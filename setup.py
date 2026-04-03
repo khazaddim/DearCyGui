@@ -95,7 +95,8 @@ def build_SDL3():
     if get_platform() == "Windows":
         # gamepad input bug https://github.com/libsdl-org/SDL/issues/11487
         cmake_config_args += ["-DSDL_PRESEED=OFF"]
-        cmake_config_args += ["-DSDL_JOYSTICK=OFF -DSDL_HAPTIC=OFF"] # without fails to compile on github windows
+        # cmake_config_args += ["-DSDL_JOYSTICK=OFF -DSDL_HAPTIC=OFF"] # without fails to compile on github windows
+        # ^ Commenting the above line out so that we can have gamepad support, but if you want to build without it
 
     if get_platform() == "Windows" and is_mingw():
         # First, set up the generator

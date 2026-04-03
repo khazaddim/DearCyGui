@@ -23,3 +23,4 @@ thirdparty/cmake_install.cmake
 #ignore build files
 build_FT/
 build_SDL/
+Small_Input_Demo.py

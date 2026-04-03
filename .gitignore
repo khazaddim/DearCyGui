@@ -19,3 +19,7 @@ src/CMakeFiles/
 thirdparty/CMakeFiles/
 thirdparty/Makefile
 thirdparty/cmake_install.cmake
+
+#ignore build files
+build_FT/
+build_SDL/

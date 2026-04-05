@@ -24,4 +24,5 @@ thirdparty/cmake_install.cmake
 build_FT/
 build_SDL/
 Small_Input_Demo.py
+SOURCES.txt
 

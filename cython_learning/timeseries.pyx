@@ -325,3 +325,68 @@ cpdef double mean_absolute_error(TimeSeries series1, TimeSeries series2):
             total_error += series2._data[i] - series1._data[i]
     
     return total_error / series1._length
+
+
+# ============================================================================
+# DEMONSTRATION: Typed vs Untyped Performance
+# ============================================================================
+# These two functions do THE SAME THING, but one is fully typed and one isn't.
+# Run demo.py to see the massive performance difference!
+#
+# Look at timeseries.html after building:
+# - sum_typed() will be mostly WHITE (pure C)
+# - sum_untyped() will be mostly YELLOW (Python overhead)
+
+def sum_untyped(data):
+    """
+    UNTYPED version - Cython compiles this, but it's still slow!
+    
+    No type declarations means Cython must:
+    - Check types at runtime
+    - Use Python object protocol for everything
+    - Handle exceptions at every step
+    
+    This is basically Python speed, even though it's "Cython".
+    """
+    total = 0.0
+    for i in range(len(data)):
+        total = total + data[i]
+    return total
+
+
+cpdef double sum_typed(double[:] data):
+    """
+    TYPED version - This is FAST!
+    
+    Type declarations tell Cython:
+    - data is a typed memoryview of doubles
+    - total is a C double
+    - i is a C int
+    
+    Cython generates pure C loop code - no Python overhead.
+    Can be 50-100x faster than the untyped version!
+    """
+    cdef double total = 0.0
+    cdef int i
+    cdef int n = data.shape[0]
+    
+    for i in range(n):
+        total = total + data[i]
+    
+    return total
+
+
+def sum_partially_typed(data):
+    """
+    PARTIALLY TYPED - Better than nothing, but still yellow spots.
+    
+    The loop variable and accumulator are typed, but 'data' is not.
+    This helps, but data[i] still requires Python indexing protocol.
+    """
+    cdef double total = 0.0
+    cdef int i
+    
+    for i in range(len(data)):
+        total = total + data[i]  # data[i] is still a Python operation!
+    
+    return total

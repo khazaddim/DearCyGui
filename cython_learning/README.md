@@ -156,6 +156,129 @@ After building, you'll see:
 **Open the `.html` files in a browser!** They show which lines are "hot" (yellow = Python overhead)
 versus "cold" (white = pure C speed). Click on a line to see the generated C code.
 
+## Why Type Annotations Are CRITICAL for Performance
+
+This is the **most important concept** in Cython. Without type declarations, Cython generates 
+code that still does Python-style dynamic type checking - you get almost no speedup!
+
+### The Problem: Untyped Code
+
+```cython
+# BAD: No types - this is basically Python speed
+def slow_sum(data):
+    total = 0
+    for i in range(len(data)):
+        total += data[i]
+    return total
+```
+
+Cython has to:
+1. Check if `data` supports `len()` 
+2. Check if `data` supports `[]` indexing
+3. Check if `total` and `data[i]` can be added
+4. Handle potential exceptions at every step
+5. Box/unbox Python objects for every operation
+
+### The Solution: Typed Code
+
+```cython
+# GOOD: Fully typed - this is C speed
+cdef double fast_sum(double* data, int length):
+    cdef double total = 0.0
+    cdef int i
+    for i in range(length):
+        total += data[i]
+    return total
+```
+
+Cython generates pure C code:
+- No type checking at runtime
+- No Python object overhead
+- Direct memory access
+- Can be 10-100x faster!
+
+### Where Types Matter Most
+
+| Location | Impact | Example |
+|----------|--------|---------|
+| **Loop variables** | HUGE | `cdef int i` in `for i in range(n)` |
+| **Accumulators** | HUGE | `cdef double total = 0.0` |
+| **Function parameters** | HIGH | `def func(int x, double y)` |
+| **Return types** | MEDIUM | `cpdef double calculate()` |
+| **Class attributes** | HIGH | `cdef double* _data` |
+
+### Try It Yourself: The Demo Proves This!
+
+**In `timeseries.pyx`**, look at the bottom - there are three sum functions:
+
+```python
+sum_untyped(data)         # No types - slow!
+sum_partially_typed(data) # Loop vars typed - better
+sum_typed(data)           # Fully typed - FAST!
+```
+
+**Run `demo.py`** and section 4b shows the benchmark:
+```
+sum_untyped()        : 0.8234s  (no types - this IS Cython!)
+sum_partially_typed(): 0.4521s  (loop vars typed)
+sum_typed()          : 0.0089s  (fully typed memoryview)
+
+Full typing speedup:    92x faster
+```
+
+**Open `timeseries.html`** in a browser and search for these functions:
+- `sum_untyped` - mostly **yellow** (Python overhead)
+- `sum_typed` - mostly **white** (pure C)
+
+### How to See the Difference
+
+The annotation HTML files (`timeseries.html`) show this visually:
+- **Yellow lines** = Python interaction (slow)
+- **White lines** = Pure C code (fast)
+
+**Rule of thumb:** If a line in a hot loop is yellow, add type declarations until it's white!
+
+### Common Patterns
+
+```cython
+# Loop variable - ALWAYS type these
+cdef int i, j, n
+
+# Accumulators
+cdef double total = 0.0
+cdef int count = 0
+
+# Working with arrays
+cdef double* data       # C pointer (fastest)
+cdef double[:] memview  # Typed memoryview (safe + fast)
+
+# Function with typed params and return
+cpdef double mean(double[:] arr):
+    cdef double total = 0.0
+    cdef int i, n = arr.shape[0]
+    for i in range(n):
+        total += arr[i]
+    return total / n
+```
+
+### What Happens Without Types (Generated C Code)
+
+Untyped:
+```c
+// Generated C for: total += data[i]
+__pyx_t_1 = __Pyx_GetItemInt(__pyx_v_data, __pyx_v_i, ...);  // ~50 lines
+__pyx_t_2 = PyNumber_Add(__pyx_v_total, __pyx_t_1);          // ~30 lines  
+// Plus error checking, reference counting, etc.
+```
+
+Typed:
+```c
+// Generated C for: total += data[i]
+__pyx_v_total = __pyx_v_total + (__pyx_v_data[__pyx_v_i]);   // 1 line!
+```
+
+---
+
 ## Key Cython Concepts Demonstrated
 
 ### 1. Typed Variables (`cdef`)

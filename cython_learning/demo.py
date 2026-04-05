@@ -152,6 +152,53 @@ print(f"  Python: {py_sma_time:.4f}s")
 print(f"  Speedup: {py_sma_time/cy_sma_time:.1f}x faster")
 
 # ============================================================================
+# 4b. THE BIG LESSON: Typed vs Untyped Cython
+# ============================================================================
+print("\n4b. THE BIG LESSON: Typed vs Untyped Cython")
+print("-" * 40)
+print("Both functions are compiled by Cython, but one has type declarations!")
+print()
+
+import array
+
+# Create test data as a Python list and as a typed array
+n_elements = 1000000
+test_list = [float(i) for i in range(n_elements)]
+test_array = array.array('d', test_list)  # 'd' = double
+
+n_runs = 10
+
+# Benchmark sum_untyped (no type declarations)
+start = time.perf_counter()
+for _ in range(n_runs):
+    result1 = ts.sum_untyped(test_list)
+untyped_time = time.perf_counter() - start
+
+# Benchmark sum_partially_typed (some type declarations)
+start = time.perf_counter()
+for _ in range(n_runs):
+    result2 = ts.sum_partially_typed(test_list)
+partial_time = time.perf_counter() - start
+
+# Benchmark sum_typed (full type declarations with memoryview)
+start = time.perf_counter()
+for _ in range(n_runs):
+    result3 = ts.sum_typed(test_array)
+typed_time = time.perf_counter() - start
+
+print(f"Summing {n_elements:,} elements, {n_runs} iterations:")
+print()
+print(f"  sum_untyped()        : {untyped_time:.4f}s  (no types - this IS Cython!)")
+print(f"  sum_partially_typed(): {partial_time:.4f}s  (loop vars typed)")
+print(f"  sum_typed()          : {typed_time:.4f}s  (fully typed memoryview)")
+print()
+print(f"  Partial typing speedup: {untyped_time/partial_time:.1f}x faster")
+print(f"  Full typing speedup:    {untyped_time/typed_time:.1f}x faster")
+print()
+print(">>> LESSON: Just using Cython isn't enough - you MUST add type declarations!")
+print(">>> Check timeseries.html to see yellow (slow) vs white (fast) lines.")
+
+# ============================================================================
 # 5. Show some actual data
 # ============================================================================
 print("\n5. Sample Data Output")

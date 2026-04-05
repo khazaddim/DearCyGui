@@ -3,6 +3,115 @@
 This folder contains small Cython examples to help you understand the build process
 and how Cython works with typed, compiled code.
 
+## Ways to Use Cython
+
+There are several approaches to using Cython in a Python project:
+
+### 1. setup.py (Traditional)
+
+This is what we use in this folder. It's the traditional approach, good for distributable packages:
+
+```python
+from setuptools import setup, Extension
+from Cython.Build import cythonize
+
+extensions = [
+    Extension("mymodule", sources=["mymodule.pyx"])
+]
+
+setup(
+    name="mypackage",
+    ext_modules=cythonize(extensions),
+)
+```
+
+Build with: `python setup.py build_ext --inplace`
+
+**Pros:** Tried and true, works everywhere, good for packages
+**Cons:** Considered "legacy" by modern Python packaging standards
+
+### 2. pyproject.toml (Modern Standard)
+
+The current recommended approach for Python packaging:
+
+```toml
+[build-system]
+requires = ["setuptools>=61.0", "cython>=3.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mypackage"
+version = "1.0.0"
+
+[tool.setuptools]
+ext-modules = [
+    {name = "mymodule", sources = ["mymodule.pyx"]}
+]
+```
+
+Build with: `pip install .` or `pip install -e .` (editable/development mode)
+
+**Pros:** Modern, declarative, follows PEP 517/518 standards
+**Cons:** Less flexible for complex builds
+
+### 3. Jupyter `%%cython` Magic (Interactive/Learning)
+
+Great for experimentation! Compile and run Cython code directly in notebook cells.
+
+First, load the extension:
+```python
+%load_ext Cython
+```
+
+Then use the `%%cython` magic in any cell:
+```python
+%%cython
+cdef int square(int x):
+    return x * x
+
+def py_square(x):
+    return square(x)
+```
+
+The cell gets compiled on-the-fly and functions become available immediately!
+
+**Additional options:**
+```python
+%%cython --annotate
+# Shows HTML annotation inline (yellow = Python overhead)
+
+%%cython -+
+# Use C++ instead of C
+
+%%cython --compile-args=-O3
+# Pass compiler flags
+```
+
+**Pros:** Instant feedback, no rebuild cycle, great for learning
+**Cons:** Not for production, can't create `.pxd` files, limited for complex projects
+
+### 4. cythonize Command Line
+
+Compile `.pyx` files directly without a setup script:
+
+```bash
+cythonize -i mymodule.pyx
+```
+
+The `-i` flag builds in-place. Useful for quick one-off compilations.
+
+### Which Should You Use?
+
+| Use Case | Recommended Approach |
+|----------|---------------------|
+| Learning/experimenting | Jupyter `%%cython` magic |
+| Quick one-off script | `cythonize -i` command |
+| Small project | `setup.py` (this folder's approach) |
+| Distributable package | `pyproject.toml` |
+| Complex build (like DearCyGui) | `setup.py` with custom logic |
+
+---
+
 ## Files
 
 - `timeseries.pyx` - Main Cython implementation (random walks, moving averages)

@@ -49,6 +49,39 @@ Pydroid3 *can* compile Cython, but you need the compiler plugin:
 - Compiling is slow and memory-intensive on mobile devices
 - May need additional packages for C standard library headers
 
+### Cloud/Remote Options (Recommended for Tablets)
+
+**GitHub Codespaces** is the easiest way to learn Cython on a tablet or Chromebook:
+
+1. Fork this repo (or create a new one with these files)
+2. Click "Code" → "Codespaces" → "Create codespace"
+3. You get a full VS Code + Linux environment with `gcc` pre-installed!
+4. Works in any browser, including tablets
+
+**Using Jupyter in Codespaces:**
+```bash
+pip install jupyter cython
+jupyter notebook
+```
+
+Then use `%%cython` magic directly in notebook cells - no setup.py needed:
+```python
+%load_ext Cython
+
+%%cython
+cdef double fast_sum(double[:] arr):
+    cdef double total = 0.0
+    cdef int i
+    for i in range(arr.shape[0]):
+        total += arr[i]
+    return total
+```
+
+**Other cloud options:**
+- **Google Colab**: Has Cython pre-installed! Just `%load_ext Cython` and go
+- **Replit**: Supports Python with Cython (may need to add to dependencies)
+- **GitPod**: Similar to Codespaces, full Linux environment
+
 ### Quick Test: Is Your Compiler Working?
 
 Create a tiny test before trying the full examples:

@@ -3,6 +3,81 @@
 This folder contains small Cython examples to help you understand the build process
 and how Cython works with typed, compiled code.
 
+## Prerequisites: You Need a C/C++ Compiler!
+
+**Cython requires a C/C++ compiler** - it's not optional. Cython transpiles `.pyx` → `.c`/`.cpp`, 
+then the compiler builds the binary extension. Without a compiler, you can't build anything.
+
+### Windows
+
+Install **Visual Studio Build Tools**:
+1. Download from https://visualstudio.microsoft.com/visual-cpp-build-tools/
+2. Run installer, select "Desktop development with C++"
+3. Make sure "MSVC v143" and "Windows SDK" are checked
+
+Or install full Visual Studio (Community edition is free).
+
+### Linux
+
+```bash
+# Ubuntu/Debian
+sudo apt install build-essential python3-dev
+
+# Fedora/RHEL
+sudo dnf install gcc gcc-c++ python3-devel
+
+# Arch
+sudo pacman -S base-devel
+```
+
+### macOS
+
+```bash
+xcode-select --install
+```
+
+### Android (Pydroid3)
+
+Pydroid3 *can* compile Cython, but you need the compiler plugin:
+
+1. Install **"Pydroid repository plugin"** from Google Play Store
+2. In Pydroid3: Menu → Pip → Install repository packages
+3. Install `gcc` and `clang` from the repository
+
+**Potential issues on Android:**
+- This folder uses `language="c++"` - if that fails, edit `setup.py` and remove that line
+- Compiling is slow and memory-intensive on mobile devices
+- May need additional packages for C standard library headers
+
+### Quick Test: Is Your Compiler Working?
+
+Create a tiny test before trying the full examples:
+
+```python
+# test_compile.py
+from setuptools import setup, Extension
+from Cython.Build import cythonize
+
+# Create a minimal .pyx file
+with open("hello.pyx", "w") as f:
+    f.write("def say_hello(): return 'Hello from Cython!'")
+
+setup(ext_modules=cythonize("hello.pyx"))
+```
+
+Run: `python test_compile.py build_ext --inplace`
+
+Then test it:
+```python
+>>> import hello
+>>> hello.say_hello()
+'Hello from Cython!'
+```
+
+If this works, the full learning examples should work too!
+
+---
+
 ## Ways to Use Cython
 
 There are several approaches to using Cython in a Python project:

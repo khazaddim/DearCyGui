@@ -22,9 +22,11 @@ cdef class TimeSeries:
     """
     
     # C-level attributes (not visible to Python, but very fast)
-    cdef double* _data      # Raw C array
-    cdef int _length        # Length of the series
-    cdef bint _owns_data    # Track if we allocated the memory
+    # these are the C-level attributes that should only be in the .pxd file (header)
+    # not to be confused with .pyd, the compiled extension module that results from building the .pyx file
+    # cdef double* _data      # Raw C array
+    # cdef int _length        # Length of the series
+    # cdef bint _owns_data    # Track if we allocated the memory
     
     def __cinit__(self, int length):
         """

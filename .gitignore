@@ -30,3 +30,7 @@ SOURCES.txt
 mark2epub.py
 study_epub/
 
+# ignore generated epub files
+*.epub
+
+

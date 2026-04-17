@@ -33,5 +33,7 @@ study_epub/
 # ignore generated epub files
 *.epub
 
-#ignore the cpp files that cython makes
-*.cpp
+# ignore only Cython-generated cpp files in the top-level dearcygui folder
+dearcygui/*.cpp
+
+# inculde backend.

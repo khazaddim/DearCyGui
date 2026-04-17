@@ -33,4 +33,5 @@ study_epub/
 # ignore generated epub files
 *.epub
 
-
+#ignore the cpp files that cython makes
+*.cpp

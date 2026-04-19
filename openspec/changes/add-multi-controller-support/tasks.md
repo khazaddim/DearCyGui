@@ -11,6 +11,8 @@
 
 **Note:** For an RPG, Milestone 1 may be sufficient — you can poll button state each frame in your game loop.
 
+**Demo validation plan:** update `Small_Input_Demo.py` at each milestone so the same demo becomes a live test harness for polling, edge detection, handlers, and axis input.
+
 ---
 
 ## Milestone 1: Basic Polling Support
@@ -56,8 +58,9 @@
 
 ### 1.8 Milestone 1 Verification
 - [ ] Build and install package
-- [ ] Create test script that prints button state for 2+ controllers
-- [ ] Verify connect/disconnect updates `connected` property
+- [ ] Update `Small_Input_Demo.py` to show connected controller slots and live button polling
+- [ ] Verify 2+ controllers can be distinguished in the demo via `viewport.gamepads[i]`
+- [ ] Verify connect/disconnect updates the demo and `connected` property correctly
 
 ---
 
@@ -79,9 +82,10 @@
 - [ ] Call `dcg_gamepad_begin_frame()` at start of render frame
 
 ### 2.4 Milestone 2 Verification
+- [ ] Update `Small_Input_Demo.py` to show one-frame press/release events in addition to held state
 - [ ] Test that `is_button_pressed()` fires exactly once per press
 - [ ] Test that `is_button_released()` fires exactly once per release
-- [ ] Test rapid button mashing doesn't miss events
+- [ ] Test rapid button mashing in the demo doesn't miss events
 
 ---
 
@@ -103,9 +107,10 @@
 - [ ] Add to type stubs
 
 ### 3.3 Milestone 3 Verification
+- [ ] Update `Small_Input_Demo.py` to use `GamepadButtonHandler` callback examples
 - [ ] Test handler fires for specific controller only
 - [ ] Test handler with `controller=None` fires for any controller
-- [ ] Test callback receives correct controller slot
+- [ ] Test callback receives correct controller slot in the demo
 
 ---
 
@@ -128,8 +133,9 @@
 - [ ] Add to type stubs
 
 ### 4.3 Milestone 4 Verification
+- [ ] Update `Small_Input_Demo.py` to show live axis values and deadzone-filtered callbacks
 - [ ] Test deadzone filtering prevents noise callbacks
-- [ ] Test axis handler fires with correct values
+- [ ] Test axis handler fires with correct values in the demo
 - [ ] Test trigger axes (0.0 to 1.0 range)
 
 ---
@@ -148,6 +154,6 @@
 - [ ] Add code examples for common patterns (polling, handlers, "press start to join")
 
 ### Testing
-- [ ] Create multi-controller demo showing all 8 slots with live input display
+- [ ] Evolve `Small_Input_Demo.py` into a multi-controller demo showing all 8 slots with live input display
 - [ ] Test with 0, 1, 2, and 8 controllers connected
 - [ ] Test hot-plug: connect/disconnect during gameplay

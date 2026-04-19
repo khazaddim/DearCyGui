@@ -11,6 +11,7 @@ DearCyGui currently merges all gamepad input into a single virtual controller vi
 - Add `GamepadAxisHandler` for per-controller analog input with deadzone support
 - Add `GamepadButton` and `GamepadAxis` enums mapping to SDL3 gamepad constants
 - Track gamepad connect/disconnect events via SDL3
+- Update `Small_Input_Demo.py` milestone-by-milestone so it serves as a live validation harness during implementation
 
 ## Impact
 - Affected specs: `gamepad-input` (new capability)
@@ -21,6 +22,7 @@ DearCyGui currently merges all gamepad input into a single virtual controller vi
   - `dearcygui/types.pyx` - New enums
   - `dearcygui/core.pyx` - Gamepad class, viewport.gamepads
   - `dearcygui/handler.pyx` - New handler classes
+  - `Small_Input_Demo.py` - Incremental milestone validation and demo coverage
   - Corresponding `.pxd` files for all `.pyx` changes
 
 ## Compatibility

@@ -284,6 +284,27 @@ SDL3 / OpenGL / OS
 
 So the backend is the **platform engine underneath DCG**, while Cython is the **bridge and API layer** that exposes it to Python.
 
+### Why Cython Helps Here
+
+If you're new to Cython, the key idea is that it does **a lot of the repetitive glue work**, but **not the actual backend design for you**.
+
+What Cython helps automate:
+- generating the low-level CPython wrapper code
+- converting many values between Python and C/C++
+- exposing native code as Python-style classes, methods, and properties
+- making it much easier to call high-performance native code from Python
+
+What you still write by hand:
+- the real backend logic in `backend.h` and `sdl3_gl3_backend.cpp`
+- the declarations in `backend.pxd`
+- the Python-facing API choices in `.pyx` files
+- memory, threading, and lifecycle decisions
+
+A useful mental model is:
+
+> Cython does not magically turn C++ into a finished Python library.
+> It helps you write the bridge layer in a much easier, more Python-like way.
+
 ### File: `dearcygui/backends/sdl3_gl3_backend.cpp`
 
 This is the C++ layer between SDL3 and Python/Cython.

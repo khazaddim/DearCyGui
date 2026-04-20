@@ -26,6 +26,93 @@ std::mutex SDLViewport::sdlInitMutex;
 std::atomic<int> SDLViewport::viewportCount{0};
 Uint32 UserEventType = SDL_EVENT_USER;
 
+// ── Multi-controller state ──────────────────────────────────────────
+static GamepadState g_gamepads[DCG_MAX_GAMEPADS];
+
+static int find_gamepad_slot(SDL_JoystickID id) {
+    for (int i = 0; i < DCG_MAX_GAMEPADS; i++) {
+        if (g_gamepads[i].connected && g_gamepads[i].sdl_id == id)
+            return i;
+    }
+    return -1;
+}
+
+static int find_empty_slot() {
+    for (int i = 0; i < DCG_MAX_GAMEPADS; i++) {
+        if (!g_gamepads[i].connected)
+            return i;
+    }
+    return -1;
+}
+
+static void handle_gamepad_added(SDL_JoystickID id) {
+    // Already tracked?
+    if (find_gamepad_slot(id) >= 0) return;
+    int slot = find_empty_slot();
+    if (slot < 0) return; // All slots full
+    SDL_Gamepad* gp = SDL_OpenGamepad(id);
+    if (!gp) return;
+    auto& s = g_gamepads[slot];
+    s.sdl_id = id;
+    s.handle = gp;
+    s.connected = true;
+    memset(s.buttons, 0, sizeof(s.buttons));
+    memset(s.axes, 0, sizeof(s.axes));
+    const char* gp_name = SDL_GetGamepadName(gp);
+    if (gp_name) {
+        strncpy(s.name, gp_name, sizeof(s.name) - 1);
+        s.name[sizeof(s.name) - 1] = '\0';
+    } else {
+        snprintf(s.name, sizeof(s.name), "Controller %d", slot);
+    }
+}
+
+static void handle_gamepad_removed(SDL_JoystickID id) {
+    int slot = find_gamepad_slot(id);
+    if (slot < 0) return;
+    auto& s = g_gamepads[slot];
+    if (s.handle) SDL_CloseGamepad(s.handle);
+    s.handle = nullptr;
+    s.connected = false;
+    s.sdl_id = 0;
+    memset(s.buttons, 0, sizeof(s.buttons));
+    memset(s.axes, 0, sizeof(s.axes));
+    s.name[0] = '\0';
+}
+
+// ── Gamepad query API ───────────────────────────────────────────────
+int dcg_gamepad_count() {
+    int n = 0;
+    for (int i = 0; i < DCG_MAX_GAMEPADS; i++)
+        if (g_gamepads[i].connected) n++;
+    return n;
+}
+
+bool dcg_gamepad_connected(int slot) {
+    if (slot < 0 || slot >= DCG_MAX_GAMEPADS) return false;
+    return g_gamepads[slot].connected;
+}
+
+const char* dcg_gamepad_name(int slot) {
+    if (slot < 0 || slot >= DCG_MAX_GAMEPADS) return "";
+    if (!g_gamepads[slot].connected) return "";
+    return g_gamepads[slot].name;
+}
+
+bool dcg_gamepad_button_down(int slot, int button) {
+    if (slot < 0 || slot >= DCG_MAX_GAMEPADS) return false;
+    if (button < 0 || button >= DCG_MAX_GAMEPAD_BUTTONS) return false;
+    if (!g_gamepads[slot].connected) return false;
+    return g_gamepads[slot].buttons[button];
+}
+
+float dcg_gamepad_axis(int slot, int axis) {
+    if (slot < 0 || slot >= DCG_MAX_GAMEPADS) return 0.0f;
+    if (axis < 0 || axis >= DCG_MAX_GAMEPAD_AXES) return 0.0f;
+    if (!g_gamepads[slot].connected) return 0.0f;
+    return g_gamepads[slot].axes[axis];
+}
+
 bool platformViewport::fastActivityCheck() {
     ImGuiContext& g = *GImGui;
 
@@ -666,18 +753,29 @@ SDLViewport* SDLViewport::create(render_fun render,
     
     // Initialize SDL in the first thread that creates a viewport
     if (!sdlInitialized) {
-#ifdef _WIN32
-        if (!SDL_Init(SDL_INIT_VIDEO)) {
-#else
         if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMEPAD)) {
-#endif
-            std::string error_msg = "Failed to initialize SDL: ";
-            error_msg += SDL_GetError();
-            SDL_ClearError();
-            throw std::runtime_error(error_msg);
+            // Fallback: try without gamepad subsystem
+            if (!SDL_Init(SDL_INIT_VIDEO)) {
+                std::string error_msg = "Failed to initialize SDL: ";
+                error_msg += SDL_GetError();
+                SDL_ClearError();
+                throw std::runtime_error(error_msg);
+            }
         }
         // Prevent SDL from sending SDL_EVENT_QUIT when the last window closes
         SDL_SetHint(SDL_HINT_QUIT_ON_LAST_WINDOW_CLOSE, "0");
+
+        // Detect gamepads already connected at startup
+        {
+            int count = 0;
+            SDL_JoystickID* ids = SDL_GetGamepads(&count);
+            if (ids) {
+                for (int i = 0; i < count && i < DCG_MAX_GAMEPADS; i++) {
+                    handle_gamepad_added(ids[i]);
+                }
+                SDL_free(ids);
+            }
+        }
 
         sdlMainThreadId = SDL_GetCurrentThreadID();
         sdlInitialized = true;
@@ -1246,6 +1344,35 @@ bool SDLViewport::processEvents(int timeout_ms) {
                 case SDL_EVENT_WINDOW_HIDDEN:
                     isVisible = false;
                     break;
+                case SDL_EVENT_GAMEPAD_ADDED:
+                    handle_gamepad_added(event.gdevice.which);
+                    needsRefresh.store(true);
+                    break;
+                case SDL_EVENT_GAMEPAD_REMOVED:
+                    handle_gamepad_removed(event.gdevice.which);
+                    needsRefresh.store(true);
+                    break;
+                case SDL_EVENT_GAMEPAD_BUTTON_DOWN:
+                case SDL_EVENT_GAMEPAD_BUTTON_UP:
+                {
+                    int slot = find_gamepad_slot(event.gbutton.which);
+                    if (slot >= 0 && event.gbutton.button < DCG_MAX_GAMEPAD_BUTTONS) {
+                        g_gamepads[slot].buttons[event.gbutton.button] = event.gbutton.down;
+                    }
+                    needsRefresh.store(true);
+                    break;
+                }
+                case SDL_EVENT_GAMEPAD_AXIS_MOTION:
+                {
+                    int slot = find_gamepad_slot(event.gaxis.which);
+                    if (slot >= 0 && event.gaxis.axis < DCG_MAX_GAMEPAD_AXES) {
+                        // Normalize: sticks to -1..1, triggers to 0..1
+                        float value = (float)event.gaxis.value / 32767.0f;
+                        g_gamepads[slot].axes[event.gaxis.axis] = value;
+                    }
+                    needsRefresh.store(true);
+                    break;
+                }
                 default:
                     if (event.type == UserEventType) {
                         // wake-up handling

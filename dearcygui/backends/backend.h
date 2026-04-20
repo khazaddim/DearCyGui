@@ -18,6 +18,27 @@ typedef void (*on_drop_fun)(void*, int, const char*);
 typedef void (*on_wait_fun)(void*);
 typedef void (*on_wake_fun)(void*);
 
+// ── Multi-controller support ────────────────────────────────────────
+static constexpr int DCG_MAX_GAMEPADS = 8;
+static constexpr int DCG_MAX_GAMEPAD_BUTTONS = 26;  // SDL_GAMEPAD_BUTTON_COUNT
+static constexpr int DCG_MAX_GAMEPAD_AXES = 6;      // SDL_GAMEPAD_AXIS_COUNT
+
+struct GamepadState {
+    SDL_JoystickID sdl_id = 0;
+    SDL_Gamepad* handle = nullptr;
+    char name[128] = {};
+    bool buttons[DCG_MAX_GAMEPAD_BUTTONS] = {};
+    float axes[DCG_MAX_GAMEPAD_AXES] = {};
+    bool connected = false;
+};
+
+// Gamepad query API (implemented in sdl3_gl3_backend.cpp)
+int  dcg_gamepad_count();
+bool dcg_gamepad_connected(int slot);
+const char* dcg_gamepad_name(int slot);
+bool dcg_gamepad_button_down(int slot, int button);
+float dcg_gamepad_axis(int slot, int axis);
+
 
 // A class to wrap a GL context, make it current, release it.
 class GLContext

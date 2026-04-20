@@ -110,3 +110,11 @@ cdef extern from "backend.h" nogil:
                                  on_wake_fun, void*) except +
         void *getSDLWindowHandle()
 
+    # Multi-controller query API
+    const int DCG_MAX_GAMEPADS
+    int  dcg_gamepad_count()
+    bint dcg_gamepad_connected(int slot)
+    const char* dcg_gamepad_name(int slot)
+    bint dcg_gamepad_button_down(int slot, int button)
+    float dcg_gamepad_axis(int slot, int axis)
+

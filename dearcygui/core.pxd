@@ -338,6 +338,10 @@ release the global imgui context mutex, and lock_im_context to lock it back.
 One instance is if making call to unknown user call which might change the imgui context.
 """
 
+cdef class Gamepad:
+    cdef int _slot
+    cdef Context _context
+
 cdef class Viewport(baseItem):
     ### Public read-only variables
     cdef int64_t frame_count # frame count
@@ -403,6 +407,7 @@ cdef class Viewport(baseItem):
     cdef object _kill_exc
     cdef void* _imgui_context # imgui.ImGuiContext
     cdef void* _implot_context # implot.ImPlotContext
+    cdef tuple _gamepads # Cached tuple of 8 Gamepad objects
     ### public methods ###
     cpdef void delete_item(self)
     cdef void coordinate_to_screen(self, float *dst_p, const double[2] src_p) noexcept nogil

@@ -1850,6 +1850,58 @@ cdef object make_MouseButtonMask(value):
             raise ValueError(f"Invalid mouse button mask value: {value}")
     raise TypeError(f"Expected MouseButtonMask enum or string, got {type(value).__name__}")
 
+cdef bint is_GamepadButton(value):
+    if isinstance(value, GamepadButton):
+        return True
+    if isinstance(value, str):
+        try:
+            value = GamepadButton[value.upper()]
+            return True
+        except KeyError:
+            return False
+    return False
+
+cdef object make_GamepadButton(value):
+    if isinstance(value, GamepadButton):
+        return value
+    if isinstance(value, str):
+        try:
+            return GamepadButton[value.upper()]
+        except KeyError:
+            raise ValueError(f"Invalid gamepad button name: {value}")
+    if isinstance(value, int):
+        try:
+            return GamepadButton(value)
+        except ValueError:
+            raise ValueError(f"Invalid gamepad button value: {value}")
+    raise TypeError(f"Expected GamepadButton enum or string, got {type(value).__name__}")
+
+cdef bint is_GamepadAxis(value):
+    if isinstance(value, GamepadAxis):
+        return True
+    if isinstance(value, str):
+        try:
+            value = GamepadAxis[value.upper()]
+            return True
+        except KeyError:
+            return False
+    return False
+
+cdef object make_GamepadAxis(value):
+    if isinstance(value, GamepadAxis):
+        return value
+    if isinstance(value, str):
+        try:
+            return GamepadAxis[value.upper()]
+        except KeyError:
+            raise ValueError(f"Invalid gamepad axis name: {value}")
+    if isinstance(value, int):
+        try:
+            return GamepadAxis(value)
+        except ValueError:
+            raise ValueError(f"Invalid gamepad axis value: {value}")
+    raise TypeError(f"Expected GamepadAxis enum or string, got {type(value).__name__}")
+
 cdef bint is_TextMarker(value):
     if isinstance(value, TextMarker):
         return True

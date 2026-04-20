@@ -92,6 +92,43 @@ cpdef enum class MouseCursor:
 cdef bint is_MouseCursor(value)
 cdef object make_MouseCursor(value)
 
+cpdef enum class GamepadButton:
+    SOUTH = 0,          # A (Xbox) / Cross (PS)
+    EAST = 1,           # B (Xbox) / Circle (PS)
+    WEST = 2,           # X (Xbox) / Square (PS)
+    NORTH = 3,          # Y (Xbox) / Triangle (PS)
+    BACK = 4,
+    GUIDE = 5,
+    START = 6,
+    LEFT_STICK = 7,
+    RIGHT_STICK = 8,
+    LEFT_SHOULDER = 9,
+    RIGHT_SHOULDER = 10,
+    DPAD_UP = 11,
+    DPAD_DOWN = 12,
+    DPAD_LEFT = 13,
+    DPAD_RIGHT = 14,
+    MISC1 = 15,
+    RIGHT_PADDLE1 = 16,
+    LEFT_PADDLE1 = 17,
+    RIGHT_PADDLE2 = 18,
+    LEFT_PADDLE2 = 19,
+    TOUCHPAD = 20
+
+cdef bint is_GamepadButton(value)
+cdef object make_GamepadButton(value)
+
+cpdef enum class GamepadAxis:
+    LEFT_X = 0,
+    LEFT_Y = 1,
+    RIGHT_X = 2,
+    RIGHT_Y = 3,
+    LEFT_TRIGGER = 4,
+    RIGHT_TRIGGER = 5
+
+cdef bint is_GamepadAxis(value)
+cdef object make_GamepadAxis(value)
+
 #Class that used to describe the positioning policy of an item (used now only by MotionHandler)
 cpdef enum class Positioning:
     DEFAULT, # Cursor position

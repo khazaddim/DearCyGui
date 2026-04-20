@@ -29,7 +29,9 @@ from cpython.buffer cimport Py_buffer, PyObject_CheckBuffer, PyObject_GetBuffer,
 from cpython.sequence cimport PySequence_Check
 from cpython.exc cimport PyErr_CheckSignals
 
-from .backends.backend cimport SDLViewport, platformViewport, GLContext
+from .backends.backend cimport SDLViewport, platformViewport, GLContext,\
+    DCG_MAX_GAMEPADS, dcg_gamepad_count, dcg_gamepad_connected,\
+    dcg_gamepad_name, dcg_gamepad_button_down, dcg_gamepad_axis
 cimport dearcygui.backends.time as ctime
 from .c_types cimport unique_lock, DCGMutex, mutex, defer_lock_t, string_to_str,\
     set_composite_label, set_uuid_label, string_from_str, Vec2, make_Vec2
@@ -42,7 +44,8 @@ from .types cimport Vec2, child_type,\
     Coord, parse_texture, Display,\
     get_children_types, get_item_type, is_Key, make_Key,\
     is_KeyMod, make_KeyMod, \
-    is_MouseCursor, make_MouseCursor, is_MouseButton, make_MouseButton
+    is_MouseCursor, make_MouseCursor, is_MouseButton, make_MouseButton,\
+    GamepadButton, GamepadAxis, make_GamepadButton, make_GamepadAxis
 from .wrapper cimport imgui, implot
 
 from atexit import register as _atexit_register
@@ -3044,6 +3047,50 @@ def _wake_viewport_on_exit(viewport_ref: _weak_ref):
     #gc.collect()
     #print(viewport_ref())
 
+cdef class Gamepad:
+    """
+    Represents a single gamepad/controller slot (0-7).
+
+    Use ``viewport.gamepads[i]`` to get the Gamepad for slot *i*.
+    Query button and axis state each frame via polling methods.
+    """
+    def __cinit__(self, Context context, int slot):
+        self._context = context
+        self._slot = slot
+
+    @property
+    def slot(self) -> int:
+        """Slot index (0-7) for this controller."""
+        return self._slot
+
+    @property
+    def connected(self) -> bool:
+        """True if a physical controller is plugged into this slot."""
+        return dcg_gamepad_connected(self._slot)
+
+    @property
+    def name(self) -> str:
+        """Human-readable name reported by the controller, or '' if empty."""
+        cdef const char* n = dcg_gamepad_name(self._slot)
+        if n == NULL or n[0] == 0:
+            return ""
+        return n.decode('utf-8')
+
+    def is_button_down(self, button) -> bool:
+        """Return True while *button* is held down."""
+        button = make_GamepadButton(button)
+        return dcg_gamepad_button_down(self._slot, <int>button)
+
+    def get_axis(self, axis) -> float:
+        """Return the current axis value (-1.0 to 1.0 for sticks, 0.0 to 1.0 for triggers)."""
+        axis = make_GamepadAxis(axis)
+        return dcg_gamepad_axis(self._slot, <int>axis)
+
+    def __repr__(self):
+        if self.connected:
+            return f"Gamepad(slot={self._slot}, name='{self.name}')"
+        return f"Gamepad(slot={self._slot}, disconnected)"
+
 @cython.final
 cdef class Viewport(baseItem):
     """
@@ -3242,6 +3289,27 @@ cdef class Viewport(baseItem):
     cdef void __check_alive(self):
         if self._platform == NULL:
             raise RuntimeError("Cannot perform this operation on a destroyed Viewport")
+
+    @property
+    def gamepads(self):
+        """
+        Tuple of 8 Gamepad objects for per-controller input polling.
+
+        Each ``Gamepad`` corresponds to a slot index (0-7). Check
+        ``gamepad.connected`` to see if a physical controller occupies
+        that slot, then use ``is_button_down()`` / ``get_axis()`` to
+        read its state.
+        """
+        if self._gamepads is None:
+            self._gamepads = tuple(
+                Gamepad(self.context, i) for i in range(DCG_MAX_GAMEPADS)
+            )
+        return self._gamepads
+
+    @property
+    def gamepad_count(self) -> int:
+        """Number of currently connected gamepads."""
+        return dcg_gamepad_count()
 
     @property
     def clear_color(self):

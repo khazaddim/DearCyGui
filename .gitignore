@@ -37,3 +37,5 @@ study_epub/
 dearcygui/*.cpp
 cython_learning/*.cpp
 cython_learning/*.html
+
+Controller_change_epub/

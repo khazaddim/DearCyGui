@@ -30,6 +30,24 @@ def test_draw_invisible_button_properties(ctx):
     btn.max_side = 20
     assert btn.max_side == 20
 
+def test_draw_invisible_state(ctx):
+    # Check that the visibility state is correctly updated even
+    # with complex hierarchy
+    with dcg.Window(ctx) as w:
+        with dcg.DrawInWindow(ctx):
+            with dcg.DrawingList(ctx):
+                btn = dcg.DrawInvisibleButton(ctx, p2=(100, 100))
+    
+    assert not btn.state.visible 
+    ctx.viewport.initialize(visible=False)
+    for _ in range(10):
+        ctx.viewport.render_frame()
+
+    assert btn.state.visible
+
+    w.show = False
+    assert not btn.state.visible
+
 def test_button_callback(ctx):
     triggered = {"value": False}
     

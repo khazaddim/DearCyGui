@@ -4785,7 +4785,7 @@ cdef class TreeNode(uiItem):
         if imgui.IsItemToggledOpen() and not(was_open):
             SharedBool.set(<SharedBool>self._value, True)
             self.state.cur.open = True
-        elif self.state.cur.rendered and was_open and not(open_and_visible):
+        elif self.state.cur.rendered and not(open_and_visible) and (was_open or self.state.prev.open):
             SharedBool.set(<SharedBool>self._value, False)
             self.state.cur.open = False
             self._propagate_hidden_state_to_children_with_handlers()
@@ -4975,7 +4975,7 @@ cdef class CollapsingHeader(uiItem):
         if imgui.IsItemToggledOpen() and not(was_open):
             SharedBool.set(<SharedBool>self._value, True)
             self.state.cur.open = True
-        elif self.state.cur.rendered and was_open and not(open_and_visible): # TODO: unsure
+        elif self.state.cur.rendered and not(open_and_visible) and (was_open or self.state.prev.open): # TODO: unsure
             SharedBool.set(<SharedBool>self._value, False)
             self.state.cur.open = False
             self._propagate_hidden_state_to_children_with_handlers()

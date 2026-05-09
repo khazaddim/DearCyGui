@@ -9,7 +9,9 @@ def parse_size(expr):
 def ctx():
     # Create a minimal context for testing
     C = dcg.Context()
-    return C
+    yield C
+    C.queue.shutdown(wait=True)
+    C.viewport.destroy()
 
 def test_parse_numeric_literals():
     # Test parsing simple numeric literals

@@ -1,8 +1,10 @@
-import gc
-import sys
-import weakref
-import pytest
+
 import dearcygui as dcg
+import gc
+import os
+import psutil
+import pytest
+import weakref
 
 def test_basic_gc():
     """Test that basic items are garbage collected when no longer referenced"""
@@ -261,38 +263,45 @@ def test_tree_cleanup():
 
 def test_memory_usage():
     """Test that memory usage doesn't grow with item creation/destruction"""
-    import psutil
-    import os
-    
+    import tracemalloc
+
     process = psutil.Process(os.getpid())
     C = dcg.Context()
-    gc.collect()
-    
-    # Create and destroy many items in a loop
-    for _ in range(1000):
-        window = dcg.Window(C, attach=False)
-        for _ in range(1000):
-            dcg.Button(C, parent=window)
-        del window
 
-    gc.collect()
-    # We measuse after allocating and deallocating in
-    # order to avoid impact of allocation caching
-    initial_memory = process.memory_info().rss
+    def run_batch():
+        for _ in range(100):
+            window = dcg.Window(C, attach=False)
+            for _ in range(100):
+                dcg.Button(C, parent=window)
+            del window
+        gc.collect()
 
-    # Create and destroy many items in a loop
-    for _ in range(1000):
-        window = dcg.Window(C, attach=False)
-        for _ in range(1000):
-            dcg.Button(C, parent=window)
-        del window
-    gc.collect()
-    
-    final_memory = process.memory_info().rss
-    memory_diff = final_memory - initial_memory
-    
-    # Allow for some memory overhead, but it shouldn't be significant
-    assert memory_diff < 1024 * 1024  # Less than 1MB difference
+    # Warmup: reach allocator steady state so caches/pools are primed
+    for _ in range(10):
+        run_batch()
+
+    # --- Python-level check with tracemalloc ---
+    tracemalloc.start()
+    run_batch()
+    _, peak1 = tracemalloc.get_traced_memory()
+    tracemalloc.reset_peak()
+    run_batch()
+    _, peak2 = tracemalloc.get_traced_memory()
+    tracemalloc.stop()
+
+    # Peak allocation of equivalent runs should be within 5% of each other
+    assert abs(peak2 - peak1) < max(peak1 * 0.05, 64 * 1024), \
+        f"Python-level peak memory diverged: {peak1 // 1024}KB vs {peak2 // 1024}KB"
+
+    # --- C-level check with psutil (coarse, generous threshold) ---
+    rss_before = process.memory_info().rss
+    for _ in range(20):
+        run_batch()
+    rss_after = process.memory_info().rss
+
+    # 20 equivalent batches shouldn't grow RSS by more than 4MB
+    assert rss_after - rss_before < 4 * 1024 * 1024, \
+        f"RSS grew {(rss_after - rss_before) // 1024}KB over 20 batches (C-level leak?)"
 
 if __name__ == "__main__":
     pytest.main([__file__])

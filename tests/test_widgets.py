@@ -1,3 +1,4 @@
+import gc
 import pytest
 import dearcygui as dcg
 
@@ -5,8 +6,12 @@ import dearcygui as dcg
 def ctx():
     # Create a minimal context for testing.
     C = dcg.Context()
-    #C.viewport.initialize(visible=False)
-    return C
+    yield C
+    C.queue.shutdown(wait=True)
+    C.viewport.destroy()
+    # Force cycle collection on the main thread so that __dealloc__
+    # doesn't fire later on a worker thread, triggering the warning.
+    gc.collect()
 
 def test_draw_invisible_button_properties(ctx):
     # Instantiate a DrawInvisibleButton and verify get/set properties.

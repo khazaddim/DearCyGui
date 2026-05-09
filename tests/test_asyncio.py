@@ -283,8 +283,10 @@ class TestAsyncThreadPoolExecutor:
         results = []
         timing = []
         
-        # Create executor with a larger time slot (50ms)
-        executor = AsyncThreadPoolExecutor(BatchingEventLoop.factory(time_slot=0.050))
+        # Use a larger time slot so quantization is clearly visible
+        # even on loaded systems
+        time_slot = 0.150
+        executor = AsyncThreadPoolExecutor(BatchingEventLoop.factory(time_slot=time_slot))
         
         async def timed_task(delay, idx):
             start = time.time()
@@ -295,11 +297,12 @@ class TestAsyncThreadPoolExecutor:
             results.append(f"end_{idx}")
             return idx
         
-        # Submit tasks with similar but different delays
+        # Submit tasks with delays well below the time_slot so they all
+        # get batched into the same slot
         futures = [
             executor.submit(timed_task, 0.020, 1),
-            executor.submit(timed_task, 0.030, 2),
-            executor.submit(timed_task, 0.040, 3),
+            executor.submit(timed_task, 0.040, 2),
+            executor.submit(timed_task, 0.060, 3),
         ]
         
         # Get results from all tasks
@@ -313,10 +316,17 @@ class TestAsyncThreadPoolExecutor:
         # We're not strictly testing the order, but ensuring all finish
         assert set(results[3:]) == {"end_1", "end_2", "end_3"}
         
-        # Check if quantization occurred - delays should be grouped
-        # At least some tasks should have longer than requested delays due to quantization
-        longer_delays = [t for _, t in timing if t > 0.045]
-        assert len(longer_delays) > 0, "No evidence of time quantization found"
+        # All tasks are well below the time_slot, so they should all be
+        # batched into the same slot and complete at roughly the same time.
+        # Evidence of quantization: all actual wait times are similar
+        # (spread is small) AND all are longer than the longest requested delay.
+        actual_times = [t for _, t in timing]
+        spread = max(actual_times) - min(actual_times)
+        longest_requested = 0.060
+        assert all(t > longest_requested for t in actual_times), \
+            f"Some tasks completed faster than the longest requested delay: {timing}"
+        assert spread < 0.030, \
+            f"Tasks did not batch together (spread={spread:.3f}s, timings={timing})"
         
         executor.shutdown()
     

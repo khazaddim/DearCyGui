@@ -54,6 +54,13 @@ class ShutdownTestHelper:
         return ctx
     
     @staticmethod
+    def cleanup(ctx):
+        """Destroy viewport resources on the current (main) thread to avoid GC warnings."""
+        ctx.running = False
+        ctx.queue.shutdown(wait=True)
+        ctx.viewport.destroy()
+
+    @staticmethod
     def run_render_loop(ctx, duration=1.0, wait_for_input=False):
         """Run the render loop for a specified duration"""
         ctx.viewport.wait_for_input = wait_for_input
@@ -73,7 +80,8 @@ def test_basic_shutdown():
     shutdown_time = time.time() - start_time
     
     assert shutdown_time < DEFAULT_TIMEOUT, f"Shutdown took too long: {shutdown_time:.2f}s"
-    ctx.running = False
+    ctx.queue.shutdown(wait=True)
+    ctx.viewport.destroy()
 
 
 def test_context_running_flag():
@@ -99,6 +107,8 @@ def test_context_running_flag():
     
     assert not ctx.running, "Context running flag wasn't set to False"
     assert shutdown_time < FAST_TIMEOUT, f"Shutdown took too long: {shutdown_time:.2f}s"
+    ctx.queue.shutdown(wait=True)
+    ctx.viewport.destroy()
 
 
 def test_immediate_shutdown():
@@ -108,6 +118,8 @@ def test_immediate_shutdown():
     # Should be able to shut down immediately
     start_time = time.time()
     ctx.running = False
+    ctx.queue.shutdown(wait=True)
+    ctx.viewport.destroy()
     del ctx
     gc.collect()
     
@@ -143,6 +155,8 @@ def test_shutdown_with_wait_for_input():
     
     assert not ctx.running, "Context didn't stop with wait_for_input"
     assert shutdown_time < DEFAULT_TIMEOUT, f"Shutdown took too long: {shutdown_time:.2f}s"
+    ctx.queue.shutdown(wait=True)
+    ctx.viewport.destroy()
 
 
 def test_complex_app_shutdown():
@@ -154,7 +168,8 @@ def test_complex_app_shutdown():
     shutdown_time = time.time() - start_time
     
     assert shutdown_time < DEFAULT_TIMEOUT, f"Complex app shutdown took too long: {shutdown_time:.2f}s"
-    ctx.running = False
+    ctx.queue.shutdown(wait=True)
+    ctx.viewport.destroy()
 
 
 def test_multiple_contexts_shutdown():
@@ -169,6 +184,10 @@ def test_multiple_contexts_shutdown():
         contexts.append(ctx)
         ShutdownTestHelper.run_render_loop(ctx, duration=0.1)
         ctx.running = False
+
+    for ctx in contexts:
+        ctx.queue.shutdown(wait=True)
+        ctx.viewport.destroy()
     
     shutdown_time = time.time() - start_time
     assert shutdown_time < DEFAULT_TIMEOUT, f"Multiple contexts shutdown took too long: {shutdown_time:.2f}s"
@@ -204,6 +223,8 @@ def test_shutdown_during_heavy_rendering():
     
     assert not ctx.running, "Heavy rendering didn't stop cleanly"
     assert shutdown_time < DEFAULT_TIMEOUT, f"Heavy rendering shutdown took too long: {shutdown_time:.2f}s"
+    ctx.queue.shutdown(wait=True)
+    ctx.viewport.destroy()
 
 
 def test_thread_pool_shutdown():
@@ -214,6 +235,8 @@ def test_thread_pool_shutdown():
         ctx = ShutdownTestHelper.create_basic_app()
         ShutdownTestHelper.run_render_loop(ctx, duration=0.1)
         ctx.running = False
+        ctx.queue.shutdown(wait=True)
+        ctx.viewport.destroy()
         del ctx
         gc.collect()
     
@@ -234,6 +257,9 @@ def test_cleanup_after_exception():
     except RuntimeError:
         # Should still be able to clean up
         ctx.running = False
+    finally:
+        ctx.queue.shutdown(wait=True)
+        ctx.viewport.destroy()
     
     shutdown_time = time.time() - start_time
     assert shutdown_time < DEFAULT_TIMEOUT, f"Exception cleanup took too long: {shutdown_time:.2f}s"
@@ -446,7 +472,7 @@ def test_resource_cleanup_on_shutdown():
         ShutdownTestHelper.run_render_loop(ctx, duration=0.05)
         
         # Explicit cleanup
-        ctx.running = False
+        ShutdownTestHelper.cleanup(ctx)
         del ctx
         gc.collect()
     
@@ -489,7 +515,7 @@ def test_shutdown_timeout_detection():
             ctx.viewport.render_frame()
         
         timer.join()
-        ctx.running = False
+        ShutdownTestHelper.cleanup(ctx)
         return "completed"
     
     # Test with timeout to ensure it doesn't hang
@@ -513,7 +539,7 @@ def test_interrupt_during_initialization():
     assert init_time < DEFAULT_TIMEOUT, f"Initialization took too long: {init_time:.2f}s"
     
     # Clean up
-    ctx.running = False
+    ShutdownTestHelper.cleanup(ctx)
     del ctx
 
 
@@ -536,9 +562,10 @@ def test_keyboard_interrupt_simulation():
     except KeyboardInterrupt:
         # Should be able to handle the interrupt and clean up
         ctx.running = False
+    finally:
+        ShutdownTestHelper.cleanup(ctx)
         
     cleanup_time = time.time() - start_time
-    assert not ctx.running, "Context didn't stop after KeyboardInterrupt"
     assert cleanup_time < FAST_TIMEOUT, f"KeyboardInterrupt cleanup took too long: {cleanup_time:.2f}s"
 
 
@@ -554,6 +581,7 @@ def test_repeated_shutdown_calls():
     start_time = time.time()
     ctx.running = False
     ctx.running = False  # Second call should be safe
+    ShutdownTestHelper.cleanup(ctx)
     del ctx  # This should also be safe
     gc.collect()
     
@@ -577,7 +605,7 @@ def test_shutdown_with_active_handlers():
         ctx.viewport.render_frame()
     
     # Shutdown should still work
-    ctx.running = False
+    ShutdownTestHelper.cleanup(ctx)
     shutdown_time = time.time() - start_time
     
     assert shutdown_time < DEFAULT_TIMEOUT, f"Shutdown with handlers took too long: {shutdown_time:.2f}s"
@@ -602,7 +630,7 @@ def test_shutdown_with_textures():
         ctx.viewport.render_frame()
     
     # Shutdown should work with textures
-    ctx.running = False
+    ShutdownTestHelper.cleanup(ctx)
     shutdown_time = time.time() - start_time
     
     assert shutdown_time < DEFAULT_TIMEOUT, f"Shutdown with textures took too long: {shutdown_time:.2f}s"
@@ -618,7 +646,7 @@ def test_fast_repeated_start_stop():
         ctx = ShutdownTestHelper.create_basic_app()
         # Run just one frame
         ctx.viewport.render_frame()
-        ctx.running = False
+        ShutdownTestHelper.cleanup(ctx)
         del ctx
         gc.collect()
         
@@ -652,7 +680,7 @@ def test_shutdown_with_large_ui():
         ctx.viewport.render_frame()
     
     # Shutdown should still be reasonably fast
-    ctx.running = False
+    ShutdownTestHelper.cleanup(ctx)
     shutdown_time = time.time() - start_time
     
     assert shutdown_time < DEFAULT_TIMEOUT, f"Large UI shutdown took too long: {shutdown_time:.2f}s"
@@ -673,7 +701,7 @@ def test_context_destruction_timing():
     start_time = time.time()
     
     for ctx in contexts:
-        ctx.running = False
+        ShutdownTestHelper.cleanup(ctx)
     
     # Clear references
     contexts.clear()

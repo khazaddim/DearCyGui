@@ -1,4 +1,5 @@
 import pytest
+import gc
 import numpy as np
 import dearcygui as dcg
 import time
@@ -18,12 +19,18 @@ def capture_context():
                             retrieve_framebuffer=True,
                             width=512, height=512)
     yield ctx
+    ctx.queue.shutdown(wait=True)
+    ctx.viewport.destroy()
+    gc.collect()
 
 @pytest.fixture
 def ctx():
     # Create a minimal context for testing.
     C = dcg.Context()
-    return C
+    yield C
+    C.queue.shutdown(wait=True)
+    C.viewport.destroy()
+    gc.collect()
 
 def test_texture_creation_with_numpy_arrays(ctx):
     """Test creating textures with numpy arrays of different shapes and types."""

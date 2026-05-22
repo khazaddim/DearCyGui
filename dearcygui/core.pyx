@@ -325,6 +325,10 @@ cdef void internal_wait_callback(void *object) noexcept nogil:
     (<Viewport>object).mutex.unlock() # Unlock the viewport mutex before waiting
 
 cdef void internal_wake_callback(void *object) noexcept nogil:
+    """
+    This callback is called from time to time
+    when the backend wakes to check for exceptions.
+    """
     # Check exceptions
     cdef unique_lock[DCGMutex] m
     with gil:
@@ -334,7 +338,7 @@ cdef void internal_wake_callback(void *object) noexcept nogil:
             lock_gil_friendly(m, (<Viewport>object).mutex)
             (<Viewport>object)._kill_signal = True
             (<platformViewport*>(<Viewport>object)._platform).shouldSkipPresenting = True
-            (<platformViewport*>(<Viewport>object)._platform).activityDetected.store(True)
+            (<platformViewport*>(<Viewport>object)._platform).needsRender.store(True)
             (<Viewport>object)._kill_exc = exc
     (<Viewport>object).mutex.lock() # Lock the viewport mutex before waking up
     lock_im_context(<Viewport>object) # Lock the imgui context before waking up
@@ -4987,7 +4991,7 @@ cdef class Viewport(baseItem):
         """
         Called during draw to request that a new draw should
         occur immediately. The current content may or may not
-        be displayed.
+        be displayed, but the spirit is for the it to be skipped.
         """
         cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)
         self._redraw_needed = True
@@ -5002,7 +5006,7 @@ cdef class Viewport(baseItem):
         be redrawn and presented right after.
         """
         cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)
-        (<platformViewport*>self._platform).needsRefresh.store(True)
+        (<platformViewport*>self._platform).needsPresent.store(True)
 
     cdef Vec2 get_size(self) noexcept nogil:
         cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)

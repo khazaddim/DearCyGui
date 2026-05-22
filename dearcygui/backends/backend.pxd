@@ -67,7 +67,8 @@ cdef extern from "backend.h" nogil:
         float[4] clearColor
         bint hasVSync
         bint shouldSkipPresenting
-        atomic[bint] activityDetected
+        atomic[bint] needsPresent
+        atomic[bint] needsRender
         atomic[bint] needsRefresh
 
         # Window properties

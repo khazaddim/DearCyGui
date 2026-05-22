@@ -211,8 +211,15 @@ public:
     bool hasModesChanged = false;
     bool hasVSync = true; // TODO: maybe change that
     bool shouldSkipPresenting = false;
-    std::atomic<bool> activityDetected{true};
+    // needsPresent: next rendering should present a frame even if no change detected.
+    // if we rerender right away, we may defer to next frame.
+    // shouldSkipPresenting does cause needsPresent to be ignored.
+    std::atomic<bool> needsPresent{true};
+    // needsRender: we should be calling draw() for each item, etc
+    std::atomic<bool> needsRender{true};
+    // needsRefresh: needsRender + needsPresent.
     std::atomic<bool> needsRefresh{true};
+    bool prevNeedsRefresh = true; // Used to store if last frame needed refresh
 
     // Window properties
     std::string windowTitle = "DearCyGui Window";

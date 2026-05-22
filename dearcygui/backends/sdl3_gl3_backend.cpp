@@ -1087,7 +1087,7 @@ bool SDLViewport::processEvents(int timeout_ms) {
         if (!new_events) {
             if (remaining_timeout <= 0)
                 break;
-            if (activityDetected.load() || needsRefresh.load())
+            if (needsRender.load() || needsRefresh.load())
                 break;
             waitCallback(callbackData);
             bool has_event = false;
@@ -1141,7 +1141,7 @@ bool SDLViewport::processEvents(int timeout_ms) {
                     needsRefresh.store(true);
                     break;
                 case SDL_EVENT_MOUSE_MOTION:
-                    activityDetected.store(true);
+                    needsRender.store(true);
                     break;
                 case SDL_EVENT_WINDOW_MOUSE_ENTER:
                 case SDL_EVENT_WINDOW_MOUSE_LEAVE:
@@ -1215,11 +1215,11 @@ bool SDLViewport::processEvents(int timeout_ms) {
                     break;
                 case SDL_EVENT_QUIT:
                     killCallback(callbackData);
-                    activityDetected.store(true);
+                    needsRender.store(true);
                     break;
                 case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
                     closeCallback(callbackData);
-                    activityDetected.store(true);
+                    needsRender.store(true);
                     break;
                 case SDL_EVENT_DROP_BEGIN:
                     dropCallback(callbackData, 0, nullptr);
@@ -1262,7 +1262,7 @@ bool SDLViewport::processEvents(int timeout_ms) {
                                 needsRefresh.store(true);
                             } else if (event.user.code == 1) {
                                 // User requested rendering
-                                activityDetected.store(true);
+                                needsRender.store(true);
                             }
                         } else {
                             // User requested a refresh or rendering in the future
@@ -1314,17 +1314,17 @@ bool SDLViewport::processEvents(int timeout_ms) {
             ).count();
         if (current_time >= time_requested_refresh) {
             needsRefresh.store(true);
-            activityDetected.store(true);
+            needsRender.store(true);
             time_requested_refresh = UINT64_MAX;
             time_requested_rendering = UINT64_MAX;
         } else if (current_time >= time_requested_rendering) {
-            activityDetected.store(true);
+            needsRender.store(true);
             time_requested_rendering = UINT64_MAX;
         }
     }
 
     bool need_refresh = needsRefresh.load();
-    bool need_redraw = activityDetected.load();
+    bool need_redraw = needsRender.load();
 
     if (need_refresh) {
         time_requested_refresh = UINT64_MAX;
@@ -1362,7 +1362,7 @@ bool SDLViewport::processEvents(int timeout_ms) {
 
 // Update renderFrame to use member prepare_present
 bool SDLViewport::renderFrame(bool can_skip_presenting) {
-    activityDetected.store(false);
+    needsRender.store(false);
     renderContextLock.lock();
     // Note: on X11 at least, this MakeCurrent is slow
     // when vsync is ON for some reason...
@@ -1378,7 +1378,7 @@ bool SDLViewport::renderFrame(bool can_skip_presenting) {
         ImGui_ImplOpenGL3_NewFrame();
         SDL_GL_MakeCurrent(windowHandle, NULL);
     }
-    
+
     renderContextLock.unlock();
     ImGui_ImplSDL3_NewFrame(frameHeight, frameWidth);
     ImGui::NewFrame();
@@ -1386,22 +1386,27 @@ bool SDLViewport::renderFrame(bool can_skip_presenting) {
     bool does_needs_refresh = needsRefresh.load();
     needsRefresh.store(false);
 
+    // Call draw() for each item
     renderCallback(callbackData);
 
     // Updates during the frame
-    // Not all might have been made into rendering
-    // thus we don't reset needs_refresh
+    // Since not all the changes that made the user
+    // set needsRefresh to true might have been made
+    // into the current rendering, we don't reset needsRefresh
+    // which will cause to redraw right away
     does_needs_refresh |= needsRefresh.load();
 
+    // In case of activity (for instance click release might open
+    // a menu), we want to make sure to refresh right away, and
+    // to refresh next frame right away in case the activity
+    // triggers some visual change.
     if (fastActivityCheck()) {
         does_needs_refresh = true;
-        /* Refresh next frame in case of activity.
-         * For instance click release might open
-         * a menu */
         needsRefresh.store(true);
     }
 
-    static bool prev_needs_refresh = true;
+    // Maybe we could use some statistics like number of vertices
+    // to detect whether to present...
 
     // shouldSkipPresenting: When we need to redraw in order
     // to improve positioning, and avoid bad frames.
@@ -1410,22 +1415,42 @@ bool SDLViewport::renderFrame(bool can_skip_presenting) {
     // The advantage of shouldSkipPresenting though,
     // is that we are not limited by vsync to
     // do the recomputation.
+
+    // The original can_skip_presenting disables
+    // shouldSkipPresenting
     if (!can_skip_presenting)
         shouldSkipPresenting = false;
 
-    // Maybe we could use some statistics like number of vertices
-    can_skip_presenting &= !does_needs_refresh && !prev_needs_refresh;
+    // if we need to refresh, we shouldn't skip presenting
+    can_skip_presenting &= !does_needs_refresh;
+
+    // If the previous frame already needed a refresh,
+    // we are likely in a situation where we need one again.
+    can_skip_presenting &= !prevNeedsRefresh;
+
+    // If draw() requested to present, we shouldn't skip presenting
+    can_skip_presenting &= !needsPresent.load();
 
     // The frame just after an activity might trigger some visual changes
-    prev_needs_refresh = does_needs_refresh;
+    prevNeedsRefresh = does_needs_refresh;
     if (does_needs_refresh)
-        activityDetected.store(true);
+        needsRender.store(true);
 
+    // shouldSkipPresenting overrides the above three
+    // conditions
     if (can_skip_presenting || shouldSkipPresenting) {
         shouldSkipPresenting = false;
+        // If shouldSkipPresenting forced hand,
+        // we should still redraw and end up refreshing.
+        if (!can_skip_presenting) {
+            needsRender.store(true);
+            needsPresent.store(true);
+        }
         ImGui::EndFrame();
         return false;
     }
+
+    needsPresent.store(false);
 
     preparePresentFrame(); 
     return true;

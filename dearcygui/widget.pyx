@@ -1768,6 +1768,8 @@ cdef class ListBox(uiItem):
             imgui.EndListBox()
         # TODO: rect_size/min/max: with the popup ? Use clipper for rect_max ?
         self.state.cur.edited = changed
+        self.state.cur.traversed = True
+        self.state.cur.rendered = visible
         #self.state.cur.deactivated_after_edited = self.state.cur.deactivated and changed -> TODO Unsure. Isn't it rather focus loss ?
         return pressed
 
@@ -3598,7 +3600,7 @@ cdef class Separator(uiItem):
             imgui.Separator()
         else:
             imgui.SeparatorText(self._imgui_label.c_str())
-        self.state.cur.rect_size = ImVec2Vec2(imgui.GetItemRectSize())
+        self.update_current_state()
         return False
 
 cdef class Spacer(uiItem):
@@ -3618,13 +3620,8 @@ cdef class Spacer(uiItem):
 
     cdef bint draw_item(self) noexcept nogil:
         cdef Vec2 requested_size = self.get_requested_size()
-        if requested_size.x == 0 and \
-           requested_size.y == 0:
-            imgui.Spacing()
-            # TODO rect_size
-        else:
-            imgui.Dummy(Vec2ImVec2(requested_size))
-        self.state.cur.rect_size = ImVec2Vec2(imgui.GetItemRectSize())
+        imgui.Dummy(Vec2ImVec2(requested_size))
+        self.update_current_state()
         return False
 
 cdef class MenuBar(uiItem):

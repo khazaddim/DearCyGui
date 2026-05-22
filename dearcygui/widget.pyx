@@ -3684,15 +3684,26 @@ cdef class MenuBar(uiItem):
         else:
             menu_allowed = imgui.BeginMenuBar()
         cdef Vec2 pos_w, pos_p, parent_size_backup
+        cdef float frame_h, win_width
         if menu_allowed:
             self.update_current_state()
-            self.state.cur.content_region_size = ImVec2Vec2(imgui.GetContentRegionAvail())
-            # Only one row is reserved for menubar, while the content region avail sees the whole window.
-            self.state.cur.content_region_size.y = imgui.GetFrameHeight()
-            # TODO: compute real size. At least this is not what update_current_state
-            # seems to fill (it is significantly too large)
-            self.state.cur.rect_size.x = self.state.cur.content_region_size.x
-            self.state.cur.rect_size.y = self.state.cur.content_region_size.y
+            frame_h = imgui.GetFrameHeight()
+            win_width = imgui.GetWindowWidth()
+            # rect_size: the full visual bounding box of the menubar.
+            # GetWindowWidth() gives the full window width including the scrollbar
+            # area, which is correct: the menubar visually spans the full width
+            # and is not affected by a vertical scrollbar in the content area.
+            self.state.cur.rect_size.x = win_width
+            self.state.cur.rect_size.y = frame_h
+            # content_region_size: equivalent to GetContentRegionAvail() but
+            # without the scrollbar deduction.
+            # GetContentRegionAvail() returns:
+            #   ContentRegionRect.Max.x - CursorPos.x
+            # = WindowWidth - WindowBorderSize - ScrollbarSizes.x - WindowPadding.x
+            # We replicate this without ScrollbarSizes.x since the scrollbar
+            # does not visually affect the menu bar area.
+            self.state.cur.content_region_size.x = win_width - imgui.GetStyle().WindowBorderSize - imgui.GetStyle().WindowPadding.x
+            self.state.cur.content_region_size.y = frame_h
             if self.last_widgets_child is not None:
                 # We are at the top of the window, but behave as if popup
                 pos_w = ImVec2Vec2(imgui.GetCursorScreenPos())

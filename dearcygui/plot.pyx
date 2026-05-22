@@ -1157,7 +1157,7 @@ cdef class PlotAxisConfig(baseItem):
             self._linked_axis.mutex.unlock()
         # The fit only impacts the next frame
         if (self._min != self._prev_min or self._max != self._prev_max):
-            self.context.viewport.redraw_needed = True
+            self.context.viewport.ask_immediate_redraw()
 
     cdef void set_hidden(self) noexcept nogil:
         self.set_previous_states()

@@ -355,13 +355,9 @@ cdef class Viewport(baseItem):
     cdef int64_t delta_rendering
     cdef int64_t delta_swapping
     cdef int64_t delta_frame
-    ### Public read-write variables ###
-    cdef bint wait_for_input
-    cdef bint always_submit_to_gpu
-    # Temporary info to be accessed during rendering
+    # Temporary read-write variables to be accessed only during rendering
     # Shouldn't be accessed outside draw()
     cdef float global_scale # Current scale factor to apply to all rendering
-    cdef bint redraw_needed # Request the viewport to redraw right away without displaying
     cdef double[2] scales # Draw*: Current multiplication factor (integrates global_scale) for all coordinates
     cdef double[2] shifts # Draw*: Current shift for all coordinates
     cdef Vec2 window_pos # Coordinates (Viewport space) of the parent window
@@ -391,6 +387,9 @@ cdef class Viewport(baseItem):
     cdef void *_platform_window # SDL_Window
     cdef atomic[int64_t] _platform_external_count
     cdef bint _initialized # False initially, then True. Doesn't need mutex
+    cdef bint _wait_for_input
+    cdef bint _always_submit_to_gpu
+    cdef bint _redraw_needed
     cdef bint _retrieve_framebuffer
     cdef object _frame_buffer
     cdef Callback _resize_callback
@@ -411,6 +410,7 @@ cdef class Viewport(baseItem):
     cdef void screen_to_coordinate(self, double *dst_p, const float[2] src_p) noexcept nogil
     cdef void ask_refresh_after_target(self, double monotonic) noexcept nogil # might refresh before, in which case you should call again
     cdef void ask_refresh_after_delta(self, double delta_monotonic) noexcept nogil # might refresh before, in which case you should call again
+    cdef void ask_immediate_redraw(self) noexcept nogil
     cdef void force_present(self) noexcept nogil
     cdef Vec2 get_size(self) noexcept nogil
     cdef void *get_platform_window(self) noexcept nogil

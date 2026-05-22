@@ -85,7 +85,7 @@ cdef class baseSizing:
 
         if current_value != self._current_value:
             # Possibility of cascading updates
-            target.context.viewport.redraw_needed = True
+            target.context.viewport.ask_immediate_redraw()
 
         return self._current_value
 

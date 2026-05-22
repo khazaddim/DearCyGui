@@ -3058,8 +3058,8 @@ cdef class Viewport(baseItem):
         self.last_t_after_swapping = self.last_t_before_event_handling
         self.skipped_last_frame = False
         self.frame_count = 0
-        self.wait_for_input = False
-        self.always_submit_to_gpu = False
+        self._wait_for_input = False
+        self._always_submit_to_gpu = False
         self._target_refresh_time = 0.
         self.state.cur.traversed = True
         self.state.cur.rendered = True # For compatibility with RenderHandlers
@@ -4331,14 +4331,14 @@ cdef class Viewport(baseItem):
         cdef unique_lock[DCGMutex] m
         lock_gil_friendly(m, self.mutex)
         self.__check_alive()
-        return self.wait_for_input
+        return self._wait_for_input
 
     @wait_for_input.setter
     def wait_for_input(self, bint value):
         cdef unique_lock[DCGMutex] m
         lock_gil_friendly(m, self.mutex)
         self.__check_alive()
-        self.wait_for_input = value
+        self._wait_for_input = value
 
     @property
     def always_submit_to_gpu(self):
@@ -4353,14 +4353,14 @@ cdef class Viewport(baseItem):
         cdef unique_lock[DCGMutex] m
         lock_gil_friendly(m, self.mutex)
         self.__check_alive()
-        return self.always_submit_to_gpu
+        return self._always_submit_to_gpu
 
     @always_submit_to_gpu.setter
     def always_submit_to_gpu(self, bint value):
         cdef unique_lock[DCGMutex] m
         lock_gil_friendly(m, self.mutex)
         self.__check_alive()
-        self.always_submit_to_gpu = value
+        self._always_submit_to_gpu = value
 
     @property
     def shown(self) -> bool:
@@ -4563,7 +4563,7 @@ cdef class Viewport(baseItem):
             self._font.push()
         if self._theme is not None: # maybe apply in render_frame instead ?
             self._theme.push()
-        self.redraw_needed = False
+        self._redraw_needed = False
         cdef int32_t i
         for i in range(5):
             self.context.prev_last_id_button_catch[i] = \
@@ -4614,7 +4614,7 @@ cdef class Viewport(baseItem):
             self._font.pop()
         self.run_handlers()
         self.last_t_after_rendering = ctime.monotonic_ns()
-        if self.redraw_needed:
+        if self._redraw_needed:
             (<platformViewport*>self._platform).needsRefresh.store(True)
             (<platformViewport*>self._platform).shouldSkipPresenting = True
             # Skip presenting frames if we can afford
@@ -4841,7 +4841,7 @@ cdef class Viewport(baseItem):
             current_time_s = self.last_t_before_event_handling * 1e-9
             target_timeout_ms = (self._target_refresh_time - current_time_s) * 1000.
             target_timeout_ms = max(0., ceil(target_timeout_ms))
-            if not self.wait_for_input:
+            if not self._wait_for_input:
                 target_timeout_ms = 0.
             # Use manual locks for processEvents (it may release them)
             self.mutex.lock()
@@ -4874,7 +4874,7 @@ cdef class Viewport(baseItem):
             lock_im_context(self)
             try:
                 should_present = \
-                    (<platformViewport*>self._platform).renderFrame(not(self.always_submit_to_gpu))
+                    (<platformViewport*>self._platform).renderFrame(not(self._always_submit_to_gpu))
             finally:
                 unlock_im_context()
             #self.last_t_after_rendering = ctime.monotonic_ns()
@@ -4982,6 +4982,15 @@ cdef class Viewport(baseItem):
         cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)
         cdef double monotonic = ctime.monotonic_ns() * 1e-9
         self._target_refresh_time = min(self._target_refresh_time, monotonic + delta_monotonic)
+
+    cdef void ask_immediate_redraw(self) noexcept nogil:
+        """
+        Called during draw to request that a new draw should
+        occur immediately. The current content may or may not
+        be displayed.
+        """
+        cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)
+        self._redraw_needed = True
 
     cdef void force_present(self) noexcept nogil:
         """
@@ -8255,7 +8264,7 @@ cdef class Window(uiItem):
                     # if failed (window doesn't exist), retry next frame
                     self.focus_requested = False
                 else:
-                    self.context.viewport.redraw_needed = True
+                    self.context.viewport.ask_immediate_redraw()
             else:
                 imgui.SetNextWindowFocus()
                 self.focus_requested = False
@@ -8346,7 +8355,7 @@ cdef class Window(uiItem):
 
             self.x_update_requested = False
             self.y_update_requested = False
-            self.context.viewport.force_present() # maybe self.context.redraw_needed = True as well ?
+            self.context.viewport.force_present() # maybe self.context.viewport.ask_immediate_redraw() as well ?
 
             imgui.SetNextWindowPos(new_pos, imgui.ImGuiCond_Always)
 
@@ -8555,7 +8564,7 @@ cdef class Window(uiItem):
         # The sizing of windows might not converge right away
         if self.state.cur.content_region_size.x != self.state.prev.content_region_size.x or \
            self.state.cur.content_region_size.y != self.state.prev.content_region_size.y:
-            self.context.viewport.redraw_needed = True
+            self.context.viewport.ask_immediate_redraw()
 
 
 cdef class plotElement(baseItem):

@@ -4019,7 +4019,7 @@ cdef class Tooltip(uiItem):
         if self.state.cur.rendered != was_visible or \
            self.state.cur.content_region_size.x != self.state.prev.content_region_size.x or \
            self.state.cur.content_region_size.y != self.state.prev.content_region_size.y:
-            self.context.viewport.redraw_needed = True
+            self.context.viewport.ask_immediate_redraw()
         elif display_condition and \
             (imgui.GetIO().MouseDelta.x != 0. or \
             imgui.GetIO().MouseDelta.y != 0.):
@@ -5495,7 +5495,7 @@ cdef class ChildWindow(uiItem):
             # The sizing of windows might not converge right away
             if self.state.cur.content_region_size.x != self.state.prev.content_region_size.x or \
                self.state.cur.content_region_size.y != self.state.prev.content_region_size.y:
-                self.context.viewport.redraw_needed = True
+                self.context.viewport.ask_immediate_redraw()
         else:
             self._set_not_rendered_and_propagate_to_children_with_handlers()
         imgui.EndChild()

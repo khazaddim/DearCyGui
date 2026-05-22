@@ -227,7 +227,7 @@ cdef class Layout(uiItem):
         # change other items including the layout.
         if child.state.cur.rect_size.x != child.state.prev.rect_size.x or \
            child.state.cur.rect_size.y != child.state.prev.rect_size.y:
-            child.context.viewport.redraw_needed = True
+            child.context.viewport.ask_immediate_redraw()
             self._force_update = True
 
     @cython.final
@@ -900,12 +900,12 @@ cdef class HorizontalLayout(Layout):
         # If our bounding box changed, the parent layout must also re-evaluate
         if self.state.cur.rect_size.x != self.state.prev.rect_size.x or \
            self.state.cur.rect_size.y != self.state.prev.rect_size.y:
-            self.context.viewport.redraw_needed = True
+            self.context.viewport.ask_immediate_redraw()
 
         # If child bounding boxes changed, we may need to redraw to update alignment/justification etc.
         if changed:
             self._force_update = True
-            self.context.viewport.redraw_needed = True
+            self.context.viewport.ask_immediate_redraw()
 
         return changed
 
@@ -1484,12 +1484,12 @@ cdef class VerticalLayout(Layout):
         # If our bounding box changed, the parent layout must also re-evaluate
         if self.state.cur.rect_size.x != self.state.prev.rect_size.x or \
            self.state.cur.rect_size.y != self.state.prev.rect_size.y:
-            self.context.viewport.redraw_needed = True
+            self.context.viewport.ask_immediate_redraw()
 
         # If child bounding boxes changed, we may need to redraw to update alignment/justification etc.
         if changed:
             self._force_update = True
-            self.context.viewport.redraw_needed = True
+            self.context.viewport.ask_immediate_redraw()
 
         return changed
 
@@ -1632,7 +1632,7 @@ cdef class WindowLayout(uiItem):
            child.state.cur.rect_size.y != child.state.prev.rect_size.y or \
            child.state.cur.pos_to_viewport.x != child.state.prev.pos_to_viewport.x or \
            child.state.cur.pos_to_viewport.y != child.state.prev.pos_to_viewport.y:
-            child.context.viewport.redraw_needed = True
+            child.context.viewport.ask_immediate_redraw()
             self._force_update = True
 
     @cython.final

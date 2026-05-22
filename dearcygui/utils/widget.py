@@ -1102,6 +1102,11 @@ class DraggableBar(dcg.DrawInWindow):
         self._grab_rounding = 0.
         self._grab_radius = 0.
 
+        # Drag tracking: mouse position and bar position at click time
+        self._drag_start_mouse_x = 0.
+        self._drag_start_mouse_y = 0.
+        self._drag_start_position = position
+
         # Set up handlers
         self.handlers += [
             # Handle hover state
@@ -1188,6 +1193,11 @@ class DraggableBar(dcg.DrawInWindow):
     def _on_clicked(self, sender, target, button) -> None:
         """Check if click was in the grab area."""
         self._dragging_in_grab = self._is_in_grab_area()
+        if self._dragging_in_grab:
+            mouse_pos = self.context.get_mouse_position()
+            self._drag_start_mouse_x = mouse_pos[0]
+            self._drag_start_mouse_y = mouse_pos[1]
+            self._drag_start_position = self._position
     
     def _on_dragging(self):
         """Update position when dragging in grab area."""
@@ -1205,11 +1215,13 @@ class DraggableBar(dcg.DrawInWindow):
         parent_height = parent_size.y
         mouse_pos = self.context.get_mouse_position()
 
-        # Update position based on orientation
+        # Update position based on orientation.
+        # Use a delta from the initial click position so the bar tracks the mouse
+        # without teleporting regardless of where within the bar the user clicked.
         if self._vertical and parent_width > 0:
-            new_position = (mouse_pos.x - parent.state.pos_to_viewport.x) / parent_width
+            new_position = self._drag_start_position + (mouse_pos.x - self._drag_start_mouse_x) / parent_width
         elif not self._vertical and parent_height > 0:
-            new_position = (mouse_pos.y - parent.state.pos_to_viewport.y) / parent_height
+            new_position = self._drag_start_position + (mouse_pos.y - self._drag_start_mouse_y) / parent_height
         else:
             return
 

@@ -3941,7 +3941,7 @@ cdef class Tooltip(uiItem):
         lock_gil_friendly(m, self.mutex)
         self._hide_on_activity = value
 
-    cdef bint draw_item(self) noexcept nogil: # TODO: maybe subclass draw() instead ?
+    cdef bint draw_item(self) noexcept nogil: # NOTE: maybe subclass draw() instead ?
         cdef float hoverDelay_backup
         cdef bint display_condition = False
         cdef float delay = self._delay

@@ -846,8 +846,9 @@ cdef class HorizontalLayout(Layout):
 
         # Capture _force_update before clearing it so that update_layout() callers
         # trigger callbacks even when the layout is otherwise stable this frame.
-        cdef bint changed = self._force_update
+        cdef bint forced = self._force_update
         self._force_update = False
+        cdef bint children_changed = False
 
         imgui.PushID(self.uuid)
         imgui.BeginGroup()
@@ -876,14 +877,14 @@ cdef class HorizontalLayout(Layout):
 
         # Dispatch to the appropriate inline drawing strategy
         if self._alignment_mode == Alignment.MANUAL:
-            changed |= self.__draw_item_manual()
+            children_changed = self.__draw_item_manual()
         elif self._alignment_mode == Alignment.LEFT:
             if self._no_wrap:
-                changed |= self.__draw_item_left_no_wrap()
+                children_changed = self.__draw_item_left_no_wrap()
             else:
-                changed |= self.__draw_item_left_wrap()
+                children_changed = self.__draw_item_left_wrap()
         else:  # RIGHT, CENTER, JUSTIFIED
-            changed |= self.__draw_item_aligned()
+            children_changed = self.__draw_item_aligned()
 
         self.last_widgets_child.unlock_and_previous_siblings()
 
@@ -902,12 +903,15 @@ cdef class HorizontalLayout(Layout):
            self.state.cur.rect_size.y != self.state.prev.rect_size.y:
             self.context.viewport.ask_immediate_redraw()
 
-        # If child bounding boxes changed, we may need to redraw to update alignment/justification etc.
-        if changed:
+        # If child bounding boxes actually changed, schedule one more redraw so
+        # alignment/justification can converge.  We only set _force_update when
+        # children genuinely changed this frame — not when we merely consumed a
+        # prior _force_update — to prevent an infinite redraw loop.
+        if children_changed:
             self._force_update = True
             self.context.viewport.ask_immediate_redraw()
 
-        return changed
+        return forced | children_changed
 
 cdef class VerticalLayout(Layout):
     """
@@ -1430,8 +1434,9 @@ cdef class VerticalLayout(Layout):
 
         # Capture _force_update before clearing it so that update_layout() callers
         # trigger callbacks even when the layout is otherwise stable this frame.
-        cdef bint changed = self._force_update
+        cdef bint forced = self._force_update
         self._force_update = False
+        cdef bint children_changed = False
 
         imgui.PushID(self.uuid)
         imgui.BeginGroup()
@@ -1460,14 +1465,14 @@ cdef class VerticalLayout(Layout):
 
         # Dispatch to the appropriate inline drawing strategy
         if self._alignment_mode == Alignment.MANUAL:
-            changed |= self.__draw_item_manual()
+            children_changed = self.__draw_item_manual()
         elif self._alignment_mode == Alignment.TOP:
             if self._no_wrap:
-                changed |= self.__draw_item_top_no_wrap()
+                children_changed = self.__draw_item_top_no_wrap()
             else:
-                changed |= self.__draw_item_top_wrap()
+                children_changed = self.__draw_item_top_wrap()
         else:  # BOTTOM, CENTER, JUSTIFIED
-            changed |= self.__draw_item_aligned()
+            children_changed = self.__draw_item_aligned()
 
         self.last_widgets_child.unlock_and_previous_siblings()
 
@@ -1486,12 +1491,15 @@ cdef class VerticalLayout(Layout):
            self.state.cur.rect_size.y != self.state.prev.rect_size.y:
             self.context.viewport.ask_immediate_redraw()
 
-        # If child bounding boxes changed, we may need to redraw to update alignment/justification etc.
-        if changed:
+        # If child bounding boxes actually changed, schedule one more redraw so
+        # alignment/justification can converge.  We only set _force_update when
+        # children genuinely changed this frame — not when we merely consumed a
+        # prior _force_update — to prevent an infinite redraw loop.
+        if children_changed:
             self._force_update = True
             self.context.viewport.ask_immediate_redraw()
 
-        return changed
+        return forced | children_changed
 
 
 cdef class WindowLayout(uiItem):

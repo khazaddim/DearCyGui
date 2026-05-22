@@ -833,6 +833,31 @@ def test_nested_3level_layout_stable(vp_ctx):
         f"3-level nested layout should stabilize; last: {sizes[-6:]}"
     )
 
+def test_nested_3level_layout_stable_with_string_sizing(vp_ctx):
+    """Three levels of nested layouts stabilize with string-based sizing."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    with dcg.Layout(ctx, parent=window, width="fillx", height="filly"):
+        with dcg.Layout(ctx, width="0.5*fullx", height="filly", no_newline=True):
+            with dcg.Layout(ctx):
+                dcg.Button(ctx, label="", width="fullx/2", height="fully")
+                dcg.Button(ctx, label="", width="fillx", height="25")
+            dcg.Button(ctx, label="", width="fullx", height="25")
+        with dcg.Layout(ctx, width="fillx", height="filly"):
+            with dcg.Layout(ctx) as inner_h:
+                dcg.Button(ctx, label="", width="fullx/2", height="fully")
+                dcg.Button(ctx, label="", width="fillx", height="25")
+            dcg.Button(ctx, label="", width="fullx", height="25")
+        dcg.Button(ctx, label="", width="60", height="30")
+
+    sizes = []
+    for _ in range(25):
+        ctx.viewport.render_frame()
+        sizes.append(inner_h.state.rect_size)
+    assert _sizes_converged(sizes, last_n=5), (
+        f"3-level nested layout should stabilize; last: {sizes[-6:]}"
+    )
+
 
 # ===========================================================================
 # ChildWindow basic sizing tests
@@ -1199,3 +1224,1164 @@ def test_nested_childwindow_in_layout_in_childwindow(vp_ctx):
 
     assert inner_cw.state.rect_size[0] == 100
     assert inner_cw.state.rect_size[1] == 80
+
+
+# --- Stable cases (no sibling) — regression guards, expected to pass -------
+
+def test_layout_filly_single_parent_height_child_stable(vp_ctx):
+    """A filly layout with only a parent.height button and no siblings is stable."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    with dcg.Layout(ctx, parent=window, height="filly") as layout:
+        dcg.Button(ctx, label="", width="50", height="parent.height")
+
+    sizes = []
+    for _ in range(25):
+        ctx.viewport.render_frame()
+        sizes.append(layout.state.rect_size)
+    assert _sizes_converged(sizes, last_n=5), (
+        f"filly + single parent.height child should stabilize; last: {sizes[-6:]}"
+    )
+
+
+def test_layout_fully_single_parent_height_child_stable(vp_ctx):
+    """A fully layout with only a parent.height button and no siblings is stable."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    with dcg.Layout(ctx, parent=window, height="fully") as layout:
+        dcg.Button(ctx, label="", width="50", height="parent.height")
+
+    sizes = []
+    for _ in range(25):
+        ctx.viewport.render_frame()
+        sizes.append(layout.state.rect_size)
+    assert _sizes_converged(sizes, last_n=5), (
+        f"fully + single parent.height child should stabilize; last: {sizes[-6:]}"
+    )
+
+
+def test_nested_filly_single_parent_height_child_stable(vp_ctx):
+    """Two nested filly layouts with only a parent.height button is stable."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    with dcg.Layout(ctx, parent=window, height="filly"):
+        with dcg.Layout(ctx, height="filly") as inner:
+            dcg.Button(ctx, label="", width="50", height="parent.height")
+
+    sizes = []
+    for _ in range(25):
+        ctx.viewport.render_frame()
+        sizes.append(inner.state.rect_size)
+    assert _sizes_converged(sizes, last_n=5), (
+        f"Nested filly + single parent.height child should stabilize; last: {sizes[-6:]}"
+    )
+
+
+# --- ChildWindow-only stable cases — confirm issue is absent outside Layout --
+
+def test_childwindow_filly_parent_height_with_sibling_stable(vp_ctx):
+    """ChildWindow with filly: parent.height button alongside fixed sibling stays stable.
+
+    This is the ChildWindow equivalent of the broken Layout pattern; it should
+    NOT exhibit the height-growth loop, confirming the bug is specific to Layout.
+    """
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    cw = dcg.ChildWindow(ctx, parent=window, width="fillx", height="filly")
+    dcg.Button(ctx, label="", width="50", height="parent.height", parent=cw)
+    dcg.Button(ctx, label="", width="50", height="25", parent=cw)
+
+    sizes = []
+    for _ in range(25):
+        ctx.viewport.render_frame()
+        sizes.append(cw.state.rect_size)
+    assert _sizes_converged(sizes, last_n=5), (
+        f"filly ChildWindow + parent.height + fixed sibling should stabilize; last: {sizes[-6:]}"
+    )
+
+
+def test_childwindow_fixed_parent_height_with_sibling_stable(vp_ctx):
+    """Fixed-height ChildWindow: parent.height button alongside fixed sibling stays stable."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    cw = dcg.ChildWindow(ctx, parent=window, width="200", height="200")
+    dcg.Button(ctx, label="", width="50", height="parent.height", parent=cw)
+    dcg.Button(ctx, label="", width="50", height="25", parent=cw)
+
+    sizes = []
+    for _ in range(25):
+        ctx.viewport.render_frame()
+        sizes.append(cw.state.rect_size)
+    assert _sizes_converged(sizes, last_n=5), (
+        f"Fixed ChildWindow + parent.height + fixed sibling should stabilize; last: {sizes[-6:]}"
+    )
+
+
+def test_nested_childwindows_parent_height_with_sibling_stable(vp_ctx):
+    """Nested ChildWindows: inner filly CW with parent.height button + sibling stays stable."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    outer = dcg.ChildWindow(ctx, parent=window, width="300", height="300")
+    inner = dcg.ChildWindow(ctx, parent=outer, width="fillx", height="filly")
+    dcg.Button(ctx, label="", width="50", height="parent.height", parent=inner)
+    dcg.Button(ctx, label="", width="50", height="25", parent=inner)
+
+    sizes = []
+    for _ in range(25):
+        ctx.viewport.render_frame()
+        sizes.append(inner.state.rect_size)
+    assert _sizes_converged(sizes, last_n=5), (
+        f"Nested ChildWindows + parent.height + sibling should stabilize; last: {sizes[-6:]}"
+    )
+
+
+# --- Broken cases (with fixed-height sibling) — expected to fail -----------
+
+def test_layout_filly_mixed_children_stable(vp_ctx):
+    """Minimal reproducer: filly layout, parent.height button alongside fixed-height sibling."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    with dcg.Layout(ctx, parent=window, height="filly") as layout:
+        dcg.Button(ctx, label="", width="50", height="filly")
+        dcg.Button(ctx, label="", width="50", height="25")
+
+    sizes = []
+    for _ in range(25):
+        ctx.viewport.render_frame()
+        sizes.append(layout.state.rect_size)
+    assert _sizes_converged(sizes, last_n=5), (
+        f"filly + parent.height + fixed sibling should stabilize; last: {sizes[-6:]}"
+    )
+
+
+def test_layout_fully_mixed_children_stable(vp_ctx):
+    """fully layout, parent.height button alongside fixed-height sibling."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    with dcg.Layout(ctx, parent=window, height="fully") as layout:
+        dcg.Button(ctx, label="", width="50", height="filly")
+        dcg.Button(ctx, label="", width="50", height="25")
+
+    sizes = []
+    for _ in range(25):
+        ctx.viewport.render_frame()
+        sizes.append(layout.state.rect_size)
+    assert _sizes_converged(sizes, last_n=5), (
+        f"fully + parent.height + fixed sibling should stabilize; last: {sizes[-6:]}"
+    )
+
+
+def test_layout_in_childwindow_mixed_children_stable(vp_ctx):
+    """filly layout inside a fixed ChildWindow: parent.height button + fixed sibling."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    cw = dcg.ChildWindow(ctx, parent=window, width="200", height="200")
+    with dcg.Layout(ctx, parent=cw, height="filly") as layout:
+        dcg.Button(ctx, label="", width="50", height="filly")
+        dcg.Button(ctx, label="", width="50", height="25")
+
+    sizes = []
+    for _ in range(25):
+        ctx.viewport.render_frame()
+        sizes.append(layout.state.rect_size)
+    assert _sizes_converged(sizes, last_n=5), (
+        f"filly layout in ChildWindow + parent.height + sibling should stabilize; last: {sizes[-6:]}"
+    )
+
+
+def test_nested_filly_mixed_children_stable(vp_ctx):
+    """Two nested filly layouts, innermost has parent.height button and fixed sibling."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    with dcg.Layout(ctx, parent=window, height="filly"):
+        with dcg.Layout(ctx, height="filly") as inner:
+            dcg.Button(ctx, label="", width="50", height="filly")
+            dcg.Button(ctx, label="", width="50", height="25")
+
+    sizes = []
+    for _ in range(25):
+        ctx.viewport.render_frame()
+        sizes.append(inner.state.rect_size)
+    assert _sizes_converged(sizes, last_n=5), (
+        f"Nested filly + parent.height + sibling should stabilize; last: {sizes[-6:]}"
+    )
+
+
+# ===========================================================================
+# HorizontalLayout / VerticalLayout — zero-size items and hidden items
+#
+# "Zero-size items": has_rect_size=False (dcg.Tooltip is the canonical proxy).
+#   They draw as floating popups; the inline ImGui cursor does not advance.
+#
+# "Hidden items": show=False.  has_rect_size=True capability but rect_size==0
+#   when not drawn.
+# ===========================================================================
+
+
+# ---------------------------------------------------------------------------
+# Phase 1 — HorizontalLayout LEFT+no_wrap, zero-size items (Tooltip)
+# ---------------------------------------------------------------------------
+
+def test_hlayout_left_no_wrap_item_tooltip_item_spacing(vp_ctx):
+    """HLayout LEFT+no_wrap: Tooltip between items preserves normal spacing_x."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    # Reference: two adjacent buttons (no tooltip)
+    with dcg.HorizontalLayout(ctx, parent=window):
+        rb1 = dcg.Button(ctx, label="", width=80, height=30)
+        rb2 = dcg.Button(ctx, label="", width=80, height=30)
+    # Test: same setup with a Tooltip between them
+    with dcg.HorizontalLayout(ctx, parent=window):
+        tb1 = dcg.Button(ctx, label="", width=80, height=30)
+        dcg.Tooltip(ctx)
+        tb2 = dcg.Button(ctx, label="", width=80, height=30)
+    _render(ctx.viewport)
+
+    ref_gap = (rb2.state.pos_to_parent.x
+               - rb1.state.pos_to_parent.x - rb1.state.rect_size.x)
+    test_gap = (tb2.state.pos_to_parent.x
+                - tb1.state.pos_to_parent.x - tb1.state.rect_size.x)
+    assert abs(test_gap - ref_gap) <= 1, (
+        f"LEFT+no_wrap item+tooltip+item: gap={test_gap} should equal ref gap={ref_gap}"
+    )
+
+
+def test_hlayout_left_no_wrap_tooltip_as_first_child(vp_ctx):
+    """HLayout LEFT+no_wrap: leading Tooltip does not shift first visible item from x=0."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    with dcg.HorizontalLayout(ctx, parent=window):
+        dcg.Tooltip(ctx)
+        b1 = dcg.Button(ctx, label="", width=80, height=30)
+        b2 = dcg.Button(ctx, label="", width=80, height=30)
+    _render(ctx.viewport)
+
+    assert b1.state.pos_to_parent.x == 0, (
+        f"Leading tooltip: first button x={b1.state.pos_to_parent.x} should be 0"
+    )
+    # b2 must be to the right of b1 with some positive gap
+    gap = b2.state.pos_to_parent.x - (b1.state.pos_to_parent.x + b1.state.rect_size.x)
+    assert gap > 0, (
+        f"Leading tooltip: gap between b1 and b2 should be > 0, got {gap}"
+    )
+
+
+def test_hlayout_left_no_wrap_tooltip_as_last_child(vp_ctx):
+    """HLayout LEFT+no_wrap: trailing Tooltip does not inflate the layout rect_size."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    # Reference: two buttons with no trailing tooltip
+    with dcg.HorizontalLayout(ctx, parent=window, no_newline=True) as ref:
+        dcg.Button(ctx, label="", width=80, height=30)
+        dcg.Button(ctx, label="", width=80, height=30)
+    r = dcg.Button(ctx, label="", width=80, height=30)
+    # Test: same buttons followed by a Tooltip
+    with dcg.HorizontalLayout(ctx, parent=window, no_newline=True) as test:
+        dcg.Button(ctx, label="", width=80, height=30)
+        dcg.Button(ctx, label="", width=80, height=30)
+        dcg.Tooltip(ctx)
+    t = dcg.Button(ctx, label="", width=80, height=30)
+    _render(ctx.viewport)
+
+    assert abs(test.state.rect_size.x - ref.state.rect_size.x) <= 1, (
+        f"Trailing tooltip: layout width {test.state.rect_size.x} "
+        f"should match no-tooltip width {ref.state.rect_size.x}"
+    )
+    assert abs(t.state.pos_to_parent.x - r.state.pos_to_parent.x) <= 1, (
+        f"Trailing tooltip: next item x={t.state.pos_to_parent.x} should match "
+        f"no-tooltip next item x={r.state.pos_to_parent.x}"
+    )
+
+
+def test_hlayout_left_no_wrap_multiple_consecutive_tooltips(vp_ctx):
+    """HLayout LEFT+no_wrap: multiple consecutive Tooltips between items don't add spacing."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    # Reference: two adjacent buttons
+    with dcg.HorizontalLayout(ctx, parent=window):
+        rb1 = dcg.Button(ctx, label="", width=80, height=30)
+        rb2 = dcg.Button(ctx, label="", width=80, height=30)
+    # Test: three tooltips between the same two buttons
+    with dcg.HorizontalLayout(ctx, parent=window):
+        tb1 = dcg.Button(ctx, label="", width=80, height=30)
+        dcg.Tooltip(ctx)
+        dcg.Tooltip(ctx)
+        dcg.Tooltip(ctx)
+        tb2 = dcg.Button(ctx, label="", width=80, height=30)
+    _render(ctx.viewport)
+
+    ref_gap = (rb2.state.pos_to_parent.x
+               - rb1.state.pos_to_parent.x - rb1.state.rect_size.x)
+    test_gap = (tb2.state.pos_to_parent.x
+                - tb1.state.pos_to_parent.x - tb1.state.rect_size.x)
+    assert abs(test_gap - ref_gap) <= 1, (
+        f"3 consecutive tooltips: gap={test_gap} should equal ref gap={ref_gap}"
+    )
+
+
+def test_hlayout_left_wrap_item_tooltip_item_spacing(vp_ctx):
+    """HLayout LEFT+wrap: Tooltip between items should preserve spacing_x (currently broken)."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    # Reference: two adjacent buttons, wrapping enabled
+    with dcg.HorizontalLayout(ctx, no_wrap=False, parent=window):
+        rb1 = dcg.Button(ctx, label="", width=80, height=30)
+        rb2 = dcg.Button(ctx, label="", width=80, height=30)
+    # Test: same buttons with a tooltip between them
+    with dcg.HorizontalLayout(ctx, no_wrap=False, parent=window):
+        tb1 = dcg.Button(ctx, label="", width=80, height=30)
+        dcg.Tooltip(ctx)
+        tb2 = dcg.Button(ctx, label="", width=80, height=30)
+    _render(ctx.viewport)
+
+    ref_gap = (rb2.state.pos_to_parent.x
+               - rb1.state.pos_to_parent.x - rb1.state.rect_size.x)
+    test_gap = (tb2.state.pos_to_parent.x
+                - tb1.state.pos_to_parent.x - tb1.state.rect_size.x)
+    assert abs(test_gap - ref_gap) <= 1, (
+        f"LEFT+wrap item+tooltip+item: gap={test_gap} should equal ref gap={ref_gap}"
+    )
+
+
+# ---------------------------------------------------------------------------
+# Phase 2 — HorizontalLayout LEFT, hidden items (show=False)
+# ---------------------------------------------------------------------------
+
+def test_hlayout_left_no_wrap_item_hidden_item(vp_ctx):
+    """HLayout LEFT+no_wrap: hidden middle item keeps next item on the same row, no double-spacing."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    # Reference: two visible adjacent buttons
+    with dcg.HorizontalLayout(ctx, parent=window):
+        rb1 = dcg.Button(ctx, label="", width=80, height=30)
+        rb2 = dcg.Button(ctx, label="", width=80, height=30)
+    # Test: hidden button between them
+    with dcg.HorizontalLayout(ctx, parent=window):
+        tb1 = dcg.Button(ctx, label="", width=80, height=30)
+        dcg.Button(ctx, label="", width=80, height=30, show=False)
+        tb2 = dcg.Button(ctx, label="", width=80, height=30)
+    _render(ctx.viewport)
+
+    # tb2 must be on the same row as tb1
+    assert tb2.state.pos_to_parent.y == tb1.state.pos_to_parent.y, (
+        f"Hidden middle item: tb2 y={tb2.state.pos_to_parent.y} "
+        f"should equal tb1 y={tb1.state.pos_to_parent.y}"
+    )
+    # Gap between tb1 and tb2 should match the reference (no hidden item)
+    ref_gap = (rb2.state.pos_to_parent.x
+               - rb1.state.pos_to_parent.x - rb1.state.rect_size.x)
+    test_gap = (tb2.state.pos_to_parent.x
+                - tb1.state.pos_to_parent.x - tb1.state.rect_size.x)
+    assert abs(test_gap - ref_gap) <= 1, (
+        f"Hidden middle item: gap={test_gap} should equal ref gap={ref_gap}"
+    )
+
+
+def test_hlayout_left_no_wrap_first_item_hidden(vp_ctx):
+    """HLayout LEFT+no_wrap: hidden first item → second item starts at x=0."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    with dcg.HorizontalLayout(ctx, parent=window):
+        dcg.Button(ctx, label="", width=80, height=30, show=False)
+        b2 = dcg.Button(ctx, label="", width=80, height=30)
+    _render(ctx.viewport)
+
+    assert b2.state.pos_to_parent.x == 0, (
+        f"Hidden first item: second button x={b2.state.pos_to_parent.x} should be 0"
+    )
+
+
+def test_hlayout_left_no_wrap_last_item_hidden_layout_width(vp_ctx):
+    """HLayout LEFT+no_wrap: hidden last item does not inflate layout rect_size."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    # Reference: one visible button
+    with dcg.HorizontalLayout(ctx, parent=window) as ref:
+        dcg.Button(ctx, label="", width=80, height=30)
+    # Test: same button followed by a hidden one
+    with dcg.HorizontalLayout(ctx, parent=window) as test:
+        dcg.Button(ctx, label="", width=80, height=30)
+        dcg.Button(ctx, label="", width=80, height=30, show=False)
+    _render(ctx.viewport)
+
+    assert abs(test.state.rect_size.x - ref.state.rect_size.x) <= 1, (
+        f"Hidden last item: layout width {test.state.rect_size.x} "
+        f"should equal single-button width {ref.state.rect_size.x}"
+    )
+
+
+def test_hlayout_left_no_wrap_all_hidden(vp_ctx):
+    """HLayout LEFT+no_wrap: all items hidden → layout rect_size is (0, 0)."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    with dcg.HorizontalLayout(ctx, parent=window) as layout:
+        dcg.Button(ctx, label="", width=80, height=30, show=False)
+        dcg.Button(ctx, label="", width=80, height=30, show=False)
+    _render(ctx.viewport)
+
+    # When all children are hidden, HLayout's width = available content width (not 0)
+    # because the Group still measures available space; only height is 0.
+    assert layout.state.rect_size.y == 0, (
+        f"All hidden: layout height={layout.state.rect_size.y} should be 0"
+    )
+    assert layout.state.rect_size.x > 0, (
+        f"All hidden: layout width={layout.state.rect_size.x} should be > 0 (available content width)"
+    )
+
+
+def test_hlayout_left_wrap_hidden_item_no_spurious_wrap(vp_ctx):
+    """HLayout LEFT+wrap: hidden middle item does not affect wrapping decisions."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    _render(ctx.viewport)
+    content_w = window.state.content_region_avail[0]
+    # Each visible item is ~45% of content_w; b1 and b2 fit on one row together.
+    # The hidden item has the same nominal width but is invisible → should not cause a wrap.
+    item_w = str(int(content_w * 0.45))
+    with dcg.HorizontalLayout(ctx, no_wrap=False, parent=window):
+        b1 = dcg.Button(ctx, label="", width=item_w, height=30)
+        dcg.Button(ctx, label="", width=item_w, height=30, show=False)
+        b2 = dcg.Button(ctx, label="", width=item_w, height=30)
+    _render(ctx.viewport)
+
+    # b1 and b2 must be on the same row (same y)
+    assert b1.state.pos_to_parent.y == b2.state.pos_to_parent.y, (
+        f"Hidden middle: b1 y={b1.state.pos_to_parent.y}, "
+        f"b2 y={b2.state.pos_to_parent.y} should be on the same row"
+    )
+    # b2 must be to the right of b1
+    assert b2.state.pos_to_parent.x > b1.state.pos_to_parent.x, (
+        f"Hidden middle: b2 x={b2.state.pos_to_parent.x} should be > b1 x={b1.state.pos_to_parent.x}"
+    )
+
+
+def test_hlayout_left_wrap_stale_hidden_item_no_spurious_wrap(vp_ctx):
+    """
+    HLayout LEFT+wrap: an item that was visible (stale large rect_size) and then
+    hidden must not trigger a spurious line-break for the following item.
+
+    Unlike test_hlayout_left_wrap_hidden_item_no_spurious_wrap, here b_hidden is
+    first rendered visible so its rect_size is recorded, then hidden.  Its stale
+    rect_size is large enough to overflow when combined with b1, so the wrap-check
+    fires on the hidden item.  The layout must absorb this and keep b2 on the same
+    row as b1.
+    """
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    _render(ctx.viewport)
+    content_w = window.state.content_region_avail[0]
+    # b_hidden is 70% wide — combined with b1 (40%) it overflows end_x.
+    small_w = str(int(content_w * 0.40))
+    large_w = str(int(content_w * 0.70))
+    with dcg.HorizontalLayout(ctx, no_wrap=False, parent=window):
+        b1 = dcg.Button(ctx, label="", width=small_w, height=30)
+        b_hidden = dcg.Button(ctx, label="", width=large_w, height=30)
+        b2 = dcg.Button(ctx, label="", width=small_w, height=30)
+    # Establish sizes with b_hidden visible so rect_size is recorded as large.
+    _render(ctx.viewport)
+    # Now hide it; its stale rect_size still reflects the 70% width.
+    b_hidden.show = False
+    _render(ctx.viewport)
+
+    # b1 and b2 must be on the same row despite the stale large rect_size.
+    assert b1.state.pos_to_parent.y == b2.state.pos_to_parent.y, (
+        f"Stale-hidden overflow: b1 y={b1.state.pos_to_parent.y}, "
+        f"b2 y={b2.state.pos_to_parent.y} should be on the same row"
+    )
+    # b2 must be placed to the right of b1 with a single ItemSpacing gap.
+    assert b2.state.pos_to_parent.x > b1.state.pos_to_parent.x, (
+        f"Stale-hidden overflow: b2 x={b2.state.pos_to_parent.x} "
+        f"should be > b1 x={b1.state.pos_to_parent.x}"
+    )
+
+
+# ---------------------------------------------------------------------------
+# Phase 3 — HorizontalLayout ALIGNED modes, special items
+# ---------------------------------------------------------------------------
+
+def test_hlayout_right_item_tooltip_item_spacing(vp_ctx):
+    """HLayout RIGHT: Tooltip excluded from pre-pass; visible item positions unchanged."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    # Reference: two buttons RIGHT-aligned
+    with dcg.HorizontalLayout(ctx, alignment_mode=dcg.Alignment.RIGHT, parent=window):
+        rb1 = dcg.Button(ctx, label="", width=80, height=30)
+        rb2 = dcg.Button(ctx, label="", width=80, height=30)
+    # Test: same buttons with a Tooltip between them
+    with dcg.HorizontalLayout(ctx, alignment_mode=dcg.Alignment.RIGHT, parent=window):
+        tb1 = dcg.Button(ctx, label="", width=80, height=30)
+        dcg.Tooltip(ctx)
+        tb2 = dcg.Button(ctx, label="", width=80, height=30)
+    _render(ctx.viewport)
+
+    assert abs(tb1.state.pos_to_parent.x - rb1.state.pos_to_parent.x) <= 1, (
+        f"RIGHT+tooltip: tb1 x={tb1.state.pos_to_parent.x} "
+        f"should match ref rb1={rb1.state.pos_to_parent.x}"
+    )
+    assert abs(tb2.state.pos_to_parent.x - rb2.state.pos_to_parent.x) <= 1, (
+        f"RIGHT+tooltip: tb2 x={tb2.state.pos_to_parent.x} "
+        f"should match ref rb2={rb2.state.pos_to_parent.x}"
+    )
+
+
+def test_hlayout_center_tooltip_excluded_from_centering(vp_ctx):
+    """HLayout CENTER: leading Tooltip does not shift the centered group."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    # Reference: two buttons, CENTER alignment
+    with dcg.HorizontalLayout(ctx, alignment_mode=dcg.Alignment.CENTER, parent=window):
+        rb1 = dcg.Button(ctx, label="", width=80, height=30)
+        rb2 = dcg.Button(ctx, label="", width=80, height=30)
+    # Test: tooltip before the first button
+    with dcg.HorizontalLayout(ctx, alignment_mode=dcg.Alignment.CENTER, parent=window):
+        dcg.Tooltip(ctx)
+        tb1 = dcg.Button(ctx, label="", width=80, height=30)
+        tb2 = dcg.Button(ctx, label="", width=80, height=30)
+    _render(ctx.viewport)
+
+    assert abs(tb1.state.pos_to_parent.x - rb1.state.pos_to_parent.x) <= 1, (
+        f"CENTER+leading tooltip: tb1 x={tb1.state.pos_to_parent.x} "
+        f"should match ref rb1={rb1.state.pos_to_parent.x}"
+    )
+
+
+def test_hlayout_justified_single_visible_item_with_tooltips(vp_ctx):
+    """HLayout JUSTIFIED: single visible item flanked by Tooltips → item at left edge."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    with dcg.HorizontalLayout(ctx, alignment_mode=dcg.Alignment.JUSTIFIED, parent=window):
+        dcg.Tooltip(ctx)
+        b1 = dcg.Button(ctx, label="", width=80, height=30)
+        dcg.Tooltip(ctx)
+    _render(ctx.viewport)
+
+    # n_with_size == 1: JUSTIFIED target_x = row_sx = 0 (no stretch applied)
+    assert b1.state.pos_to_parent.x == 0, (
+        f"JUSTIFIED single visible item: b1 x={b1.state.pos_to_parent.x} should be 0"
+    )
+
+
+def test_hlayout_right_snap_with_trailing_tooltip(vp_ctx):
+    """HLayout RIGHT: snap-to-right-edge works when last child is a Tooltip."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    _render(ctx.viewport)
+    content_w = window.state.content_region_avail.x 
+    with dcg.HorizontalLayout(ctx, alignment_mode=dcg.Alignment.RIGHT, parent=window):
+        b1 = dcg.Button(ctx, label="", width=80, height=30)
+        b2 = dcg.Button(ctx, label="", width=80, height=30)
+        dcg.Tooltip(ctx)   # trailing tooltip after the last visible item
+    _render(ctx.viewport)
+
+    last_right = b2.state.pos_to_parent.x + b2.state.rect_size.x
+    assert abs(last_right - content_w) <= 1, (
+        f"RIGHT snap+trailing tooltip: last right={last_right} should ≈ content_w={content_w}"
+    )
+
+
+def test_hlayout_right_hidden_item_alignment(vp_ctx):
+    """HLayout RIGHT: hidden item must not affect the alignment of visible items."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    # Reference: two visible buttons RIGHT-aligned
+    with dcg.HorizontalLayout(ctx, alignment_mode=dcg.Alignment.RIGHT, parent=window):
+        rb1 = dcg.Button(ctx, label="", width=80, height=30)
+        rb2 = dcg.Button(ctx, label="", width=80, height=30)
+    # Test: same buttons with a hidden button between them
+    with dcg.HorizontalLayout(ctx, alignment_mode=dcg.Alignment.RIGHT, parent=window):
+        tb1 = dcg.Button(ctx, label="", width=80, height=30)
+        dcg.Button(ctx, label="", width=80, height=30, show=False)
+        tb2 = dcg.Button(ctx, label="", width=80, height=30)
+    _render(ctx.viewport)
+
+    assert abs(tb1.state.pos_to_parent.x - rb1.state.pos_to_parent.x) <= 1, (
+        f"RIGHT+hidden: tb1 x={tb1.state.pos_to_parent.x} "
+        f"should match ref rb1={rb1.state.pos_to_parent.x}"
+    )
+    assert abs(tb2.state.pos_to_parent.x - rb2.state.pos_to_parent.x) <= 1, (
+        f"RIGHT+hidden: tb2 x={tb2.state.pos_to_parent.x} "
+        f"should match ref rb2={rb2.state.pos_to_parent.x}"
+    )
+
+
+# ---------------------------------------------------------------------------
+# Phase 4 — VerticalLayout, zero-size items and hidden items
+# ---------------------------------------------------------------------------
+
+def test_vlayout_top_no_wrap_item_tooltip_item(vp_ctx):
+    """VLayout TOP+no_wrap: Tooltip between items adds no vertical gap."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    # Reference: two adjacent buttons
+    with dcg.VerticalLayout(ctx, parent=window):
+        rb1 = dcg.Button(ctx, label="", width=80, height=30)
+        rb2 = dcg.Button(ctx, label="", width=80, height=30)
+    # Test: same buttons with a tooltip between them
+    with dcg.VerticalLayout(ctx, parent=window):
+        tb1 = dcg.Button(ctx, label="", width=80, height=30)
+        dcg.Tooltip(ctx)
+        tb2 = dcg.Button(ctx, label="", width=80, height=30)
+    _render(ctx.viewport)
+
+    ref_gap = (rb2.state.pos_to_parent.y
+               - rb1.state.pos_to_parent.y - rb1.state.rect_size.y)
+    test_gap = (tb2.state.pos_to_parent.y
+                - tb1.state.pos_to_parent.y - tb1.state.rect_size.y)
+    assert abs(test_gap - ref_gap) <= 1, (
+        f"VLayout TOP item+tooltip+item: vertical gap={test_gap} should equal ref={ref_gap}"
+    )
+
+
+def test_vlayout_top_no_wrap_item_hidden_item(vp_ctx):
+    """VLayout TOP+no_wrap: hidden middle item adds no vertical gap."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    # Reference: two adjacent buttons
+    with dcg.VerticalLayout(ctx, parent=window):
+        rb1 = dcg.Button(ctx, label="", width=80, height=30)
+        rb2 = dcg.Button(ctx, label="", width=80, height=30)
+    # Test: hidden button between them
+    with dcg.VerticalLayout(ctx, parent=window):
+        tb1 = dcg.Button(ctx, label="", width=80, height=30)
+        dcg.Button(ctx, label="", width=80, height=30, show=False)
+        tb2 = dcg.Button(ctx, label="", width=80, height=30)
+    _render(ctx.viewport)
+
+    ref_gap = (rb2.state.pos_to_parent.y
+               - rb1.state.pos_to_parent.y - rb1.state.rect_size.y)
+    test_gap = (tb2.state.pos_to_parent.y
+                - tb1.state.pos_to_parent.y - tb1.state.rect_size.y)
+    assert abs(test_gap - ref_gap) <= 1, (
+        f"VLayout TOP item+hidden+item: vertical gap={test_gap} should equal ref={ref_gap}"
+    )
+
+
+def test_vlayout_bottom_tooltip_excluded_from_height_calc(vp_ctx):
+    """VLayout BOTTOM: Tooltip between items excluded from column height; last item at bottom."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    with dcg.VerticalLayout(ctx, alignment_mode=dcg.Alignment.BOTTOM, parent=window) as layout:
+        tb1 = dcg.Button(ctx, label="", width=80, height=30)
+        dcg.Tooltip(ctx)
+        tb2 = dcg.Button(ctx, label="", width=80, height=30)
+    _render(ctx.viewport)
+
+    # Items must be vertically ordered
+    assert tb1.state.pos_to_parent.y < tb2.state.pos_to_parent.y, (
+        f"BOTTOM+tooltip: tb1 y={tb1.state.pos_to_parent.y} should be < tb2 y={tb2.state.pos_to_parent.y}"
+    )
+    # Last visible item's bottom edge must align with the layout's content bottom
+    layout_h = layout.state.content_region_avail.y
+    last_bottom = tb2.state.pos_to_parent.y + tb2.state.rect_size.y
+    assert abs(last_bottom - layout_h) <= 1, (
+        f"BOTTOM+tooltip: last bottom={last_bottom} should ≈ layout_h={layout_h}"
+    )
+
+
+# ---------------------------------------------------------------------------
+# Phase 1 addendum — VerticalLayout TOP+no_wrap, zero-size items (Tooltip)
+# ---------------------------------------------------------------------------
+
+def test_vlayout_top_no_wrap_tooltip_as_first_child(vp_ctx):
+    """VLayout TOP+no_wrap: leading Tooltip does not shift first visible item from y=0."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    with dcg.VerticalLayout(ctx, parent=window):
+        dcg.Tooltip(ctx)
+        b1 = dcg.Button(ctx, label="", width=80, height=30)
+        b2 = dcg.Button(ctx, label="", width=80, height=30)
+    _render(ctx.viewport)
+
+    assert b1.state.pos_to_parent.y == 0, (
+        f"Leading tooltip: first button y={b1.state.pos_to_parent.y} should be 0"
+    )
+    gap = b2.state.pos_to_parent.y - (b1.state.pos_to_parent.y + b1.state.rect_size.y)
+    assert gap > 0, (
+        f"Leading tooltip: gap between b1 and b2 should be > 0, got {gap}"
+    )
+
+
+def test_vlayout_top_no_wrap_tooltip_as_last_child(vp_ctx):
+    """VLayout TOP+no_wrap: trailing Tooltip does not inflate the layout rect_size."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    # Reference: two buttons with no trailing tooltip
+    with dcg.VerticalLayout(ctx, parent=window) as ref:
+        dcg.Button(ctx, label="", width=80, height=30)
+        dcg.Button(ctx, label="", width=80, height=30)
+    # Test: same buttons followed by a Tooltip
+    with dcg.VerticalLayout(ctx, parent=window) as test:
+        dcg.Button(ctx, label="", width=80, height=30)
+        dcg.Button(ctx, label="", width=80, height=30)
+        dcg.Tooltip(ctx)
+    _render(ctx.viewport)
+
+    assert abs(test.state.rect_size.y - ref.state.rect_size.y) <= 1, (
+        f"Trailing tooltip: layout height {test.state.rect_size.y} "
+        f"should match no-tooltip height {ref.state.rect_size.y}"
+    )
+
+
+def test_vlayout_top_no_wrap_multiple_consecutive_tooltips(vp_ctx):
+    """VLayout TOP+no_wrap: multiple consecutive Tooltips between items don't add spacing."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    # Reference: two adjacent buttons
+    with dcg.VerticalLayout(ctx, parent=window):
+        rb1 = dcg.Button(ctx, label="", width=80, height=30)
+        rb2 = dcg.Button(ctx, label="", width=80, height=30)
+    # Test: three tooltips between the same two buttons
+    with dcg.VerticalLayout(ctx, parent=window):
+        tb1 = dcg.Button(ctx, label="", width=80, height=30)
+        dcg.Tooltip(ctx)
+        dcg.Tooltip(ctx)
+        dcg.Tooltip(ctx)
+        tb2 = dcg.Button(ctx, label="", width=80, height=30)
+    _render(ctx.viewport)
+
+    ref_gap = (rb2.state.pos_to_parent.y
+               - rb1.state.pos_to_parent.y - rb1.state.rect_size.y)
+    test_gap = (tb2.state.pos_to_parent.y
+                - tb1.state.pos_to_parent.y - tb1.state.rect_size.y)
+    assert abs(test_gap - ref_gap) <= 1, (
+        f"3 consecutive tooltips: gap={test_gap} should equal ref gap={ref_gap}"
+    )
+
+
+# ---------------------------------------------------------------------------
+# Phase 2 — VerticalLayout TOP+wrap, zero-size items (Tooltip)
+# ---------------------------------------------------------------------------
+
+def test_vlayout_top_wrap_item_tooltip_item_spacing(vp_ctx):
+    """VLayout TOP+wrap: Tooltip between items should preserve spacing_y."""
+    ctx = vp_ctx
+    ref_window = _stable_window(ctx)
+    test_window = _stable_window(ctx)
+    # Reference: two adjacent buttons, wrapping enabled
+    with dcg.VerticalLayout(ctx, wrap=True, parent=ref_window):
+        rb1 = dcg.Button(ctx, label="", width=80, height=30)
+        rb2 = dcg.Button(ctx, label="", width=80, height=30)
+    # Test: same buttons with a tooltip between them
+    with dcg.VerticalLayout(ctx, wrap=True, parent=test_window):
+        tb1 = dcg.Button(ctx, label="", width=80, height=30)
+        dcg.Tooltip(ctx)
+        tb2 = dcg.Button(ctx, label="", width=80, height=30)
+    _render(ctx.viewport)
+
+    ref_gap = (rb2.state.pos_to_parent.y
+               - rb1.state.pos_to_parent.y - rb1.state.rect_size.y)
+    test_gap = (tb2.state.pos_to_parent.y
+                - tb1.state.pos_to_parent.y - tb1.state.rect_size.y)
+    assert abs(test_gap - ref_gap) <= 1, (
+        f"TOP+wrap item+tooltip+item: gap={test_gap} should equal ref gap={ref_gap}"
+    )
+
+
+# ---------------------------------------------------------------------------
+# Phase 3 — VerticalLayout TOP+no_wrap, hidden items (show=False)
+# ---------------------------------------------------------------------------
+
+def test_vlayout_top_no_wrap_first_item_hidden(vp_ctx):
+    """VLayout TOP+no_wrap: hidden first item → second item starts at y=0."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    with dcg.VerticalLayout(ctx, parent=window):
+        dcg.Button(ctx, label="", width=80, height=30, show=False)
+        b2 = dcg.Button(ctx, label="", width=80, height=30)
+    _render(ctx.viewport)
+
+    assert b2.state.pos_to_parent.y == 0, (
+        f"Hidden first item: second button y={b2.state.pos_to_parent.y} should be 0"
+    )
+
+
+def test_vlayout_top_no_wrap_last_item_hidden_layout_height(vp_ctx):
+    """VLayout TOP+no_wrap: hidden last item does not inflate layout rect_size."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    # Reference: one visible button
+    with dcg.VerticalLayout(ctx, parent=window) as ref:
+        dcg.Button(ctx, label="", width=80, height=30)
+    # Test: same button followed by a hidden one
+    with dcg.VerticalLayout(ctx, parent=window) as test:
+        dcg.Button(ctx, label="", width=80, height=30)
+        dcg.Button(ctx, label="", width=80, height=30, show=False)
+    _render(ctx.viewport)
+
+    assert abs(test.state.rect_size.y - ref.state.rect_size.y) <= 1, (
+        f"Hidden last item: layout height {test.state.rect_size.y} "
+        f"should equal single-button height {ref.state.rect_size.y}"
+    )
+
+
+def test_vlayout_top_no_wrap_all_hidden(vp_ctx):
+    """VLayout TOP+no_wrap: all items hidden → layout height is 0."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    with dcg.VerticalLayout(ctx, parent=window) as layout:
+        dcg.Button(ctx, label="", width=80, height=30, show=False)
+        dcg.Button(ctx, label="", width=80, height=30, show=False)
+    _render(ctx.viewport)
+
+    assert layout.state.rect_size.y == 0, (
+        f"All hidden: layout height={layout.state.rect_size.y} should be 0"
+    )
+
+
+# ---------------------------------------------------------------------------
+# Phase 4 — VerticalLayout TOP+wrap, hidden items (show=False)
+# ---------------------------------------------------------------------------
+
+def test_vlayout_top_wrap_hidden_item_no_spurious_wrap(vp_ctx):
+    """VLayout TOP+wrap: hidden middle item does not affect wrapping decisions."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    _render(ctx.viewport)
+    content_h = window.state.content_region_avail[1]
+    # Each visible item is ~45% of content_h; b1 and b2 fit in one column together.
+    # The hidden item has the same nominal height but is invisible → should not cause a wrap.
+    item_h = str(int(content_h * 0.45))
+    with dcg.VerticalLayout(ctx, wrap=True, parent=window):
+        b1 = dcg.Button(ctx, label="", width=80, height=item_h)
+        dcg.Button(ctx, label="", width=80, height=item_h, show=False)
+        b2 = dcg.Button(ctx, label="", width=80, height=item_h)
+    _render(ctx.viewport)
+
+    # b1 and b2 must be in the same column (same x)
+    assert b1.state.pos_to_parent.x == b2.state.pos_to_parent.x, (
+        f"Hidden middle: b1 x={b1.state.pos_to_parent.x}, "
+        f"b2 x={b2.state.pos_to_parent.x} should be in the same column"
+    )
+    # b2 must be below b1
+    assert b2.state.pos_to_parent.y > b1.state.pos_to_parent.y, (
+        f"Hidden middle: b2 y={b2.state.pos_to_parent.y} should be > b1 y={b1.state.pos_to_parent.y}"
+    )
+
+
+def test_vlayout_top_wrap_stale_hidden_item_no_spurious_wrap(vp_ctx):
+    """
+    VLayout TOP+wrap: an item that was visible (stale large rect_size) and then hidden
+    must not trigger a spurious column-break for the following item.
+
+    b_hidden is first rendered visible so its rect_size is recorded as large, then hidden.
+    Its stale rect_size combined with b1 exceeds end_y, so without the traversed guard the
+    wrap-check would fire and push b2 to a new column.  The layout must absorb this and keep
+    b2 in the same column as b1.
+    """
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    _render(ctx.viewport)
+    content_h = window.state.content_region_avail[1]
+    # b_hidden is 70% tall — combined with b1 (40%) it overflows end_y.
+    small_h = str(int(content_h * 0.40))
+    large_h = str(int(content_h * 0.70))
+    with dcg.VerticalLayout(ctx, wrap=True, parent=window):
+        b1 = dcg.Button(ctx, label="", width=80, height=small_h)
+        b_hidden = dcg.Button(ctx, label="", width=80, height=large_h)
+        b2 = dcg.Button(ctx, label="", width=80, height=small_h)
+    # Establish sizes with b_hidden visible so rect_size is recorded as large.
+    _render(ctx.viewport)
+    # Now hide it; its stale rect_size still reflects the 70% height.
+    b_hidden.show = False
+    _render(ctx.viewport)
+
+    # b1 and b2 must be in the same column (same x) despite the stale large rect_size.
+    assert b1.state.pos_to_parent.x == b2.state.pos_to_parent.x, (
+        f"Stale-hidden overflow: b1 x={b1.state.pos_to_parent.x}, "
+        f"b2 x={b2.state.pos_to_parent.x} should be in the same column"
+    )
+    # b2 must be placed below b1
+    assert b2.state.pos_to_parent.y > b1.state.pos_to_parent.y, (
+        f"Stale-hidden overflow: b2 y={b2.state.pos_to_parent.y} "
+        f"should be > b1 y={b1.state.pos_to_parent.y}"
+    )
+
+
+# ---------------------------------------------------------------------------
+# Phase 5 — VerticalLayout ALIGNED modes, special items
+# ---------------------------------------------------------------------------
+
+def test_vlayout_bottom_item_tooltip_item_spacing(vp_ctx):
+    """VLayout BOTTOM: Tooltip excluded from pre-pass; visible item positions unchanged."""
+    ctx = vp_ctx
+    ref_window = _stable_window(ctx)
+    test_window = _stable_window(ctx)
+    # Reference: two buttons BOTTOM-aligned
+    with dcg.VerticalLayout(ctx, alignment_mode=dcg.Alignment.BOTTOM, parent=ref_window):
+        rb1 = dcg.Button(ctx, label="", width=80, height=30)
+        rb2 = dcg.Button(ctx, label="", width=80, height=30)
+    # Test: same buttons with a Tooltip between them
+    with dcg.VerticalLayout(ctx, alignment_mode=dcg.Alignment.BOTTOM, parent=test_window):
+        tb1 = dcg.Button(ctx, label="", width=80, height=30)
+        dcg.Tooltip(ctx)
+        tb2 = dcg.Button(ctx, label="", width=80, height=30)
+    _render(ctx.viewport)
+
+    assert abs(tb1.state.pos_to_parent.y - rb1.state.pos_to_parent.y) <= 1, (
+        f"BOTTOM+tooltip: tb1 y={tb1.state.pos_to_parent.y} "
+        f"should match ref rb1={rb1.state.pos_to_parent.y}"
+    )
+    assert abs(tb2.state.pos_to_parent.y - rb2.state.pos_to_parent.y) <= 1, (
+        f"BOTTOM+tooltip: tb2 y={tb2.state.pos_to_parent.y} "
+        f"should match ref rb2={rb2.state.pos_to_parent.y}"
+    )
+
+
+def test_vlayout_center_tooltip_excluded_from_centering(vp_ctx):
+    """VLayout CENTER: leading Tooltip does not shift the centered group."""
+    ctx = vp_ctx
+    ref_window = _stable_window(ctx)
+    test_window = _stable_window(ctx)
+    # Reference: two buttons, CENTER alignment
+    with dcg.VerticalLayout(ctx, alignment_mode=dcg.Alignment.CENTER, parent=ref_window):
+        rb1 = dcg.Button(ctx, label="", width=80, height=30)
+        rb2 = dcg.Button(ctx, label="", width=80, height=30)
+    # Test: tooltip before the first button
+    with dcg.VerticalLayout(ctx, alignment_mode=dcg.Alignment.CENTER, parent=test_window):
+        dcg.Tooltip(ctx)
+        tb1 = dcg.Button(ctx, label="", width=80, height=30)
+        tb2 = dcg.Button(ctx, label="", width=80, height=30)
+    _render(ctx.viewport)
+
+    assert abs(tb1.state.pos_to_parent.y - rb1.state.pos_to_parent.y) <= 1, (
+        f"CENTER+leading tooltip: tb1 y={tb1.state.pos_to_parent.y} "
+        f"should match ref rb1={rb1.state.pos_to_parent.y}"
+    )
+
+
+def test_vlayout_justified_single_visible_item_with_tooltips(vp_ctx):
+    """VLayout JUSTIFIED: single visible item flanked by Tooltips → item at top edge."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    with dcg.VerticalLayout(ctx, alignment_mode=dcg.Alignment.JUSTIFIED, parent=window):
+        dcg.Tooltip(ctx)
+        b1 = dcg.Button(ctx, label="", width=80, height=30)
+        dcg.Tooltip(ctx)
+    _render(ctx.viewport)
+
+    # n_with_size == 1: JUSTIFIED target_y = col_sy = 0 (no stretch applied)
+    assert b1.state.pos_to_parent.y == 0, (
+        f"JUSTIFIED single visible item: b1 y={b1.state.pos_to_parent.y} should be 0"
+    )
+
+
+def test_vlayout_bottom_snap_with_trailing_tooltip(vp_ctx):
+    """VLayout BOTTOM: snap-to-bottom works when last child is a Tooltip."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    _render(ctx.viewport)
+    with dcg.VerticalLayout(ctx, alignment_mode=dcg.Alignment.BOTTOM, parent=window) as layout:
+        b1 = dcg.Button(ctx, label="", width=80, height=30)
+        b2 = dcg.Button(ctx, label="", width=80, height=30)
+        dcg.Tooltip(ctx)   # trailing tooltip after the last visible item
+    _render(ctx.viewport)
+
+    layout_h = layout.state.content_region_avail.y
+    last_bottom = b2.state.pos_to_parent.y + b2.state.rect_size.y
+    assert abs(last_bottom - layout_h) <= 1, (
+        f"BOTTOM snap+trailing tooltip: last bottom={last_bottom} should ≈ layout_h={layout_h}"
+    )
+
+
+def test_vlayout_bottom_hidden_item_alignment(vp_ctx):
+    """VLayout BOTTOM: hidden item must not affect the alignment of visible items."""
+    ctx = vp_ctx
+    ref_window = _stable_window(ctx)
+    test_window = _stable_window(ctx)
+    # Reference: two visible buttons BOTTOM-aligned
+    with dcg.VerticalLayout(ctx, alignment_mode=dcg.Alignment.BOTTOM, parent=ref_window):
+        rb1 = dcg.Button(ctx, label="", width=80, height=30)
+        rb2 = dcg.Button(ctx, label="", width=80, height=30)
+    # Test: same buttons with a hidden button between them
+    with dcg.VerticalLayout(ctx, alignment_mode=dcg.Alignment.BOTTOM, parent=test_window):
+        tb1 = dcg.Button(ctx, label="", width=80, height=30)
+        dcg.Button(ctx, label="", width=80, height=30, show=False)
+        tb2 = dcg.Button(ctx, label="", width=80, height=30)
+    _render(ctx.viewport)
+
+    assert abs(tb1.state.pos_to_parent.y - rb1.state.pos_to_parent.y) <= 1, (
+        f"BOTTOM+hidden: tb1 y={tb1.state.pos_to_parent.y} "
+        f"should match ref rb1={rb1.state.pos_to_parent.y}"
+    )
+    assert abs(tb2.state.pos_to_parent.y - rb2.state.pos_to_parent.y) <= 1, (
+        f"BOTTOM+hidden: tb2 y={tb2.state.pos_to_parent.y} "
+        f"should match ref rb2={rb2.state.pos_to_parent.y}"
+    )
+
+
+# ---------------------------------------------------------------------------
+# VLayout wrapping disabled explicit test
+# ---------------------------------------------------------------------------
+
+def test_vlayout_wrapping_disabled(vp_ctx):
+    """VerticalLayout default (no wrap): items stay in one column even if they overflow."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    _render(ctx.viewport)
+    content_h = window.state.content_region_avail[1]
+    item_h = int(content_h * 0.4)
+    with dcg.VerticalLayout(ctx, parent=window):
+        b1 = dcg.Button(ctx, label="", width=80, height=item_h)
+        b2 = dcg.Button(ctx, label="", width=80, height=item_h)
+        b3 = dcg.Button(ctx, label="", width=80, height=item_h)
+    _render(ctx.viewport)
+
+    # All items in the same column (x coordinate equal)
+    p1_x = b1.state.pos_to_parent[0]
+    p2_x = b2.state.pos_to_parent[0]
+    p3_x = b3.state.pos_to_parent[0]
+    assert p1_x == p2_x == p3_x, (
+        f"no wrap: all items in same column, got x={p1_x},{p2_x},{p3_x}"
+    )
+    # Items ordered top-to-bottom even beyond content height
+    p1_y, p2_y, p3_y = [b.state.pos_to_parent[1] for b in (b1, b2, b3)]
+    assert p1_y < p2_y < p3_y
+
+
+# ---------------------------------------------------------------------------
+# HLayout CENTER and JUSTIFIED with hidden items (Phase 5 addendum)
+# ---------------------------------------------------------------------------
+
+def test_hlayout_center_hidden_item_alignment(vp_ctx):
+    """HLayout CENTER: hidden item must not affect the centering of visible items."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    # Reference: two visible buttons CENTER-aligned
+    with dcg.HorizontalLayout(ctx, alignment_mode=dcg.Alignment.CENTER, parent=window):
+        rb1 = dcg.Button(ctx, label="", width=80, height=30)
+        rb2 = dcg.Button(ctx, label="", width=80, height=30)
+    # Test: same buttons with a hidden button between them
+    with dcg.HorizontalLayout(ctx, alignment_mode=dcg.Alignment.CENTER, parent=window):
+        tb1 = dcg.Button(ctx, label="", width=80, height=30)
+        dcg.Button(ctx, label="", width=80, height=30, show=False)
+        tb2 = dcg.Button(ctx, label="", width=80, height=30)
+    _render(ctx.viewport)
+
+    assert abs(tb1.state.pos_to_parent.x - rb1.state.pos_to_parent.x) <= 1, (
+        f"CENTER+hidden: tb1 x={tb1.state.pos_to_parent.x} "
+        f"should match ref rb1={rb1.state.pos_to_parent.x}"
+    )
+    assert abs(tb2.state.pos_to_parent.x - rb2.state.pos_to_parent.x) <= 1, (
+        f"CENTER+hidden: tb2 x={tb2.state.pos_to_parent.x} "
+        f"should match ref rb2={rb2.state.pos_to_parent.x}"
+    )
+
+
+def test_hlayout_justified_hidden_item_alignment(vp_ctx):
+    """HLayout JUSTIFIED: hidden item must not affect the justification of visible items."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    # Reference: two visible buttons JUSTIFIED-aligned
+    with dcg.HorizontalLayout(ctx, alignment_mode=dcg.Alignment.JUSTIFIED, parent=window):
+        rb1 = dcg.Button(ctx, label="", width=80, height=30)
+        rb2 = dcg.Button(ctx, label="", width=80, height=30)
+    # Test: same buttons with a hidden button between them
+    with dcg.HorizontalLayout(ctx, alignment_mode=dcg.Alignment.JUSTIFIED, parent=window):
+        tb1 = dcg.Button(ctx, label="", width=80, height=30)
+        dcg.Button(ctx, label="", width=80, height=30, show=False)
+        tb2 = dcg.Button(ctx, label="", width=80, height=30)
+    _render(ctx.viewport)
+
+    assert abs(tb1.state.pos_to_parent.x - rb1.state.pos_to_parent.x) <= 1, (
+        f"JUSTIFIED+hidden: tb1 x={tb1.state.pos_to_parent.x} "
+        f"should match ref rb1={rb1.state.pos_to_parent.x}"
+    )
+    assert abs(tb2.state.pos_to_parent.x - rb2.state.pos_to_parent.x) <= 1, (
+        f"JUSTIFIED+hidden: tb2 x={tb2.state.pos_to_parent.x} "
+        f"should match ref rb2={rb2.state.pos_to_parent.x}"
+    )
+
+
+# ---------------------------------------------------------------------------
+# Regression: RIGHT HLayout with interleaved Tooltip + Spacer
+#
+# Pattern from real user code:
+#   ProgressBar → Tooltip → Spacer → ProgressBar → Tooltip → Spacer →
+#   ProgressBar → Tooltip
+#
+# The last ProgressBar must snap to the right edge (right edge ≈ content_w).
+# A reference layout with NO tooltips must produce identical item positions
+# because Tooltips have has_rect_size=False and must not disturb the spacing
+# chain or the RIGHT snap logic.
+# ---------------------------------------------------------------------------
+
+def test_hlayout_right_tooltip_spacer_interleaved_last_right_snap(vp_ctx):
+    """RIGHT HLayout: item→Tooltip→Spacer pattern must not push the last item past end_x."""
+    ctx = vp_ctx
+    window = _stable_window(ctx)
+    _render(ctx.viewport)
+    content_w = window.state.content_region_avail[0]
+
+    BAR_W   = 80
+    SPACE_W = 20
+
+    # Reference layout: same visible items (ProgressBars + Spacers), no Tooltips.
+    # Used to confirm Tooltips do not alter item positions.
+    with dcg.HorizontalLayout(
+        ctx,
+        alignment_mode=dcg.Alignment.RIGHT,
+        no_wrap=True,
+        parent=window,
+    ):
+        ref_pb1 = dcg.ProgressBar(ctx, value=0.3, width=BAR_W, height=20)
+        ref_sp1 = dcg.Spacer(ctx, width=SPACE_W)
+        ref_pb2 = dcg.ProgressBar(ctx, value=0.6, width=BAR_W, height=20)
+        ref_sp2 = dcg.Spacer(ctx, width=SPACE_W)
+        ref_pb3 = dcg.ProgressBar(ctx, value=0.9, width=BAR_W, height=20)
+
+    # Test layout: same items with a Tooltip after each ProgressBar.
+    with dcg.HorizontalLayout(
+        ctx,
+        alignment_mode=dcg.Alignment.RIGHT,
+        no_wrap=True,
+        parent=window,
+    ):
+        pb1 = dcg.ProgressBar(ctx, value=0.3, width=BAR_W, height=20)
+        with dcg.Tooltip(ctx):
+            dcg.Text(ctx, value="CPU Usage")
+        sp1 = dcg.Spacer(ctx, width=SPACE_W)
+        pb2 = dcg.ProgressBar(ctx, value=0.6, width=BAR_W, height=20)
+        with dcg.Tooltip(ctx):
+            dcg.Text(ctx, value="FPS")
+        sp2 = dcg.Spacer(ctx, width=SPACE_W)
+        pb3 = dcg.ProgressBar(ctx, value=0.9, width=BAR_W, height=20)
+        with dcg.Tooltip(ctx):
+            dcg.Text(ctx, value="Max FPS")
+
+    # Extra frames so all sizes stabilise and the RIGHT snap fires.
+    _render(ctx.viewport, n=20)
+
+    # The last ProgressBar's right edge must reach content_w (RIGHT alignment).
+    last_right = pb3.state.pos_to_parent[0] + pb3.state.rect_size[0]
+    assert abs(last_right - content_w) <= 1, (
+        f"RIGHT+Tooltip+Spacer: last pb3 right {last_right} "
+        f"should be at content_w {content_w}"
+    )
+
+    # Intermediate items must be strictly ordered (no overlap).
+    x_pb1, x_sp1, x_pb2, x_sp2, x_pb3 = (
+        pb1.state.pos_to_parent[0],
+        sp1.state.pos_to_parent[0],
+        pb2.state.pos_to_parent[0],
+        sp2.state.pos_to_parent[0],
+        pb3.state.pos_to_parent[0],
+    )
+    assert x_pb1 < x_sp1 < x_pb2 < x_sp2 < x_pb3, (
+        f"RIGHT+Tooltip+Spacer: items not ordered: "
+        f"pb1={x_pb1} sp1={x_sp1} pb2={x_pb2} sp2={x_sp2} pb3={x_pb3}"
+    )
+
+    # Tooltips must not shift item positions: compare against the reference layout.
+    for name, test_item, ref_item in (
+        ("pb1", pb1, ref_pb1),
+        ("sp1", sp1, ref_sp1),
+        ("pb2", pb2, ref_pb2),
+        ("sp2", sp2, ref_sp2),
+        ("pb3", pb3, ref_pb3),
+    ):
+        tx = test_item.state.pos_to_parent[0]
+        rx = ref_item.state.pos_to_parent[0]
+        assert abs(tx - rx) <= 1, (
+            f"RIGHT+Tooltip+Spacer: {name} x={tx} should match "
+            f"reference x={rx} (Tooltips must not shift positions)"
+        )

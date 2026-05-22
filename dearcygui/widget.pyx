@@ -1272,7 +1272,7 @@ cdef class Combo(uiItem):
                         changed = True
                         SharedStr.set(<SharedStr>self._value, self._items[i])
             else:
-                # TODO: test
+                # We disable the combo by enforcing a single selection.
                 selected = True
                 imgui.Selectable(current_value.c_str(),
                                  &selected,
@@ -1280,7 +1280,9 @@ cdef class Combo(uiItem):
                                  Vec2ImVec2(self.get_requested_size()))
             imgui.PopID()
             imgui.EndCombo()
-        # TODO: rect_size/min/max: with the popup ? Use clipper for rect_max ?
+
+        # NOTE: we don't include the popup in rect_size as it doesn't affect the placement
+        # of other items around it (it is a different window, like Tooltip).
         self.state.cur.edited = changed
         self.state.cur.deactivated_after_edited = self.state.prev.active and changed and not(self.state.cur.active)
         return pressed
@@ -1710,63 +1712,63 @@ cdef class ListBox(uiItem):
         self._num_items_shown_when_open = value
 
     cdef bint draw_item(self) noexcept nogil:
-        # TODO: Merge with ComboBox
-        cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)
-        cdef bint visible
-        cdef int32_t i
+        # Retrieve current selected content
         cdef DCGString current_value
         SharedStr.get(<SharedStr>self._value, current_value)
-        cdef imgui.ImVec2 popup_size = imgui.ImVec2(0., 0.)
-        cdef float text_height = imgui.GetTextLineHeightWithSpacing()
+
+        # Compute the number of shown items
         cdef int32_t num_items = min(7, <int>self._items.size())
         if self._num_items_shown_when_open > 0:
             num_items = self._num_items_shown_when_open
-        # Computation from imgui
-        popup_size.y = trunc(<float>0.25 + <float>num_items) * text_height
-        popup_size.y += 2. * imgui.GetStyle().FramePadding.y
-        visible = imgui.BeginListBox(self._imgui_label.c_str(),
-                                     popup_size)
 
+        # Deduce ChildWindow size (computation from imgui)
+        cdef imgui.ImVec2 popup_size = imgui.ImVec2(0., 0.)
+        popup_size.y = trunc(<float>0.25 + <float>num_items) * imgui.GetTextLineHeightWithSpacing()
+        popup_size.y += 2. * imgui.GetStyle().FramePadding.y
+
+        # Start the item
+        cdef bint visible = imgui.BeginListBox(
+            self._imgui_label.c_str(),
+            popup_size
+        )
+
+        cdef int32_t i
         cdef bool pressed = False
         cdef bint changed = False
         cdef bool selected
         cdef bool selected_backup
-        # we push an ID because we didn't append ###uuid to the items
         
-        # TODO: there are nice ImGuiSelectableFlags to add in the future
-        # TODO: use clipper
         if visible:
             # ListBox is simply a ChildWindow wrapped in a group
             self.state.cur.hovered = imgui.IsWindowHovered(imgui.ImGuiHoveredFlags_None)
             self.state.cur.focused = imgui.IsWindowFocused(imgui.ImGuiFocusedFlags_None)
             self.state.cur.rect_size = ImVec2Vec2(imgui.GetWindowSize())
             update_current_mouse_states(self.state)
+
+            # we push an ID because we didn't append ###uuid to the items
             imgui.PushID(self.uuid)
-            if self._enabled:
-                for i in range(<int>self._items.size()):
-                    imgui.PushID(i)
-                    selected = self._items[i] == current_value
-                    selected_backup = selected
-                    pressed |= imgui.Selectable(self._items[i].c_str(),
-                                                &selected,
-                                                imgui.ImGuiSelectableFlags_None,
-                                                Vec2ImVec2(self.get_requested_size()))
-                    if selected:
-                        imgui.SetItemDefaultFocus()
-                    if selected and selected != selected_backup:
-                        changed = True
-                        SharedStr.set(<SharedStr>self._value, self._items[i])
-                    imgui.PopID()
-            else:
-                # TODO: test
-                selected = True
-                imgui.Selectable(current_value.c_str(),
-                                 &selected,
-                                 imgui.ImGuiSelectableFlags_Disabled,
-                                 Vec2ImVec2(self.get_requested_size()))
+
+            for i in range(<int>self._items.size()):
+                imgui.PushID(i)
+                selected = self._items[i] == current_value
+                selected_backup = selected
+                # TODO: there are nice ImGuiSelectableFlags to add in the future
+                pressed |= imgui.Selectable(
+                    self._items[i].c_str(),
+                    &selected,
+                    imgui.ImGuiSelectableFlags_None if self._enabled else imgui.ImGuiSelectableFlags_Disabled,
+                    Vec2ImVec2(self.get_requested_size())
+                )
+                if selected:
+                    imgui.SetItemDefaultFocus()
+                if selected and selected != selected_backup:
+                    changed = True
+                    SharedStr.set(<SharedStr>self._value, self._items[i])
+                imgui.PopID()
+
             imgui.PopID()
             imgui.EndListBox()
-        # TODO: rect_size/min/max: with the popup ? Use clipper for rect_max ?
+
         self.state.cur.edited = changed
         self.state.cur.traversed = True
         self.state.cur.rendered = visible

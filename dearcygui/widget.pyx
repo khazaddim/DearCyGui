@@ -4779,16 +4779,19 @@ cdef class TreeNode(uiItem):
         cdef bint was_open = SharedBool.get(<SharedBool>self._value)
         cdef bint closed = False
         cdef imgui.ImGuiTreeNodeFlags flags = self._flags
-        imgui.PushID(self.uuid)
-        # Unsure group is needed
-        imgui.BeginGroup()
         if was_open and self._selectable:
             flags |= imgui.ImGuiTreeNodeFlags_Selected
 
+        # Include in a group to compute bounding box
+        imgui.BeginGroup()
+
+        # Start the TreeNode and handle the open state
         imgui.SetNextItemOpen(was_open, imgui.ImGuiCond_Always)
         self.state.cur.open = was_open
-        cdef bint open_and_visible = imgui.TreeNodeEx(self._imgui_label.c_str(),
-                                                      flags)
+        cdef bint open_and_visible = imgui.TreeNodeEx(
+            self._imgui_label.c_str(),
+            flags
+        )
         self.update_current_state()
         if imgui.IsItemToggledOpen() and not(was_open):
             SharedBool.set(<SharedBool>self._value, True)
@@ -4797,6 +4800,8 @@ cdef class TreeNode(uiItem):
             SharedBool.set(<SharedBool>self._value, False)
             self.state.cur.open = False
             self._propagate_hidden_state_to_children_with_handlers()
+
+        # Draw children if the tree is opened
         cdef Vec2 pos_p, parent_size_backup
         cdef float dx, dy
         if open_and_visible:
@@ -4813,12 +4818,13 @@ cdef class TreeNode(uiItem):
                 self.context.viewport.parent_size = parent_size_backup
             imgui.TreePop()
 
-        #imgui.PushStyleVar(imgui.ImGuiStyleVar_ItemSpacing,
-        #                   imgui.ImVec2(0., 0.))
+        # Use as bounding box the label, plus the children if any.
         imgui.EndGroup()
-        #imgui.PopStyleVar(1)
-        # TODO; rect size from group ?
-        imgui.PopID()
+        self.state.cur.rect_size = Vec2(imgui.GetItemRectSize().x,
+                                        imgui.GetItemRectSize().y)
+
+        # Call the callback when we switch to the open state
+        return self.state.cur.open and not(was_open)
 
 cdef class CollapsingHeader(uiItem):
     """
@@ -4971,6 +4977,10 @@ cdef class CollapsingHeader(uiItem):
         if self._closable:
             flags |= imgui.ImGuiTreeNodeFlags_Selected
 
+        # Encapsulate in a group for bounding box computation
+        imgui.BeginGroup()
+
+        # Start the collapsing header and handle the open state
         imgui.SetNextItemOpen(was_open, imgui.ImGuiCond_Always)
         self.state.cur.open = was_open
         cdef bint open_and_visible = \
@@ -4983,10 +4993,12 @@ cdef class CollapsingHeader(uiItem):
         if imgui.IsItemToggledOpen() and not(was_open):
             SharedBool.set(<SharedBool>self._value, True)
             self.state.cur.open = True
-        elif self.state.cur.rendered and not(open_and_visible) and (was_open or self.state.prev.open): # TODO: unsure
+        elif self.state.cur.rendered and not(open_and_visible) and (was_open or self.state.prev.open):
             SharedBool.set(<SharedBool>self._value, False)
             self.state.cur.open = False
             self._propagate_hidden_state_to_children_with_handlers()
+
+        # Draw children if applicable
         cdef Vec2 pos_p, parent_size_backup
         cdef float dx, dy
         if open_and_visible:
@@ -5001,7 +5013,13 @@ cdef class CollapsingHeader(uiItem):
                 draw_ui_children(self)
                 self.context.viewport.parent_pos = pos_p
                 self.context.viewport.parent_size = parent_size_backup
-        # TODO: rect_size from group ?
+
+        # Use the header (and children if open) as the bounding box
+        imgui.EndGroup()
+        self.state.cur.rect_size = Vec2(imgui.GetItemRectSize().x,
+                                        imgui.GetItemRectSize().y)
+
+         # Call the callback when we switch to the open state
         return not(was_open) and self.state.cur.open
 
 cdef class ChildWindow(uiItem): # TODO: remove label

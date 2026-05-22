@@ -3766,6 +3766,7 @@ cdef class Menu(uiItem):
         self.state.cap.can_be_hovered = True
         self.state.cap.can_be_active = True
         self.state.cap.has_rect_size = True
+        self.state.cap.has_content_region = True
         self.state.cap.can_be_toggled = True
 
     cdef bint draw_item(self) noexcept nogil:
@@ -3774,10 +3775,14 @@ cdef class Menu(uiItem):
         self.update_current_state()
         cdef Vec2 pos_w, pos_p, parent_size_backup
         if menu_open:
-            self.state.cur.hovered = imgui.IsWindowHovered(imgui.ImGuiHoveredFlags_None)
+            self.state.cur.hovered |= imgui.IsWindowHovered(imgui.ImGuiHoveredFlags_None)
             self.state.cur.focused = imgui.IsWindowFocused(imgui.ImGuiFocusedFlags_None)
-            self.state.cur.rect_size.x = imgui.GetWindowWidth()
-            self.state.cur.rect_size.y = imgui.GetWindowHeight()
+            self.state.cur.content_pos = ImVec2Vec2(imgui.GetCursorScreenPos())
+            self.state.cur.content_region_size = ImVec2Vec2(imgui.GetContentRegionAvail()) # Unsure
+            # rect_size doesn't include the content, only the menu entry as it is a separate
+            # window that doesn't affect other items around it.
+            #self.state.cur.rect_size.x = imgui.GetWindowWidth()
+            #self.state.cur.rect_size.y = imgui.GetWindowHeight()
             if self.last_widgets_child is not None:
                 # We are in a separate window
                 pos_w = ImVec2Vec2(imgui.GetCursorScreenPos())
@@ -3785,7 +3790,7 @@ cdef class Menu(uiItem):
                 swap_Vec2(pos_w, self.context.viewport.window_pos)
                 swap_Vec2(pos_p, self.context.viewport.parent_pos)
                 parent_size_backup = self.context.viewport.parent_size
-                self.context.viewport.parent_size = self.state.cur.rect_size # TODO: probably incorrect
+                self.context.viewport.parent_size = self.state.cur.content_region_size
                 draw_ui_children(self)
                 self.context.viewport.window_pos = pos_w
                 self.context.viewport.parent_pos = pos_p

@@ -711,6 +711,14 @@ cdef class DrawInWindow(uiItem):
         cdef float startx = <float>imgui.GetCursorScreenPos().x
         cdef float starty = <float>imgui.GetCursorScreenPos().y
 
+        # Backup current drawInfo
+        cdef bint backup_in_plot = self.context.viewport.in_plot
+        cdef Vec2 backup_parent_pos = self.context.viewport.parent_pos
+        cdef double[2] backup_shifts = [self.context.viewport.shifts[0], self.context.viewport.shifts[1]]
+        cdef double[2] backup_scales = [self.context.viewport.scales[0], self.context.viewport.scales[1]]
+        cdef float backup_thickness_multiplier = self.context.viewport.thickness_multiplier
+        cdef float backup_size_multiplier = self.context.viewport.size_multiplier
+
         # Reset current drawInfo
         self.context.viewport.in_plot = False
         self.context.viewport.parent_pos = ImVec2Vec2(imgui.GetCursorScreenPos())
@@ -763,6 +771,16 @@ cdef class DrawInWindow(uiItem):
         else:
             imgui.Dummy(imgui.ImVec2(clip_width, clip_height))
             active = False
+
+        # Restore draw info
+        self.context.viewport.in_plot = backup_in_plot
+        self.context.viewport.parent_pos = backup_parent_pos
+        self.context.viewport.shifts[0] = backup_shifts[0]
+        self.context.viewport.shifts[1] = backup_shifts[1]
+        self.context.viewport.scales[0] = backup_scales[0]
+        self.context.viewport.scales[1] = backup_scales[1]
+        self.context.viewport.thickness_multiplier = backup_thickness_multiplier
+        self.context.viewport.size_multiplier = backup_size_multiplier
 
         self.update_current_state()
         if no_frame:

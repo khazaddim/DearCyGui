@@ -195,6 +195,10 @@ cdef class Layout(uiItem):
 
         # Set the content area for this frame
         self.state.cur.content_region_size = cur_content_area
+
+        # Also update content_pos (Layout/HorizontalLayout/VerticalLayout
+        # only, not ChildWindow) to match pos_to_viewport (filled before draw_item)
+        self.state.cur.content_pos = self.state.cur.pos_to_viewport
         return cur_content_area
 
     cdef bint check_change(self) noexcept nogil:
@@ -1709,6 +1713,7 @@ cdef class WindowLayout(uiItem):
         self.state.cur.pos_to_window = pos_to_parent
         self.state.cur.pos_to_parent = pos_to_parent
         self.state.cur.pos_to_viewport = pos_to_viewport
+        self.state.cur.content_pos = pos_to_viewport
 
         # Position must be set before calling update_content_area so that
         # pos_to_parent is available for the fill-remaining-space calculation.

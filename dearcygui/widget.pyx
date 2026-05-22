@@ -46,6 +46,9 @@ from .wrapper cimport imgui
 
 from .imgui_types cimport is_ButtonDirection, make_ButtonDirection
 
+
+from warnings import warn as _warn
+
 cdef class DrawInvisibleButton(drawingItem):
     """
     Invisible rectangular area, parallel to axes, behaving
@@ -1640,7 +1643,6 @@ cdef class ListBox(uiItem):
         self._value = <SharedValue>(SharedStr.__new__(SharedStr, self.context))
         #self.state.cap.can_be_active = True
         self.state.cap.can_be_clicked = True
-        #self.state.cap.can_be_deactivated_after_edited = True
         self.state.cap.can_be_dragged = True
         self.state.cap.can_be_edited = True
         self.state.cap.can_be_focused = True
@@ -1772,7 +1774,6 @@ cdef class ListBox(uiItem):
         self.state.cur.edited = changed
         self.state.cur.traversed = True
         self.state.cur.rendered = visible
-        #self.state.cur.deactivated_after_edited = self.state.cur.deactivated and changed -> TODO Unsure. Isn't it rather focus loss ?
         return pressed
 
 
@@ -3288,7 +3289,6 @@ cdef class MenuItem(uiItem):
         self._shortcut = string_from_str(value)
 
     cdef bint draw_item(self) noexcept nogil:
-        # TODO dpg does overwrite textdisabled...
         cdef bool current_value = SharedBool.get(<SharedBool>self._value)
         cdef bint activated = imgui.MenuItem(self._imgui_label.c_str(),
                                              self._shortcut.c_str(),
@@ -5024,7 +5024,7 @@ cdef class CollapsingHeader(uiItem):
          # Call the callback when we switch to the open state
         return not(was_open) and self.state.cur.open
 
-cdef class ChildWindow(uiItem): # TODO: remove label
+cdef class ChildWindow(uiItem):
     """
     A child window container that enables hierarchical UI layout.
     
@@ -5134,6 +5134,30 @@ cdef class ChildWindow(uiItem): # TODO: remove label
         self._window_flags &= ~imgui.ImGuiWindowFlags_HorizontalScrollbar
         if value:
             self._window_flags |= imgui.ImGuiWindowFlags_HorizontalScrollbar
+
+    
+    @property
+    def label(self):
+        """
+        Text label displayed with or within the item.
+        
+        The label is displayed differently depending on the item type. For buttons
+        and selectable items it appears inside them, for windows it becomes the
+        title, and for sliders and input fields it appears next to them.
+        """
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        return self._user_label
+
+    @label.setter
+    def label(self, str value):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        if value is None:
+            self._user_label = ""
+        else:
+            self._user_label = value
+        _warn("label has no effect on ChildWindow and will be removed in a future version", DeprecationWarning)
 
     @property
     def menubar(self):

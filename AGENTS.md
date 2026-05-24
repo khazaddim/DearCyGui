@@ -16,3 +16,7 @@ Use `@/openspec/AGENTS.md` to learn:
 Keep this managed block so 'openspec update' can refresh the instructions.
 
 <!-- OPENSPEC:END -->
+
+## Reusable Skills
+
+- Use `.github/skills/openspec-epub-workflow/SKILL.md` when a user wants to package OpenSpec proposals, project files, commit ranges, diffs, specs, designs, or tasks into a mark2epub-ready folder or EPUB for ereader review.

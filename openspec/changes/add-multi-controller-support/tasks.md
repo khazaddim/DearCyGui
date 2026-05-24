@@ -94,23 +94,23 @@
 **Goal:** `GamepadButtonHandler` fires callbacks when buttons are pressed/released, with per-controller filtering.
 
 ### 3.1 Handler Implementation
-- [ ] Implement `GamepadButtonHandler` cdef class in `handler.pyx`
-- [ ] Support `controller` parameter (-1 for any, 0-7 for specific)
-- [ ] Support `button` parameter (GamepadButton enum)
-- [ ] Support `on_press` parameter (default True; False for release)
-- [ ] Implement `check()` method following existing handler patterns
-- [ ] Fire callback with controller slot info
+- [x] Implement `GamepadButtonHandler` cdef class in `handler.pyx`
+- [x] Support `controller` parameter (-1 for any, 0-7 for specific)
+- [x] Support `button` parameter (GamepadButton enum)
+- [x] Support `on_press` parameter (default True; False for release)
+- [x] Implement `check()` method following existing handler patterns
+- [x] Fire callback with controller slot info
 
 ### 3.2 Declarations and Exports
-- [ ] Add declarations to `handler.pxd`
-- [ ] Update `__init__.py` exports
+- [x] Add declarations to `handler.pxd`
+- [x] Update `__init__.py` exports
 - [ ] Add to type stubs
 
 ### 3.3 Milestone 3 Verification
-- [ ] Update `Small_Input_Demo.py` to use `GamepadButtonHandler` callback examples
-- [ ] Test handler fires for specific controller only
-- [ ] Test handler with `controller=None` fires for any controller
-- [ ] Test callback receives correct controller slot in the demo
+- [x] Update `Small_Input_Demo.py` to use `GamepadButtonHandler` callback examples
+- [x] Test handler fires for specific controller only
+- [x] Test handler with `controller=None` fires for any controller
+- [x] Test callback receives correct controller slot in the demo
 
 ---
 

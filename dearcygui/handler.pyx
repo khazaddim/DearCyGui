@@ -26,9 +26,14 @@ from .core cimport baseHandler, baseItem, lock_gil_friendly,\
     itemState, lock_im_context, unlock_im_context
 from .c_types cimport DCGMutex, unique_lock, string_to_str, string_from_str
 from .types cimport make_Positioning, read_rect, Rect,\
-    is_Key, make_Key, Positioning
+    is_Key, make_Key, Positioning,\
+    GamepadButton, is_GamepadButton, make_GamepadButton
 from .widget cimport SharedBool
 from .wrapper cimport imgui
+from .backends.backend cimport DCG_MAX_GAMEPADS,\
+    dcg_gamepad_connected,\
+    dcg_gamepad_button_pressed,\
+    dcg_gamepad_button_released
 
 from traceback import format_exc as _format_exc
 from warnings import warn as _warn
@@ -1525,6 +1530,129 @@ cdef class AnyKeyDownHandler(baseHandler):
             # Request a refresh to continue sending frequent callbacks while keys are down, even if the user
             # doesn't call wake.
             self.context.viewport.ask_refresh_after_delta(imgui.GetIO().KeyRepeatRate)
+
+
+cdef class GamepadButtonHandler(baseHandler):
+    """
+    Handler that fires when a gamepad button is pressed or released.
+
+    Wraps the M2 edge-detection API (``is_button_pressed`` /
+    ``is_button_released``) in a callback-style handler that integrates with
+    the standard DearCyGui handler dispatch (attached to any item, fires
+    globally each frame).
+
+    Properties:
+        controller (int): Controller slot to monitor (0..7), or -1 for any.
+        button (GamepadButton): The button to watch.
+        on_press (bool): If True, fire on the rising edge (press).
+            If False, fire on the falling edge (release). Default True.
+
+    Callback receives:
+        - data: a tuple ``(controller_slot, GamepadButton)`` identifying
+          which controller fired which button.
+    """
+    def __cinit__(self):
+        self._slot = -1
+        self._button = <int>GamepadButton.SOUTH
+        self._on_press = True
+
+    @property
+    def controller(self):
+        """Controller slot (0..7), or -1 for any connected controller."""
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        return self._slot
+
+    @controller.setter
+    def controller(self, value):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        cdef int32_t v
+        if value is None:
+            v = -1
+        else:
+            v = <int32_t>int(value)
+        if v < -1 or v >= DCG_MAX_GAMEPADS:
+            raise ValueError(
+                f"controller must be -1 (any) or 0..{DCG_MAX_GAMEPADS - 1}, got {v}"
+            )
+        self._slot = v
+
+    @property
+    def button(self):
+        """The gamepad button this handler is watching."""
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        return make_GamepadButton(self._button)
+
+    @button.setter
+    def button(self, value):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        if value is None or not is_GamepadButton(value):
+            raise TypeError(f"button must be a valid GamepadButton, not {value}")
+        self._button = <int32_t>make_GamepadButton(value)
+
+    @property
+    def on_press(self):
+        """True: trigger on press (rising edge). False: trigger on release."""
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        return self._on_press
+
+    @on_press.setter
+    def on_press(self, bint value):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        self._on_press = value
+
+    cdef bint check_state(self, baseItem item) noexcept nogil:
+        cdef int32_t s
+        if self._slot >= 0:
+            if self._on_press:
+                return dcg_gamepad_button_pressed(self._slot, self._button)
+            else:
+                return dcg_gamepad_button_released(self._slot, self._button)
+        # any-controller mode
+        for s in range(DCG_MAX_GAMEPADS):
+            if self._on_press:
+                if dcg_gamepad_button_pressed(s, self._button):
+                    return True
+            else:
+                if dcg_gamepad_button_released(s, self._button):
+                    return True
+        return False
+
+    cdef void run_handler(self, baseItem item) noexcept nogil:
+        cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)
+        if not self._enabled or self._callback is None:
+            return
+        cdef int32_t s
+        cdef bint fired
+        if self._slot >= 0:
+            if self._on_press:
+                fired = dcg_gamepad_button_pressed(self._slot, self._button)
+            else:
+                fired = dcg_gamepad_button_released(self._slot, self._button)
+            if fired:
+                with gil:
+                    self.context.queue_callback(
+                        self._callback, self, item,
+                        (int(self._slot), make_GamepadButton(self._button))
+                    )
+            return
+        # any-controller mode: fire one callback per slot that triggered
+        for s in range(DCG_MAX_GAMEPADS):
+            if self._on_press:
+                fired = dcg_gamepad_button_pressed(s, self._button)
+            else:
+                fired = dcg_gamepad_button_released(s, self._button)
+            if fired:
+                with gil:
+                    self.context.queue_callback(
+                        self._callback, self, item,
+                        (int(s), make_GamepadButton(self._button))
+                    )
 
 
 cdef class MouseClickHandler(baseHandler):

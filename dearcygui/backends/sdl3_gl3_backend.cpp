@@ -57,6 +57,8 @@ static void handle_gamepad_added(SDL_JoystickID id) {
     s.handle = gp;
     s.connected = true;
     memset(s.buttons, 0, sizeof(s.buttons));
+    memset(s.buttons_pressed, 0, sizeof(s.buttons_pressed));
+    memset(s.buttons_released, 0, sizeof(s.buttons_released));
     memset(s.axes, 0, sizeof(s.axes));
     const char* gp_name = SDL_GetGamepadName(gp);
     if (gp_name) {
@@ -76,6 +78,8 @@ static void handle_gamepad_removed(SDL_JoystickID id) {
     s.connected = false;
     s.sdl_id = 0;
     memset(s.buttons, 0, sizeof(s.buttons));
+    memset(s.buttons_pressed, 0, sizeof(s.buttons_pressed));
+    memset(s.buttons_released, 0, sizeof(s.buttons_released));
     memset(s.axes, 0, sizeof(s.axes));
     s.name[0] = '\0';
 }
@@ -106,11 +110,35 @@ bool dcg_gamepad_button_down(int slot, int button) {
     return g_gamepads[slot].buttons[button];
 }
 
+bool dcg_gamepad_button_pressed(int slot, int button) {
+    if (slot < 0 || slot >= DCG_MAX_GAMEPADS) return false;
+    if (button < 0 || button >= DCG_MAX_GAMEPAD_BUTTONS) return false;
+    if (!g_gamepads[slot].connected) return false;
+    return g_gamepads[slot].buttons_pressed[button];
+}
+
+bool dcg_gamepad_button_released(int slot, int button) {
+    if (slot < 0 || slot >= DCG_MAX_GAMEPADS) return false;
+    if (button < 0 || button >= DCG_MAX_GAMEPAD_BUTTONS) return false;
+    if (!g_gamepads[slot].connected) return false;
+    return g_gamepads[slot].buttons_released[button];
+}
+
 float dcg_gamepad_axis(int slot, int axis) {
     if (slot < 0 || slot >= DCG_MAX_GAMEPADS) return 0.0f;
     if (axis < 0 || axis >= DCG_MAX_GAMEPAD_AXES) return 0.0f;
     if (!g_gamepads[slot].connected) return 0.0f;
     return g_gamepads[slot].axes[axis];
+}
+
+// Clear edge-detection flags at the start of each frame.
+// Called by Viewport.render_frame() before SDL events are processed,
+// so pressed/released flags reflect events that arrived during this frame.
+void dcg_gamepad_begin_frame() {
+    for (int i = 0; i < DCG_MAX_GAMEPADS; i++) {
+        memset(g_gamepads[i].buttons_pressed, 0, sizeof(g_gamepads[i].buttons_pressed));
+        memset(g_gamepads[i].buttons_released, 0, sizeof(g_gamepads[i].buttons_released));
+    }
 }
 
 bool platformViewport::fastActivityCheck() {
@@ -1357,7 +1385,16 @@ bool SDLViewport::processEvents(int timeout_ms) {
                 {
                     int slot = find_gamepad_slot(event.gbutton.which);
                     if (slot >= 0 && event.gbutton.button < DCG_MAX_GAMEPAD_BUTTONS) {
-                        g_gamepads[slot].buttons[event.gbutton.button] = event.gbutton.down;
+                        bool was_down = g_gamepads[slot].buttons[event.gbutton.button];
+                        bool now_down = event.gbutton.down;
+                        g_gamepads[slot].buttons[event.gbutton.button] = now_down;
+                        // Edge detection: latch the transition for this frame.
+                        // Using OR so multiple transitions within one frame still register as an event.
+                        if (now_down && !was_down) {
+                            g_gamepads[slot].buttons_pressed[event.gbutton.button] = true;
+                        } else if (!now_down && was_down) {
+                            g_gamepads[slot].buttons_released[event.gbutton.button] = true;
+                        }
                     }
                     needsRefresh.store(true);
                     break;

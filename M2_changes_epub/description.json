@@ -1,0 +1,38 @@
+{
+  "metadata": {
+    "dc:title": "M2 Changes Walkthrough: Frame Edge Detection",
+    "dc:creator": "Chris",
+    "dc:language": "en",
+    "dc:identifier": "m2-changes-walkthrough-edge-detection"
+  },
+  "cover_image": "cover.png",
+  "default_css": [
+    "style.css"
+  ],
+  "chapters": [
+    {
+      "markdown": "00_overview.md",
+      "css": ""
+    },
+    {
+      "markdown": "01_backend_header.md",
+      "css": ""
+    },
+    {
+      "markdown": "02_backend_cpp.md",
+      "css": ""
+    },
+    {
+      "markdown": "03_cython_bridge.md",
+      "css": ""
+    },
+    {
+      "markdown": "04_python_api.md",
+      "css": ""
+    },
+    {
+      "markdown": "05_demo_and_data_flow.md",
+      "css": ""
+    }
+  ]
+}

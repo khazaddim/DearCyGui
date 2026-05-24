@@ -117,5 +117,8 @@ cdef extern from "backend.h" nogil:
     bint dcg_gamepad_connected(int slot)
     const char* dcg_gamepad_name(int slot)
     bint dcg_gamepad_button_down(int slot, int button)
+    bint dcg_gamepad_button_pressed(int slot, int button)
+    bint dcg_gamepad_button_released(int slot, int button)
     float dcg_gamepad_axis(int slot, int axis)
+    void dcg_gamepad_begin_frame()
 

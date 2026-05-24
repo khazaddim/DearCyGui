@@ -31,7 +31,8 @@ from cpython.exc cimport PyErr_CheckSignals
 
 from .backends.backend cimport SDLViewport, platformViewport, GLContext,\
     DCG_MAX_GAMEPADS, dcg_gamepad_count, dcg_gamepad_connected,\
-    dcg_gamepad_name, dcg_gamepad_button_down, dcg_gamepad_axis
+    dcg_gamepad_name, dcg_gamepad_button_down, dcg_gamepad_button_pressed,\
+    dcg_gamepad_button_released, dcg_gamepad_axis, dcg_gamepad_begin_frame
 cimport dearcygui.backends.time as ctime
 from .c_types cimport unique_lock, DCGMutex, mutex, defer_lock_t, string_to_str,\
     set_composite_label, set_uuid_label, string_from_str, Vec2, make_Vec2
@@ -3081,6 +3082,24 @@ cdef class Gamepad:
         button = make_GamepadButton(button)
         return dcg_gamepad_button_down(self._slot, <int>button)
 
+    def is_button_pressed(self, button) -> bool:
+        """Return True only on the frame *button* transitioned from up to down.
+
+        Edge-detection state is cleared at the start of each ``render_frame()``
+        call, so this returns True for exactly one frame per press.
+        """
+        button = make_GamepadButton(button)
+        return dcg_gamepad_button_pressed(self._slot, <int>button)
+
+    def is_button_released(self, button) -> bool:
+        """Return True only on the frame *button* transitioned from down to up.
+
+        Edge-detection state is cleared at the start of each ``render_frame()``
+        call, so this returns True for exactly one frame per release.
+        """
+        button = make_GamepadButton(button)
+        return dcg_gamepad_button_released(self._slot, <int>button)
+
     def get_axis(self, axis) -> float:
         """Return the current axis value (-1.0 to 1.0 for sticks, 0.0 to 1.0 for triggers)."""
         axis = make_GamepadAxis(axis)
@@ -4921,6 +4940,10 @@ cdef class Viewport(baseItem):
             # Note: processEvents releases the mutex if target_timeout_ms > 0,
             # and no events require immediate redraw.
             try:
+                # Clear gamepad edge-detection flags before processing events,
+                # so is_button_pressed()/is_button_released() reflect only events
+                # captured during this frame.
+                dcg_gamepad_begin_frame()
                 (<platformViewport*>self._platform).processEvents(
                     <int>target_timeout_ms)
             finally:

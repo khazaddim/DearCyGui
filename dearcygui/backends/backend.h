@@ -28,6 +28,8 @@ struct GamepadState {
     SDL_Gamepad* handle = nullptr;
     char name[128] = {};
     bool buttons[DCG_MAX_GAMEPAD_BUTTONS] = {};
+    bool buttons_pressed[DCG_MAX_GAMEPAD_BUTTONS] = {};   // edge: just pressed this frame
+    bool buttons_released[DCG_MAX_GAMEPAD_BUTTONS] = {};  // edge: just released this frame
     float axes[DCG_MAX_GAMEPAD_AXES] = {};
     bool connected = false;
 };
@@ -37,7 +39,12 @@ int  dcg_gamepad_count();
 bool dcg_gamepad_connected(int slot);
 const char* dcg_gamepad_name(int slot);
 bool dcg_gamepad_button_down(int slot, int button);
+bool dcg_gamepad_button_pressed(int slot, int button);   // True only on the frame the button was pressed
+bool dcg_gamepad_button_released(int slot, int button);  // True only on the frame the button was released
 float dcg_gamepad_axis(int slot, int axis);
+
+// Frame management (called by viewport at the start of each render frame)
+void dcg_gamepad_begin_frame();
 
 
 // A class to wrap a GL context, make it current, release it.

@@ -11,7 +11,7 @@ dist/
 __pycache__/
 lib_location.txt
 version_number.txt
-dearpygui.egg-info/
+dearcygui.egg-info/
 build/
 # Ignore only subdirectories
 sandbox/*/
@@ -19,3 +19,25 @@ src/CMakeFiles/
 thirdparty/CMakeFiles/
 thirdparty/Makefile
 thirdparty/cmake_install.cmake
+
+#ignore build files
+build_FT/
+build_SDL/
+Small_Input_Demo.py
+SOURCES.txt
+
+
+mark2epub.py
+study_epub/
+
+# ignore generated epub files
+*.epub
+
+# ignore Cython-generated cpp files (top-level dearcygui and dearcygui/utils)
+# NOTE: dearcygui/backends/*.cpp are hand-written and must remain tracked
+dearcygui/*.cpp
+dearcygui/utils/*.cpp
+cython_learning/*.cpp
+cython_learning/*.html
+
+Controller_change_epub/

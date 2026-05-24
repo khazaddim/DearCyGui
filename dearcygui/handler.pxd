@@ -192,6 +192,13 @@ cdef class AnyKeyDownHandler(baseHandler):
     cdef bint check_state(self, baseItem) noexcept nogil
     cdef void run_handler(self, baseItem) noexcept nogil
 
+cdef class GamepadButtonHandler(baseHandler):
+    cdef int32_t _slot     # -1 == any controller, else 0..DCG_MAX_GAMEPADS-1
+    cdef int32_t _button
+    cdef bint _on_press    # True: trigger on press; False: trigger on release
+    cdef bint check_state(self, baseItem) noexcept nogil
+    cdef void run_handler(self, baseItem) noexcept nogil
+
 cdef class MouseClickHandler(baseHandler):
     cdef MouseButton _button
     cdef bint _repeat

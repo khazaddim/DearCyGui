@@ -98,7 +98,7 @@ class InputDemo:
         self.C.queue = AsyncPoolExecutor()
         self.C.viewport.wait_for_input = True
         self.C.viewport.initialize(
-            height=920, width=1280,
+            height=920, width=1440,
             title="Multi-Controller Demo (event-driven)",
         )
 
@@ -119,8 +119,8 @@ class InputDemo:
 
         # ---- UI ------------------------------------------------------------
         with dcg.Window(self.C, primary=True) as self.window:
-            with dcg.HorizontalLayout(self.C):
-                with dcg.ChildWindow(self.C, width=430, height=820):
+            with dcg.HorizontalLayout(self.C, no_wrap=True):
+                with dcg.ChildWindow(self.C, width=620, height=820, resizable_x=True):
                     dcg.Text(self.C, value="=== Multi-Controller Input Demo (event-driven) ===")
                     dcg.Text(
                         self.C,
@@ -177,7 +177,7 @@ class InputDemo:
                             dcg.Text(self.C, value="       Events:  ---")
                         )
 
-                with dcg.ChildWindow(self.C, width=810, height=820):
+                with dcg.ChildWindow(self.C, width="fillx", height=820):
                     dcg.Text(self.C, value="--- Plot Interaction Probe ---")
                     dcg.Text(
                         self.C,

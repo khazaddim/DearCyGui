@@ -16,7 +16,7 @@ if site_packages.exists():
 import asyncio
 
 import dearcygui as dcg
-from dearcygui.utils.asyncio_helpers import AsyncPoolExecutor
+from dearcygui.utils.asyncio_helpers import AsyncPoolExecutor, run_viewport_loop
 
 
 loop = asyncio.new_event_loop()
@@ -245,17 +245,9 @@ class InputDemo:
             )
         else:
             self.history_labels[i].value = "       Events:  ---"
-
-
-async def main_loop(viewport):
-    while viewport.context.running:
-        viewport.render_frame()
-        await asyncio.sleep(1.0 / 60.0)
-
-
 if __name__ == "__main__":
     demo = InputDemo()
     try:
-        loop.run_until_complete(main_loop(demo.C.viewport))
+        loop.run_until_complete(run_viewport_loop(demo.C.viewport))
     except Exception as e:
         print(f"Error: {e}")

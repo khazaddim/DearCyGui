@@ -115,6 +115,7 @@ class InputDemo:
         self.connected = [False] * NUM_SLOTS
         self.names = [""] * NUM_SLOTS
         self._plot_rng = random.Random(7)
+        self._fullscreen_state = None
 
         # ---- UI ------------------------------------------------------------
         with dcg.Window(self.C, primary=True) as self.window:
@@ -135,6 +136,16 @@ class InputDemo:
                         self.C,
                         value="Use the plot on the right to test mouse pan/zoom while "
                               "pressing buttons or moving sticks.",
+                    )
+                    self.fullscreen_button = dcg.Button(
+                        self.C,
+                        label="Enter Fullscreen",
+                        width="fillx",
+                        callback=self._toggle_fullscreen,
+                    )
+                    self.fullscreen_status = dcg.Text(
+                        self.C,
+                        value="Viewport: windowed",
                     )
                     dcg.Text(self.C, value="")
 
@@ -202,6 +213,7 @@ class InputDemo:
         ))
 
         self.window.handlers = handlers
+        self._refresh_viewport_controls()
 
     # ---- Handler callbacks -------------------------------------------------
     def _on_button_press(self, sender, target, data):
@@ -227,6 +239,7 @@ class InputDemo:
     def _on_render(self, sender, target, data):
         # The only non-event work: notice connect / disconnect and refresh
         # the slot header. We DO NOT poll buttons or axes here.
+        self._refresh_viewport_controls()
         gamepads = self.C.viewport.gamepads
         for i in range(NUM_SLOTS):
             gp = gamepads[i]
@@ -249,6 +262,22 @@ class InputDemo:
         log.insert(0, entry)
         if len(log) > HISTORY_SIZE:
             del log[HISTORY_SIZE:]
+
+    def _toggle_fullscreen(self, sender=None, target=None, data=None):
+        self.C.viewport.fullscreen = not self.C.viewport.fullscreen
+        self._refresh_viewport_controls()
+
+    def _refresh_viewport_controls(self):
+        is_fullscreen = bool(self.C.viewport.fullscreen)
+        if is_fullscreen == self._fullscreen_state:
+            return
+        self._fullscreen_state = is_fullscreen
+        self.fullscreen_button.label = (
+            "Exit Fullscreen" if is_fullscreen else "Enter Fullscreen"
+        )
+        self.fullscreen_status.value = (
+            "Viewport: fullscreen" if is_fullscreen else "Viewport: windowed"
+        )
 
     def _build_plot_probe(self):
         for coord in range(-100, 101, 20):

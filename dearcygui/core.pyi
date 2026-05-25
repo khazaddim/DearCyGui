@@ -130,6 +130,61 @@ class wrap_this_and_parents_mutex:
     def __exit__(self, exc_type, exc_value, traceback): # -> Literal[False]:
         ...
 
+
+class Gamepad:
+    """
+    Represents a single gamepad/controller slot (0-7).
+
+    Use ``viewport.gamepads[i]`` to get the Gamepad for slot *i*.
+    Query button and axis state each frame via polling methods.
+    """
+    @property
+    def slot(self) -> int:
+        """Slot index (0-7) for this controller."""
+        ...
+
+    @property
+    def connected(self) -> bool:
+        """True if a physical controller is plugged into this slot."""
+        ...
+
+    @property
+    def name(self) -> str:
+        """Hardware controller name reported by SDL3, or '' if empty.
+
+        This is the device name SDL3 obtains from the underlying
+        driver / HID descriptor (e.g. ``'Xbox Wireless Controller'``,
+        ``'PS5 Controller'``, ``'Nintendo Switch Pro Controller'``).
+        It is read-only and identifies the *hardware*, not the player
+        using it. To associate a player label with a slot, keep a
+        separate mapping such as ``player_names[gamepad.slot] = 'P1'``.
+        """
+        ...
+
+    def is_button_down(self, button: 'GamepadButton') -> bool:
+        """Return True while *button* is held down."""
+        ...
+
+    def is_button_pressed(self, button: 'GamepadButton') -> bool:
+        """Return True only on the frame *button* transitioned from up to down.
+
+        Edge-detection state is cleared at the start of each ``render_frame()``
+        call, so this returns True for exactly one frame per press.
+        """
+        ...
+
+    def is_button_released(self, button: 'GamepadButton') -> bool:
+        """Return True only on the frame *button* transitioned from down to up.
+
+        Edge-detection state is cleared at the start of each ``render_frame()``
+        call, so this returns True for exactly one frame per release.
+        """
+        ...
+
+    def get_axis(self, axis: 'GamepadAxis') -> float:
+        """Return the current axis value (-1.0 to 1.0 for sticks, 0.0 to 1.0 for triggers)."""
+        ...
+
 try:
     from collections.abc import Buffer
     Array: TypeAlias = memoryview | bytearray | bytes | Sequence[Any] | Buffer
@@ -979,6 +1034,55 @@ class MouseCursor(IntEnum):
     WAIT = ...
     PROGRESS = ...
     NOT_ALLOWED = ...
+
+
+class GamepadButton(IntEnum):
+    """
+    Enum identifying gamepad buttons in the SDL3 GameController mapping.
+
+    Naming uses the SDL/Xbox layout. Cross-vendor aliases:
+        SOUTH = A (Xbox) / Cross (PS)
+        EAST  = B (Xbox) / Circle (PS)
+        WEST  = X (Xbox) / Square (PS)
+        NORTH = Y (Xbox) / Triangle (PS)
+    """
+    SOUTH = ...
+    EAST = ...
+    WEST = ...
+    NORTH = ...
+    BACK = ...
+    GUIDE = ...
+    START = ...
+    LEFT_STICK = ...
+    RIGHT_STICK = ...
+    LEFT_SHOULDER = ...
+    RIGHT_SHOULDER = ...
+    DPAD_UP = ...
+    DPAD_DOWN = ...
+    DPAD_LEFT = ...
+    DPAD_RIGHT = ...
+    MISC1 = ...
+    RIGHT_PADDLE1 = ...
+    LEFT_PADDLE1 = ...
+    RIGHT_PADDLE2 = ...
+    LEFT_PADDLE2 = ...
+    TOUCHPAD = ...
+
+
+class GamepadAxis(IntEnum):
+    """
+    Enum identifying gamepad analog axes.
+
+    Stick axes (LEFT_X / LEFT_Y / RIGHT_X / RIGHT_Y) report values in
+    the range [-1.0, +1.0]. Trigger axes (LEFT_TRIGGER / RIGHT_TRIGGER)
+    report values in the range [0.0, 1.0].
+    """
+    LEFT_X = ...
+    LEFT_Y = ...
+    RIGHT_X = ...
+    RIGHT_Y = ...
+    LEFT_TRIGGER = ...
+    RIGHT_TRIGGER = ...
 
 
 class Positioning(IntEnum):
@@ -10312,7 +10416,7 @@ class Viewport(baseItem):
     It is decorated by the operating system and can be minimized/maximized/made fullscreen.
 
     """
-    def __init__(self, context : Context, *, always_on_top : bool = False, always_submit_to_gpu : bool = False, attach : Any = ..., before : Any = ..., children : Sequence['Window' | 'WindowLayout' | 'ViewportDrawList' | 'MenuBar'] = [], clear_color : tuple = (0.0, 0.0, 0.0, 1.0), close_callback : Any = ..., cursor : MouseCursor = MouseCursor.ARROW, decorated : bool = True, disable_close : bool = False, font : 'baseFont' | None = None, fullscreen : bool = False, handlers : Sequence['baseHandler'] | 'baseHandler' | None = [], height : float | str | 'baseSizing' = 800, hit_test_surface : Any = ..., icon : Any = ..., keyboard_navigation : bool = False, max_height : int = 10000, max_width : int = 10000, maximized : bool = False, min_height : int = 250, min_width : int = 250, minimized : bool = False, next_sibling : 'baseItem' | None = None, parent : 'baseItem' | None = None, pixel_height : int = 800, pixel_width : int = 1280, previous_sibling : 'baseItem' | None = None, resizable : bool = True, resize_callback : Any = ..., retrieve_framebuffer : bool = False, scale : float = 1.0, theme : Any = ..., title : str = "DearCyGui Window", transparent : bool = False, user_data : Any = ..., visible : bool = True, vsync : bool = True, wait_for_input : bool = False, width : float | str | 'baseSizing' = 1280, x_pos : int = 100, y_pos : int = 100):
+    def __init__(self, context : Context, *, always_on_top : bool = False, always_submit_to_gpu : bool = False, attach : Any = ..., before : Any = ..., children : Sequence['Window' | 'WindowLayout' | 'ViewportDrawList' | 'MenuBar'] = [], clear_color : tuple = (0.0, 0.0, 0.0, 1.0), close_callback : Any = ..., cursor : MouseCursor = MouseCursor.ARROW, decorated : bool = True, disable_close : bool = False, font : 'baseFont' | None = None, fullscreen : bool = False, handlers : Sequence['baseHandler'] | 'baseHandler' | None = [], height : float | str | 'baseSizing' = 800, hit_test_surface : Any = ..., icon : Any = ..., keyboard_navigation : bool = False, max_height : int = 10000, max_width : int = 10000, maximized : bool = False, min_height : int = 250, min_width : int = 250, minimized : bool = False, next_sibling : 'baseItem' | None = None, parent : 'baseItem' | None = None, pixel_height : int = 1000, pixel_width : int = 1280, previous_sibling : 'baseItem' | None = None, resizable : bool = True, resize_callback : Any = ..., retrieve_framebuffer : bool = False, scale : float = 1.0, theme : Any = ..., title : str = "DearCyGui Window", transparent : bool = False, user_data : Any = ..., visible : bool = True, vsync : bool = True, wait_for_input : bool = False, width : float | str | 'baseSizing' = 1024, x_pos : int = 100, y_pos : int = 100):
         """
         Parameters
         ----------
@@ -10362,7 +10466,7 @@ class Viewport(baseItem):
         ...
 
 
-    def configure(self, *, always_on_top : bool = False, always_submit_to_gpu : bool = False, children : Sequence['Window' | 'WindowLayout' | 'ViewportDrawList' | 'MenuBar'] = [], clear_color : tuple = (0.0, 0.0, 0.0, 1.0), close_callback : Any = ..., cursor : MouseCursor = MouseCursor.ARROW, decorated : bool = True, disable_close : bool = False, font : 'baseFont' | None = None, fullscreen : bool = False, handlers : Sequence['baseHandler'] | 'baseHandler' | None = [], height : float | str | 'baseSizing' = 800, hit_test_surface : Any = ..., icon : Any = ..., keyboard_navigation : bool = False, max_height : int = 10000, max_width : int = 10000, maximized : bool = False, min_height : int = 250, min_width : int = 250, minimized : bool = False, next_sibling : 'baseItem' | None = None, parent : 'baseItem' | None = None, pixel_height : int = 800, pixel_width : int = 1280, previous_sibling : 'baseItem' | None = None, resizable : bool = True, resize_callback : Any = ..., retrieve_framebuffer : bool = False, scale : float = 1.0, theme : Any = ..., title : str = "DearCyGui Window", transparent : bool = False, user_data : Any = ..., visible : bool = True, vsync : bool = True, wait_for_input : bool = False, width : float | str | 'baseSizing' = 1280, x_pos : int = 100, y_pos : int = 100) -> None:
+    def configure(self, *, always_on_top : bool = False, always_submit_to_gpu : bool = False, children : Sequence['Window' | 'WindowLayout' | 'ViewportDrawList' | 'MenuBar'] = [], clear_color : tuple = (0.0, 0.0, 0.0, 1.0), close_callback : Any = ..., cursor : MouseCursor = MouseCursor.ARROW, decorated : bool = True, disable_close : bool = False, font : 'baseFont' | None = None, fullscreen : bool = False, handlers : Sequence['baseHandler'] | 'baseHandler' | None = [], height : float | str | 'baseSizing' = 800, hit_test_surface : Any = ..., icon : Any = ..., keyboard_navigation : bool = False, max_height : int = 10000, max_width : int = 10000, maximized : bool = False, min_height : int = 250, min_width : int = 250, minimized : bool = False, next_sibling : 'baseItem' | None = None, parent : 'baseItem' | None = None, pixel_height : int = 1000, pixel_width : int = 1280, previous_sibling : 'baseItem' | None = None, resizable : bool = True, resize_callback : Any = ..., retrieve_framebuffer : bool = False, scale : float = 1.0, theme : Any = ..., title : str = "DearCyGui Window", transparent : bool = False, user_data : Any = ..., visible : bool = True, vsync : bool = True, wait_for_input : bool = False, width : float | str | 'baseSizing' = 1024, x_pos : int = 100, y_pos : int = 100) -> None:
         """
         Shortcut to set multiple attributes at once.
 
@@ -10442,7 +10546,7 @@ class Viewport(baseItem):
         ...
 
 
-    def initialize(self, *, always_on_top : bool = False, always_submit_to_gpu : bool = False, children : Sequence['Window' | 'WindowLayout' | 'ViewportDrawList' | 'MenuBar'] = [], clear_color : tuple = (0.0, 0.0, 0.0, 1.0), close_callback : Any = ..., cursor : MouseCursor = MouseCursor.ARROW, decorated : bool = True, disable_close : bool = False, font : 'baseFont' | None = None, fullscreen : bool = False, handlers : Sequence['baseHandler'] | 'baseHandler' | None = [], height : float | str | 'baseSizing' = 800, hit_test_surface : Any = ..., icon : Any = ..., keyboard_navigation : bool = False, max_height : int = 10000, max_width : int = 10000, maximized : bool = False, min_height : int = 250, min_width : int = 250, minimized : bool = False, next_sibling : 'baseItem' | None = None, parent : 'baseItem' | None = None, pixel_height : int = 800, pixel_width : int = 1280, previous_sibling : 'baseItem' | None = None, resizable : bool = True, resize_callback : Any = ..., retrieve_framebuffer : bool = False, scale : float = 1.0, theme : Any = ..., title : str = "DearCyGui Window", transparent : bool = False, user_data : Any = ..., visible : bool = True, vsync : bool = True, wait_for_input : bool = False, width : float | str | 'baseSizing' = 1280, x_pos : int = 100, y_pos : int = 100) -> None:
+    def initialize(self, *, always_on_top : bool = False, always_submit_to_gpu : bool = False, children : Sequence['Window' | 'WindowLayout' | 'ViewportDrawList' | 'MenuBar'] = [], clear_color : tuple = (0.0, 0.0, 0.0, 1.0), close_callback : Any = ..., cursor : MouseCursor = MouseCursor.ARROW, decorated : bool = True, disable_close : bool = False, font : 'baseFont' | None = None, fullscreen : bool = False, handlers : Sequence['baseHandler'] | 'baseHandler' | None = [], height : float | str | 'baseSizing' = 800, hit_test_surface : Any = ..., icon : Any = ..., keyboard_navigation : bool = False, max_height : int = 10000, max_width : int = 10000, maximized : bool = False, min_height : int = 250, min_width : int = 250, minimized : bool = False, next_sibling : 'baseItem' | None = None, parent : 'baseItem' | None = None, pixel_height : int = 1000, pixel_width : int = 1280, previous_sibling : 'baseItem' | None = None, resizable : bool = True, resize_callback : Any = ..., retrieve_framebuffer : bool = False, scale : float = 1.0, theme : Any = ..., title : str = "DearCyGui Window", transparent : bool = False, user_data : Any = ..., visible : bool = True, vsync : bool = True, wait_for_input : bool = False, width : float | str | 'baseSizing' = 1024, x_pos : int = 100, y_pos : int = 100) -> None:
         """
         Initialize the viewport for rendering and show it.
 
@@ -10794,6 +10898,27 @@ Render one frame of the application.
 
     @fullscreen.setter
     def fullscreen(self, value : bool):
+        ...
+
+
+    @property
+    def gamepad_count(self) -> int:
+        """(Read-only) Number of currently connected gamepads.
+        """
+        ...
+
+
+    @property
+    def gamepads(self) -> tuple:
+        """
+        (Read-only) Tuple of 8 Gamepad objects for per-controller input polling.
+
+        Each ``Gamepad`` corresponds to a slot index (0-7). Check
+        ``gamepad.connected`` to see if a physical controller occupies
+        that slot, then use ``is_button_down()`` / ``get_axis()`` to
+        read its state.
+
+        """
         ...
 
 
@@ -20139,6 +20264,209 @@ class FontMultiScales(baseFont):
         in any particular order.
 
         """
+        ...
+
+
+class GamepadAxisHandler(baseHandler):
+    """
+    Handler that fires when a gamepad analog axis value changes outside the
+    deadzone.
+
+    Each frame the handler reads the raw axis value via ``dcg_gamepad_axis``
+    and applies a deadzone: any ``|raw| < deadzone`` is treated as ``0.0``.
+    A callback is queued only when the filtered value differs from the
+    previously reported value for that slot. This produces:
+
+    - No callbacks while the stick is at rest inside the deadzone.
+    - A stream of callbacks while the stick is moving outside the deadzone
+      (one per frame the value changes).
+    - A single "return to center" callback with value ``0.0`` when the stick
+      crosses back into the deadzone.
+
+    Properties:
+        controller (int): Controller slot to monitor (0..7), or -1 for any.
+        axis (GamepadAxis): The axis to watch.
+        deadzone (float): Absolute threshold (0.0..1.0). Default 0.15.
+
+    Callback receives:
+        - data: a tuple ``(controller_slot, axis_value)`` where
+          ``axis_value`` is the deadzone-filtered float in
+          ``[-1.0, 1.0]`` (or ``[0.0, 1.0]`` for triggers).
+
+    """
+    def __init__(self, context : Context, *, attach : Any = ..., axis : GamepadAxis = GamepadAxis.LEFT_X, before : 'baseHandler' | None = None, callback : DCGCallable | None = None, children : list[Never] = [], controller : int = -1, deadzone : float = 0.15000000596046448, enabled : bool = True, next_sibling : 'baseHandler' | None = None, parent : 'baseHandler' | None = None, previous_sibling : 'baseHandler' | None = None, show : bool = True, user_data : Any = ...):
+        """
+        Parameters
+        ----------
+        - attach: Whether to attach the item to a parent. Default is None (auto)
+        - axis: The gamepad axis this handler is watching.
+        - before: Attach the item just before the target item. Default is None (disabled)
+        - callback: Function called when the handler's condition is met.
+        - children: List of all the children of the item, from first rendered, to last rendered.
+        - controller: Controller slot (0..7), or -1 for any connected controller.
+        - deadzone: Absolute threshold below which the axis is treated as 0.0.
+        - enabled: Controls whether the handler is active and processing events.
+        - next_sibling: Child of the parent rendered just after this item.
+        - parent: Parent of the item in the rendering tree.
+        - previous_sibling: Child of the parent rendered just before this item.
+        - show: Alias for the enabled property provided for backward compatibility.
+        - user_data: User data of any type.
+        """
+        ...
+
+
+    def configure(self, *, axis : GamepadAxis = GamepadAxis.LEFT_X, callback : DCGCallable | None = None, children : list[Never] = [], controller : int = -1, deadzone : float = 0.15000000596046448, enabled : bool = True, next_sibling : 'baseHandler' | None = None, parent : 'baseHandler' | None = None, previous_sibling : 'baseHandler' | None = None, show : bool = True, user_data : Any = ...) -> None:
+        """
+        Shortcut to set multiple attributes at once.
+
+        Parameters
+        ----------
+        - axis: The gamepad axis this handler is watching.
+        - callback: Function called when the handler's condition is met.
+        - children: List of all the children of the item, from first rendered, to last rendered.
+        - controller: Controller slot (0..7), or -1 for any connected controller.
+        - deadzone: Absolute threshold below which the axis is treated as 0.0.
+        - enabled: Controls whether the handler is active and processing events.
+        - next_sibling: Child of the parent rendered just after this item.
+        - parent: Parent of the item in the rendering tree.
+        - previous_sibling: Child of the parent rendered just before this item.
+        - show: Alias for the enabled property provided for backward compatibility.
+        - user_data: User data of any type.
+        """
+        ...
+
+
+    @property
+    def axis(self) -> GamepadAxis:
+        """The gamepad axis this handler is watching.
+        """
+        ...
+
+
+    @axis.setter
+    def axis(self, value : GamepadAxis):
+        ...
+
+
+    @property
+    def controller(self) -> int:
+        """Controller slot (0..7), or -1 for any connected controller.
+        """
+        ...
+
+
+    @controller.setter
+    def controller(self, value : int):
+        ...
+
+
+    @property
+    def deadzone(self) -> float:
+        """Absolute threshold below which the axis is treated as 0.0.
+        """
+        ...
+
+
+    @deadzone.setter
+    def deadzone(self, value : float):
+        ...
+
+
+class GamepadButtonHandler(baseHandler):
+    """
+    Handler that fires when a gamepad button is pressed or released.
+
+    Wraps the M2 edge-detection API (``is_button_pressed`` /
+    ``is_button_released``) in a callback-style handler that integrates with
+    the standard DearCyGui handler dispatch (attached to any item, fires
+    globally each frame).
+
+    Properties:
+        controller (int): Controller slot to monitor (0..7), or -1 for any.
+        button (GamepadButton): The button to watch.
+        on_press (bool): If True, fire on the rising edge (press).
+            If False, fire on the falling edge (release). Default True.
+
+    Callback receives:
+        - data: a tuple ``(controller_slot, GamepadButton)`` identifying
+          which controller fired which button.
+
+    """
+    def __init__(self, context : Context, *, attach : Any = ..., before : 'baseHandler' | None = None, button : GamepadButton = GamepadButton.SOUTH, callback : DCGCallable | None = None, children : list[Never] = [], controller : int = -1, enabled : bool = True, next_sibling : 'baseHandler' | None = None, on_press : bool = True, parent : 'baseHandler' | None = None, previous_sibling : 'baseHandler' | None = None, show : bool = True, user_data : Any = ...):
+        """
+        Parameters
+        ----------
+        - attach: Whether to attach the item to a parent. Default is None (auto)
+        - before: Attach the item just before the target item. Default is None (disabled)
+        - button: The gamepad button this handler is watching.
+        - callback: Function called when the handler's condition is met.
+        - children: List of all the children of the item, from first rendered, to last rendered.
+        - controller: Controller slot (0..7), or -1 for any connected controller.
+        - enabled: Controls whether the handler is active and processing events.
+        - next_sibling: Child of the parent rendered just after this item.
+        - on_press: True: trigger on press (rising edge). False: trigger on release.
+        - parent: Parent of the item in the rendering tree.
+        - previous_sibling: Child of the parent rendered just before this item.
+        - show: Alias for the enabled property provided for backward compatibility.
+        - user_data: User data of any type.
+        """
+        ...
+
+
+    def configure(self, *, button : GamepadButton = GamepadButton.SOUTH, callback : DCGCallable | None = None, children : list[Never] = [], controller : int = -1, enabled : bool = True, next_sibling : 'baseHandler' | None = None, on_press : bool = True, parent : 'baseHandler' | None = None, previous_sibling : 'baseHandler' | None = None, show : bool = True, user_data : Any = ...) -> None:
+        """
+        Shortcut to set multiple attributes at once.
+
+        Parameters
+        ----------
+        - button: The gamepad button this handler is watching.
+        - callback: Function called when the handler's condition is met.
+        - children: List of all the children of the item, from first rendered, to last rendered.
+        - controller: Controller slot (0..7), or -1 for any connected controller.
+        - enabled: Controls whether the handler is active and processing events.
+        - next_sibling: Child of the parent rendered just after this item.
+        - on_press: True: trigger on press (rising edge). False: trigger on release.
+        - parent: Parent of the item in the rendering tree.
+        - previous_sibling: Child of the parent rendered just before this item.
+        - show: Alias for the enabled property provided for backward compatibility.
+        - user_data: User data of any type.
+        """
+        ...
+
+
+    @property
+    def button(self) -> GamepadButton:
+        """The gamepad button this handler is watching.
+        """
+        ...
+
+
+    @button.setter
+    def button(self, value : GamepadButton):
+        ...
+
+
+    @property
+    def controller(self) -> int:
+        """Controller slot (0..7), or -1 for any connected controller.
+        """
+        ...
+
+
+    @controller.setter
+    def controller(self, value : int):
+        ...
+
+
+    @property
+    def on_press(self) -> bool:
+        """True: trigger on press (rising edge). False: trigger on release.
+        """
+        ...
+
+
+    @on_press.setter
+    def on_press(self, value : bool):
         ...
 
 

@@ -130,6 +130,61 @@ class wrap_this_and_parents_mutex:
     def __exit__(self, exc_type, exc_value, traceback): # -> Literal[False]:
         ...
 
+
+class Gamepad:
+    """
+    Represents a single gamepad/controller slot (0-7).
+
+    Use ``viewport.gamepads[i]`` to get the Gamepad for slot *i*.
+    Query button and axis state each frame via polling methods.
+    """
+    @property
+    def slot(self) -> int:
+        """Slot index (0-7) for this controller."""
+        ...
+
+    @property
+    def connected(self) -> bool:
+        """True if a physical controller is plugged into this slot."""
+        ...
+
+    @property
+    def name(self) -> str:
+        """Hardware controller name reported by SDL3, or '' if empty.
+
+        This is the device name SDL3 obtains from the underlying
+        driver / HID descriptor (e.g. ``'Xbox Wireless Controller'``,
+        ``'PS5 Controller'``, ``'Nintendo Switch Pro Controller'``).
+        It is read-only and identifies the *hardware*, not the player
+        using it. To associate a player label with a slot, keep a
+        separate mapping such as ``player_names[gamepad.slot] = 'P1'``.
+        """
+        ...
+
+    def is_button_down(self, button: 'GamepadButton') -> bool:
+        """Return True while *button* is held down."""
+        ...
+
+    def is_button_pressed(self, button: 'GamepadButton') -> bool:
+        """Return True only on the frame *button* transitioned from up to down.
+
+        Edge-detection state is cleared at the start of each ``render_frame()``
+        call, so this returns True for exactly one frame per press.
+        """
+        ...
+
+    def is_button_released(self, button: 'GamepadButton') -> bool:
+        """Return True only on the frame *button* transitioned from down to up.
+
+        Edge-detection state is cleared at the start of each ``render_frame()``
+        call, so this returns True for exactly one frame per release.
+        """
+        ...
+
+    def get_axis(self, axis: 'GamepadAxis') -> float:
+        """Return the current axis value (-1.0 to 1.0 for sticks, 0.0 to 1.0 for triggers)."""
+        ...
+
 try:
     from collections.abc import Buffer
     Array: TypeAlias = memoryview | bytearray | bytes | Sequence[Any] | Buffer

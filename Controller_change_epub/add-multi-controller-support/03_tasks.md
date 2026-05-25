@@ -108,7 +108,7 @@
 ### 3.2 Declarations and Exports
 - [x] Add declarations to `handler.pxd`
 - [x] Update `__init__.py` exports
-- [ ] Add to type stubs
+- [x] Add to type stubs
 
 ### 3.3 Milestone 3 Verification
 - [x] Update `Small_Input_Demo.py` to use `GamepadButtonHandler` callback examples
@@ -134,7 +134,7 @@
 ### 4.2 Declarations and Exports
 - [x] Add declarations to `handler.pxd`
 - [x] Update `__init__.py` exports
-- [ ] Add to type stubs
+- [x] Add to type stubs
 
 ### 4.3 Milestone 4 Verification
 - [ ] Update `Small_Input_Demo.py` to show live axis values and deadzone-filtered callbacks
@@ -147,15 +147,15 @@
 ## Post-Milestone Tasks
 
 ### Type Stubs
-- [ ] Add `GamepadButton` and `GamepadAxis` to `types.pyi`
-- [ ] Add `Gamepad` class to `core.pyi`
-- [ ] Add `GamepadButtonHandler` and `GamepadAxisHandler` to handler stubs
-- [ ] Update `viewport.gamepads` property in stubs
+- [x] Add `GamepadButton` and `GamepadAxis` to `types.pyi`
+- [x] Add `Gamepad` class to `core.pyi`
+- [x] Add `GamepadButtonHandler` and `GamepadAxisHandler` to handler stubs
+- [x] Update `viewport.gamepads` property in stubs
 
 ### Documentation
-- [ ] Add gamepad section to `dearcygui/docs/` (new `gamepad.md` or in `basics.md`)
-- [ ] Document migration from `KeyPressHandler` gamepad keys to new API
-- [ ] Add code examples for common patterns (polling, handlers, "press start to join")
+- [x] Add gamepad section to `dearcygui/docs/` (new `gamepad.md` or in `basics.md`)
+- [x] Document migration from `KeyPressHandler` gamepad keys to new API
+- [x] Add code examples for common patterns (polling, handlers, "press start to join")
 
 ### Testing
 - [ ] Evolve `Small_Input_Demo.py` into a multi-controller demo showing all 8 slots with live input display

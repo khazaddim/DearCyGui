@@ -1,4 +1,5 @@
 import sys
+import random
 from pathlib import Path
 
 # This demo lives in the repo root next to the source package folder.
@@ -16,7 +17,7 @@ if site_packages.exists():
 import asyncio
 
 import dearcygui as dcg
-from dearcygui.utils.asyncio_helpers import AsyncPoolExecutor, run_viewport_loop
+from dearcygui.utils.asyncio_helpers import AsyncPoolExecutor
 
 
 loop = asyncio.new_event_loop()
@@ -65,11 +66,31 @@ AXIS_DEADZONE = 0.15
 class InputDemo:
     """Purely event-driven multi-controller demo.
 
-    No polling of `is_button_*` or `get_axis` happens here. Every UI
-    update is triggered by a `GamepadButtonHandler` or `GamepadAxisHandler`
-    callback. The single exception is connection / SDL name tracking,
-    which has no event-driven API yet — a `RenderHandler` checks it
-    periodically and re-syncs the slot labels.
+        - No polling of `is_button_*` or `get_axis` happens here.
+        - Every UI update is triggered by a `GamepadButtonHandler` or
+            `GamepadAxisHandler` callback.
+        - The single exception is connection / SDL name tracking, which has no
+            event-driven API yet; a `RenderHandler` checks it periodically and
+            re-syncs the slot labels.
+
+        Important design notes:
+
+        - Gamepad button handlers depend on frame-latched edge state
+            (`pressed this frame` / `released this frame`), not on a persistent
+            event queue.
+        - That is a good fit for game input because it gives exactly-once
+            semantics for actions like jump, confirm, or menu navigation while
+            keeping held-state separate.
+        - Because those button edges are tied to frame processing, the
+            recommended loop for gamepad button handlers is the custom frame loop
+            below, not `run_viewport_loop()`.
+        - The custom loop calls `render_frame()` directly, so button edges are
+            captured and consumed in the same frame.
+        - In contrast, a helper that waits for events before starting the frame
+            can process SDL button input too early, causing one-frame button edges
+            to be cleared before the handlers observe them.
+        - Axis values are level state and are less sensitive to that ordering,
+            but buttons and D-pad presses are not.
     """
 
     def __init__(self):
@@ -77,7 +98,7 @@ class InputDemo:
         self.C.queue = AsyncPoolExecutor()
         self.C.viewport.wait_for_input = True
         self.C.viewport.initialize(
-            height=820, width=900,
+            height=920, width=1280,
             title="Multi-Controller Demo (event-driven)",
         )
 
@@ -93,50 +114,68 @@ class InputDemo:
         # Cached connection state, updated by the RenderHandler.
         self.connected = [False] * NUM_SLOTS
         self.names = [""] * NUM_SLOTS
+        self._plot_rng = random.Random(7)
 
         # ---- UI ------------------------------------------------------------
         with dcg.Window(self.C, primary=True) as self.window:
-            dcg.Text(self.C, value="=== Multi-Controller Input Demo (event-driven) ===")
-            dcg.Text(
-                self.C,
-                value="All updates come from GamepadButtonHandler / "
-                      "GamepadAxisHandler callbacks. No polling.",
-            )
-            dcg.Text(
-                self.C,
-                value=f"Axis deadzone = {AXIS_DEADZONE}. Slot/name list "
-                      "is refreshed once per frame from a RenderHandler.",
-            )
-            dcg.Text(self.C, value="")
-
-            self.slot_labels = []
-            self.held_labels = []
-            self.counts_labels = []
-            self.axis_labels = []
-            self.history_labels = []
-
-            for i in range(NUM_SLOTS):
-                dcg.Text(self.C, value=f"--- Slot {i} ---")
-                self.slot_labels.append(
-                    dcg.Text(self.C, value=f"  [{i}] (disconnected)")
-                )
-                self.held_labels.append(
-                    dcg.Text(self.C, value="       Held:    (none)")
-                )
-                self.counts_labels.append(
-                    dcg.Text(self.C, value="       Counts:  press=0  release=0  axis=0")
-                )
-                self.axis_labels.append(
+            with dcg.HorizontalLayout(self.C):
+                with dcg.ChildWindow(self.C, width=430, height=820):
+                    dcg.Text(self.C, value="=== Multi-Controller Input Demo (event-driven) ===")
                     dcg.Text(
                         self.C,
-                        value="       Axes:    LX=+0.00 LY=+0.00  "
-                              "RX=+0.00 RY=+0.00  LT=0.00 RT=0.00",
+                        value="All updates come from GamepadButtonHandler / "
+                              "GamepadAxisHandler callbacks. No polling.",
                     )
-                )
-                self.history_labels.append(
-                    dcg.Text(self.C, value="       Events:  ---")
-                )
+                    dcg.Text(
+                        self.C,
+                        value=f"Axis deadzone = {AXIS_DEADZONE}. Slot/name list "
+                              "is refreshed once per frame from a RenderHandler.",
+                    )
+                    dcg.Text(
+                        self.C,
+                        value="Use the plot on the right to test mouse pan/zoom while "
+                              "pressing buttons or moving sticks.",
+                    )
+                    dcg.Text(self.C, value="")
 
+                    self.slot_labels = []
+                    self.held_labels = []
+                    self.counts_labels = []
+                    self.axis_labels = []
+                    self.history_labels = []
+
+                    for i in range(NUM_SLOTS):
+                        dcg.Text(self.C, value=f"--- Slot {i} ---")
+                        self.slot_labels.append(
+                            dcg.Text(self.C, value=f"  [{i}] (disconnected)")
+                        )
+                        self.held_labels.append(
+                            dcg.Text(self.C, value="       Held:    (none)")
+                        )
+                        self.counts_labels.append(
+                            dcg.Text(self.C, value="       Counts:  press=0  release=0  axis=0")
+                        )
+                        self.axis_labels.append(
+                            dcg.Text(
+                                self.C,
+                                value="       Axes:    LX=+0.00 LY=+0.00  "
+                                      "RX=+0.00 RY=+0.00  LT=0.00 RT=0.00",
+                            )
+                        )
+                        self.history_labels.append(
+                            dcg.Text(self.C, value="       Events:  ---")
+                        )
+
+                with dcg.ChildWindow(self.C, width=810, height=820):
+                    dcg.Text(self.C, value="--- Plot Interaction Probe ---")
+                    dcg.Text(
+                        self.C,
+                        value="Pan with the mouse, zoom with the wheel, and mash controller "
+                              "buttons to check that neither side interferes with the other.",
+                    )
+                    with dcg.Plot(self.C, label="Pannable Test Plot", width=-1, height=760):
+                        with dcg.DrawInPlot(self.C, no_legend=True):
+                            self._build_plot_probe()
         # ---- Handlers ------------------------------------------------------
         # One press- and one release-handler per named button, in
         # "any controller" mode. Callbacks demultiplex by slot.
@@ -211,6 +250,61 @@ class InputDemo:
         if len(log) > HISTORY_SIZE:
             del log[HISTORY_SIZE:]
 
+    def _build_plot_probe(self):
+        for coord in range(-100, 101, 20):
+            grid_color = (70, 78, 92, 110)
+            axis_color = (105, 140, 175, 170)
+            color = axis_color if coord == 0 else grid_color
+            dcg.DrawLine(self.C, p1=(coord, -100), p2=(coord, 100), color=color, thickness=-1)
+            dcg.DrawLine(self.C, p1=(-100, coord), p2=(100, coord), color=color, thickness=-1)
+
+        route = [(-88, -72), (-62, -50), (-28, -36), (8, -12), (34, 16), (58, 22), (86, 48)]
+        for p1, p2 in zip(route, route[1:]):
+            dcg.DrawLine(self.C, p1=p1, p2=p2, color=(92, 218, 160, 230), thickness=-3)
+
+        for point in route:
+            dcg.DrawCircle(
+                self.C,
+                center=point,
+                radius=-5,
+                color=(14, 18, 24, 220),
+                fill=(92, 218, 160, 255),
+                thickness=-1,
+            )
+
+        palette = [
+            ((208, 122, 88, 255), (208, 122, 88, 70)),
+            ((111, 161, 224, 255), (111, 161, 224, 70)),
+            ((199, 179, 76, 255), (199, 179, 76, 70)),
+        ]
+        for index in range(9):
+            cx = self._plot_rng.uniform(-82.0, 82.0)
+            cy = self._plot_rng.uniform(-82.0, 82.0)
+            half_w = self._plot_rng.uniform(5.0, 14.0)
+            half_h = self._plot_rng.uniform(4.0, 12.0)
+            outline, fill = palette[index % len(palette)]
+            dcg.DrawRect(
+                self.C,
+                pmin=(cx - half_w, cy - half_h),
+                pmax=(cx + half_w, cy + half_h),
+                color=outline,
+                fill=fill,
+                thickness=-2,
+            )
+
+        for index in range(10):
+            x = self._plot_rng.uniform(-90.0, 90.0)
+            y = self._plot_rng.uniform(-90.0, 90.0)
+            radius = self._plot_rng.uniform(3.0, 8.0)
+            dcg.DrawCircle(
+                self.C,
+                center=(x, y),
+                radius=radius,
+                color=(184, 116, 236, 230),
+                fill=(184, 116, 236, 70),
+                thickness=-2,
+            )
+
     def _refresh_slot(self, i):
         if self.connected[i]:
             self.slot_labels[i].value = f"  [{i}] {self.names[i] or '(unnamed)'}"
@@ -245,9 +339,17 @@ class InputDemo:
             )
         else:
             self.history_labels[i].value = "       Events:  ---"
+
+
+async def main_loop(viewport):
+    while viewport.context.running:
+        viewport.render_frame()
+        await asyncio.sleep(1.0 / 120.0)
+
+
 if __name__ == "__main__":
     demo = InputDemo()
     try:
-        loop.run_until_complete(run_viewport_loop(demo.C.viewport))
+        loop.run_until_complete(main_loop(demo.C.viewport))
     except Exception as e:
         print(f"Error: {e}")

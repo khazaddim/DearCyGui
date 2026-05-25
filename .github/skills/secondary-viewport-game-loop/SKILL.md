@@ -1,6 +1,6 @@
 ---
 name: secondary-viewport-game-loop
-description: "Use when: adding a secondary viewport / second OS window / second physical screen to a DearCyGui game or tool that uses frame-based rendering and event-driven gamepad handlers. Covers why run_viewport_loop() conflicts with frame-latched GamepadButtonHandler edges and shows the shared manual render-loop pattern for operator screens, map screens, or hidden control displays."
+description: "Use when: adding a secondary viewport / second OS window / second physical screen to a DearCyGui game or tool that uses frame-based rendering and event-driven gamepad handlers. Covers why run_viewport_loop() conflicts with frame-latched GamepadButtonHandler edges, how to render multiple viewports from one manual loop, and how to place a hidden operator screen on another monitor in fullscreen."
 ---
 
 # Secondary Viewport Game Loop
@@ -14,6 +14,8 @@ This is the recommended pattern for the game work built on `Fancy_Demo.py`: a pl
 - "second viewport"
 - "secondary window"
 - "second monitor" / "second physical screen"
+- "fullscreen operator screen"
+- "fullscreen on monitor 2"
 - "operator screen" / "GM screen" / "hidden map screen"
 - Any multi-viewport DearCyGui workflow that also depends on `GamepadButtonHandler`
 - Any task that mixes event-driven gamepad handlers with a second OS-level viewport
@@ -84,6 +86,13 @@ class MultiViewportDemo:
             height=700,
             title="Operator View",
         )
+
+        displays = secondary.viewport.displays
+        if len(displays) > 1:
+            operator_display = displays[1]
+            secondary.viewport.x_pos = int(operator_display.bounds.x1)
+            secondary.viewport.y_pos = int(operator_display.bounds.y1)
+            secondary.viewport.fullscreen = True
 
         with dcg.Window(secondary, primary=True):
             dcg.Text(secondary, value="Hidden map / debug screen")
@@ -156,14 +165,50 @@ If viewport construction does not need `await`, a normal synchronous method is e
 
 ## Physical Monitor Notes
 
-This skill does not assume automatic monitor placement. Opening on a second physical screen may require explicit viewport position APIs if and when the app wants deterministic placement on monitor 2.
+DearCyGui already exposes what you need for the common second-screen case:
+
+- `viewport.displays` to inspect available monitors
+- `viewport.x_pos` / `viewport.y_pos` to move the viewport
+- `viewport.fullscreen = True` to make the operator screen fill the monitor
+
+The usual pattern is:
+
+1. initialize the secondary viewport
+2. query `displays`
+3. move the viewport to the target display's `bounds.x1` / `bounds.y1`
+4. set `fullscreen = True`
+
+That is usually a better fit for a hidden operator screen than `maximized`, because fullscreen removes normal OS chrome and fills the entire display.
 
 That monitor-placement concern is separate from the gamepad-input concern:
 
 - monitor placement = where the second viewport appears
+- fullscreen = whether it occupies the whole target monitor
 - shared manual render loop = how button handlers remain reliable
 
 Treat them as two separate implementation steps.
+
+## Fullscreen Example
+
+```python
+secondary = dcg.Context()
+secondary.queue = AsyncPoolExecutor()
+secondary.viewport.wait_for_input = True
+secondary.viewport.initialize(
+    width=900,
+    height=700,
+    title="Operator View",
+)
+
+displays = secondary.viewport.displays
+if len(displays) > 1:
+    screen2 = displays[1]
+    secondary.viewport.x_pos = int(screen2.bounds.x1)
+    secondary.viewport.y_pos = int(screen2.bounds.y1)
+    secondary.viewport.fullscreen = True
+```
+
+If there is only one display, you can skip fullscreen or choose to fullscreen on the primary display instead.
 
 ## Pitfalls
 
@@ -171,6 +216,7 @@ Treat them as two separate implementation steps.
 - Do not assume button handlers are equivalent to axis handlers; button edges are more sensitive to event ordering.
 - Do not create a second viewport and forget to render it every frame.
 - Do not return unscheduled coroutine objects from button callbacks.
+- Do not assume monitor selection happens automatically when you set fullscreen; place the viewport on the intended display first when deterministic screen choice matters.
 - Do not overcomplicate the first spike: start with a text label or simple plot before building the full hidden map UI.
 
 ## Recommended First Spike

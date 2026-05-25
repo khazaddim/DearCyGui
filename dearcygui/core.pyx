@@ -2918,7 +2918,15 @@ cdef class Gamepad:
 
     @property
     def name(self) -> str:
-        """Human-readable name reported by the controller, or '' if empty."""
+        """Hardware controller name reported by SDL3, or '' if empty.
+
+        This is the device name SDL3 obtains from the underlying
+        driver / HID descriptor (e.g. ``'Xbox Wireless Controller'``,
+        ``'PS5 Controller'``, ``'Nintendo Switch Pro Controller'``).
+        It is read-only and identifies the *hardware*, not the player
+        using it. To associate a player label with a slot, keep a
+        separate mapping such as ``player_names[gamepad.slot] = 'P1'``.
+        """
         cdef const char* n = dcg_gamepad_name(self._slot)
         if n == NULL or n[0] == 0:
             return ""

@@ -199,6 +199,17 @@ cdef class GamepadButtonHandler(baseHandler):
     cdef bint check_state(self, baseItem) noexcept nogil
     cdef void run_handler(self, baseItem) noexcept nogil
 
+cdef class GamepadAxisHandler(baseHandler):
+    cdef int32_t _slot     # -1 == any controller, else 0..DCG_MAX_GAMEPADS-1
+    cdef int32_t _axis     # GamepadAxis enum value
+    cdef float _deadzone   # absolute threshold below which raw value is treated as 0
+    # Per-slot last reported (deadzone-filtered) value. Size MUST match
+    # DCG_MAX_GAMEPADS (8) from backend.h; kept as a literal because the
+    # extern constant is not a compile-time value in Cython.
+    cdef float _last_value[8]
+    cdef bint check_state(self, baseItem) noexcept nogil
+    cdef void run_handler(self, baseItem) noexcept nogil
+
 cdef class MouseClickHandler(baseHandler):
     cdef MouseButton _button
     cdef bint _repeat

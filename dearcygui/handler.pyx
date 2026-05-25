@@ -20,20 +20,22 @@ from cpython.sequence cimport PySequence_Check
 cimport cython
 from cython.operator cimport dereference
 from libc.string cimport strcmp
-from libcpp.cmath cimport fmax, fmin, fmod
+from libcpp.cmath cimport fmax, fmin, fmod, fabs
 
 from .core cimport baseHandler, baseItem, lock_gil_friendly,\
     itemState, lock_im_context, unlock_im_context
 from .c_types cimport DCGMutex, unique_lock, string_to_str, string_from_str
 from .types cimport make_Positioning, read_rect, Rect,\
     is_Key, make_Key, Positioning,\
-    GamepadButton, is_GamepadButton, make_GamepadButton
+    GamepadButton, is_GamepadButton, make_GamepadButton,\
+    GamepadAxis, is_GamepadAxis, make_GamepadAxis
 from .widget cimport SharedBool
 from .wrapper cimport imgui
 from .backends.backend cimport DCG_MAX_GAMEPADS,\
     dcg_gamepad_connected,\
     dcg_gamepad_button_pressed,\
-    dcg_gamepad_button_released
+    dcg_gamepad_button_released,\
+    dcg_gamepad_axis
 
 from traceback import format_exc as _format_exc
 from warnings import warn as _warn
@@ -1652,6 +1654,146 @@ cdef class GamepadButtonHandler(baseHandler):
                     self.context.queue_callback(
                         self._callback, self, item,
                         (int(s), make_GamepadButton(self._button))
+                    )
+
+
+cdef class GamepadAxisHandler(baseHandler):
+    """
+    Handler that fires when a gamepad analog axis value changes outside the
+    deadzone.
+
+    Each frame the handler reads the raw axis value via ``dcg_gamepad_axis``
+    and applies a deadzone: any ``|raw| < deadzone`` is treated as ``0.0``.
+    A callback is queued only when the filtered value differs from the
+    previously reported value for that slot. This produces:
+
+    - No callbacks while the stick is at rest inside the deadzone.
+    - A stream of callbacks while the stick is moving outside the deadzone
+      (one per frame the value changes).
+    - A single "return to center" callback with value ``0.0`` when the stick
+      crosses back into the deadzone.
+
+    Properties:
+        controller (int): Controller slot to monitor (0..7), or -1 for any.
+        axis (GamepadAxis): The axis to watch.
+        deadzone (float): Absolute threshold (0.0..1.0). Default 0.15.
+
+    Callback receives:
+        - data: a tuple ``(controller_slot, axis_value)`` where
+          ``axis_value`` is the deadzone-filtered float in
+          ``[-1.0, 1.0]`` (or ``[0.0, 1.0]`` for triggers).
+    """
+    def __cinit__(self):
+        self._slot = -1
+        self._axis = <int>GamepadAxis.LEFT_X
+        self._deadzone = 0.15
+        cdef int32_t i
+        for i in range(8):
+            self._last_value[i] = 0.0
+
+    @property
+    def controller(self):
+        """Controller slot (0..7), or -1 for any connected controller."""
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        return self._slot
+
+    @controller.setter
+    def controller(self, value):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        cdef int32_t v
+        if value is None:
+            v = -1
+        else:
+            v = <int32_t>int(value)
+        if v < -1 or v >= DCG_MAX_GAMEPADS:
+            raise ValueError(
+                f"controller must be -1 (any) or 0..{DCG_MAX_GAMEPADS - 1}, got {v}"
+            )
+        self._slot = v
+        # Reset per-slot tracking so the next frame doesn't fire a stale event.
+        cdef int32_t i
+        for i in range(8):
+            self._last_value[i] = 0.0
+
+    @property
+    def axis(self):
+        """The gamepad axis this handler is watching."""
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        return make_GamepadAxis(self._axis)
+
+    @axis.setter
+    def axis(self, value):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        if value is None or not is_GamepadAxis(value):
+            raise TypeError(f"axis must be a valid GamepadAxis, not {value}")
+        self._axis = <int32_t>make_GamepadAxis(value)
+        cdef int32_t i
+        for i in range(8):
+            self._last_value[i] = 0.0
+
+    @property
+    def deadzone(self):
+        """Absolute threshold below which the axis is treated as 0.0."""
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        return self._deadzone
+
+    @deadzone.setter
+    def deadzone(self, value):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        cdef float v = <float>float(value)
+        if v < 0.0 or v > 1.0:
+            raise ValueError(f"deadzone must be in [0.0, 1.0], got {v}")
+        self._deadzone = v
+
+    cdef bint check_state(self, baseItem item) noexcept nogil:
+        # Non-mutating: reports whether *some* monitored slot has a
+        # deadzone-filtered value different from its last reported value.
+        cdef int32_t s
+        cdef float raw, cur
+        if self._slot >= 0:
+            raw = dcg_gamepad_axis(self._slot, self._axis)
+            cur = 0.0 if fabs(raw) < self._deadzone else raw
+            return fabs(cur - self._last_value[self._slot]) > 1e-4
+        for s in range(DCG_MAX_GAMEPADS):
+            raw = dcg_gamepad_axis(s, self._axis)
+            cur = 0.0 if fabs(raw) < self._deadzone else raw
+            if fabs(cur - self._last_value[s]) > 1e-4:
+                return True
+        return False
+
+    cdef void run_handler(self, baseItem item) noexcept nogil:
+        cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)
+        if not self._enabled or self._callback is None:
+            return
+        cdef int32_t s
+        cdef float raw, cur
+        if self._slot >= 0:
+            raw = dcg_gamepad_axis(self._slot, self._axis)
+            cur = 0.0 if fabs(raw) < self._deadzone else raw
+            if fabs(cur - self._last_value[self._slot]) > 1e-4:
+                self._last_value[self._slot] = cur
+                with gil:
+                    self.context.queue_callback(
+                        self._callback, self, item,
+                        (int(self._slot), float(cur))
+                    )
+            return
+        # any-controller mode: fire one callback per slot whose filtered value changed
+        for s in range(DCG_MAX_GAMEPADS):
+            raw = dcg_gamepad_axis(s, self._axis)
+            cur = 0.0 if fabs(raw) < self._deadzone else raw
+            if fabs(cur - self._last_value[s]) > 1e-4:
+                self._last_value[s] = cur
+                with gil:
+                    self.context.queue_callback(
+                        self._callback, self, item,
+                        (int(s), float(cur))
                     )
 
 

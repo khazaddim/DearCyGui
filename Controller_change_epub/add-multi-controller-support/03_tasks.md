@@ -123,17 +123,17 @@
 **Goal:** `GamepadAxisHandler` fires callbacks when analog values change, with deadzone filtering.
 
 ### 4.1 Handler Implementation
-- [ ] Implement `GamepadAxisHandler` cdef class in `handler.pyx`
-- [ ] Support `controller` parameter (-1 for any, 0-7 for specific)
-- [ ] Support `axis` parameter (GamepadAxis enum)
-- [ ] Support `deadzone` parameter (default 0.15)
-- [ ] Track `_last_value` for change detection
-- [ ] Implement `check()` method - fire callback when value changes beyond deadzone
-- [ ] Fire callback with (controller_slot, axis_value)
+- [x] Implement `GamepadAxisHandler` cdef class in `handler.pyx`
+- [x] Support `controller` parameter (-1 for any, 0-7 for specific)
+- [x] Support `axis` parameter (GamepadAxis enum)
+- [x] Support `deadzone` parameter (default 0.15)
+- [x] Track `_last_value` for change detection
+- [x] Implement `check()` method - fire callback when value changes beyond deadzone
+- [x] Fire callback with (controller_slot, axis_value)
 
 ### 4.2 Declarations and Exports
-- [ ] Add declarations to `handler.pxd`
-- [ ] Update `__init__.py` exports
+- [x] Add declarations to `handler.pxd`
+- [x] Update `__init__.py` exports
 - [ ] Add to type stubs
 
 ### 4.3 Milestone 4 Verification

@@ -13,6 +13,7 @@ lib_location.txt
 version_number.txt
 dearcygui.egg-info/
 build/
+Demos/
 # Ignore only subdirectories
 sandbox/*/
 src/CMakeFiles/

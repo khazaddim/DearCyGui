@@ -33414,6 +33414,211 @@ class PlotBars(plotElementXY):
         ...
 
 
+class PlotColorBars(plotElementXY):
+    """
+    Plots colored bars from X,Y data points using a custom native draw loop.
+
+    Supports per-bar fill colors, optional border colors, horizontal or
+    vertical orientation, and viewport-edge anchoring resolved from the live
+    visible plot limits during native plot rendering.
+
+    """
+    def __init__(self, context : Context, *, X : Array = ..., Y : Array = ..., anchor : str = "baseline", anchor_value : float = 0.0, attach : Any = ..., axes : tuple['Axis', 'Axis'] = (Axis.X1, Axis.Y1), before : 'plotElement' | None = None, children : Sequence['uiItem'] = [], colors : Sequence[Color] | Color | None = None, enabled : bool = True, font : 'baseFont' | None = None, horizontal : bool = False, ignore_fit : bool = False, label : str = "", legend_button : MouseButton = MouseButton.RIGHT, legend_handlers : Sequence['baseHandler'] | 'baseHandler' | None = [], line_colors : Sequence[Color] | Color | None = None, next_sibling : 'plotElement' | None = None, no_legend : bool = False, normalized_max_fraction : float = 1.0, parent : 'Plot' | None = None, previous_sibling : 'plotElement' | None = None, show : bool = True, theme : Any = ..., user_data : Any = ..., value_space : str = "data", weight : float = 1.0):
+        """
+        Parameters
+        ----------
+        - X: Bar centers for vertical mode, or bar lengths for horizontal mode.
+        - Y: Bar lengths for vertical mode, or bar centers for horizontal mode.
+        - anchor: One of `"baseline"`, `"axis_min"`, or `"axis_max"`.
+        - anchor_value: Baseline used when `anchor="baseline"`.
+        - attach: Whether to attach the item to a parent. Default is None (auto)
+        - axes: The X and Y axes that the plot element is attached to.
+        - before: Attach the item just before the target item. Default is None (disabled)
+        - children: List of all the children of the item, from first rendered, to last rendered.
+        - colors: Optional broadcast fill color or one fill color per bar.
+        - enabled: Whether this element is currently visible in the plot.
+        - font: Font used for rendering this element's text.
+        - horizontal: Whether to render bars horizontally instead of vertically.
+        - ignore_fit: Whether to exclude this element when auto-fitting axes.
+        - label: Text label for the plot element.
+        - legend_button: Mouse button that opens this element's legend popup.
+        - legend_handlers: Event handlers attached to this element's legend entry.
+        - line_colors: Optional broadcast border color or one border color per bar.
+        - next_sibling: Child of the parent rendered just after this item.
+        - no_legend: Whether to hide this element from the plot legend.
+        - normalized_max_fraction: Maximum visible-axis occupancy used in normalized mode.
+        - parent: Parent of the item in the rendering tree.
+        - previous_sibling: Child of the parent rendered just before this item.
+        - show: Controls whether the plot element is visible.
+        - theme: Visual theme applied to the plot element.
+        - user_data: User data of any type.
+        - value_space: Length interpretation mode, either "data" or "normalized".
+        - weight: Bar thickness in plot units on the orthogonal axis.
+        """
+        ...
+
+
+    def configure(self, *, X : Array = ..., Y : Array = ..., anchor : str = "baseline", anchor_value : float = 0.0, axes : tuple['Axis', 'Axis'] = (Axis.X1, Axis.Y1), children : Sequence['uiItem'] = [], colors : Sequence[Color] | Color | None = None, enabled : bool = True, font : 'baseFont' | None = None, horizontal : bool = False, ignore_fit : bool = False, label : str = "", legend_button : MouseButton = MouseButton.RIGHT, legend_handlers : Sequence['baseHandler'] | 'baseHandler' | None = [], line_colors : Sequence[Color] | Color | None = None, next_sibling : 'plotElement' | None = None, no_legend : bool = False, normalized_max_fraction : float = 1.0, parent : 'Plot' | None = None, previous_sibling : 'plotElement' | None = None, show : bool = True, theme : Any = ..., user_data : Any = ..., value_space : str = "data", weight : float = 1.0) -> None:
+        """
+        Shortcut to set multiple attributes at once.
+
+        Parameters
+        ----------
+        - X: Bar centers for vertical mode, or bar lengths for horizontal mode.
+        - Y: Bar lengths for vertical mode, or bar centers for horizontal mode.
+        - anchor: One of `"baseline"`, `"axis_min"`, or `"axis_max"`.
+        - anchor_value: Baseline used when `anchor="baseline"`.
+        - axes: The X and Y axes that the plot element is attached to.
+        - children: List of all the children of the item, from first rendered, to last rendered.
+        - colors: Optional broadcast fill color or one fill color per bar.
+        - enabled: Whether this element is currently visible in the plot.
+        - font: Font used for rendering this element's text.
+        - horizontal: Whether to render bars horizontally instead of vertically.
+        - ignore_fit: Whether to exclude this element when auto-fitting axes.
+        - label: Text label for the plot element.
+        - legend_button: Mouse button that opens this element's legend popup.
+        - legend_handlers: Event handlers attached to this element's legend entry.
+        - line_colors: Optional broadcast border color or one border color per bar.
+        - next_sibling: Child of the parent rendered just after this item.
+        - no_legend: Whether to hide this element from the plot legend.
+        - normalized_max_fraction: Maximum visible-axis occupancy used in normalized mode.
+        - parent: Parent of the item in the rendering tree.
+        - previous_sibling: Child of the parent rendered just before this item.
+        - show: Controls whether the plot element is visible.
+        - theme: Visual theme applied to the plot element.
+        - user_data: User data of any type.
+        - value_space: Length interpretation mode, either "data" or "normalized".
+        - weight: Bar thickness in plot units on the orthogonal axis.
+        """
+        ...
+
+
+    @property
+    def anchor(self) -> str:
+        """
+        Bar anchor mode.
+
+        Accepted values are `"baseline"`, `"axis_min"`, and `"axis_max"`.
+
+        """
+        ...
+
+
+    @anchor.setter
+    def anchor(self, value : str):
+        ...
+
+
+    @property
+    def anchor_value(self) -> float:
+        """
+        Baseline value used when `anchor` is `"baseline"`.
+
+        """
+        ...
+
+
+    @anchor_value.setter
+    def anchor_value(self, value : float):
+        ...
+
+
+    @property
+    def colors(self) -> list[Color]:
+        """
+        Fill colors for the series.
+
+        May contain zero colors, one broadcast color, or one color per bar.
+
+        """
+        ...
+
+
+    @colors.setter
+    def colors(self, value : Sequence[Color] | Color | None):
+        ...
+
+
+    @property
+    def horizontal(self) -> bool:
+        """
+        Whether to render bars horizontally instead of vertically.
+
+        When True, `Y` contains bar centers and `X` contains bar lengths.
+        When False, `X` contains bar centers and `Y` contains bar lengths.
+
+        """
+        ...
+
+
+    @horizontal.setter
+    def horizontal(self, value : bool):
+        ...
+
+
+    @property
+    def line_colors(self) -> list[Color]:
+        """
+        Optional border colors for the series.
+
+        May contain zero colors, one broadcast color, or one color per bar.
+
+        """
+        ...
+
+
+    @line_colors.setter
+    def line_colors(self, value : Sequence[Color] | Color | None):
+        ...
+
+
+    @property
+    def weight(self) -> float:
+        """
+        Bar thickness in plot units on the orthogonal axis.
+
+        """
+        ...
+
+
+    @weight.setter
+    def weight(self, value : float):
+        ...
+
+
+    @property
+    def value_space(self) -> str:
+        """
+        Length interpretation mode for the bar values.
+
+        - "data": use raw X/Y lengths directly in axis units.
+        - "normalized": scale lengths by the visible primary-axis span.
+
+        """
+        ...
+
+
+    @value_space.setter
+    def value_space(self, value : str):
+        ...
+
+
+    @property
+    def normalized_max_fraction(self) -> float:
+        """
+        Occupancy cap used when `value_space` is "normalized".
+
+        Effective length is scaled by this fraction of the current visible span.
+
+        """
+        ...
+
+
+    @normalized_max_fraction.setter
+    def normalized_max_fraction(self, value : float):
+        ...
+
+
 class PlotDigital(plotElementXY):
     """
     Plots a digital signal as a step function from X,Y data.

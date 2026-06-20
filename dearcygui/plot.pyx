@@ -2981,6 +2981,307 @@ cdef class PlotBars(plotElementXY):
                                     0,
                                     self._X.stride())
 
+cdef class PlotColorBars(plotElementXY):
+    """
+    Plots colored bars from X,Y data points using a custom native draw loop.
+
+    Supports per-bar fill colors, optional border colors, horizontal or
+    vertical orientation, and viewport-edge anchoring that resolves against the
+    current plot limits during the same render pass as the plot itself.
+    """
+    def __cinit__(self):
+        self._colors = DCGVector[int32_t]()
+        self._line_colors = DCGVector[int32_t]()
+        self._weight = 1.
+        self._horizontal = False
+        self._anchor_mode = 0
+        self._anchor_value = 0.
+        self._value_space = 0
+        self._normalized_max_fraction = 1.
+
+    cdef void _validate_configuration(self):
+        cdef Py_ssize_t x_size = self._X.size()
+        cdef Py_ssize_t y_size = self._Y.size()
+        cdef Py_ssize_t count
+
+        if x_size != 0 and y_size != 0 and x_size != y_size:
+            raise ValueError("PlotColorBars requires len(X) == len(Y)")
+        if self._weight <= 0:
+            raise ValueError("PlotColorBars weight must be > 0")
+        if self._anchor_mode < 0 or self._anchor_mode > 2:
+            raise ValueError("PlotColorBars anchor must be 'baseline', 'axis_min', or 'axis_max'")
+        if self._value_space < 0 or self._value_space > 1:
+            raise ValueError("PlotColorBars value_space must be 'data' or 'normalized'")
+        if self._normalized_max_fraction <= 0. or self._normalized_max_fraction > 1.:
+            raise ValueError("PlotColorBars normalized_max_fraction must be > 0 and <= 1")
+        if x_size == 0 or y_size == 0:
+            return
+
+        count = x_size
+        if self._colors.size() > 1 and self._colors.size() != count:
+            raise ValueError("PlotColorBars colors must be empty, a single color, or one color per bar")
+        if self._line_colors.size() > 1 and self._line_colors.size() != count:
+            raise ValueError("PlotColorBars line_colors must be empty, a single color, or one color per bar")
+
+    @property
+    def X(self):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        return get_object_from_1D_array_view(self._X)
+
+    @X.setter
+    def X(self, value):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        if value is None:
+            self._X.reset()
+        else:
+            self._X.reset(value)
+        self._validate_configuration()
+
+    @property
+    def Y(self):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        return get_object_from_1D_array_view(self._Y)
+
+    @Y.setter
+    def Y(self, value):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        if value is None:
+            self._Y.reset()
+        else:
+            self._Y.reset(value)
+        self._validate_configuration()
+
+    @property
+    def colors(self):
+        cdef unique_lock[DCGMutex] m
+        cdef float[4] color
+        cdef int i
+        lock_gil_friendly(m, self.mutex)
+        result = []
+        for i in range(<int>self._colors.size()):
+            unparse_color(color, <uint32_t>self._colors[i])
+            result.append(list(color))
+        return result
+
+    @colors.setter
+    def colors(self, value):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        reset_color_vector(self._colors, value)
+        self._validate_configuration()
+
+    @property
+    def line_colors(self):
+        cdef unique_lock[DCGMutex] m
+        cdef float[4] color
+        cdef int i
+        lock_gil_friendly(m, self.mutex)
+        result = []
+        for i in range(<int>self._line_colors.size()):
+            unparse_color(color, <uint32_t>self._line_colors[i])
+            result.append(list(color))
+        return result
+
+    @line_colors.setter
+    def line_colors(self, value):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        reset_color_vector(self._line_colors, value)
+        self._validate_configuration()
+
+    @property
+    def horizontal(self):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        return self._horizontal
+
+    @horizontal.setter
+    def horizontal(self, bint value):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        self._horizontal = value
+
+    @property
+    def weight(self):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        return self._weight
+
+    @weight.setter
+    def weight(self, double value):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        self._weight = value
+        self._validate_configuration()
+
+    @property
+    def anchor(self):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        if self._anchor_mode == 1:
+            return "axis_min"
+        if self._anchor_mode == 2:
+            return "axis_max"
+        return "baseline"
+
+    @anchor.setter
+    def anchor(self, value):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        if value == "baseline":
+            self._anchor_mode = 0
+        elif value == "axis_min":
+            self._anchor_mode = 1
+        elif value == "axis_max":
+            self._anchor_mode = 2
+        else:
+            raise ValueError("PlotColorBars anchor must be 'baseline', 'axis_min', or 'axis_max'")
+        self._validate_configuration()
+
+    @property
+    def anchor_value(self):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        return self._anchor_value
+
+    @anchor_value.setter
+    def anchor_value(self, double value):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        self._anchor_value = value
+
+    @property
+    def value_space(self):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        if self._value_space == 1:
+            return "normalized"
+        return "data"
+
+    @value_space.setter
+    def value_space(self, value):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        if value == "data":
+            self._value_space = 0
+        elif value == "normalized":
+            self._value_space = 1
+        else:
+            raise ValueError("PlotColorBars value_space must be 'data' or 'normalized'")
+        self._validate_configuration()
+
+    @property
+    def normalized_max_fraction(self):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        return self._normalized_max_fraction
+
+    @normalized_max_fraction.setter
+    def normalized_max_fraction(self, double value):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        self._normalized_max_fraction = value
+        self._validate_configuration()
+
+    cdef void draw_element(self) noexcept nogil:
+        cdef int32_t size
+        cdef int32_t i
+        cdef double center
+        cdef double length
+        cdef double start_value
+        cdef double end_value
+        cdef double half_weight
+        cdef double first_coord
+        cdef double second_coord
+        cdef float tmp
+        cdef imgui.ImVec2 pmin
+        cdef imgui.ImVec2 pmax
+        cdef implot.ImPlotRect limits
+        cdef imgui.ImDrawList* draw_list
+        cdef imgui.ImU32 default_fill
+        cdef imgui.ImU32 default_line
+        cdef imgui.ImU32 fill_col
+        cdef imgui.ImU32 line_col
+        cdef float line_weight
+        cdef double value_span
+
+        self.check_arrays()
+        size = min(self._X.size(), self._Y.size())
+        if size == 0:
+            return
+
+        if not implot.BeginItem(self._imgui_label.c_str(), self._flags, implot.ImPlotCol_Fill):
+            return
+
+        limits = implot.GetPlotLimits(self._axes[0], self._axes[1])
+        draw_list = implot.GetPlotDrawList()
+        half_weight = self._weight * 0.5
+        default_fill = GetCurrentItemColorU32(implot.ImPlotCol_Fill)
+        default_line = GetCurrentItemColorU32(implot.ImPlotCol_Line)
+        line_weight = GetCurrentItemLineWeight()
+
+        implot.PushPlotClipRect(0.)
+        try:
+            for i in range(size):
+                start_value = resolve_anchor_value(limits,
+                                                   self._horizontal,
+                                                   self._anchor_mode,
+                                                   self._anchor_value)
+                if self._horizontal:
+                    center = get_1d_plot_value(self._Y, i)
+                    length = get_1d_plot_value(self._X, i)
+                    if self._value_space == 1:
+                        value_span = limits.X.Max - limits.X.Min
+                        length = length * self._normalized_max_fraction * value_span
+                    end_value = start_value - length if self._anchor_mode == 2 else start_value + length
+                    first_coord = center - half_weight
+                    second_coord = center + half_weight
+                    pmin = implot.PlotToPixels(start_value, first_coord, self._axes[0], self._axes[1])
+                    pmax = implot.PlotToPixels(end_value, second_coord, self._axes[0], self._axes[1])
+                else:
+                    center = get_1d_plot_value(self._X, i)
+                    length = get_1d_plot_value(self._Y, i)
+                    if self._value_space == 1:
+                        value_span = limits.Y.Max - limits.Y.Min
+                        length = length * self._normalized_max_fraction * value_span
+                    end_value = start_value - length if self._anchor_mode == 2 else start_value + length
+                    first_coord = center - half_weight
+                    second_coord = center + half_weight
+                    pmin = implot.PlotToPixels(first_coord, start_value, self._axes[0], self._axes[1])
+                    pmax = implot.PlotToPixels(second_coord, end_value, self._axes[0], self._axes[1])
+
+                if pmin.x > pmax.x:
+                    tmp = pmin.x
+                    pmin.x = pmax.x
+                    pmax.x = tmp
+                if pmin.y > pmax.y:
+                    tmp = pmin.y
+                    pmin.y = pmax.y
+                    pmax.y = tmp
+
+                fill_col = get_vector_color(self._colors, i, default_fill)
+                draw_list.AddRectFilled(pmin,
+                                        pmax,
+                                        fill_col,
+                                        0.,
+                                        <imgui.ImDrawFlags>0)
+
+                if self._line_colors.size() > 0:
+                    line_col = get_vector_color(self._line_colors, i, default_line)
+                    draw_list.AddRect(pmin,
+                                      pmax,
+                                      line_col,
+                                      0.,
+                                      <imgui.ImDrawFlags>0,
+                                      line_weight)
+        finally:
+            implot.PopPlotClipRect()
+            implot.EndItem()
+
 cdef class PlotStairs(plotElementXY):
     """
     Plots a stair-step graph from X,Y data points.

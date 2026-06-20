@@ -2981,6 +2981,59 @@ cdef class PlotBars(plotElementXY):
                                     0,
                                     self._X.stride())
 
+
+cdef inline double _get_1d_plot_value(DCG1DArrayView values, int32_t index) noexcept nogil:
+    if values.type() == DCG_INT32:
+        return <double>values.data[int32_t]()[index]
+    if values.type() == DCG_FLOAT:
+        return <double>values.data[float]()[index]
+    if values.type() == DCG_DOUBLE:
+        return values.data[double]()[index]
+    if values.type() == DCG_UINT8:
+        return <double>values.data[uint8_t]()[index]
+    return 0.
+
+
+cdef inline double _resolve_anchor_value(implot.ImPlotRect limits,
+                                         bint horizontal,
+                                         int32_t anchor_mode,
+                                         double anchor_value) noexcept nogil:
+    if anchor_mode == 1:
+        return limits.X.Min if horizontal else limits.Y.Min
+    if anchor_mode == 2:
+        return limits.X.Max if horizontal else limits.Y.Max
+    return anchor_value
+
+
+cdef inline imgui.ImU32 _get_vector_color(DCGVector[int32_t]& colors,
+                                          int32_t index,
+                                          imgui.ImU32 default_color) noexcept nogil:
+    cdef int32_t color_count = <int32_t>colors.size()
+    if color_count <= 0:
+        return default_color
+    if color_count == 1:
+        return <imgui.ImU32>colors[0]
+    if index < color_count:
+        return <imgui.ImU32>colors[index]
+    return default_color
+
+
+cdef void _reset_color_vector(DCGVector[int32_t]& colors, value):
+    cdef Py_ssize_t i
+    cdef Py_ssize_t count
+    colors.clear()
+    if value is None:
+        return
+    try:
+        colors.push_back(<int32_t>parse_color(value))
+        return
+    except Exception:
+        if not PySequence_Check(value):
+            raise
+    count = len(value)
+    for i in range(count):
+        colors.push_back(<int32_t>parse_color(value[i]))
+
 cdef class PlotColorBars(plotElementXY):
     """
     Plots colored bars from X,Y data points using a custom native draw loop.
@@ -3063,7 +3116,7 @@ cdef class PlotColorBars(plotElementXY):
         lock_gil_friendly(m, self.mutex)
         result = []
         for i in range(<int>self._colors.size()):
-            unparse_color(color, <uint32_t>self._colors[i])
+            unparse_color(color, <imgui.ImU32>self._colors[i])
             result.append(list(color))
         return result
 
@@ -3071,7 +3124,7 @@ cdef class PlotColorBars(plotElementXY):
     def colors(self, value):
         cdef unique_lock[DCGMutex] m
         lock_gil_friendly(m, self.mutex)
-        reset_color_vector(self._colors, value)
+        _reset_color_vector(self._colors, value)
         self._validate_configuration()
 
     @property
@@ -3082,7 +3135,7 @@ cdef class PlotColorBars(plotElementXY):
         lock_gil_friendly(m, self.mutex)
         result = []
         for i in range(<int>self._line_colors.size()):
-            unparse_color(color, <uint32_t>self._line_colors[i])
+            unparse_color(color, <imgui.ImU32>self._line_colors[i])
             result.append(list(color))
         return result
 
@@ -3090,7 +3143,7 @@ cdef class PlotColorBars(plotElementXY):
     def line_colors(self, value):
         cdef unique_lock[DCGMutex] m
         lock_gil_friendly(m, self.mutex)
-        reset_color_vector(self._line_colors, value)
+        _reset_color_vector(self._line_colors, value)
         self._validate_configuration()
 
     @property
@@ -3214,73 +3267,74 @@ cdef class PlotColorBars(plotElementXY):
         if size == 0:
             return
 
-        if not implot.BeginItem(self._imgui_label.c_str(), self._flags, implot.ImPlotCol_Fill):
-            return
+        with gil:
+            if not implot.BeginItem(self._imgui_label.c_str(), self._flags, implot.ImPlotCol_Fill):
+                return
 
-        limits = implot.GetPlotLimits(self._axes[0], self._axes[1])
-        draw_list = implot.GetPlotDrawList()
-        half_weight = self._weight * 0.5
-        default_fill = GetCurrentItemColorU32(implot.ImPlotCol_Fill)
-        default_line = GetCurrentItemColorU32(implot.ImPlotCol_Line)
-        line_weight = GetCurrentItemLineWeight()
+            limits = implot.GetPlotLimits(self._axes[0], self._axes[1])
+            draw_list = implot.GetPlotDrawList()
+            half_weight = self._weight * 0.5
+            default_fill = imgui.GetColorU32(implot.GetStyle().Colors[<int>implot.ImPlotCol_Fill])
+            default_line = imgui.GetColorU32(implot.GetStyle().Colors[<int>implot.ImPlotCol_Line])
+            line_weight = implot.GetStyle().LineWeight
 
-        implot.PushPlotClipRect(0.)
-        try:
-            for i in range(size):
-                start_value = resolve_anchor_value(limits,
-                                                   self._horizontal,
-                                                   self._anchor_mode,
-                                                   self._anchor_value)
-                if self._horizontal:
-                    center = get_1d_plot_value(self._Y, i)
-                    length = get_1d_plot_value(self._X, i)
-                    if self._value_space == 1:
-                        value_span = limits.X.Max - limits.X.Min
-                        length = length * self._normalized_max_fraction * value_span
-                    end_value = start_value - length if self._anchor_mode == 2 else start_value + length
-                    first_coord = center - half_weight
-                    second_coord = center + half_weight
-                    pmin = implot.PlotToPixels(start_value, first_coord, self._axes[0], self._axes[1])
-                    pmax = implot.PlotToPixels(end_value, second_coord, self._axes[0], self._axes[1])
-                else:
-                    center = get_1d_plot_value(self._X, i)
-                    length = get_1d_plot_value(self._Y, i)
-                    if self._value_space == 1:
-                        value_span = limits.Y.Max - limits.Y.Min
-                        length = length * self._normalized_max_fraction * value_span
-                    end_value = start_value - length if self._anchor_mode == 2 else start_value + length
-                    first_coord = center - half_weight
-                    second_coord = center + half_weight
-                    pmin = implot.PlotToPixels(first_coord, start_value, self._axes[0], self._axes[1])
-                    pmax = implot.PlotToPixels(second_coord, end_value, self._axes[0], self._axes[1])
+            implot.PushPlotClipRect(0.)
+            try:
+                for i in range(size):
+                    start_value = _resolve_anchor_value(limits,
+                                                        self._horizontal,
+                                                        self._anchor_mode,
+                                                        self._anchor_value)
+                    if self._horizontal:
+                        center = _get_1d_plot_value(self._Y, i)
+                        length = _get_1d_plot_value(self._X, i)
+                        if self._value_space == 1:
+                            value_span = limits.X.Max - limits.X.Min
+                            length = length * self._normalized_max_fraction * value_span
+                        end_value = start_value - length if self._anchor_mode == 2 else start_value + length
+                        first_coord = center - half_weight
+                        second_coord = center + half_weight
+                        pmin = implot.PlotToPixels(start_value, first_coord, self._axes[0], self._axes[1])
+                        pmax = implot.PlotToPixels(end_value, second_coord, self._axes[0], self._axes[1])
+                    else:
+                        center = _get_1d_plot_value(self._X, i)
+                        length = _get_1d_plot_value(self._Y, i)
+                        if self._value_space == 1:
+                            value_span = limits.Y.Max - limits.Y.Min
+                            length = length * self._normalized_max_fraction * value_span
+                        end_value = start_value - length if self._anchor_mode == 2 else start_value + length
+                        first_coord = center - half_weight
+                        second_coord = center + half_weight
+                        pmin = implot.PlotToPixels(first_coord, start_value, self._axes[0], self._axes[1])
+                        pmax = implot.PlotToPixels(second_coord, end_value, self._axes[0], self._axes[1])
 
-                if pmin.x > pmax.x:
-                    tmp = pmin.x
-                    pmin.x = pmax.x
-                    pmax.x = tmp
-                if pmin.y > pmax.y:
-                    tmp = pmin.y
-                    pmin.y = pmax.y
-                    pmax.y = tmp
+                    if pmin.x > pmax.x:
+                        tmp = pmin.x
+                        pmin.x = pmax.x
+                        pmax.x = tmp
+                    if pmin.y > pmax.y:
+                        tmp = pmin.y
+                        pmin.y = pmax.y
+                        pmax.y = tmp
 
-                fill_col = get_vector_color(self._colors, i, default_fill)
-                draw_list.AddRectFilled(pmin,
-                                        pmax,
-                                        fill_col,
-                                        0.,
-                                        <imgui.ImDrawFlags>0)
+                    fill_col = _get_vector_color(self._colors, i, default_fill)
+                    draw_list.AddRectFilled(pmin,
+                                            pmax,
+                                            fill_col,
+                                            0.,
+                                            <imgui.ImDrawFlags>0)
 
-                if self._line_colors.size() > 0:
-                    line_col = get_vector_color(self._line_colors, i, default_line)
-                    draw_list.AddRect(pmin,
-                                      pmax,
-                                      line_col,
-                                      0.,
-                                      <imgui.ImDrawFlags>0,
-                                      line_weight)
-        finally:
-            implot.PopPlotClipRect()
-            implot.EndItem()
+                    if self._line_colors.size() > 0:
+                        line_col = _get_vector_color(self._line_colors, i, default_line)
+                        draw_list.AddRect(pmin,
+                                          pmax,
+                                          line_col,
+                                          0.,
+                                          <imgui.ImDrawFlags>0,
+                                          line_weight)
+            finally:
+                implot.PopPlotClipRect()
+                implot.EndItem()
 
 cdef class PlotStairs(plotElementXY):
     """

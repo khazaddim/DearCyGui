@@ -1,0 +1,19 @@
+body {
+    font-family: serif;
+    line-height: 1.5;
+    margin: 5%;
+}
+
+h1, h2, h3 {
+    page-break-after: avoid;
+}
+
+pre, code {
+    font-family: monospace;
+    white-space: pre-wrap;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}

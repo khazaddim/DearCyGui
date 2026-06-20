@@ -1,0 +1,16 @@
+{
+  "metadata": {
+    "dc:title": "DearCyGui Study Guide: Multi-Controller Implementation",
+    "dc:creator": "Chris",
+    "dc:language": "en",
+    "dc:identifier": "dearcygui-study-guide-multicontroller"
+  },
+  "cover_image": "demo.gif",
+  "default_css": ["style.css"],
+  "chapters": [
+    {
+      "markdown": "STUDY_GUIDE_MULTICONTROLLER.md",
+      "css": ""
+    }
+  ]
+}

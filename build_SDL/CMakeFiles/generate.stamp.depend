@@ -1,0 +1,79 @@
+# CMake generation dependency list for this directory.
+C:/Chris/DearCyGui/.git/modules/thirdparty/SDL/HEAD
+C:/Chris/DearCyGui/build_SDL/CMakeFiles/3.31.4/CMakeCCompiler.cmake
+C:/Chris/DearCyGui/build_SDL/CMakeFiles/3.31.4/CMakeRCCompiler.cmake
+C:/Chris/DearCyGui/build_SDL/CMakeFiles/3.31.4/CMakeSystem.cmake
+C:/Chris/DearCyGui/build_SDL/CMakeFiles/SDL_build_config.h.intermediate
+C:/Chris/DearCyGui/build_SDL/CMakeFiles/git-data/grabRef.cmake
+C:/Chris/DearCyGui/thirdparty/SDL/CMakeLists.txt
+C:/Chris/DearCyGui/thirdparty/SDL/cmake/3rdparty.cmake
+C:/Chris/DearCyGui/thirdparty/SDL/cmake/CPackProjectConfig.cmake.in
+C:/Chris/DearCyGui/thirdparty/SDL/cmake/FindLibUSB.cmake
+C:/Chris/DearCyGui/thirdparty/SDL/cmake/GetGitRevisionDescription.cmake
+C:/Chris/DearCyGui/thirdparty/SDL/cmake/GetGitRevisionDescription.cmake.in
+C:/Chris/DearCyGui/thirdparty/SDL/cmake/PreseedEmscriptenCache.cmake
+C:/Chris/DearCyGui/thirdparty/SDL/cmake/PreseedMSVCCache.cmake
+C:/Chris/DearCyGui/thirdparty/SDL/cmake/SDL3Config.cmake.in
+C:/Chris/DearCyGui/thirdparty/SDL/cmake/cmake_uninstall.cmake.in
+C:/Chris/DearCyGui/thirdparty/SDL/cmake/macros.cmake
+C:/Chris/DearCyGui/thirdparty/SDL/cmake/sdl3.pc.in
+C:/Chris/DearCyGui/thirdparty/SDL/cmake/sdlchecks.cmake
+C:/Chris/DearCyGui/thirdparty/SDL/cmake/sdlcompilers.cmake
+C:/Chris/DearCyGui/thirdparty/SDL/cmake/sdlcpu.cmake
+C:/Chris/DearCyGui/thirdparty/SDL/cmake/sdlmanpages.cmake
+C:/Chris/DearCyGui/thirdparty/SDL/cmake/sdlplatform.cmake
+C:/Chris/DearCyGui/thirdparty/SDL/cmake/sdltargets.cmake
+C:/Chris/DearCyGui/thirdparty/SDL/include/build_config/SDL_build_config.h.cmake
+C:/Chris/DearCyGui/thirdparty/SDL/include/build_config/SDL_revision.h.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in
+C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeCInformation.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeCommonLanguageInclude.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDependentOption.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeGenericSystem.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeInitializeConfigs.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeLanguageInformation.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/CMakePackageConfigHelpers.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeParseArguments.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/CMakePushCheckState.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeRCInformation.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeSystemSpecificInformation.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeSystemSpecificInitialize.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/CPack.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/CPackComponent.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/CheckCCompilerFlag.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/CheckCSourceCompiles.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/CheckCSourceRuns.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/CheckCXXCompilerFlag.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/CheckCXXSourceCompiles.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/CheckIncludeFile.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/CheckLanguage.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/CheckLibraryExists.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/CheckLinkerFlag.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/CheckSourceCompiles.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/CheckStructHasMember.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/CheckSymbolExists.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/Compiler/CMakeCommonCompilerMacros.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/Compiler/MSVC-C.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/Compiler/MSVC.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/FindGit.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/FindPackageHandleStandardArgs.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/FindPackageMessage.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/FindPkgConfig.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/GNUInstallDirs.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/Internal/CMakeCLinkerInformation.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/Internal/CMakeCommonLinkerInformation.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/Internal/CheckCompilerFlag.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/Internal/CheckFlagCommonConfig.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/Internal/CheckLinkerFlag.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/Internal/CheckSourceCompiles.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/Internal/CheckSourceRuns.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-MSVC-C.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/Platform/Linker/Windows-MSVC.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/Platform/Windows-Initialize.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/Platform/Windows-MSVC-C.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/Platform/Windows-MSVC.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/Platform/Windows.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/Platform/WindowsPaths.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/WriteBasicConfigVersionFile.cmake
+C:/Program Files/CMake/share/cmake-3.31/Templates/CPackConfig.cmake.in

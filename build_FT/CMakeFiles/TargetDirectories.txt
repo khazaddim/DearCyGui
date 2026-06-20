@@ -1,0 +1,5 @@
+C:/Chris/DearCyGui/build_FT/CMakeFiles/freetype.dir
+C:/Chris/DearCyGui/build_FT/CMakeFiles/PACKAGE.dir
+C:/Chris/DearCyGui/build_FT/CMakeFiles/INSTALL.dir
+C:/Chris/DearCyGui/build_FT/CMakeFiles/ALL_BUILD.dir
+C:/Chris/DearCyGui/build_FT/CMakeFiles/ZERO_CHECK.dir

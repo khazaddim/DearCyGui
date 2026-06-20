@@ -1,0 +1,42 @@
+{
+  "metadata": {
+    "dc:title": "PlotColorBars Cython Walkthrough",
+    "dc:creator": "GitHub Copilot",
+    "dc:language": "en",
+    "dc:identifier": "plot-color-bars-cython-walkthrough"
+  },
+  "cover_image": "cover.png",
+  "default_css": [
+    "style.css"
+  ],
+  "chapters": [
+    {
+      "markdown": "00_overview.md",
+      "css": ""
+    },
+    {
+      "markdown": "01_change_history.md",
+      "css": ""
+    },
+    {
+      "markdown": "02_dearcygui_cython_context.md",
+      "css": ""
+    },
+    {
+      "markdown": "03_plotcolorbars_core.md",
+      "css": ""
+    },
+    {
+      "markdown": "04_normalized_mode.md",
+      "css": ""
+    },
+    {
+      "markdown": "05_public_api_and_demo.md",
+      "css": ""
+    },
+    {
+      "markdown": "06_learning_notes.md",
+      "css": ""
+    }
+  ]
+}

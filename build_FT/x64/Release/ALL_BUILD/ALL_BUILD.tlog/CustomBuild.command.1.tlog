@@ -1,0 +1,10 @@
+^C:\CHRIS\DEARCYGUI\THIRDPARTY\FREETYPE\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Chris/DearCyGui/thirdparty/freetype -BC:/Chris/DearCyGui/build_FT --check-stamp-file C:/Chris/DearCyGui/build_FT/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

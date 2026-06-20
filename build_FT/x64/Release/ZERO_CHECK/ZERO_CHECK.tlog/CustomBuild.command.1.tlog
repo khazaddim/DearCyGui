@@ -1,0 +1,10 @@
+^C:\CHRIS\DEARCYGUI\BUILD_FT\CMAKEFILES\1AC6349636F6860EE19BC74CE8574D74\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Chris/DearCyGui/thirdparty/freetype -BC:/Chris/DearCyGui/build_FT --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Chris/DearCyGui/build_FT/freetype.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

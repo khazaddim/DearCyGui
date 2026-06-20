@@ -1,0 +1,38 @@
+body {
+    font-family: Georgia, serif;
+    line-height: 1.6;
+    margin: 5%;
+    color: #222;
+}
+
+h1, h2, h3, h4 {
+    page-break-after: avoid;
+    color: #1a365d;
+}
+
+pre, code {
+    font-family: Consolas, monospace;
+    white-space: pre-wrap;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid #bbb;
+    padding: 0.4em;
+    text-align: left;
+}
+
+blockquote {
+    border-left: 4px solid #999;
+    padding-left: 1em;
+    color: #555;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}

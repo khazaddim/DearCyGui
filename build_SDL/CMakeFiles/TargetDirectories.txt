@@ -1,0 +1,7 @@
+C:/Chris/DearCyGui/build_SDL/CMakeFiles/SDL3-static.dir
+C:/Chris/DearCyGui/build_SDL/CMakeFiles/SDL_uclibc.dir
+C:/Chris/DearCyGui/build_SDL/CMakeFiles/uninstall.dir
+C:/Chris/DearCyGui/build_SDL/CMakeFiles/PACKAGE.dir
+C:/Chris/DearCyGui/build_SDL/CMakeFiles/INSTALL.dir
+C:/Chris/DearCyGui/build_SDL/CMakeFiles/ALL_BUILD.dir
+C:/Chris/DearCyGui/build_SDL/CMakeFiles/ZERO_CHECK.dir

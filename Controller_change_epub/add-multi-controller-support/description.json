@@ -1,0 +1,34 @@
+{
+  "metadata": {
+    "dc:title": "OpenSpec Proposal: add-multi-controller-support",
+    "dc:creator": "Chris",
+    "dc:language": "en",
+    "dc:identifier": "openspec-proposal-add-multi-controller-support"
+  },
+  "cover_image": "demo.gif",
+  "default_css": [
+    "style.css"
+  ],
+  "chapters": [
+    {
+      "markdown": "00_overview.md",
+      "css": ""
+    },
+    {
+      "markdown": "01_proposal.md",
+      "css": ""
+    },
+    {
+      "markdown": "02_design.md",
+      "css": ""
+    },
+    {
+      "markdown": "03_tasks.md",
+      "css": ""
+    },
+    {
+      "markdown": "04_spec-gamepad-input.md",
+      "css": ""
+    }
+  ]
+}

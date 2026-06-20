@@ -1,0 +1,34 @@
+{
+  "metadata": {
+    "dc:title": "Fancy Demo Guide: Multi-Controller API and Next UI Steps",
+    "dc:creator": "Chris",
+    "dc:language": "en",
+    "dc:identifier": "fancy-demo-guide-multicontroller-api"
+  },
+  "cover_image": "cover.png",
+  "default_css": [
+    "style.css"
+  ],
+  "chapters": [
+    {
+      "markdown": "00_overview.md",
+      "css": ""
+    },
+    {
+      "markdown": "01_fancy_demo_walkthrough.md",
+      "css": ""
+    },
+    {
+      "markdown": "02_multicontroller_api.md",
+      "css": ""
+    },
+    {
+      "markdown": "03_planning_notes.md",
+      "css": ""
+    },
+    {
+      "markdown": "04_image_overlay_mapping.md",
+      "css": ""
+    }
+  ]
+}

@@ -2982,15 +2982,17 @@ cdef class PlotBars(plotElementXY):
                                     self._X.stride())
 
 
-cdef inline double _get_1d_plot_value(DCG1DArrayView values, int32_t index) noexcept nogil:
+cdef inline double _get_1d_plot_value(DCG1DArrayView& values, int32_t index) noexcept nogil:
+    cdef char* base = <char*>values.data[uint8_t]()
+    cdef Py_ssize_t offset = <Py_ssize_t>index * <Py_ssize_t>values.stride()
     if values.type() == DCG_INT32:
-        return <double>values.data[int32_t]()[index]
+        return <double>(<int32_t*>(base + offset))[0]
     if values.type() == DCG_FLOAT:
-        return <double>values.data[float]()[index]
+        return <double>(<float*>(base + offset))[0]
     if values.type() == DCG_DOUBLE:
-        return values.data[double]()[index]
+        return (<double*>(base + offset))[0]
     if values.type() == DCG_UINT8:
-        return <double>values.data[uint8_t]()[index]
+        return <double>(<uint8_t*>(base + offset))[0]
     return 0.
 
 
@@ -3294,8 +3296,8 @@ cdef class PlotColorBars(plotElementXY):
                         end_value = start_value - length if self._anchor_mode == 2 else start_value + length
                         first_coord = center - half_weight
                         second_coord = center + half_weight
-                        pmin = implot.PlotToPixels(start_value, first_coord, self._axes[0], self._axes[1])
-                        pmax = implot.PlotToPixels(end_value, second_coord, self._axes[0], self._axes[1])
+                        pmin = implot.PlotToPixels(start_value, first_coord, -1, -1)
+                        pmax = implot.PlotToPixels(end_value, second_coord, -1, -1)
                     else:
                         center = _get_1d_plot_value(self._X, i)
                         length = _get_1d_plot_value(self._Y, i)
@@ -3305,8 +3307,8 @@ cdef class PlotColorBars(plotElementXY):
                         end_value = start_value - length if self._anchor_mode == 2 else start_value + length
                         first_coord = center - half_weight
                         second_coord = center + half_weight
-                        pmin = implot.PlotToPixels(first_coord, start_value, self._axes[0], self._axes[1])
-                        pmax = implot.PlotToPixels(second_coord, end_value, self._axes[0], self._axes[1])
+                        pmin = implot.PlotToPixels(first_coord, start_value, -1, -1)
+                        pmax = implot.PlotToPixels(second_coord, end_value, -1, -1)
 
                     if pmin.x > pmax.x:
                         tmp = pmin.x

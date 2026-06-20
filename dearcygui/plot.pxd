@@ -111,6 +111,16 @@ cdef class PlotBars(plotElementXY):
     cdef double _weight
     cdef void draw_element(self) noexcept nogil
 
+cdef class PlotColorBars(plotElementXY):
+    cdef DCGVector[int32_t] _colors
+    cdef DCGVector[int32_t] _line_colors
+    cdef double _weight
+    cdef bint _horizontal
+    cdef int32_t _anchor_mode
+    cdef double _anchor_value
+    cdef void _validate_configuration(self)
+    cdef void draw_element(self) noexcept nogil
+
 cdef class PlotStairs(plotElementXY):
     cdef void draw_element(self) noexcept nogil
 

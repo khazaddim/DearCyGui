@@ -97,6 +97,13 @@ If a regenerated `.cpp` appears as modified in `git status`, the rule of thumb i
 - **Cython 3.1.2 build error** — pin Cython to 3.1.6 in the venv.
 - **SDL3 CMake fails on first build** — make sure `cmake` is installed in the venv (`pip install cmake`) and a C++ compiler is available on PATH (MSVC Build Tools on Windows).
 - **Stale extension after `.pxd` edit** — `.pxd` changes affect every `.pyx` that cimports from it, plus their transitive consumers. The canonical command rebuilds everything; do not try to partial-rebuild a single file.
+- **Stale generated C++ after branch integration** — if MSVC reports an error in a generated file (`dearcygui/core.cpp`, `dearcygui/plot.cpp`, etc.) for code that is not present in the current `.pyx` source, the generated `.cpp` is stale. Example symptom: `core.cpp` references `platformViewport.activityDetected` while current `core.pyx` uses `needsRender.store(True)`. Force Cython regeneration by updating `.pyx` timestamps, then rebuild:
+   ```powershell
+   Get-ChildItem dearcygui -Filter *.pyx | ForEach-Object { $_.LastWriteTime = Get-Date }
+   Get-ChildItem dearcygui\utils -Filter *.pyx | ForEach-Object { $_.LastWriteTime = Get-Date }
+   C:\Chris\DearCyGui\.venv\Scripts\python.exe -m pip install --no-build-isolation . --force-reinstall --no-cache-dir
+   ```
+   After a successful build, discard generated/build artifact changes (`build_FT/`, `build_SDL/`, `dearcygui/*.cpp`, `dearcygui/utils/*.cpp`, `dearcygui.egg-info/`) unless intentionally updating generated artifacts.
 - **Venv not activated in agent terminal** — symptom: `python` resolves to system Python and `import dearcygui` finds nothing or the wrong build. Fix: always use `C:\Chris\DearCyGui\.venv\Scripts\python.exe` by absolute path.
 
 ## Recommended Agent Workflow
@@ -107,5 +114,7 @@ When the user asks you to rebuild and test:
 2. Run the canonical build command (sync mode, generous timeout — at least 10 min).
 3. On success, run the demo or test with the venv Python by absolute path.
 4. Do NOT stage regenerated `.cpp` files — they're either gitignored or by-convention untracked.
+
+After branch integration, if native compiler errors mention generated `.cpp` code that no longer exists in the corresponding `.pyx`, force Cython regeneration before changing source semantics. The first real error may be stale code, not a logic bug.
 
 When the user reports a build failure, surface the **first** Cython/compiler error from the log (later errors are usually downstream cascades) and ask before attempting fixes that change source semantics.

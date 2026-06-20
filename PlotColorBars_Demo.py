@@ -30,7 +30,7 @@ class PlotColorBarsDemo:
         self.C.viewport.wait_for_input = True
         self.C.viewport.initialize(height=920, width=1400, title="PlotColorBars Demo")
 
-        self._lane_width_template = np.array([16.0, 10.0, 22.0, 14.0, 18.0], dtype=np.float64)
+        self._lane_width_template = np.array([1.6, 1.0, 2.2, 1.4, 1.8], dtype=np.float64)
         self._lane_fill_template = [
             (231, 76, 60, 150),
             (52, 152, 219, 150),
@@ -43,27 +43,38 @@ class PlotColorBarsDemo:
             with dcg.VerticalLayout(self.C, width="fillx", height="filly"):
                 dcg.Text(
                     self.C,
-                    value="Top plot: bottom-edge-anchored vertical bars with one fill color per bar.",
+                    value="Single-plot test: bottom-edge vertical bars plus right-edge horizontal bars.",
                 )
                 dcg.Text(
                     self.C,
-                    value="Bottom plot: right-anchored horizontal bars. Pan or zoom the plot to verify the bars stay locked to the visible right edge.",
+                    value="Pan or zoom to compare normalization behavior for both orientations in the same viewport.",
                 )
 
-                with dcg.Plot(self.C, label="Per-Bar Vertical Bars", width="fillx", height=380):
-                    self._build_vertical_plot()
+                with dcg.HorizontalLayout(self.C, width="fillx"):
+                    self.vertical_normalized_mode_toggle = dcg.Checkbox(
+                        self.C,
+                        label="Normalize Vertical Lengths",
+                        value=True,
+                        callback=lambda *_: self._update_vertical_bars(),
+                    )
+                    self.vertical_normalized_fraction_slider = dcg.Slider(
+                        self.C,
+                        label="Vertical Max Fraction",
+                        min_value=0.05,
+                        max_value=1.0,
+                        value=0.2,
+                        print_format="%.2f",
+                        width=260,
+                        callback=lambda *_: self._update_vertical_bars(),
+                    )
 
-                dcg.Text(
-                    self.C,
-                    value="Horizontal lane controls:",
-                )
                 with dcg.HorizontalLayout(self.C, width="fillx"):
                     self.lane_base_slider = dcg.Slider(
                         self.C,
                         label="Lane Base",
-                        min_value=80.0,
-                        max_value=110.0,
-                        value=92.0,
+                        min_value=0,
+                        max_value=12.0,
+                        value=0,
                         print_format="%.1f",
                         width=220,
                         callback=lambda *_: self._update_horizontal_bars(),
@@ -71,9 +82,9 @@ class PlotColorBarsDemo:
                     self.lane_pitch_slider = dcg.Slider(
                         self.C,
                         label="Lane Pitch",
-                        min_value=1.0,
-                        max_value=10.0,
-                        value=4.5,
+                        min_value=0.3,
+                        max_value=2.5,
+                        value=0.9,
                         print_format="%.1f",
                         width=220,
                         callback=lambda *_: self._update_horizontal_bars(),
@@ -82,21 +93,38 @@ class PlotColorBarsDemo:
                         self.C,
                         label="Lane Count",
                         min_value=1,
-                        max_value=12,
+                        max_value=8,
                         value=5,
                         print_format="%.0f",
                         width=220,
                         callback=lambda *_: self._update_horizontal_bars(),
                     )
+                    self.normalized_mode_toggle = dcg.Checkbox(
+                        self.C,
+                        label="Normalize Horizontal Lengths",
+                        value=True,
+                        callback=lambda *_: self._update_horizontal_bars(),
+                    )
+                    self.normalized_fraction_slider = dcg.Slider(
+                        self.C,
+                        label="Horizontal Max Fraction",
+                        min_value=0.05,
+                        max_value=1.0,
+                        value=0.2,
+                        print_format="%.2f",
+                        width=260,
+                        callback=lambda *_: self._update_horizontal_bars(),
+                    )
 
-                with dcg.Plot(self.C, label="Right-Anchored Horizontal Bars", width="fillx", height=420) as horizontal_plot:
-                    horizontal_plot.Y1.label = "Price"
-                    horizontal_plot.X1.label = "Overlay / Backdrop X"
+                with dcg.Plot(self.C, label="Combined Vertical + Horizontal PlotColorBars", width="fillx", height=620) as combined_plot:
+                    combined_plot.X1.label = "X"
+                    combined_plot.Y1.label = "Y"
+                    self._build_vertical_plot()
                     self._build_horizontal_plot()
 
     def _build_vertical_plot(self) -> None:
-        x = np.arange(12, dtype=np.float64)
-        y = np.array([3.5, 1.5, 4.0, 2.5, 5.2, 3.0, 4.4, 2.2, 5.8, 4.7, 3.1, 2.8], dtype=np.float64)
+        self._vertical_x = np.arange(12, dtype=np.float64)
+        self._vertical_y_template = np.array([3.5, 1.5, 4.0, 2.5, 5.2, 3.0, 4.4, 2.2, 5.8, 4.7, 3.1, 2.8], dtype=np.float64)
         colors = [
             (235, 94, 84, 185),
             (245, 176, 65, 185),
@@ -118,10 +146,10 @@ class PlotColorBarsDemo:
         # - "axis_max": bars start from the currently visible upper plot edge
         # This example uses axis_min so the bars stay glued to the bottom edge
         # of the visible Y range while panning or zooming.
-        dcg.PlotColorBars(
+        self.vertical_bars = dcg.PlotColorBars(
             self.C,
-            X=x,
-            Y=y,
+            X=self._vertical_x,
+            Y=self._vertical_y_template,
             colors=colors,
             weight=0.8,
             anchor="axis_min",
@@ -131,14 +159,33 @@ class PlotColorBarsDemo:
 
         dcg.PlotLine(
             self.C,
-            X=x,
+            X=self._vertical_x,
             Y=np.array([2.0, 2.2, 2.3, 2.7, 3.0, 3.3, 3.2, 3.7, 4.0, 4.1, 4.2, 4.5], dtype=np.float64),
             label="Reference line",
         )
 
+        self._update_vertical_bars()
+
+    def _update_vertical_bars(self) -> None:
+        if not hasattr(self, "vertical_bars"):
+            return
+
+        is_normalized = bool(self.vertical_normalized_mode_toggle.value)
+        normalized_fraction = float(self.vertical_normalized_fraction_slider.value)
+        heights = np.array(self._vertical_y_template, copy=True)
+        if is_normalized:
+            height_scale = float(np.max(np.abs(heights)))
+            if height_scale > 0.:
+                heights = heights / height_scale
+
+        self.vertical_bars.Y = heights
+        self.vertical_bars.value_space = "normalized" if is_normalized else "data"
+        self.vertical_bars.normalized_max_fraction = normalized_fraction
+        self.C.viewport.wake()
+
     def _build_horizontal_plot(self) -> None:
-        self._backdrop_x = np.linspace(0.0, 200.0, 240, dtype=np.float64)
-        self._backdrop_y = 100.0 + 8.0 * np.sin(self._backdrop_x * 0.05) + 2.0 * np.cos(self._backdrop_x * 0.13)
+        self._backdrop_x = np.linspace(0.0, 12.0, 240, dtype=np.float64)
+        self._backdrop_y = 2.8 + 0.9 * np.sin(self._backdrop_x * 0.9) + 0.4 * np.cos(self._backdrop_x * 1.8)
         #borders = [(255, 255, 255, 210)]
 
         dcg.PlotLine(
@@ -155,7 +202,7 @@ class PlotColorBarsDemo:
         self.horizontal_bars = dcg.PlotColorBars(
             self.C,
             X=self._lane_width_template,
-            Y=92.0 + 4.5 * np.arange(5, dtype=np.float64),
+            Y=7.2 + 0.9 * np.arange(5, dtype=np.float64),
             colors=self._lane_fill_template,
             #line_colors=borders,  #this makes white borders around the bars, but they are clipped at the plot edge when anchored to axis_max
             horizontal=True,
@@ -178,6 +225,12 @@ class PlotColorBarsDemo:
         lane_y = lane_base + lane_pitch * np.arange(lane_count, dtype=np.float64)
         lane_bar_weight = lane_pitch * 0.6
         widths = np.resize(self._lane_width_template, lane_count)
+        is_normalized = bool(self.normalized_mode_toggle.value)
+        normalized_fraction = float(self.normalized_fraction_slider.value)
+        if is_normalized:
+            width_scale = float(np.max(np.abs(widths)))
+            if width_scale > 0.:
+                widths = widths / width_scale
         fills = [
             self._lane_fill_template[i % len(self._lane_fill_template)]
             for i in range(lane_count)
@@ -197,6 +250,8 @@ class PlotColorBarsDemo:
             self.horizontal_bars.Y = lane_y
             self.horizontal_bars.colors = fills
 
+        self.horizontal_bars.value_space = "normalized" if is_normalized else "data"
+        self.horizontal_bars.normalized_max_fraction = normalized_fraction
         self.horizontal_bars.weight = lane_bar_weight
         self.C.viewport.wake()
 

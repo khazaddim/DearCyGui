@@ -33751,7 +33751,7 @@ class PlotColorBars(plotElementXY):
     visible plot limits during native plot rendering.
 
     """
-    def __init__(self, context : Context, *, X : Array = ..., Y : Array = ..., anchor : str = "baseline", anchor_value : float = 0.0, attach : Any = ..., axes : tuple['Axis', 'Axis'] = (Axis.X1, Axis.Y1), before : 'plotElement' | None = None, children : Sequence['uiItem'] = [], colors : Sequence[Color] | Color | None = None, enabled : bool = True, font : 'baseFont' | None = None, horizontal : bool = False, ignore_fit : bool = False, label : str = "", legend_button : MouseButton = MouseButton.RIGHT, legend_handlers : Sequence['baseHandler'] | 'baseHandler' | None = [], line_colors : Sequence[Color] | Color | None = None, next_sibling : 'plotElement' | None = None, no_legend : bool = False, parent : 'Plot' | None = None, previous_sibling : 'plotElement' | None = None, show : bool = True, theme : Any = ..., user_data : Any = ..., weight : float = 1.0):
+    def __init__(self, context : Context, *, X : Array = ..., Y : Array = ..., anchor : str = "baseline", anchor_value : float = 0.0, attach : Any = ..., axes : tuple['Axis', 'Axis'] = (Axis.X1, Axis.Y1), before : 'plotElement' | None = None, children : Sequence['uiItem'] = [], colors : Sequence[Color] | Color | None = None, enabled : bool = True, font : 'baseFont' | None = None, horizontal : bool = False, ignore_fit : bool = False, label : str = "", legend_button : MouseButton = MouseButton.RIGHT, legend_handlers : Sequence['baseHandler'] | 'baseHandler' | None = [], line_colors : Sequence[Color] | Color | None = None, next_sibling : 'plotElement' | None = None, no_legend : bool = False, normalized_max_fraction : float = 1.0, parent : 'Plot' | None = None, previous_sibling : 'plotElement' | None = None, show : bool = True, theme : Any = ..., user_data : Any = ..., value_space : str = "data", weight : float = 1.0):
         """
         Parameters
         ----------
@@ -33774,17 +33774,19 @@ class PlotColorBars(plotElementXY):
         - line_colors: Optional broadcast border color or one border color per bar.
         - next_sibling: Child of the parent rendered just after this item.
         - no_legend: Whether to hide this element from the plot legend.
+        - normalized_max_fraction: Maximum visible-axis occupancy used in normalized mode.
         - parent: Parent of the item in the rendering tree.
         - previous_sibling: Child of the parent rendered just before this item.
         - show: Controls whether the plot element is visible.
         - theme: Visual theme applied to the plot element.
         - user_data: User data of any type.
+        - value_space: Length interpretation mode, either "data" or "normalized".
         - weight: Bar thickness in plot units on the orthogonal axis.
         """
         ...
 
 
-    def configure(self, *, X : Array = ..., Y : Array = ..., anchor : str = "baseline", anchor_value : float = 0.0, axes : tuple['Axis', 'Axis'] = (Axis.X1, Axis.Y1), children : Sequence['uiItem'] = [], colors : Sequence[Color] | Color | None = None, enabled : bool = True, font : 'baseFont' | None = None, horizontal : bool = False, ignore_fit : bool = False, label : str = "", legend_button : MouseButton = MouseButton.RIGHT, legend_handlers : Sequence['baseHandler'] | 'baseHandler' | None = [], line_colors : Sequence[Color] | Color | None = None, next_sibling : 'plotElement' | None = None, no_legend : bool = False, parent : 'Plot' | None = None, previous_sibling : 'plotElement' | None = None, show : bool = True, theme : Any = ..., user_data : Any = ..., weight : float = 1.0) -> None:
+    def configure(self, *, X : Array = ..., Y : Array = ..., anchor : str = "baseline", anchor_value : float = 0.0, axes : tuple['Axis', 'Axis'] = (Axis.X1, Axis.Y1), children : Sequence['uiItem'] = [], colors : Sequence[Color] | Color | None = None, enabled : bool = True, font : 'baseFont' | None = None, horizontal : bool = False, ignore_fit : bool = False, label : str = "", legend_button : MouseButton = MouseButton.RIGHT, legend_handlers : Sequence['baseHandler'] | 'baseHandler' | None = [], line_colors : Sequence[Color] | Color | None = None, next_sibling : 'plotElement' | None = None, no_legend : bool = False, normalized_max_fraction : float = 1.0, parent : 'Plot' | None = None, previous_sibling : 'plotElement' | None = None, show : bool = True, theme : Any = ..., user_data : Any = ..., value_space : str = "data", weight : float = 1.0) -> None:
         """
         Shortcut to set multiple attributes at once.
 
@@ -33807,11 +33809,13 @@ class PlotColorBars(plotElementXY):
         - line_colors: Optional broadcast border color or one border color per bar.
         - next_sibling: Child of the parent rendered just after this item.
         - no_legend: Whether to hide this element from the plot legend.
+        - normalized_max_fraction: Maximum visible-axis occupancy used in normalized mode.
         - parent: Parent of the item in the rendering tree.
         - previous_sibling: Child of the parent rendered just before this item.
         - show: Controls whether the plot element is visible.
         - theme: Visual theme applied to the plot element.
         - user_data: User data of any type.
+        - value_space: Length interpretation mode, either "data" or "normalized".
         - weight: Bar thickness in plot units on the orthogonal axis.
         """
         ...
@@ -33907,6 +33911,39 @@ class PlotColorBars(plotElementXY):
 
     @weight.setter
     def weight(self, value : float):
+        ...
+
+
+    @property
+    def value_space(self) -> str:
+        """
+        Length interpretation mode for the bar values.
+
+        - "data": use raw X/Y lengths directly in axis units.
+        - "normalized": scale lengths by the visible primary-axis span.
+
+        """
+        ...
+
+
+    @value_space.setter
+    def value_space(self, value : str):
+        ...
+
+
+    @property
+    def normalized_max_fraction(self) -> float:
+        """
+        Occupancy cap used when `value_space` is "normalized".
+
+        Effective length is scaled by this fraction of the current visible span.
+
+        """
+        ...
+
+
+    @normalized_max_fraction.setter
+    def normalized_max_fraction(self, value : float):
         ...
 
 

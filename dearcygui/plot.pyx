@@ -3057,6 +3057,8 @@ cdef class PlotColorBars(plotElementXY):
         self._horizontal = False
         self._anchor_mode = 0
         self._anchor_value = 0.
+        self._value_space = 0
+        self._normalized_max_fraction = 1.
 
     cdef void _validate_configuration(self):
         cdef Py_ssize_t x_size = self._X.size()
@@ -3069,6 +3071,10 @@ cdef class PlotColorBars(plotElementXY):
             raise ValueError("PlotColorBars weight must be > 0")
         if self._anchor_mode < 0 or self._anchor_mode > 2:
             raise ValueError("PlotColorBars anchor must be 'baseline', 'axis_min', or 'axis_max'")
+        if self._value_space < 0 or self._value_space > 1:
+            raise ValueError("PlotColorBars value_space must be 'data' or 'normalized'")
+        if self._normalized_max_fraction <= 0. or self._normalized_max_fraction > 1.:
+            raise ValueError("PlotColorBars normalized_max_fraction must be > 0 and <= 1")
         if x_size == 0 or y_size == 0:
             return
 
@@ -3209,6 +3215,39 @@ cdef class PlotColorBars(plotElementXY):
         lock_gil_friendly(m, self.mutex)
         self._anchor_value = value
 
+    @property
+    def value_space(self):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        if self._value_space == 1:
+            return "normalized"
+        return "data"
+
+    @value_space.setter
+    def value_space(self, value):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        if value == "data":
+            self._value_space = 0
+        elif value == "normalized":
+            self._value_space = 1
+        else:
+            raise ValueError("PlotColorBars value_space must be 'data' or 'normalized'")
+        self._validate_configuration()
+
+    @property
+    def normalized_max_fraction(self):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        return self._normalized_max_fraction
+
+    @normalized_max_fraction.setter
+    def normalized_max_fraction(self, double value):
+        cdef unique_lock[DCGMutex] m
+        lock_gil_friendly(m, self.mutex)
+        self._normalized_max_fraction = value
+        self._validate_configuration()
+
     cdef void draw_element(self) noexcept nogil:
         cdef int32_t size
         cdef int32_t i
@@ -3229,6 +3268,7 @@ cdef class PlotColorBars(plotElementXY):
         cdef imgui.ImU32 fill_col
         cdef imgui.ImU32 line_col
         cdef float line_weight
+        cdef double value_span
 
         self.check_arrays()
         size = min(self._X.size(), self._Y.size())
@@ -3255,6 +3295,9 @@ cdef class PlotColorBars(plotElementXY):
                 if self._horizontal:
                     center = get_1d_plot_value(self._Y, i)
                     length = get_1d_plot_value(self._X, i)
+                    if self._value_space == 1:
+                        value_span = limits.X.Max - limits.X.Min
+                        length = length * self._normalized_max_fraction * value_span
                     end_value = start_value - length if self._anchor_mode == 2 else start_value + length
                     first_coord = center - half_weight
                     second_coord = center + half_weight
@@ -3263,6 +3306,9 @@ cdef class PlotColorBars(plotElementXY):
                 else:
                     center = get_1d_plot_value(self._X, i)
                     length = get_1d_plot_value(self._Y, i)
+                    if self._value_space == 1:
+                        value_span = limits.Y.Max - limits.Y.Min
+                        length = length * self._normalized_max_fraction * value_span
                     end_value = start_value - length if self._anchor_mode == 2 else start_value + length
                     first_coord = center - half_weight
                     second_coord = center + half_weight

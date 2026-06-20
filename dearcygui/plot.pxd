@@ -118,6 +118,8 @@ cdef class PlotColorBars(plotElementXY):
     cdef bint _horizontal
     cdef int32_t _anchor_mode
     cdef double _anchor_value
+    cdef int32_t _value_space
+    cdef double _normalized_max_fraction
     cdef void _validate_configuration(self)
     cdef void draw_element(self) noexcept nogil
 

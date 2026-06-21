@@ -46,10 +46,10 @@ And `normalized_max_fraction` stores the numeric value and revalidates it.
 
 Exact source anchors:
 
-- `value_space` getter: `dearcygui/plot.pyx:3219`
-- `value_space` setter: `dearcygui/plot.pyx:3227`
-- `normalized_max_fraction` getter: `dearcygui/plot.pyx:3239`
-- `normalized_max_fraction` setter: `dearcygui/plot.pyx:3245`
+- `value_space` getter: `dearcygui/plot.pyx:3213`
+- `value_space` setter: `dearcygui/plot.pyx:3221`
+- `normalized_max_fraction` getter: `dearcygui/plot.pyx:3233`
+- `normalized_max_fraction` setter: `dearcygui/plot.pyx:3239`
 
 A useful lesson here is that the setters do not perform the full rendering calculation. They only keep the object state coherent.
 
@@ -60,7 +60,7 @@ The actual normalized behavior lives in two tiny branches inside `draw_element()
 For horizontal bars:
 
 ```cython
-length = get_1d_plot_value(self._X, i)
+length = _get_1d_plot_value(self._X, i)
 if self._value_space == 1:
     value_span = limits.X.Max - limits.X.Min
     length = length * self._normalized_max_fraction * value_span
@@ -69,7 +69,7 @@ if self._value_space == 1:
 For vertical bars:
 
 ```cython
-length = get_1d_plot_value(self._Y, i)
+length = _get_1d_plot_value(self._Y, i)
 if self._value_space == 1:
     value_span = limits.Y.Max - limits.Y.Min
     length = length * self._normalized_max_fraction * value_span
@@ -88,9 +88,9 @@ This is why the bars respond correctly to zoom without needing outside coordinat
 
 Read the real draw code at:
 
-- draw loop start: `dearcygui/plot.pyx:3251`
-- horizontal normalized branch: `dearcygui/plot.pyx:3288`
-- vertical normalized branch: `dearcygui/plot.pyx:3298`
+- draw loop start: `dearcygui/plot.pyx:3245`
+- horizontal normalized branch: `dearcygui/plot.pyx:3289`
+- vertical normalized branch: `dearcygui/plot.pyx:3301`
 
 ## Why Anchor Behavior Does Not Need To Change
 
@@ -107,5 +107,5 @@ Compare the spec to the implementation:
 
 - normalized design text: `openspec/changes/add-plot-color-bars-normalized-mode/design.md:1`
 - validating fields in code: `dearcygui/plot.pyx:3069`
-- normalized properties: `dearcygui/plot.pyx:3219`
-- normalized draw conversion: `dearcygui/plot.pyx:3251`
+- normalized properties: `dearcygui/plot.pyx:3213`
+- normalized draw conversion: `dearcygui/plot.pyx:3245`

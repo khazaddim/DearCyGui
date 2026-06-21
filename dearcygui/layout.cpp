@@ -3349,7 +3349,7 @@ struct __pyx_t_9dearcygui_4core_itemStateCapabilities;
 struct __pyx_t_9dearcygui_4core_itemStateValues;
 struct __pyx_t_9dearcygui_4core_itemState;
 
-/* "core.pxd":220
+/* "core.pxd":222
  * # The capabilities are set during item creation
  * # and indicate which itemStateValues are valid
  * cdef struct itemStateCapabilities:             # <<<<<<<<<<<<<<
@@ -3370,7 +3370,7 @@ struct __pyx_t_9dearcygui_4core_itemStateCapabilities {
   int has_content_region;
 };
 
-/* "core.pxd":233
+/* "core.pxd":235
  *     bint has_content_region
  * 
  * cdef struct itemStateValues:             # <<<<<<<<<<<<<<
@@ -3398,7 +3398,7 @@ struct __pyx_t_9dearcygui_4core_itemStateValues {
   Vec2 content_pos;
 };
 
-/* "core.pxd":272
+/* "core.pxd":274
  *     Vec2 content_pos
  * 
  * cdef struct itemState:             # <<<<<<<<<<<<<<
@@ -3833,7 +3833,7 @@ struct __pyx_obj_9dearcygui_4core_baseItem {
 };
 
 
-/* "core.pxd":280
+/* "core.pxd":282
  * 
  * 
  * cdef class ItemStateView:             # <<<<<<<<<<<<<<
@@ -3849,7 +3849,7 @@ struct __pyx_obj_9dearcygui_4core_ItemStateView {
 };
 
 
-/* "core.pxd":290
+/* "core.pxd":292
  * 
  * 
  * cdef class ItemStateCopy:             # <<<<<<<<<<<<<<
@@ -3864,7 +3864,7 @@ struct __pyx_obj_9dearcygui_4core_ItemStateCopy {
 };
 
 
-/* "core.pxd":341
+/* "core.pxd":343
  * """
  * 
  * cdef class Gamepad:             # <<<<<<<<<<<<<<
@@ -3878,7 +3878,7 @@ struct __pyx_obj_9dearcygui_4core_Gamepad {
 };
 
 
-/* "core.pxd":345
+/* "core.pxd":347
  *     cdef Context _context
  * 
  * cdef class Viewport(baseItem):             # <<<<<<<<<<<<<<
@@ -3899,10 +3899,7 @@ struct __pyx_obj_9dearcygui_4core_Viewport {
   int64_t delta_rendering;
   int64_t delta_swapping;
   int64_t delta_frame;
-  int wait_for_input;
-  int always_submit_to_gpu;
   float global_scale;
-  int redraw_needed;
   double scales[2];
   double shifts[2];
   Vec2 window_pos;
@@ -3927,6 +3924,9 @@ struct __pyx_obj_9dearcygui_4core_Viewport {
   void *_platform_window;
   std::atomic<int64_t>  _platform_external_count;
   int _initialized;
+  int _wait_for_input;
+  int _always_submit_to_gpu;
+  int _redraw_needed;
   int _retrieve_framebuffer;
   PyObject *_frame_buffer;
   struct __pyx_obj_9dearcygui_4core_Callback *_resize_callback;
@@ -3945,7 +3945,7 @@ struct __pyx_obj_9dearcygui_4core_Viewport {
 };
 
 
-/* "core.pxd":432
+/* "core.pxd":434
  * 
  * 
  * cdef class Callback:             # <<<<<<<<<<<<<<
@@ -3959,7 +3959,7 @@ struct __pyx_obj_9dearcygui_4core_Callback {
 };
 
 
-/* "core.pxd":514
+/* "core.pxd":516
  * """
  * 
  * cdef class drawingItem(baseItem):             # <<<<<<<<<<<<<<
@@ -3972,7 +3972,7 @@ struct __pyx_obj_9dearcygui_4core_drawingItem {
 };
 
 
-/* "core.pxd":630
+/* "core.pxd":632
  * """
  * 
  * cdef class baseHandler(baseItem):             # <<<<<<<<<<<<<<
@@ -3986,7 +3986,7 @@ struct __pyx_obj_9dearcygui_4core_baseHandler {
 };
 
 
-/* "core.pxd":649
+/* "core.pxd":651
  * cdef void update_current_mouse_states(itemState& state) noexcept nogil
  * 
  * cdef class uiItem(baseItem):             # <<<<<<<<<<<<<<
@@ -4018,7 +4018,7 @@ struct __pyx_obj_9dearcygui_4core_uiItem {
 };
 
 
-/* "core.pxd":697
+/* "core.pxd":698
  * Shared values (sources)
  * """
  * cdef class SharedValue:             # <<<<<<<<<<<<<<
@@ -4036,7 +4036,7 @@ struct __pyx_obj_9dearcygui_4core_SharedValue {
 };
 
 
-/* "core.pxd":715
+/* "core.pxd":716
  * """
  * 
  * cdef class TimeWatcher(uiItem):             # <<<<<<<<<<<<<<
@@ -4048,7 +4048,7 @@ struct __pyx_obj_9dearcygui_4core_TimeWatcher {
 };
 
 
-/* "core.pxd":718
+/* "core.pxd":719
  *     pass
  * 
  * cdef class Window(uiItem):             # <<<<<<<<<<<<<<
@@ -4095,7 +4095,7 @@ struct __pyx_obj_9dearcygui_4core_Window {
 };
 
 
-/* "core.pxd":763
+/* "core.pxd":764
  * drawingItem.
  * """
  * cdef class plotElement(baseItem):             # <<<<<<<<<<<<<<
@@ -4113,7 +4113,7 @@ struct __pyx_obj_9dearcygui_4core_plotElement {
 };
 
 
-/* "core.pxd":776
+/* "core.pxd":777
  * # We don't define draw() for this class as
  * # the parent axis handles it.
  * cdef class AxisTag(baseItem):             # <<<<<<<<<<<<<<
@@ -4129,7 +4129,7 @@ struct __pyx_obj_9dearcygui_4core_AxisTag {
 };
 
 
-/* "core.pxd":787
+/* "core.pxd":788
  * """
  * 
  * cdef class baseFont(baseItem):             # <<<<<<<<<<<<<<
@@ -4141,7 +4141,7 @@ struct __pyx_obj_9dearcygui_4core_baseFont {
 };
 
 
-/* "core.pxd":801
+/* "core.pxd":802
  * """
  * 
  * cdef class baseTheme(baseItem):             # <<<<<<<<<<<<<<
@@ -4263,7 +4263,7 @@ struct __pyx_obj_9dearcygui_6layout_HorizontalLayout {
 };
 
 
-/* "dearcygui/layout.pxd":27
+/* "dearcygui/layout.pxd":31
  *     cdef bint draw_item(self) noexcept nogil
  * 
  * cdef class VerticalLayout(Layout):             # <<<<<<<<<<<<<<
@@ -4279,7 +4279,7 @@ struct __pyx_obj_9dearcygui_6layout_VerticalLayout {
 };
 
 
-/* "dearcygui/layout.pxd":36
+/* "dearcygui/layout.pxd":44
  *     cdef bint draw_item(self) noexcept nogil
  * 
  * cdef class WindowLayout(uiItem):             # <<<<<<<<<<<<<<
@@ -4487,6 +4487,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_baseItem {
   void (*_set_hidden_and_propagate_to_children_with_handlers)(struct __pyx_obj_9dearcygui_4core_baseItem *);
   void (*_set_hidden_and_propagate_to_children_no_handlers)(struct __pyx_obj_9dearcygui_4core_baseItem *);
   void (*_set_not_rendered_and_propagate_to_children_with_handlers)(struct __pyx_obj_9dearcygui_4core_baseItem *);
+  void (*_clear_additional_references_on_delete)(struct __pyx_obj_9dearcygui_4core_baseItem *);
   void (*_copy_children)(struct __pyx_obj_9dearcygui_4core_baseItem *, struct __pyx_obj_9dearcygui_4core_baseItem *);
   int (*_check_traversed)(struct __pyx_obj_9dearcygui_4core_baseItem *);
   void (*_detach_item_and_lock)(struct __pyx_obj_9dearcygui_4core_baseItem *, std::unique_lock<DCGMutex>  &);
@@ -4495,7 +4496,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_baseItem {
 static struct __pyx_vtabstruct_9dearcygui_4core_baseItem *__pyx_vtabptr_9dearcygui_4core_baseItem;
 
 
-/* "core.pxd":280
+/* "core.pxd":282
  * 
  * 
  * cdef class ItemStateView:             # <<<<<<<<<<<<<<
@@ -4509,7 +4510,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_ItemStateView {
 static struct __pyx_vtabstruct_9dearcygui_4core_ItemStateView *__pyx_vtabptr_9dearcygui_4core_ItemStateView;
 
 
-/* "core.pxd":290
+/* "core.pxd":292
  * 
  * 
  * cdef class ItemStateCopy:             # <<<<<<<<<<<<<<
@@ -4523,7 +4524,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_ItemStateCopy {
 static struct __pyx_vtabstruct_9dearcygui_4core_ItemStateCopy *__pyx_vtabptr_9dearcygui_4core_ItemStateCopy;
 
 
-/* "core.pxd":345
+/* "core.pxd":347
  *     cdef Context _context
  * 
  * cdef class Viewport(baseItem):             # <<<<<<<<<<<<<<
@@ -4537,6 +4538,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_Viewport {
   void (*screen_to_coordinate)(struct __pyx_obj_9dearcygui_4core_Viewport *, double *, float *);
   void (*ask_refresh_after_target)(struct __pyx_obj_9dearcygui_4core_Viewport *, double);
   void (*ask_refresh_after_delta)(struct __pyx_obj_9dearcygui_4core_Viewport *, double);
+  void (*ask_immediate_redraw)(struct __pyx_obj_9dearcygui_4core_Viewport *);
   void (*force_present)(struct __pyx_obj_9dearcygui_4core_Viewport *);
   Vec2 (*get_size)(struct __pyx_obj_9dearcygui_4core_Viewport *);
   void *(*get_platform_window)(struct __pyx_obj_9dearcygui_4core_Viewport *);
@@ -4553,7 +4555,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_Viewport {
 static struct __pyx_vtabstruct_9dearcygui_4core_Viewport *__pyx_vtabptr_9dearcygui_4core_Viewport;
 
 
-/* "core.pxd":514
+/* "core.pxd":516
  * """
  * 
  * cdef class drawingItem(baseItem):             # <<<<<<<<<<<<<<
@@ -4568,7 +4570,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_drawingItem {
 static struct __pyx_vtabstruct_9dearcygui_4core_drawingItem *__pyx_vtabptr_9dearcygui_4core_drawingItem;
 
 
-/* "core.pxd":630
+/* "core.pxd":632
  * """
  * 
  * cdef class baseHandler(baseItem):             # <<<<<<<<<<<<<<
@@ -4586,7 +4588,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_baseHandler {
 static struct __pyx_vtabstruct_9dearcygui_4core_baseHandler *__pyx_vtabptr_9dearcygui_4core_baseHandler;
 
 
-/* "core.pxd":649
+/* "core.pxd":651
  * cdef void update_current_mouse_states(itemState& state) noexcept nogil
  * 
  * cdef class uiItem(baseItem):             # <<<<<<<<<<<<<<
@@ -4605,7 +4607,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_uiItem {
 static struct __pyx_vtabstruct_9dearcygui_4core_uiItem *__pyx_vtabptr_9dearcygui_4core_uiItem;
 
 
-/* "core.pxd":697
+/* "core.pxd":698
  * Shared values (sources)
  * """
  * cdef class SharedValue:             # <<<<<<<<<<<<<<
@@ -4621,7 +4623,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_SharedValue {
 static struct __pyx_vtabstruct_9dearcygui_4core_SharedValue *__pyx_vtabptr_9dearcygui_4core_SharedValue;
 
 
-/* "core.pxd":715
+/* "core.pxd":716
  * """
  * 
  * cdef class TimeWatcher(uiItem):             # <<<<<<<<<<<<<<
@@ -4635,7 +4637,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_TimeWatcher {
 static struct __pyx_vtabstruct_9dearcygui_4core_TimeWatcher *__pyx_vtabptr_9dearcygui_4core_TimeWatcher;
 
 
-/* "core.pxd":718
+/* "core.pxd":719
  *     pass
  * 
  * cdef class Window(uiItem):             # <<<<<<<<<<<<<<
@@ -4649,7 +4651,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_Window {
 static struct __pyx_vtabstruct_9dearcygui_4core_Window *__pyx_vtabptr_9dearcygui_4core_Window;
 
 
-/* "core.pxd":763
+/* "core.pxd":764
  * drawingItem.
  * """
  * cdef class plotElement(baseItem):             # <<<<<<<<<<<<<<
@@ -4665,7 +4667,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_plotElement {
 static struct __pyx_vtabstruct_9dearcygui_4core_plotElement *__pyx_vtabptr_9dearcygui_4core_plotElement;
 
 
-/* "core.pxd":776
+/* "core.pxd":777
  * # We don't define draw() for this class as
  * # the parent axis handles it.
  * cdef class AxisTag(baseItem):             # <<<<<<<<<<<<<<
@@ -4679,7 +4681,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_AxisTag {
 static struct __pyx_vtabstruct_9dearcygui_4core_AxisTag *__pyx_vtabptr_9dearcygui_4core_AxisTag;
 
 
-/* "core.pxd":787
+/* "core.pxd":788
  * """
  * 
  * cdef class baseFont(baseItem):             # <<<<<<<<<<<<<<
@@ -4695,7 +4697,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_baseFont {
 static struct __pyx_vtabstruct_9dearcygui_4core_baseFont *__pyx_vtabptr_9dearcygui_4core_baseFont;
 
 
-/* "core.pxd":801
+/* "core.pxd":802
  * """
  * 
  * cdef class baseTheme(baseItem):             # <<<<<<<<<<<<<<
@@ -4797,7 +4799,7 @@ struct __pyx_vtabstruct_9dearcygui_6sizing_RefHeight {
 static struct __pyx_vtabstruct_9dearcygui_6sizing_RefHeight *__pyx_vtabptr_9dearcygui_6sizing_RefHeight;
 
 
-/* "dearcygui/layout.pyx":34
+/* "dearcygui/layout.pyx":33
  * from warnings import warn as _warn
  * 
  * cdef class Layout(uiItem):             # <<<<<<<<<<<<<<
@@ -4818,7 +4820,7 @@ static void __pyx_f_9dearcygui_6layout_6Layout_draw_child(struct __pyx_obj_9dear
 static void __pyx_f_9dearcygui_6layout_6Layout_draw_children(struct __pyx_obj_9dearcygui_6layout_Layout *);
 
 
-/* "dearcygui/layout.pyx":195
+/* "dearcygui/layout.pyx":288
  *         return changed
  * 
  * cdef class HorizontalLayout(Layout):             # <<<<<<<<<<<<<<
@@ -4828,14 +4830,18 @@ static void __pyx_f_9dearcygui_6layout_6Layout_draw_children(struct __pyx_obj_9d
 
 struct __pyx_vtabstruct_9dearcygui_6layout_HorizontalLayout {
   struct __pyx_vtabstruct_9dearcygui_6layout_Layout __pyx_base;
-  void (*_HorizontalLayout__update_layout_manual)(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *);
-  void (*_HorizontalLayout__update_layout)(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *);
+  int (*_HorizontalLayout__check_children_neutral)(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *);
+  void (*_HorizontalLayout__apply_children_neutral)(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *);
+  int (*_HorizontalLayout__draw_item_left_no_wrap)(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *);
+  int (*_HorizontalLayout__draw_item_left_wrap)(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *);
+  int (*_HorizontalLayout__draw_item_manual)(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *);
+  int (*_HorizontalLayout__draw_item_aligned)(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *);
 };
 static struct __pyx_vtabstruct_9dearcygui_6layout_HorizontalLayout *__pyx_vtabptr_9dearcygui_6layout_HorizontalLayout;
 
 
-/* "dearcygui/layout.pyx":544
- *         return changed
+/* "dearcygui/layout.pyx":920
+ *         return forced | children_changed
  * 
  * cdef class VerticalLayout(Layout):             # <<<<<<<<<<<<<<
  *     """
@@ -4844,13 +4850,17 @@ static struct __pyx_vtabstruct_9dearcygui_6layout_HorizontalLayout *__pyx_vtabpt
 
 struct __pyx_vtabstruct_9dearcygui_6layout_VerticalLayout {
   struct __pyx_vtabstruct_9dearcygui_6layout_Layout __pyx_base;
-  void (*_VerticalLayout__update_layout_manual)(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *);
-  void (*_VerticalLayout__update_layout)(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *);
+  int (*_VerticalLayout__check_children_neutral)(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *);
+  void (*_VerticalLayout__apply_children_neutral)(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *);
+  int (*_VerticalLayout__draw_item_top_no_wrap)(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *);
+  int (*_VerticalLayout__draw_item_top_wrap)(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *);
+  int (*_VerticalLayout__draw_item_manual)(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *);
+  int (*_VerticalLayout__draw_item_aligned)(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *);
 };
 static struct __pyx_vtabstruct_9dearcygui_6layout_VerticalLayout *__pyx_vtabptr_9dearcygui_6layout_VerticalLayout;
 
 
-/* "dearcygui/layout.pyx":897
+/* "dearcygui/layout.pyx":1509
  * 
  * 
  * cdef class WindowLayout(uiItem):             # <<<<<<<<<<<<<<
@@ -6051,11 +6061,11 @@ static CYTHON_INLINE int __Pyx_PyLong_As_int(PyObject *);
 /* CIntToPy.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyLong_From_int(int value);
 
-/* CIntFromPy.proto */
-static CYTHON_INLINE int32_t __Pyx_PyLong_As_int32_t(PyObject *);
-
 /* CIntToPy.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyLong_From_long(long value);
+
+/* CIntFromPy.proto */
+static CYTHON_INLINE int32_t __Pyx_PyLong_As_int32_t(PyObject *);
 
 /* CIntFromPy.proto */
 static CYTHON_INLINE PY_LONG_LONG __Pyx_PyLong_As_PY_LONG_LONG(PyObject *);
@@ -6187,11 +6197,19 @@ static int __pyx_f_9dearcygui_6layout_6Layout_check_change(struct __pyx_obj_9dea
 static void __pyx_f_9dearcygui_6layout_6Layout_draw_child(struct __pyx_obj_9dearcygui_6layout_Layout *__pyx_v_self, struct __pyx_obj_9dearcygui_4core_uiItem *__pyx_v_child); /* proto*/
 static void __pyx_f_9dearcygui_6layout_6Layout_draw_children(struct __pyx_obj_9dearcygui_6layout_Layout *__pyx_v_self); /* proto*/
 static int __pyx_f_9dearcygui_6layout_6Layout_draw_item(struct __pyx_obj_9dearcygui_6layout_Layout *__pyx_v_self); /* proto*/
-static void __pyx_f_9dearcygui_6layout_16HorizontalLayout__HorizontalLayout__update_layout_manual(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *__pyx_v_self); /* proto*/
-static void __pyx_f_9dearcygui_6layout_16HorizontalLayout__HorizontalLayout__update_layout(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *__pyx_v_self); /* proto*/
+static int __pyx_f_9dearcygui_6layout_16HorizontalLayout__HorizontalLayout__check_children_neutral(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *__pyx_v_self); /* proto*/
+static void __pyx_f_9dearcygui_6layout_16HorizontalLayout__HorizontalLayout__apply_children_neutral(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *__pyx_v_self); /* proto*/
+static int __pyx_f_9dearcygui_6layout_16HorizontalLayout__HorizontalLayout__draw_item_left_no_wrap(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *__pyx_v_self); /* proto*/
+static int __pyx_f_9dearcygui_6layout_16HorizontalLayout__HorizontalLayout__draw_item_left_wrap(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *__pyx_v_self); /* proto*/
+static int __pyx_f_9dearcygui_6layout_16HorizontalLayout__HorizontalLayout__draw_item_manual(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *__pyx_v_self); /* proto*/
+static int __pyx_f_9dearcygui_6layout_16HorizontalLayout__HorizontalLayout__draw_item_aligned(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *__pyx_v_self); /* proto*/
 static int __pyx_f_9dearcygui_6layout_16HorizontalLayout_draw_item(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *__pyx_v_self); /* proto*/
-static void __pyx_f_9dearcygui_6layout_14VerticalLayout__VerticalLayout__update_layout_manual(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *__pyx_v_self); /* proto*/
-static void __pyx_f_9dearcygui_6layout_14VerticalLayout__VerticalLayout__update_layout(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *__pyx_v_self); /* proto*/
+static int __pyx_f_9dearcygui_6layout_14VerticalLayout__VerticalLayout__check_children_neutral(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *__pyx_v_self); /* proto*/
+static void __pyx_f_9dearcygui_6layout_14VerticalLayout__VerticalLayout__apply_children_neutral(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *__pyx_v_self); /* proto*/
+static int __pyx_f_9dearcygui_6layout_14VerticalLayout__VerticalLayout__draw_item_top_no_wrap(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *__pyx_v_self); /* proto*/
+static int __pyx_f_9dearcygui_6layout_14VerticalLayout__VerticalLayout__draw_item_top_wrap(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *__pyx_v_self); /* proto*/
+static int __pyx_f_9dearcygui_6layout_14VerticalLayout__VerticalLayout__draw_item_manual(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *__pyx_v_self); /* proto*/
+static int __pyx_f_9dearcygui_6layout_14VerticalLayout__VerticalLayout__draw_item_aligned(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *__pyx_v_self); /* proto*/
 static int __pyx_f_9dearcygui_6layout_14VerticalLayout_draw_item(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *__pyx_v_self); /* proto*/
 static Vec2 __pyx_f_9dearcygui_6layout_12WindowLayout_update_content_area(struct __pyx_obj_9dearcygui_6layout_WindowLayout *__pyx_v_self); /* proto*/
 static int __pyx_f_9dearcygui_6layout_12WindowLayout_check_change(struct __pyx_obj_9dearcygui_6layout_WindowLayout *__pyx_v_self); /* proto*/
@@ -6447,7 +6465,6 @@ static PyObject *__pyx_pf_9dearcygui_6layout_16HorizontalLayout_6wrap_x___get__(
 static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_6wrap_x_2__set__(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *__pyx_v_self, float __pyx_v_value); /* proto */
 static PyObject *__pyx_pf_9dearcygui_6layout_16HorizontalLayout_9positions___get__(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *__pyx_v_self); /* proto */
 static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_9positions_2__set__(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
-static PyObject *__pyx_pf_9dearcygui_6layout_16HorizontalLayout_2update_layout(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *__pyx_v_self); /* proto */
 static int __pyx_pf_9dearcygui_6layout_14VerticalLayout___cinit__(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_9dearcygui_6layout_14VerticalLayout_14alignment_mode___get__(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *__pyx_v_self); /* proto */
 static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_14alignment_mode_2__set__(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *__pyx_v_self, __PYX_ENUM_CLASS_DECL __pyx_t_9dearcygui_5types_Alignment __pyx_v_value); /* proto */
@@ -6457,7 +6474,6 @@ static PyObject *__pyx_pf_9dearcygui_6layout_14VerticalLayout_6wrap_y___get__(st
 static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_6wrap_y_2__set__(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *__pyx_v_self, float __pyx_v_value); /* proto */
 static PyObject *__pyx_pf_9dearcygui_6layout_14VerticalLayout_9positions___get__(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *__pyx_v_self); /* proto */
 static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_9positions_2__set__(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
-static PyObject *__pyx_pf_9dearcygui_6layout_14VerticalLayout_2update_layout(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *__pyx_v_self); /* proto */
 static int __pyx_pf_9dearcygui_6layout_12WindowLayout___cinit__(struct __pyx_obj_9dearcygui_6layout_WindowLayout *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_9dearcygui_6layout_12WindowLayout_2update_layout(struct __pyx_obj_9dearcygui_6layout_WindowLayout *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_9dearcygui_6layout_12WindowLayout_4clip___get__(struct __pyx_obj_9dearcygui_6layout_WindowLayout *__pyx_v_self); /* proto */
@@ -6540,9 +6556,9 @@ typedef struct {
   __Pyx_CachedCFunction __pyx_umethod_PyDict_Type_values;
   PyObject *__pyx_slice[2];
   PyObject *__pyx_tuple[4];
-  PyObject *__pyx_codeobj_tab[4];
-  PyObject *__pyx_string_tab[167];
-  PyObject *__pyx_number_tab[5];
+  PyObject *__pyx_codeobj_tab[2];
+  PyObject *__pyx_string_tab[159];
+  PyObject *__pyx_number_tab[6];
 /* #### Code section: module_state_contents ### */
 /* CommonTypesMetaclass.module_state_decls */
 PyTypeObject *__pyx_CommonTypesMetaclassType;
@@ -6602,159 +6618,152 @@ static __pyx_mstatetype * const __pyx_mstate_global = &__pyx_mstate_global_stati
 #define __pyx_kp_u_Invalid_alignment_value __pyx_string_tab[16]
 #define __pyx_kp_u_Invalid_mode_expected_c_or_fortr __pyx_string_tab[17]
 #define __pyx_kp_u_Invalid_shape_in_axis __pyx_string_tab[18]
-#define __pyx_kp_u_MemoryView_of __pyx_string_tab[19]
-#define __pyx_kp_u_Note_that_Cython_is_deliberately __pyx_string_tab[20]
-#define __pyx_kp_u_Out_of_bounds_on_buffer_access_a __pyx_string_tab[21]
-#define __pyx_kp_u_Point_data_must_be_a_tuple_of_up __pyx_string_tab[22]
-#define __pyx_kp_u_Point_data_must_be_an_array_of_u __pyx_string_tab[23]
-#define __pyx_kp_u_Rect_data_must_be_a_tuple_of_two __pyx_string_tab[24]
-#define __pyx_kp_u_Step_may_not_be_zero_axis_d __pyx_string_tab[25]
-#define __pyx_kp_u_Unable_to_convert_item_to_object __pyx_string_tab[26]
-#define __pyx_kp_u__2 __pyx_string_tab[27]
-#define __pyx_kp_u__3 __pyx_string_tab[28]
-#define __pyx_kp_u__4 __pyx_string_tab[29]
-#define __pyx_kp_u__5 __pyx_string_tab[30]
-#define __pyx_kp_u__6 __pyx_string_tab[31]
-#define __pyx_kp_u_add_note __pyx_string_tab[32]
-#define __pyx_kp_u_and __pyx_string_tab[33]
-#define __pyx_kp_u_at_0x __pyx_string_tab[34]
-#define __pyx_kp_u_collections_abc __pyx_string_tab[35]
-#define __pyx_kp_u_contiguous_and_direct __pyx_string_tab[36]
-#define __pyx_kp_u_contiguous_and_indirect __pyx_string_tab[37]
-#define __pyx_kp_u_dearcygui_layout_pyx __pyx_string_tab[38]
-#define __pyx_kp_u_dearcygui_sizing __pyx_string_tab[39]
-#define __pyx_kp_u_disable __pyx_string_tab[40]
-#define __pyx_kp_u_enable __pyx_string_tab[41]
-#define __pyx_kp_u_enum_class_Alignment_not_importa __pyx_string_tab[42]
-#define __pyx_kp_u_gc __pyx_string_tab[43]
-#define __pyx_kp_u_got __pyx_string_tab[44]
-#define __pyx_kp_u_got_differing_extents_in_dimensi __pyx_string_tab[45]
-#define __pyx_kp_u_is_not_a_valid_Alignment __pyx_string_tab[46]
-#define __pyx_kp_u_isenabled __pyx_string_tab[47]
-#define __pyx_kp_u_itemsize_0_for_cython_array __pyx_string_tab[48]
-#define __pyx_kp_u_no_default___reduce___due_to_non __pyx_string_tab[49]
-#define __pyx_kp_u_object __pyx_string_tab[50]
-#define __pyx_kp_u_strided_and_direct __pyx_string_tab[51]
-#define __pyx_kp_u_strided_and_direct_or_indirect __pyx_string_tab[52]
-#define __pyx_kp_u_strided_and_indirect __pyx_string_tab[53]
-#define __pyx_kp_u_unable_to_allocate_array_data __pyx_string_tab[54]
-#define __pyx_kp_u_unable_to_allocate_shape_and_str __pyx_string_tab[55]
-#define __pyx_kp_u_utf_8 __pyx_string_tab[56]
-#define __pyx_kp_u_wrap_x_is_deprecated_it_will_be __pyx_string_tab[57]
-#define __pyx_kp_u_wrap_y_is_deprecated_it_will_be __pyx_string_tab[58]
-#define __pyx_n_u_ADD __pyx_string_tab[59]
-#define __pyx_n_u_ASCII __pyx_string_tab[60]
-#define __pyx_n_u_Alignment __pyx_string_tab[61]
-#define __pyx_n_u_BOTTOM __pyx_string_tab[62]
-#define __pyx_n_u_CENTER __pyx_string_tab[63]
-#define __pyx_n_u_Ellipsis __pyx_string_tab[64]
-#define __pyx_n_u_FIXED __pyx_string_tab[65]
-#define __pyx_n_u_HorizontalLayout __pyx_string_tab[66]
-#define __pyx_n_u_HorizontalLayout_update_layout __pyx_string_tab[67]
+#define __pyx_kp_u_MANUAL_alignment_mode_is_depreca __pyx_string_tab[19]
+#define __pyx_kp_u_MANUAL_alignment_mode_is_depreca_2 __pyx_string_tab[20]
+#define __pyx_kp_u_MemoryView_of __pyx_string_tab[21]
+#define __pyx_kp_u_Note_that_Cython_is_deliberately __pyx_string_tab[22]
+#define __pyx_kp_u_Out_of_bounds_on_buffer_access_a __pyx_string_tab[23]
+#define __pyx_kp_u_Point_data_must_be_a_tuple_of_up __pyx_string_tab[24]
+#define __pyx_kp_u_Point_data_must_be_an_array_of_u __pyx_string_tab[25]
+#define __pyx_kp_u_Rect_data_must_be_a_tuple_of_two __pyx_string_tab[26]
+#define __pyx_kp_u_Step_may_not_be_zero_axis_d __pyx_string_tab[27]
+#define __pyx_kp_u_Unable_to_convert_item_to_object __pyx_string_tab[28]
+#define __pyx_kp_u__2 __pyx_string_tab[29]
+#define __pyx_kp_u__3 __pyx_string_tab[30]
+#define __pyx_kp_u__4 __pyx_string_tab[31]
+#define __pyx_kp_u__5 __pyx_string_tab[32]
+#define __pyx_kp_u__6 __pyx_string_tab[33]
+#define __pyx_kp_u_add_note __pyx_string_tab[34]
+#define __pyx_kp_u_and __pyx_string_tab[35]
+#define __pyx_kp_u_at_0x __pyx_string_tab[36]
+#define __pyx_kp_u_collections_abc __pyx_string_tab[37]
+#define __pyx_kp_u_contiguous_and_direct __pyx_string_tab[38]
+#define __pyx_kp_u_contiguous_and_indirect __pyx_string_tab[39]
+#define __pyx_kp_u_dearcygui_layout_pyx __pyx_string_tab[40]
+#define __pyx_kp_u_disable __pyx_string_tab[41]
+#define __pyx_kp_u_enable __pyx_string_tab[42]
+#define __pyx_kp_u_enum_class_Alignment_not_importa __pyx_string_tab[43]
+#define __pyx_kp_u_gc __pyx_string_tab[44]
+#define __pyx_kp_u_got __pyx_string_tab[45]
+#define __pyx_kp_u_got_differing_extents_in_dimensi __pyx_string_tab[46]
+#define __pyx_kp_u_is_not_a_valid_Alignment __pyx_string_tab[47]
+#define __pyx_kp_u_isenabled __pyx_string_tab[48]
+#define __pyx_kp_u_itemsize_0_for_cython_array __pyx_string_tab[49]
+#define __pyx_kp_u_no_default___reduce___due_to_non __pyx_string_tab[50]
+#define __pyx_kp_u_object __pyx_string_tab[51]
+#define __pyx_kp_u_positions_and_MANUAL_alignment_m __pyx_string_tab[52]
+#define __pyx_kp_u_positions_and_MANUAL_alignment_m_2 __pyx_string_tab[53]
+#define __pyx_kp_u_strided_and_direct __pyx_string_tab[54]
+#define __pyx_kp_u_strided_and_direct_or_indirect __pyx_string_tab[55]
+#define __pyx_kp_u_strided_and_indirect __pyx_string_tab[56]
+#define __pyx_kp_u_unable_to_allocate_array_data __pyx_string_tab[57]
+#define __pyx_kp_u_unable_to_allocate_shape_and_str __pyx_string_tab[58]
+#define __pyx_kp_u_utf_8 __pyx_string_tab[59]
+#define __pyx_kp_u_wrap_x_is_deprecated_it_will_be __pyx_string_tab[60]
+#define __pyx_kp_u_wrap_y_is_deprecated_it_will_be __pyx_string_tab[61]
+#define __pyx_n_u_ASCII __pyx_string_tab[62]
+#define __pyx_n_u_Alignment __pyx_string_tab[63]
+#define __pyx_n_u_BOTTOM __pyx_string_tab[64]
+#define __pyx_n_u_CENTER __pyx_string_tab[65]
+#define __pyx_n_u_Ellipsis __pyx_string_tab[66]
+#define __pyx_n_u_HorizontalLayout __pyx_string_tab[67]
 #define __pyx_n_u_JUSTIFIED __pyx_string_tab[68]
 #define __pyx_n_u_LEFT __pyx_string_tab[69]
 #define __pyx_n_u_Layout __pyx_string_tab[70]
 #define __pyx_n_u_Layout_update_layout __pyx_string_tab[71]
 #define __pyx_n_u_MANUAL __pyx_string_tab[72]
-#define __pyx_n_u_PARENT_X1 __pyx_string_tab[73]
-#define __pyx_n_u_PARENT_Y1 __pyx_string_tab[74]
-#define __pyx_n_u_Pyx_PyDict_NextRef __pyx_string_tab[75]
-#define __pyx_n_u_RIGHT __pyx_string_tab[76]
-#define __pyx_n_u_Sequence __pyx_string_tab[77]
-#define __pyx_n_u_Size __pyx_string_tab[78]
-#define __pyx_n_u_Size_2 __pyx_string_tab[79]
-#define __pyx_n_u_TOP __pyx_string_tab[80]
-#define __pyx_n_u_VerticalLayout __pyx_string_tab[81]
-#define __pyx_n_u_VerticalLayout_update_layout __pyx_string_tab[82]
-#define __pyx_n_u_View_MemoryView __pyx_string_tab[83]
-#define __pyx_n_u_WindowLayout __pyx_string_tab[84]
-#define __pyx_n_u_WindowLayout_update_layout __pyx_string_tab[85]
-#define __pyx_n_u_abc __pyx_string_tab[86]
-#define __pyx_n_u_allocate_buffer __pyx_string_tab[87]
-#define __pyx_n_u_append __pyx_string_tab[88]
-#define __pyx_n_u_asyncio_coroutines __pyx_string_tab[89]
-#define __pyx_n_u_base __pyx_string_tab[90]
-#define __pyx_n_u_c __pyx_string_tab[91]
-#define __pyx_n_u_class __pyx_string_tab[92]
-#define __pyx_n_u_class_getitem __pyx_string_tab[93]
-#define __pyx_n_u_cline_in_traceback __pyx_string_tab[94]
-#define __pyx_n_u_count __pyx_string_tab[95]
-#define __pyx_n_u_d __pyx_string_tab[96]
-#define __pyx_n_u_dearcygui_layout __pyx_string_tab[97]
-#define __pyx_n_u_dearcygui_types __pyx_string_tab[98]
-#define __pyx_n_u_decode __pyx_string_tab[99]
-#define __pyx_n_u_dict __pyx_string_tab[100]
-#define __pyx_n_u_dtype_is_object __pyx_string_tab[101]
-#define __pyx_n_u_encode __pyx_string_tab[102]
-#define __pyx_n_u_encoding __pyx_string_tab[103]
-#define __pyx_n_u_enumerate __pyx_string_tab[104]
-#define __pyx_n_u_error __pyx_string_tab[105]
-#define __pyx_n_u_flags __pyx_string_tab[106]
-#define __pyx_n_u_format __pyx_string_tab[107]
-#define __pyx_n_u_fortran __pyx_string_tab[108]
-#define __pyx_n_u_func __pyx_string_tab[109]
-#define __pyx_n_u_getstate __pyx_string_tab[110]
-#define __pyx_n_u_i __pyx_string_tab[111]
-#define __pyx_n_u_id __pyx_string_tab[112]
-#define __pyx_n_u_import __pyx_string_tab[113]
-#define __pyx_n_u_index __pyx_string_tab[114]
-#define __pyx_n_u_is_coroutine __pyx_string_tab[115]
-#define __pyx_n_u_items __pyx_string_tab[116]
-#define __pyx_n_u_itemsize __pyx_string_tab[117]
-#define __pyx_n_u_m __pyx_string_tab[118]
-#define __pyx_n_u_main __pyx_string_tab[119]
-#define __pyx_n_u_memview __pyx_string_tab[120]
-#define __pyx_n_u_mode __pyx_string_tab[121]
-#define __pyx_n_u_module __pyx_string_tab[122]
-#define __pyx_n_u_name __pyx_string_tab[123]
-#define __pyx_n_u_name_2 __pyx_string_tab[124]
-#define __pyx_n_u_ndim __pyx_string_tab[125]
-#define __pyx_n_u_new __pyx_string_tab[126]
-#define __pyx_n_u_obj __pyx_string_tab[127]
-#define __pyx_n_u_pack __pyx_string_tab[128]
-#define __pyx_n_u_pop __pyx_string_tab[129]
-#define __pyx_n_u_pyx_checksum __pyx_string_tab[130]
-#define __pyx_n_u_pyx_state __pyx_string_tab[131]
-#define __pyx_n_u_pyx_type __pyx_string_tab[132]
-#define __pyx_n_u_pyx_unpickle_Enum __pyx_string_tab[133]
-#define __pyx_n_u_pyx_vtable __pyx_string_tab[134]
-#define __pyx_n_u_qualname __pyx_string_tab[135]
-#define __pyx_n_u_reduce __pyx_string_tab[136]
-#define __pyx_n_u_reduce_cython __pyx_string_tab[137]
-#define __pyx_n_u_reduce_ex __pyx_string_tab[138]
-#define __pyx_n_u_register __pyx_string_tab[139]
-#define __pyx_n_u_self __pyx_string_tab[140]
-#define __pyx_n_u_set_name __pyx_string_tab[141]
-#define __pyx_n_u_setdefault __pyx_string_tab[142]
-#define __pyx_n_u_setstate __pyx_string_tab[143]
-#define __pyx_n_u_setstate_cython __pyx_string_tab[144]
-#define __pyx_n_u_shape __pyx_string_tab[145]
-#define __pyx_n_u_size __pyx_string_tab[146]
-#define __pyx_n_u_sizing __pyx_string_tab[147]
-#define __pyx_n_u_start __pyx_string_tab[148]
-#define __pyx_n_u_step __pyx_string_tab[149]
-#define __pyx_n_u_stop __pyx_string_tab[150]
-#define __pyx_n_u_struct __pyx_string_tab[151]
-#define __pyx_n_u_test __pyx_string_tab[152]
-#define __pyx_n_u_unpack __pyx_string_tab[153]
-#define __pyx_n_u_update __pyx_string_tab[154]
-#define __pyx_n_u_update_layout __pyx_string_tab[155]
-#define __pyx_n_u_values __pyx_string_tab[156]
-#define __pyx_n_u_warn __pyx_string_tab[157]
-#define __pyx_n_u_warn_2 __pyx_string_tab[158]
-#define __pyx_n_u_warnings __pyx_string_tab[159]
-#define __pyx_n_u_x __pyx_string_tab[160]
-#define __pyx_kp_b_ImU32_ImVec4_ImVec4_ImU32_imgui __pyx_string_tab[161]
-#define __pyx_kp_b_iso88591_A_T_E_auD_5_1_D_1DPVV_a __pyx_string_tab[162]
-#define __pyx_kp_b_iso88591_A_T_E_auD_5_1_D_1DPVV_a_2 __pyx_string_tab[163]
-#define __pyx_kp_b_iso88591_A_T_Q __pyx_string_tab[164]
-#define __pyx_kp_b_void_std_unique_lock_DCGMutex_lo __pyx_string_tab[165]
-#define __pyx_n_b_O __pyx_string_tab[166]
+#define __pyx_n_u_Pyx_PyDict_NextRef __pyx_string_tab[73]
+#define __pyx_n_u_RIGHT __pyx_string_tab[74]
+#define __pyx_n_u_Sequence __pyx_string_tab[75]
+#define __pyx_n_u_TOP __pyx_string_tab[76]
+#define __pyx_n_u_VerticalLayout __pyx_string_tab[77]
+#define __pyx_n_u_View_MemoryView __pyx_string_tab[78]
+#define __pyx_n_u_WindowLayout __pyx_string_tab[79]
+#define __pyx_n_u_WindowLayout_update_layout __pyx_string_tab[80]
+#define __pyx_n_u_abc __pyx_string_tab[81]
+#define __pyx_n_u_allocate_buffer __pyx_string_tab[82]
+#define __pyx_n_u_append __pyx_string_tab[83]
+#define __pyx_n_u_asyncio_coroutines __pyx_string_tab[84]
+#define __pyx_n_u_base __pyx_string_tab[85]
+#define __pyx_n_u_c __pyx_string_tab[86]
+#define __pyx_n_u_class __pyx_string_tab[87]
+#define __pyx_n_u_class_getitem __pyx_string_tab[88]
+#define __pyx_n_u_cline_in_traceback __pyx_string_tab[89]
+#define __pyx_n_u_count __pyx_string_tab[90]
+#define __pyx_n_u_d __pyx_string_tab[91]
+#define __pyx_n_u_dearcygui_layout __pyx_string_tab[92]
+#define __pyx_n_u_dearcygui_types __pyx_string_tab[93]
+#define __pyx_n_u_decode __pyx_string_tab[94]
+#define __pyx_n_u_dict __pyx_string_tab[95]
+#define __pyx_n_u_dtype_is_object __pyx_string_tab[96]
+#define __pyx_n_u_encode __pyx_string_tab[97]
+#define __pyx_n_u_encoding __pyx_string_tab[98]
+#define __pyx_n_u_enumerate __pyx_string_tab[99]
+#define __pyx_n_u_error __pyx_string_tab[100]
+#define __pyx_n_u_flags __pyx_string_tab[101]
+#define __pyx_n_u_format __pyx_string_tab[102]
+#define __pyx_n_u_fortran __pyx_string_tab[103]
+#define __pyx_n_u_func __pyx_string_tab[104]
+#define __pyx_n_u_getstate __pyx_string_tab[105]
+#define __pyx_n_u_id __pyx_string_tab[106]
+#define __pyx_n_u_import __pyx_string_tab[107]
+#define __pyx_n_u_index __pyx_string_tab[108]
+#define __pyx_n_u_is_coroutine __pyx_string_tab[109]
+#define __pyx_n_u_items __pyx_string_tab[110]
+#define __pyx_n_u_itemsize __pyx_string_tab[111]
+#define __pyx_n_u_m __pyx_string_tab[112]
+#define __pyx_n_u_main __pyx_string_tab[113]
+#define __pyx_n_u_memview __pyx_string_tab[114]
+#define __pyx_n_u_mode __pyx_string_tab[115]
+#define __pyx_n_u_module __pyx_string_tab[116]
+#define __pyx_n_u_name __pyx_string_tab[117]
+#define __pyx_n_u_name_2 __pyx_string_tab[118]
+#define __pyx_n_u_ndim __pyx_string_tab[119]
+#define __pyx_n_u_new __pyx_string_tab[120]
+#define __pyx_n_u_obj __pyx_string_tab[121]
+#define __pyx_n_u_pack __pyx_string_tab[122]
+#define __pyx_n_u_pop __pyx_string_tab[123]
+#define __pyx_n_u_pyx_checksum __pyx_string_tab[124]
+#define __pyx_n_u_pyx_state __pyx_string_tab[125]
+#define __pyx_n_u_pyx_type __pyx_string_tab[126]
+#define __pyx_n_u_pyx_unpickle_Enum __pyx_string_tab[127]
+#define __pyx_n_u_pyx_vtable __pyx_string_tab[128]
+#define __pyx_n_u_qualname __pyx_string_tab[129]
+#define __pyx_n_u_reduce __pyx_string_tab[130]
+#define __pyx_n_u_reduce_cython __pyx_string_tab[131]
+#define __pyx_n_u_reduce_ex __pyx_string_tab[132]
+#define __pyx_n_u_register __pyx_string_tab[133]
+#define __pyx_n_u_self __pyx_string_tab[134]
+#define __pyx_n_u_set_name __pyx_string_tab[135]
+#define __pyx_n_u_setdefault __pyx_string_tab[136]
+#define __pyx_n_u_setstate __pyx_string_tab[137]
+#define __pyx_n_u_setstate_cython __pyx_string_tab[138]
+#define __pyx_n_u_shape __pyx_string_tab[139]
+#define __pyx_n_u_size __pyx_string_tab[140]
+#define __pyx_n_u_stacklevel __pyx_string_tab[141]
+#define __pyx_n_u_start __pyx_string_tab[142]
+#define __pyx_n_u_step __pyx_string_tab[143]
+#define __pyx_n_u_stop __pyx_string_tab[144]
+#define __pyx_n_u_struct __pyx_string_tab[145]
+#define __pyx_n_u_test __pyx_string_tab[146]
+#define __pyx_n_u_unpack __pyx_string_tab[147]
+#define __pyx_n_u_update __pyx_string_tab[148]
+#define __pyx_n_u_update_layout __pyx_string_tab[149]
+#define __pyx_n_u_values __pyx_string_tab[150]
+#define __pyx_n_u_warn __pyx_string_tab[151]
+#define __pyx_n_u_warn_2 __pyx_string_tab[152]
+#define __pyx_n_u_warnings __pyx_string_tab[153]
+#define __pyx_n_u_x __pyx_string_tab[154]
+#define __pyx_kp_b_ImU32_ImVec4_ImVec4_ImU32_imgui __pyx_string_tab[155]
+#define __pyx_kp_b_iso88591_A_T_Q __pyx_string_tab[156]
+#define __pyx_kp_b_void_std_unique_lock_DCGMutex_lo __pyx_string_tab[157]
+#define __pyx_n_b_O __pyx_string_tab[158]
 #define __pyx_int_0 __pyx_number_tab[0]
 #define __pyx_int_neg_1 __pyx_number_tab[1]
 #define __pyx_int_1 __pyx_number_tab[2]
-#define __pyx_int_8 __pyx_number_tab[3]
-#define __pyx_int_136983863 __pyx_number_tab[4]
+#define __pyx_int_2 __pyx_number_tab[3]
+#define __pyx_int_8 __pyx_number_tab[4]
+#define __pyx_int_136983863 __pyx_number_tab[5]
 /* #### Code section: module_state_clear ### */
 #if CYTHON_USE_MODULE_STATE
 static CYTHON_SMALL_CODE int __pyx_m_clear(PyObject *m) {
@@ -6816,9 +6825,9 @@ static CYTHON_SMALL_CODE int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_type___pyx_memoryviewslice);
   for (int i=0; i<2; ++i) { Py_CLEAR(clear_module_state->__pyx_slice[i]); }
   for (int i=0; i<4; ++i) { Py_CLEAR(clear_module_state->__pyx_tuple[i]); }
-  for (int i=0; i<4; ++i) { Py_CLEAR(clear_module_state->__pyx_codeobj_tab[i]); }
-  for (int i=0; i<167; ++i) { Py_CLEAR(clear_module_state->__pyx_string_tab[i]); }
-  for (int i=0; i<5; ++i) { Py_CLEAR(clear_module_state->__pyx_number_tab[i]); }
+  for (int i=0; i<2; ++i) { Py_CLEAR(clear_module_state->__pyx_codeobj_tab[i]); }
+  for (int i=0; i<159; ++i) { Py_CLEAR(clear_module_state->__pyx_string_tab[i]); }
+  for (int i=0; i<6; ++i) { Py_CLEAR(clear_module_state->__pyx_number_tab[i]); }
 /* #### Code section: module_state_clear_contents ### */
 /* CommonTypesMetaclass.module_state_clear */
 Py_CLEAR(clear_module_state->__pyx_CommonTypesMetaclassType);
@@ -6888,9 +6897,9 @@ static CYTHON_SMALL_CODE int __pyx_m_traverse(PyObject *m, visitproc visit, void
   Py_VISIT(traverse_module_state->__pyx_type___pyx_memoryviewslice);
   for (int i=0; i<2; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_slice[i]); }
   for (int i=0; i<4; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_tuple[i]); }
-  for (int i=0; i<4; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_codeobj_tab[i]); }
-  for (int i=0; i<167; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_string_tab[i]); }
-  for (int i=0; i<5; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_number_tab[i]); }
+  for (int i=0; i<2; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_codeobj_tab[i]); }
+  for (int i=0; i<159; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_string_tab[i]); }
+  for (int i=0; i<6; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_number_tab[i]); }
 /* #### Code section: module_state_traverse_contents ### */
 /* CommonTypesMetaclass.module_state_traverse */
 Py_VISIT(traverse_module_state->__pyx_CommonTypesMetaclassType);
@@ -27995,7 +28004,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_append_obj_vector(DCGVector<P
   __Pyx_RefNannyFinishContext();
 }
 
-/* "core.pxd":438
+/* "core.pxd":440
  * # Rendering children
  * 
  * cdef inline void draw_drawing_children(baseItem item,             # <<<<<<<<<<<<<<
@@ -28007,7 +28016,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_drawing_children(struct 
   PyObject *__pyx_v_child;
   int __pyx_t_1;
 
-  /* "core.pxd":440
+  /* "core.pxd":442
  * cdef inline void draw_drawing_children(baseItem item,
  *                                        void* drawlist) noexcept nogil:
  *     if item.last_drawings_child is None:             # <<<<<<<<<<<<<<
@@ -28017,7 +28026,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_drawing_children(struct 
   __pyx_t_1 = (((PyObject *)__pyx_v_item->last_drawings_child) == Py_None);
   if (__pyx_t_1) {
 
-    /* "core.pxd":441
+    /* "core.pxd":443
  *                                        void* drawlist) noexcept nogil:
  *     if item.last_drawings_child is None:
  *         return             # <<<<<<<<<<<<<<
@@ -28026,7 +28035,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_drawing_children(struct 
 */
     goto __pyx_L0;
 
-    /* "core.pxd":440
+    /* "core.pxd":442
  * cdef inline void draw_drawing_children(baseItem item,
  *                                        void* drawlist) noexcept nogil:
  *     if item.last_drawings_child is None:             # <<<<<<<<<<<<<<
@@ -28035,7 +28044,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_drawing_children(struct 
 */
   }
 
-  /* "core.pxd":442
+  /* "core.pxd":444
  *     if item.last_drawings_child is None:
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_drawings_child             # <<<<<<<<<<<<<<
@@ -28044,7 +28053,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_drawing_children(struct 
 */
   __pyx_v_child = ((PyObject *)__pyx_v_item->last_drawings_child);
 
-  /* "core.pxd":443
+  /* "core.pxd":445
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_drawings_child
  *     while (<baseItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
@@ -28055,7 +28064,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_drawing_children(struct 
     __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":444
+    /* "core.pxd":446
  *     cdef PyObject *child = <PyObject*> item.last_drawings_child
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling             # <<<<<<<<<<<<<<
@@ -28065,7 +28074,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_drawing_children(struct 
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling);
   }
 
-  /* "core.pxd":445
+  /* "core.pxd":447
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:             # <<<<<<<<<<<<<<
@@ -28076,7 +28085,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_drawing_children(struct 
     __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":446
+    /* "core.pxd":448
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:
  *         (<drawingItem>child).draw(drawlist) # drawlist is imgui.ImDrawList*             # <<<<<<<<<<<<<<
@@ -28085,7 +28094,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_drawing_children(struct 
 */
     ((struct __pyx_vtabstruct_9dearcygui_4core_drawingItem *)((struct __pyx_obj_9dearcygui_4core_drawingItem *)__pyx_v_child)->__pyx_base.__pyx_vtab)->draw(((struct __pyx_obj_9dearcygui_4core_drawingItem *)__pyx_v_child), __pyx_v_drawlist);
 
-    /* "core.pxd":447
+    /* "core.pxd":449
  *     while (<baseItem>child) is not None:
  *         (<drawingItem>child).draw(drawlist) # drawlist is imgui.ImDrawList*
  *         child = <PyObject *>(<baseItem>child).next_sibling             # <<<<<<<<<<<<<<
@@ -28095,7 +28104,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_drawing_children(struct 
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->next_sibling);
   }
 
-  /* "core.pxd":438
+  /* "core.pxd":440
  * # Rendering children
  * 
  * cdef inline void draw_drawing_children(baseItem item,             # <<<<<<<<<<<<<<
@@ -28107,7 +28116,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_drawing_children(struct 
   __pyx_L0:;
 }
 
-/* "core.pxd":449
+/* "core.pxd":451
  *         child = <PyObject *>(<baseItem>child).next_sibling
  * 
  * cdef inline void draw_menubar_children(baseItem item) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -28119,7 +28128,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_menubar_children(struct 
   PyObject *__pyx_v_child;
   int __pyx_t_1;
 
-  /* "core.pxd":450
+  /* "core.pxd":452
  * 
  * cdef inline void draw_menubar_children(baseItem item) noexcept nogil:
  *     if item.last_menubar_child is None:             # <<<<<<<<<<<<<<
@@ -28129,7 +28138,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_menubar_children(struct 
   __pyx_t_1 = (((PyObject *)__pyx_v_item->last_menubar_child) == Py_None);
   if (__pyx_t_1) {
 
-    /* "core.pxd":451
+    /* "core.pxd":453
  * cdef inline void draw_menubar_children(baseItem item) noexcept nogil:
  *     if item.last_menubar_child is None:
  *         return             # <<<<<<<<<<<<<<
@@ -28138,7 +28147,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_menubar_children(struct 
 */
     goto __pyx_L0;
 
-    /* "core.pxd":450
+    /* "core.pxd":452
  * 
  * cdef inline void draw_menubar_children(baseItem item) noexcept nogil:
  *     if item.last_menubar_child is None:             # <<<<<<<<<<<<<<
@@ -28147,7 +28156,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_menubar_children(struct 
 */
   }
 
-  /* "core.pxd":452
+  /* "core.pxd":454
  *     if item.last_menubar_child is None:
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_menubar_child             # <<<<<<<<<<<<<<
@@ -28156,7 +28165,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_menubar_children(struct 
 */
   __pyx_v_child = ((PyObject *)__pyx_v_item->last_menubar_child);
 
-  /* "core.pxd":453
+  /* "core.pxd":455
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_menubar_child
  *     while (<baseItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
@@ -28167,7 +28176,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_menubar_children(struct 
     __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":454
+    /* "core.pxd":456
  *     cdef PyObject *child = <PyObject*> item.last_menubar_child
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling             # <<<<<<<<<<<<<<
@@ -28177,7 +28186,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_menubar_children(struct 
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling);
   }
 
-  /* "core.pxd":455
+  /* "core.pxd":457
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:             # <<<<<<<<<<<<<<
@@ -28188,7 +28197,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_menubar_children(struct 
     __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":456
+    /* "core.pxd":458
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:
  *         (<uiItem>child).draw()             # <<<<<<<<<<<<<<
@@ -28197,7 +28206,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_menubar_children(struct 
 */
     ((struct __pyx_vtabstruct_9dearcygui_4core_uiItem *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.__pyx_vtab)->draw(((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child));
 
-    /* "core.pxd":457
+    /* "core.pxd":459
  *     while (<baseItem>child) is not None:
  *         (<uiItem>child).draw()
  *         child = <PyObject *>(<baseItem>child).next_sibling             # <<<<<<<<<<<<<<
@@ -28207,7 +28216,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_menubar_children(struct 
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->next_sibling);
   }
 
-  /* "core.pxd":449
+  /* "core.pxd":451
  *         child = <PyObject *>(<baseItem>child).next_sibling
  * 
  * cdef inline void draw_menubar_children(baseItem item) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -28219,7 +28228,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_menubar_children(struct 
   __pyx_L0:;
 }
 
-/* "core.pxd":459
+/* "core.pxd":461
  *         child = <PyObject *>(<baseItem>child).next_sibling
  * 
  * cdef inline void draw_plot_element_children(baseItem item) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -28231,7 +28240,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_plot_element_children(st
   PyObject *__pyx_v_child;
   int __pyx_t_1;
 
-  /* "core.pxd":460
+  /* "core.pxd":462
  * 
  * cdef inline void draw_plot_element_children(baseItem item) noexcept nogil:
  *     if item.last_plot_element_child is None:             # <<<<<<<<<<<<<<
@@ -28241,7 +28250,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_plot_element_children(st
   __pyx_t_1 = (((PyObject *)__pyx_v_item->last_plot_element_child) == Py_None);
   if (__pyx_t_1) {
 
-    /* "core.pxd":461
+    /* "core.pxd":463
  * cdef inline void draw_plot_element_children(baseItem item) noexcept nogil:
  *     if item.last_plot_element_child is None:
  *         return             # <<<<<<<<<<<<<<
@@ -28250,7 +28259,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_plot_element_children(st
 */
     goto __pyx_L0;
 
-    /* "core.pxd":460
+    /* "core.pxd":462
  * 
  * cdef inline void draw_plot_element_children(baseItem item) noexcept nogil:
  *     if item.last_plot_element_child is None:             # <<<<<<<<<<<<<<
@@ -28259,7 +28268,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_plot_element_children(st
 */
   }
 
-  /* "core.pxd":462
+  /* "core.pxd":464
  *     if item.last_plot_element_child is None:
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_plot_element_child             # <<<<<<<<<<<<<<
@@ -28268,7 +28277,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_plot_element_children(st
 */
   __pyx_v_child = ((PyObject *)__pyx_v_item->last_plot_element_child);
 
-  /* "core.pxd":463
+  /* "core.pxd":465
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_plot_element_child
  *     while (<baseItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
@@ -28279,7 +28288,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_plot_element_children(st
     __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":464
+    /* "core.pxd":466
  *     cdef PyObject *child = <PyObject*> item.last_plot_element_child
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling             # <<<<<<<<<<<<<<
@@ -28289,7 +28298,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_plot_element_children(st
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling);
   }
 
-  /* "core.pxd":465
+  /* "core.pxd":467
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:             # <<<<<<<<<<<<<<
@@ -28300,7 +28309,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_plot_element_children(st
     __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":466
+    /* "core.pxd":468
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:
  *         (<plotElement>child).draw()             # <<<<<<<<<<<<<<
@@ -28309,7 +28318,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_plot_element_children(st
 */
     ((struct __pyx_vtabstruct_9dearcygui_4core_plotElement *)((struct __pyx_obj_9dearcygui_4core_plotElement *)__pyx_v_child)->__pyx_base.__pyx_vtab)->draw(((struct __pyx_obj_9dearcygui_4core_plotElement *)__pyx_v_child));
 
-    /* "core.pxd":467
+    /* "core.pxd":469
  *     while (<baseItem>child) is not None:
  *         (<plotElement>child).draw()
  *         child = <PyObject *>(<baseItem>child).next_sibling             # <<<<<<<<<<<<<<
@@ -28319,7 +28328,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_plot_element_children(st
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->next_sibling);
   }
 
-  /* "core.pxd":459
+  /* "core.pxd":461
  *         child = <PyObject *>(<baseItem>child).next_sibling
  * 
  * cdef inline void draw_plot_element_children(baseItem item) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -28331,7 +28340,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_plot_element_children(st
   __pyx_L0:;
 }
 
-/* "core.pxd":469
+/* "core.pxd":471
  *         child = <PyObject *>(<baseItem>child).next_sibling
  * 
  * cdef inline void draw_tab_children(baseItem item) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -28343,7 +28352,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_tab_children(struct __py
   PyObject *__pyx_v_child;
   int __pyx_t_1;
 
-  /* "core.pxd":470
+  /* "core.pxd":472
  * 
  * cdef inline void draw_tab_children(baseItem item) noexcept nogil:
  *     if item.last_tab_child is None:             # <<<<<<<<<<<<<<
@@ -28353,7 +28362,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_tab_children(struct __py
   __pyx_t_1 = (((PyObject *)__pyx_v_item->last_tab_child) == Py_None);
   if (__pyx_t_1) {
 
-    /* "core.pxd":471
+    /* "core.pxd":473
  * cdef inline void draw_tab_children(baseItem item) noexcept nogil:
  *     if item.last_tab_child is None:
  *         return             # <<<<<<<<<<<<<<
@@ -28362,7 +28371,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_tab_children(struct __py
 */
     goto __pyx_L0;
 
-    /* "core.pxd":470
+    /* "core.pxd":472
  * 
  * cdef inline void draw_tab_children(baseItem item) noexcept nogil:
  *     if item.last_tab_child is None:             # <<<<<<<<<<<<<<
@@ -28371,7 +28380,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_tab_children(struct __py
 */
   }
 
-  /* "core.pxd":472
+  /* "core.pxd":474
  *     if item.last_tab_child is None:
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_tab_child             # <<<<<<<<<<<<<<
@@ -28380,7 +28389,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_tab_children(struct __py
 */
   __pyx_v_child = ((PyObject *)__pyx_v_item->last_tab_child);
 
-  /* "core.pxd":473
+  /* "core.pxd":475
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_tab_child
  *     while (<baseItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
@@ -28391,7 +28400,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_tab_children(struct __py
     __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":474
+    /* "core.pxd":476
  *     cdef PyObject *child = <PyObject*> item.last_tab_child
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling             # <<<<<<<<<<<<<<
@@ -28401,7 +28410,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_tab_children(struct __py
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling);
   }
 
-  /* "core.pxd":475
+  /* "core.pxd":477
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:             # <<<<<<<<<<<<<<
@@ -28412,7 +28421,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_tab_children(struct __py
     __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":476
+    /* "core.pxd":478
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:
  *         (<uiItem>child).draw()             # <<<<<<<<<<<<<<
@@ -28421,7 +28430,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_tab_children(struct __py
 */
     ((struct __pyx_vtabstruct_9dearcygui_4core_uiItem *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.__pyx_vtab)->draw(((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child));
 
-    /* "core.pxd":477
+    /* "core.pxd":479
  *     while (<baseItem>child) is not None:
  *         (<uiItem>child).draw()
  *         child = <PyObject *>(<baseItem>child).next_sibling             # <<<<<<<<<<<<<<
@@ -28431,7 +28440,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_tab_children(struct __py
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->next_sibling);
   }
 
-  /* "core.pxd":469
+  /* "core.pxd":471
  *         child = <PyObject *>(<baseItem>child).next_sibling
  * 
  * cdef inline void draw_tab_children(baseItem item) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -28443,7 +28452,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_tab_children(struct __py
   __pyx_L0:;
 }
 
-/* "core.pxd":479
+/* "core.pxd":481
  *         child = <PyObject *>(<baseItem>child).next_sibling
  * 
  * cdef inline void draw_viewport_drawlist_children(baseItem item) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -28455,7 +28464,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_viewport_drawlist_childr
   PyObject *__pyx_v_child;
   int __pyx_t_1;
 
-  /* "core.pxd":480
+  /* "core.pxd":482
  * 
  * cdef inline void draw_viewport_drawlist_children(baseItem item) noexcept nogil:
  *     if item.last_viewport_drawlist_child is None:             # <<<<<<<<<<<<<<
@@ -28465,7 +28474,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_viewport_drawlist_childr
   __pyx_t_1 = (((PyObject *)__pyx_v_item->last_viewport_drawlist_child) == Py_None);
   if (__pyx_t_1) {
 
-    /* "core.pxd":481
+    /* "core.pxd":483
  * cdef inline void draw_viewport_drawlist_children(baseItem item) noexcept nogil:
  *     if item.last_viewport_drawlist_child is None:
  *         return             # <<<<<<<<<<<<<<
@@ -28474,7 +28483,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_viewport_drawlist_childr
 */
     goto __pyx_L0;
 
-    /* "core.pxd":480
+    /* "core.pxd":482
  * 
  * cdef inline void draw_viewport_drawlist_children(baseItem item) noexcept nogil:
  *     if item.last_viewport_drawlist_child is None:             # <<<<<<<<<<<<<<
@@ -28483,7 +28492,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_viewport_drawlist_childr
 */
   }
 
-  /* "core.pxd":482
+  /* "core.pxd":484
  *     if item.last_viewport_drawlist_child is None:
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_viewport_drawlist_child             # <<<<<<<<<<<<<<
@@ -28492,7 +28501,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_viewport_drawlist_childr
 */
   __pyx_v_child = ((PyObject *)__pyx_v_item->last_viewport_drawlist_child);
 
-  /* "core.pxd":483
+  /* "core.pxd":485
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_viewport_drawlist_child
  *     while (<baseItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
@@ -28503,7 +28512,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_viewport_drawlist_childr
     __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":484
+    /* "core.pxd":486
  *     cdef PyObject *child = <PyObject*> item.last_viewport_drawlist_child
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling             # <<<<<<<<<<<<<<
@@ -28513,7 +28522,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_viewport_drawlist_childr
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling);
   }
 
-  /* "core.pxd":485
+  /* "core.pxd":487
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:             # <<<<<<<<<<<<<<
@@ -28524,7 +28533,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_viewport_drawlist_childr
     __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":486
+    /* "core.pxd":488
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:
  *         (<drawingItem>child).draw(NULL)             # <<<<<<<<<<<<<<
@@ -28533,7 +28542,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_viewport_drawlist_childr
 */
     ((struct __pyx_vtabstruct_9dearcygui_4core_drawingItem *)((struct __pyx_obj_9dearcygui_4core_drawingItem *)__pyx_v_child)->__pyx_base.__pyx_vtab)->draw(((struct __pyx_obj_9dearcygui_4core_drawingItem *)__pyx_v_child), NULL);
 
-    /* "core.pxd":487
+    /* "core.pxd":489
  *     while (<baseItem>child) is not None:
  *         (<drawingItem>child).draw(NULL)
  *         child = <PyObject *>(<baseItem>child).next_sibling             # <<<<<<<<<<<<<<
@@ -28543,7 +28552,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_viewport_drawlist_childr
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->next_sibling);
   }
 
-  /* "core.pxd":479
+  /* "core.pxd":481
  *         child = <PyObject *>(<baseItem>child).next_sibling
  * 
  * cdef inline void draw_viewport_drawlist_children(baseItem item) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -28555,7 +28564,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_viewport_drawlist_childr
   __pyx_L0:;
 }
 
-/* "core.pxd":489
+/* "core.pxd":491
  *         child = <PyObject *>(<baseItem>child).next_sibling
  * 
  * cdef inline void draw_ui_children(baseItem item) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -28567,7 +28576,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_ui_children(struct __pyx
   PyObject *__pyx_v_child;
   int __pyx_t_1;
 
-  /* "core.pxd":490
+  /* "core.pxd":492
  * 
  * cdef inline void draw_ui_children(baseItem item) noexcept nogil:
  *     if item.last_widgets_child is None:             # <<<<<<<<<<<<<<
@@ -28577,7 +28586,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_ui_children(struct __pyx
   __pyx_t_1 = (((PyObject *)__pyx_v_item->last_widgets_child) == Py_None);
   if (__pyx_t_1) {
 
-    /* "core.pxd":491
+    /* "core.pxd":493
  * cdef inline void draw_ui_children(baseItem item) noexcept nogil:
  *     if item.last_widgets_child is None:
  *         return             # <<<<<<<<<<<<<<
@@ -28586,7 +28595,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_ui_children(struct __pyx
 */
     goto __pyx_L0;
 
-    /* "core.pxd":490
+    /* "core.pxd":492
  * 
  * cdef inline void draw_ui_children(baseItem item) noexcept nogil:
  *     if item.last_widgets_child is None:             # <<<<<<<<<<<<<<
@@ -28595,7 +28604,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_ui_children(struct __pyx
 */
   }
 
-  /* "core.pxd":492
+  /* "core.pxd":494
  *     if item.last_widgets_child is None:
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_widgets_child             # <<<<<<<<<<<<<<
@@ -28604,7 +28613,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_ui_children(struct __pyx
 */
   __pyx_v_child = ((PyObject *)__pyx_v_item->last_widgets_child);
 
-  /* "core.pxd":493
+  /* "core.pxd":495
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_widgets_child
  *     while (<baseItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
@@ -28615,7 +28624,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_ui_children(struct __pyx
     __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":494
+    /* "core.pxd":496
  *     cdef PyObject *child = <PyObject*> item.last_widgets_child
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling             # <<<<<<<<<<<<<<
@@ -28625,7 +28634,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_ui_children(struct __pyx
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling);
   }
 
-  /* "core.pxd":495
+  /* "core.pxd":497
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:             # <<<<<<<<<<<<<<
@@ -28636,7 +28645,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_ui_children(struct __pyx
     __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":496
+    /* "core.pxd":498
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:
  *         (<uiItem>child).draw()             # <<<<<<<<<<<<<<
@@ -28645,7 +28654,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_ui_children(struct __pyx
 */
     ((struct __pyx_vtabstruct_9dearcygui_4core_uiItem *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.__pyx_vtab)->draw(((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child));
 
-    /* "core.pxd":497
+    /* "core.pxd":499
  *     while (<baseItem>child) is not None:
  *         (<uiItem>child).draw()
  *         child = <PyObject *>(<baseItem>child).next_sibling             # <<<<<<<<<<<<<<
@@ -28655,7 +28664,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_ui_children(struct __pyx
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->next_sibling);
   }
 
-  /* "core.pxd":489
+  /* "core.pxd":491
  *         child = <PyObject *>(<baseItem>child).next_sibling
  * 
  * cdef inline void draw_ui_children(baseItem item) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -28667,7 +28676,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_ui_children(struct __pyx
   __pyx_L0:;
 }
 
-/* "core.pxd":499
+/* "core.pxd":501
  *         child = <PyObject *>(<baseItem>child).next_sibling
  * 
  * cdef inline void draw_window_children(baseItem item) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -28679,7 +28688,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_window_children(struct _
   PyObject *__pyx_v_child;
   int __pyx_t_1;
 
-  /* "core.pxd":500
+  /* "core.pxd":502
  * 
  * cdef inline void draw_window_children(baseItem item) noexcept nogil:
  *     if item.last_window_child is None:             # <<<<<<<<<<<<<<
@@ -28689,7 +28698,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_window_children(struct _
   __pyx_t_1 = (((PyObject *)__pyx_v_item->last_window_child) == Py_None);
   if (__pyx_t_1) {
 
-    /* "core.pxd":501
+    /* "core.pxd":503
  * cdef inline void draw_window_children(baseItem item) noexcept nogil:
  *     if item.last_window_child is None:
  *         return             # <<<<<<<<<<<<<<
@@ -28698,7 +28707,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_window_children(struct _
 */
     goto __pyx_L0;
 
-    /* "core.pxd":500
+    /* "core.pxd":502
  * 
  * cdef inline void draw_window_children(baseItem item) noexcept nogil:
  *     if item.last_window_child is None:             # <<<<<<<<<<<<<<
@@ -28707,7 +28716,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_window_children(struct _
 */
   }
 
-  /* "core.pxd":502
+  /* "core.pxd":504
  *     if item.last_window_child is None:
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_window_child             # <<<<<<<<<<<<<<
@@ -28716,7 +28725,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_window_children(struct _
 */
   __pyx_v_child = ((PyObject *)__pyx_v_item->last_window_child);
 
-  /* "core.pxd":503
+  /* "core.pxd":505
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_window_child
  *     while (<baseItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
@@ -28727,7 +28736,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_window_children(struct _
     __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":504
+    /* "core.pxd":506
  *     cdef PyObject *child = <PyObject*> item.last_window_child
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling             # <<<<<<<<<<<<<<
@@ -28737,7 +28746,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_window_children(struct _
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling);
   }
 
-  /* "core.pxd":505
+  /* "core.pxd":507
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:             # <<<<<<<<<<<<<<
@@ -28748,7 +28757,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_window_children(struct _
     __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":506
+    /* "core.pxd":508
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:
  *         (<uiItem>child).draw()             # <<<<<<<<<<<<<<
@@ -28757,7 +28766,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_window_children(struct _
 */
     ((struct __pyx_vtabstruct_9dearcygui_4core_uiItem *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.__pyx_vtab)->draw(((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child));
 
-    /* "core.pxd":507
+    /* "core.pxd":509
  *     while (<baseItem>child) is not None:
  *         (<uiItem>child).draw()
  *         child = <PyObject *>(<baseItem>child).next_sibling             # <<<<<<<<<<<<<<
@@ -28767,7 +28776,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_window_children(struct _
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->next_sibling);
   }
 
-  /* "core.pxd":499
+  /* "core.pxd":501
  *         child = <PyObject *>(<baseItem>child).next_sibling
  * 
  * cdef inline void draw_window_children(baseItem item) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -29840,8 +29849,8 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_6sizing_set_size(ValueOrItem &__pyx
   __Pyx_RefNannyFinishContext();
 }
 
-/* "dearcygui/layout.pyx":71
- *     nesting layouts. If you intend to force a specific size, use a `ChildWindow`.
+/* "dearcygui/layout.pyx":136
+ *     If you intend to force a specific size, use a `ChildWindow`.
  *     """
  *     def __cinit__(self):             # <<<<<<<<<<<<<<
  *         self.can_have_widget_child = True
@@ -29876,7 +29885,7 @@ static int __pyx_pw_9dearcygui_6layout_6Layout_1__cinit__(PyObject *__pyx_v_self
 static int __pyx_pf_9dearcygui_6layout_6Layout___cinit__(struct __pyx_obj_9dearcygui_6layout_Layout *__pyx_v_self) {
   int __pyx_r;
 
-  /* "dearcygui/layout.pyx":72
+  /* "dearcygui/layout.pyx":137
  *     """
  *     def __cinit__(self):
  *         self.can_have_widget_child = True             # <<<<<<<<<<<<<<
@@ -29885,7 +29894,7 @@ static int __pyx_pf_9dearcygui_6layout_6Layout___cinit__(struct __pyx_obj_9dearc
 */
   __pyx_v_self->__pyx_base.__pyx_base.can_have_widget_child = 1;
 
-  /* "dearcygui/layout.pyx":73
+  /* "dearcygui/layout.pyx":138
  *     def __cinit__(self):
  *         self.can_have_widget_child = True
  *         self.state.cap.can_be_active = True             # <<<<<<<<<<<<<<
@@ -29894,7 +29903,7 @@ static int __pyx_pf_9dearcygui_6layout_6Layout___cinit__(struct __pyx_obj_9dearc
 */
   __pyx_v_self->__pyx_base.state.cap.can_be_active = 1;
 
-  /* "dearcygui/layout.pyx":74
+  /* "dearcygui/layout.pyx":139
  *         self.can_have_widget_child = True
  *         self.state.cap.can_be_active = True
  *         self.state.cap.can_be_clicked = True             # <<<<<<<<<<<<<<
@@ -29903,7 +29912,7 @@ static int __pyx_pf_9dearcygui_6layout_6Layout___cinit__(struct __pyx_obj_9dearc
 */
   __pyx_v_self->__pyx_base.state.cap.can_be_clicked = 1;
 
-  /* "dearcygui/layout.pyx":75
+  /* "dearcygui/layout.pyx":140
  *         self.state.cap.can_be_active = True
  *         self.state.cap.can_be_clicked = True
  *         self.state.cap.can_be_dragged = True             # <<<<<<<<<<<<<<
@@ -29912,7 +29921,7 @@ static int __pyx_pf_9dearcygui_6layout_6Layout___cinit__(struct __pyx_obj_9dearc
 */
   __pyx_v_self->__pyx_base.state.cap.can_be_dragged = 1;
 
-  /* "dearcygui/layout.pyx":76
+  /* "dearcygui/layout.pyx":141
  *         self.state.cap.can_be_clicked = True
  *         self.state.cap.can_be_dragged = True
  *         self.state.cap.can_be_deactivated_after_edited = True             # <<<<<<<<<<<<<<
@@ -29921,7 +29930,7 @@ static int __pyx_pf_9dearcygui_6layout_6Layout___cinit__(struct __pyx_obj_9dearc
 */
   __pyx_v_self->__pyx_base.state.cap.can_be_deactivated_after_edited = 1;
 
-  /* "dearcygui/layout.pyx":77
+  /* "dearcygui/layout.pyx":142
  *         self.state.cap.can_be_dragged = True
  *         self.state.cap.can_be_deactivated_after_edited = True
  *         self.state.cap.can_be_edited = True             # <<<<<<<<<<<<<<
@@ -29930,7 +29939,7 @@ static int __pyx_pf_9dearcygui_6layout_6Layout___cinit__(struct __pyx_obj_9dearc
 */
   __pyx_v_self->__pyx_base.state.cap.can_be_edited = 1;
 
-  /* "dearcygui/layout.pyx":78
+  /* "dearcygui/layout.pyx":143
  *         self.state.cap.can_be_deactivated_after_edited = True
  *         self.state.cap.can_be_edited = True
  *         self.state.cap.can_be_focused = True             # <<<<<<<<<<<<<<
@@ -29939,7 +29948,7 @@ static int __pyx_pf_9dearcygui_6layout_6Layout___cinit__(struct __pyx_obj_9dearc
 */
   __pyx_v_self->__pyx_base.state.cap.can_be_focused = 1;
 
-  /* "dearcygui/layout.pyx":79
+  /* "dearcygui/layout.pyx":144
  *         self.state.cap.can_be_edited = True
  *         self.state.cap.can_be_focused = True
  *         self.state.cap.can_be_hovered = True             # <<<<<<<<<<<<<<
@@ -29948,7 +29957,7 @@ static int __pyx_pf_9dearcygui_6layout_6Layout___cinit__(struct __pyx_obj_9dearc
 */
   __pyx_v_self->__pyx_base.state.cap.can_be_hovered = 1;
 
-  /* "dearcygui/layout.pyx":80
+  /* "dearcygui/layout.pyx":145
  *         self.state.cap.can_be_focused = True
  *         self.state.cap.can_be_hovered = True
  *         self.state.cap.can_be_toggled = True             # <<<<<<<<<<<<<<
@@ -29957,7 +29966,7 @@ static int __pyx_pf_9dearcygui_6layout_6Layout___cinit__(struct __pyx_obj_9dearc
 */
   __pyx_v_self->__pyx_base.state.cap.can_be_toggled = 1;
 
-  /* "dearcygui/layout.pyx":81
+  /* "dearcygui/layout.pyx":146
  *         self.state.cap.can_be_hovered = True
  *         self.state.cap.can_be_toggled = True
  *         self.state.cap.has_content_region = True             # <<<<<<<<<<<<<<
@@ -29966,7 +29975,7 @@ static int __pyx_pf_9dearcygui_6layout_6Layout___cinit__(struct __pyx_obj_9dearc
 */
   __pyx_v_self->__pyx_base.state.cap.has_content_region = 1;
 
-  /* "dearcygui/layout.pyx":82
+  /* "dearcygui/layout.pyx":147
  *         self.state.cap.can_be_toggled = True
  *         self.state.cap.has_content_region = True
  *         self._previous_last_child = NULL             # <<<<<<<<<<<<<<
@@ -29975,8 +29984,8 @@ static int __pyx_pf_9dearcygui_6layout_6Layout___cinit__(struct __pyx_obj_9dearc
 */
   __pyx_v_self->_previous_last_child = NULL;
 
-  /* "dearcygui/layout.pyx":71
- *     nesting layouts. If you intend to force a specific size, use a `ChildWindow`.
+  /* "dearcygui/layout.pyx":136
+ *     If you intend to force a specific size, use a `ChildWindow`.
  *     """
  *     def __cinit__(self):             # <<<<<<<<<<<<<<
  *         self.can_have_widget_child = True
@@ -29988,7 +29997,7 @@ static int __pyx_pf_9dearcygui_6layout_6Layout___cinit__(struct __pyx_obj_9dearc
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":84
+/* "dearcygui/layout.pyx":149
  *         self._previous_last_child = NULL
  * 
  *     def update_layout(self):             # <<<<<<<<<<<<<<
@@ -30014,53 +30023,30 @@ static PyObject *__pyx_pw_9dearcygui_6layout_6Layout_3update_layout(PyObject *__
 }
 
 static PyObject *__pyx_pf_9dearcygui_6layout_6Layout_2update_layout(struct __pyx_obj_9dearcygui_6layout_Layout *__pyx_v_self) {
-  int32_t __pyx_v_i;
   std::unique_lock<DCGMutex>  __pyx_v_m;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  int __pyx_t_1;
-  int __pyx_t_2;
-  int32_t __pyx_t_3;
-  PyObject *__pyx_t_4;
-  PyObject *__pyx_t_5 = NULL;
   __Pyx_RefNannySetupContext("update_layout", 0);
 
-  /* "dearcygui/layout.pyx":94
- *         cdef int32_t i
+  /* "dearcygui/layout.pyx":158
+ *         """
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)             # <<<<<<<<<<<<<<
- *         for i in range(<int>self._callbacks.size()):
- *             self.context.queue_callback_arg1value(<Callback>self._callbacks[i], self, self, self._value)
+ *         self._force_update = True
+ * 
 */
   __pyx_f_9dearcygui_4core_lock_gil_friendly(__pyx_v_m, __pyx_v_self->__pyx_base.__pyx_base.mutex);
 
-  /* "dearcygui/layout.pyx":95
+  /* "dearcygui/layout.pyx":159
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)
- *         for i in range(<int>self._callbacks.size()):             # <<<<<<<<<<<<<<
- *             self.context.queue_callback_arg1value(<Callback>self._callbacks[i], self, self, self._value)
- * 
-*/
-  __pyx_t_1 = ((int)__pyx_v_self->__pyx_base._callbacks.size());
-  __pyx_t_2 = __pyx_t_1;
-  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
-    __pyx_v_i = __pyx_t_3;
-
-    /* "dearcygui/layout.pyx":96
- *         lock_gil_friendly(m, self.mutex)
- *         for i in range(<int>self._callbacks.size()):
- *             self.context.queue_callback_arg1value(<Callback>self._callbacks[i], self, self, self._value)             # <<<<<<<<<<<<<<
+ *         self._force_update = True             # <<<<<<<<<<<<<<
  * 
  *     # final enables inlining
 */
-    __pyx_t_4 = (__pyx_v_self->__pyx_base._callbacks[__pyx_v_i]);
-    __pyx_t_5 = ((PyObject *)__pyx_v_self->__pyx_base._value);
-    __Pyx_INCREF(__pyx_t_5);
-    ((struct __pyx_vtabstruct_9dearcygui_4core_Context *)__pyx_v_self->__pyx_base.__pyx_base.context->__pyx_vtab)->queue_callback_arg1value(__pyx_v_self->__pyx_base.__pyx_base.context, ((struct __pyx_obj_9dearcygui_4core_Callback *)__pyx_t_4), ((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_self), ((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_self), ((struct __pyx_obj_9dearcygui_4core_SharedValue *)__pyx_t_5));
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  }
+  __pyx_v_self->_force_update = 1;
 
-  /* "dearcygui/layout.pyx":84
+  /* "dearcygui/layout.pyx":149
  *         self._previous_last_child = NULL
  * 
  *     def update_layout(self):             # <<<<<<<<<<<<<<
@@ -30075,65 +30061,68 @@ static PyObject *__pyx_pf_9dearcygui_6layout_6Layout_2update_layout(struct __pyx
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":99
+/* "dearcygui/layout.pyx":162
  * 
  *     # final enables inlining
  *     @cython.final             # <<<<<<<<<<<<<<
  *     cdef Vec2 update_content_area(self) noexcept nogil:
- *         cdef Vec2 full_content_area = self.context.viewport.parent_size
+ *         """
 */
 
 static Vec2 __pyx_f_9dearcygui_6layout_6Layout_update_content_area(struct __pyx_obj_9dearcygui_6layout_Layout *__pyx_v_self) {
   Vec2 __pyx_v_full_content_area;
-  Vec2 __pyx_v_cur_content_area;
   Vec2 __pyx_v_requested_size;
+  Vec2 __pyx_v_cur_content_area;
   Vec2 __pyx_r;
   Vec2 __pyx_t_1;
   int __pyx_t_2;
   float __pyx_t_3;
-  long __pyx_t_4;
-  float __pyx_t_5;
+  double __pyx_t_4;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyGILState_STATE __pyx_gilstate_save;
 
-  /* "dearcygui/layout.pyx":101
- *     @cython.final
- *     cdef Vec2 update_content_area(self) noexcept nogil:
+  /* "dearcygui/layout.pyx":169
+ *         """
+ *         # Retrieve fillx/filly area
  *         cdef Vec2 full_content_area = self.context.viewport.parent_size             # <<<<<<<<<<<<<<
- *         cdef Vec2 cur_content_area, requested_size
- * 
+ *         full_content_area.x -= self.state.cur.pos_to_parent.x
+ *         full_content_area.y -= self.state.cur.pos_to_parent.y
 */
   __pyx_t_1 = __pyx_v_self->__pyx_base.__pyx_base.context->viewport->parent_size;
   __pyx_v_full_content_area = __pyx_t_1;
 
-  /* "dearcygui/layout.pyx":104
- *         cdef Vec2 cur_content_area, requested_size
- * 
+  /* "dearcygui/layout.pyx":170
+ *         # Retrieve fillx/filly area
+ *         cdef Vec2 full_content_area = self.context.viewport.parent_size
  *         full_content_area.x -= self.state.cur.pos_to_parent.x             # <<<<<<<<<<<<<<
  *         full_content_area.y -= self.state.cur.pos_to_parent.y
  * 
 */
   __pyx_v_full_content_area.x = (__pyx_v_full_content_area.x - __pyx_v_self->__pyx_base.state.cur.pos_to_parent.x);
 
-  /* "dearcygui/layout.pyx":105
- * 
+  /* "dearcygui/layout.pyx":171
+ *         cdef Vec2 full_content_area = self.context.viewport.parent_size
  *         full_content_area.x -= self.state.cur.pos_to_parent.x
  *         full_content_area.y -= self.state.cur.pos_to_parent.y             # <<<<<<<<<<<<<<
  * 
- *         requested_size = self.get_requested_size()
+ *         # Fetch requested content area size
 */
   __pyx_v_full_content_area.y = (__pyx_v_full_content_area.y - __pyx_v_self->__pyx_base.state.cur.pos_to_parent.y);
 
-  /* "dearcygui/layout.pyx":107
- *         full_content_area.y -= self.state.cur.pos_to_parent.y
+  /* "dearcygui/layout.pyx":174
  * 
- *         requested_size = self.get_requested_size()             # <<<<<<<<<<<<<<
+ *         # Fetch requested content area size
+ *         cdef Vec2 requested_size = self.get_requested_size()             # <<<<<<<<<<<<<<
  * 
- *         if requested_size.x == 0:
+ *         # Interpret zero/negative values as "fill" from the right/bottom
 */
   __pyx_v_requested_size = ((struct __pyx_vtabstruct_9dearcygui_6layout_Layout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_vtab)->__pyx_base.get_requested_size(((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_self));
 
-  /* "dearcygui/layout.pyx":109
- *         requested_size = self.get_requested_size()
- * 
+  /* "dearcygui/layout.pyx":178
+ *         # Interpret zero/negative values as "fill" from the right/bottom
+ *         cdef Vec2 cur_content_area
  *         if requested_size.x == 0:             # <<<<<<<<<<<<<<
  *             cur_content_area.x = full_content_area.x
  *         elif requested_size.x < 0:
@@ -30141,8 +30130,8 @@ static Vec2 __pyx_f_9dearcygui_6layout_6Layout_update_content_area(struct __pyx_
   __pyx_t_2 = (__pyx_v_requested_size.x == 0.0);
   if (__pyx_t_2) {
 
-    /* "dearcygui/layout.pyx":110
- * 
+    /* "dearcygui/layout.pyx":179
+ *         cdef Vec2 cur_content_area
  *         if requested_size.x == 0:
  *             cur_content_area.x = full_content_area.x             # <<<<<<<<<<<<<<
  *         elif requested_size.x < 0:
@@ -30151,9 +30140,9 @@ static Vec2 __pyx_f_9dearcygui_6layout_6Layout_update_content_area(struct __pyx_
     __pyx_t_3 = __pyx_v_full_content_area.x;
     __pyx_v_cur_content_area.x = __pyx_t_3;
 
-    /* "dearcygui/layout.pyx":109
- *         requested_size = self.get_requested_size()
- * 
+    /* "dearcygui/layout.pyx":178
+ *         # Interpret zero/negative values as "fill" from the right/bottom
+ *         cdef Vec2 cur_content_area
  *         if requested_size.x == 0:             # <<<<<<<<<<<<<<
  *             cur_content_area.x = full_content_area.x
  *         elif requested_size.x < 0:
@@ -30161,7 +30150,7 @@ static Vec2 __pyx_f_9dearcygui_6layout_6Layout_update_content_area(struct __pyx_
     goto __pyx_L3;
   }
 
-  /* "dearcygui/layout.pyx":111
+  /* "dearcygui/layout.pyx":180
  *         if requested_size.x == 0:
  *             cur_content_area.x = full_content_area.x
  *         elif requested_size.x < 0:             # <<<<<<<<<<<<<<
@@ -30171,7 +30160,7 @@ static Vec2 __pyx_f_9dearcygui_6layout_6Layout_update_content_area(struct __pyx_
   __pyx_t_2 = (__pyx_v_requested_size.x < 0.0);
   if (__pyx_t_2) {
 
-    /* "dearcygui/layout.pyx":112
+    /* "dearcygui/layout.pyx":181
  *             cur_content_area.x = full_content_area.x
  *         elif requested_size.x < 0:
  *             cur_content_area.x = full_content_area.x + requested_size.x             # <<<<<<<<<<<<<<
@@ -30180,7 +30169,7 @@ static Vec2 __pyx_f_9dearcygui_6layout_6Layout_update_content_area(struct __pyx_
 */
     __pyx_v_cur_content_area.x = (__pyx_v_full_content_area.x + __pyx_v_requested_size.x);
 
-    /* "dearcygui/layout.pyx":111
+    /* "dearcygui/layout.pyx":180
  *         if requested_size.x == 0:
  *             cur_content_area.x = full_content_area.x
  *         elif requested_size.x < 0:             # <<<<<<<<<<<<<<
@@ -30190,12 +30179,12 @@ static Vec2 __pyx_f_9dearcygui_6layout_6Layout_update_content_area(struct __pyx_
     goto __pyx_L3;
   }
 
-  /* "dearcygui/layout.pyx":114
+  /* "dearcygui/layout.pyx":183
  *             cur_content_area.x = full_content_area.x + requested_size.x
  *         else:
  *             cur_content_area.x = requested_size.x             # <<<<<<<<<<<<<<
- * 
  *         if requested_size.y == 0:
+ *             cur_content_area.y = full_content_area.y
 */
   /*else*/ {
     __pyx_t_3 = __pyx_v_requested_size.x;
@@ -30203,9 +30192,9 @@ static Vec2 __pyx_f_9dearcygui_6layout_6Layout_update_content_area(struct __pyx_
   }
   __pyx_L3:;
 
-  /* "dearcygui/layout.pyx":116
+  /* "dearcygui/layout.pyx":184
+ *         else:
  *             cur_content_area.x = requested_size.x
- * 
  *         if requested_size.y == 0:             # <<<<<<<<<<<<<<
  *             cur_content_area.y = full_content_area.y
  *         elif requested_size.y < 0:
@@ -30213,8 +30202,8 @@ static Vec2 __pyx_f_9dearcygui_6layout_6Layout_update_content_area(struct __pyx_
   __pyx_t_2 = (__pyx_v_requested_size.y == 0.0);
   if (__pyx_t_2) {
 
-    /* "dearcygui/layout.pyx":117
- * 
+    /* "dearcygui/layout.pyx":185
+ *             cur_content_area.x = requested_size.x
  *         if requested_size.y == 0:
  *             cur_content_area.y = full_content_area.y             # <<<<<<<<<<<<<<
  *         elif requested_size.y < 0:
@@ -30223,9 +30212,9 @@ static Vec2 __pyx_f_9dearcygui_6layout_6Layout_update_content_area(struct __pyx_
     __pyx_t_3 = __pyx_v_full_content_area.y;
     __pyx_v_cur_content_area.y = __pyx_t_3;
 
-    /* "dearcygui/layout.pyx":116
+    /* "dearcygui/layout.pyx":184
+ *         else:
  *             cur_content_area.x = requested_size.x
- * 
  *         if requested_size.y == 0:             # <<<<<<<<<<<<<<
  *             cur_content_area.y = full_content_area.y
  *         elif requested_size.y < 0:
@@ -30233,7 +30222,7 @@ static Vec2 __pyx_f_9dearcygui_6layout_6Layout_update_content_area(struct __pyx_
     goto __pyx_L4;
   }
 
-  /* "dearcygui/layout.pyx":118
+  /* "dearcygui/layout.pyx":186
  *         if requested_size.y == 0:
  *             cur_content_area.y = full_content_area.y
  *         elif requested_size.y < 0:             # <<<<<<<<<<<<<<
@@ -30243,7 +30232,7 @@ static Vec2 __pyx_f_9dearcygui_6layout_6Layout_update_content_area(struct __pyx_
   __pyx_t_2 = (__pyx_v_requested_size.y < 0.0);
   if (__pyx_t_2) {
 
-    /* "dearcygui/layout.pyx":119
+    /* "dearcygui/layout.pyx":187
  *             cur_content_area.y = full_content_area.y
  *         elif requested_size.y < 0:
  *             cur_content_area.y = full_content_area.y + requested_size.y             # <<<<<<<<<<<<<<
@@ -30252,7 +30241,7 @@ static Vec2 __pyx_f_9dearcygui_6layout_6Layout_update_content_area(struct __pyx_
 */
     __pyx_v_cur_content_area.y = (__pyx_v_full_content_area.y + __pyx_v_requested_size.y);
 
-    /* "dearcygui/layout.pyx":118
+    /* "dearcygui/layout.pyx":186
  *         if requested_size.y == 0:
  *             cur_content_area.y = full_content_area.y
  *         elif requested_size.y < 0:             # <<<<<<<<<<<<<<
@@ -30262,12 +30251,12 @@ static Vec2 __pyx_f_9dearcygui_6layout_6Layout_update_content_area(struct __pyx_
     goto __pyx_L4;
   }
 
-  /* "dearcygui/layout.pyx":121
+  /* "dearcygui/layout.pyx":189
  *             cur_content_area.y = full_content_area.y + requested_size.y
  *         else:
  *             cur_content_area.y = requested_size.y             # <<<<<<<<<<<<<<
  * 
- *         cur_content_area.x = max(0, cur_content_area.x)
+ *         # Clamp to ensure non-negative content area. A larger
 */
   /*else*/ {
     __pyx_t_3 = __pyx_v_requested_size.y;
@@ -30275,52 +30264,62 @@ static Vec2 __pyx_f_9dearcygui_6layout_6Layout_update_content_area(struct __pyx_
   }
   __pyx_L4:;
 
-  /* "dearcygui/layout.pyx":123
- *             cur_content_area.y = requested_size.y
+  /* "dearcygui/layout.pyx":193
+ *         # Clamp to ensure non-negative content area. A larger
+ *         # content area than the real size is allowed.
+ *         cur_content_area.x = fmax(0., cur_content_area.x)             # <<<<<<<<<<<<<<
+ *         cur_content_area.y = fmax(0., cur_content_area.y)
  * 
- *         cur_content_area.x = max(0, cur_content_area.x)             # <<<<<<<<<<<<<<
- *         cur_content_area.y = max(0, cur_content_area.y)
- *         self.state.cur.content_region_size = cur_content_area
 */
-  __pyx_t_3 = __pyx_v_cur_content_area.x;
-  __pyx_t_4 = 0;
-  __pyx_t_2 = (__pyx_t_3 > __pyx_t_4);
-  if (__pyx_t_2) {
-    __pyx_t_5 = __pyx_t_3;
-  } else {
-    __pyx_t_5 = __pyx_t_4;
+  try {
+    __pyx_t_4 = std::fmax(0., __pyx_v_cur_content_area.x);
+  } catch(...) {
+    PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+    __Pyx_CppExn2PyErr();
+    __Pyx_PyGILState_Release(__pyx_gilstate_save);
+    __PYX_ERR(0, 193, __pyx_L1_error)
   }
-  __pyx_v_cur_content_area.x = __pyx_t_5;
+  __pyx_v_cur_content_area.x = __pyx_t_4;
 
-  /* "dearcygui/layout.pyx":124
+  /* "dearcygui/layout.pyx":194
+ *         # content area than the real size is allowed.
+ *         cur_content_area.x = fmax(0., cur_content_area.x)
+ *         cur_content_area.y = fmax(0., cur_content_area.y)             # <<<<<<<<<<<<<<
  * 
- *         cur_content_area.x = max(0, cur_content_area.x)
- *         cur_content_area.y = max(0, cur_content_area.y)             # <<<<<<<<<<<<<<
- *         self.state.cur.content_region_size = cur_content_area
- *         return cur_content_area
+ *         #Set the content area for this frame
 */
-  __pyx_t_5 = __pyx_v_cur_content_area.y;
-  __pyx_t_4 = 0;
-  __pyx_t_2 = (__pyx_t_5 > __pyx_t_4);
-  if (__pyx_t_2) {
-    __pyx_t_3 = __pyx_t_5;
-  } else {
-    __pyx_t_3 = __pyx_t_4;
+  try {
+    __pyx_t_4 = std::fmax(0., __pyx_v_cur_content_area.y);
+  } catch(...) {
+    PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+    __Pyx_CppExn2PyErr();
+    __Pyx_PyGILState_Release(__pyx_gilstate_save);
+    __PYX_ERR(0, 194, __pyx_L1_error)
   }
-  __pyx_v_cur_content_area.y = __pyx_t_3;
+  __pyx_v_cur_content_area.y = __pyx_t_4;
 
-  /* "dearcygui/layout.pyx":125
- *         cur_content_area.x = max(0, cur_content_area.x)
- *         cur_content_area.y = max(0, cur_content_area.y)
+  /* "dearcygui/layout.pyx":197
+ * 
+ *         #Set the content area for this frame
  *         self.state.cur.content_region_size = cur_content_area             # <<<<<<<<<<<<<<
- *         return cur_content_area
  * 
+ *         # Also update content_pos (Layout/HorizontalLayout/VerticalLayout
 */
   __pyx_v_self->__pyx_base.state.cur.content_region_size = __pyx_v_cur_content_area;
 
-  /* "dearcygui/layout.pyx":126
- *         cur_content_area.y = max(0, cur_content_area.y)
- *         self.state.cur.content_region_size = cur_content_area
+  /* "dearcygui/layout.pyx":201
+ *         # Also update content_pos (Layout/HorizontalLayout/VerticalLayout
+ *         # only, not ChildWindow) to match pos_to_viewport (filled before draw_item)
+ *         self.state.cur.content_pos = self.state.cur.pos_to_viewport             # <<<<<<<<<<<<<<
+ *         return cur_content_area
+ * 
+*/
+  __pyx_t_1 = __pyx_v_self->__pyx_base.state.cur.pos_to_viewport;
+  __pyx_v_self->__pyx_base.state.cur.content_pos = __pyx_t_1;
+
+  /* "dearcygui/layout.pyx":202
+ *         # only, not ChildWindow) to match pos_to_viewport (filled before draw_item)
+ *         self.state.cur.content_pos = self.state.cur.pos_to_viewport
  *         return cur_content_area             # <<<<<<<<<<<<<<
  * 
  *     cdef bint check_change(self) noexcept nogil:
@@ -30328,25 +30327,30 @@ static Vec2 __pyx_f_9dearcygui_6layout_6Layout_update_content_area(struct __pyx_
   __pyx_r = __pyx_v_cur_content_area;
   goto __pyx_L0;
 
-  /* "dearcygui/layout.pyx":99
+  /* "dearcygui/layout.pyx":162
  * 
  *     # final enables inlining
  *     @cython.final             # <<<<<<<<<<<<<<
  *     cdef Vec2 update_content_area(self) noexcept nogil:
- *         cdef Vec2 full_content_area = self.context.viewport.parent_size
+ *         """
 */
 
   /* function exit code */
+  __pyx_L1_error:;
+  __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+  __Pyx_WriteUnraisable("dearcygui.layout.Layout.update_content_area", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __Pyx_pretend_to_initialize(&__pyx_r);
+  __Pyx_PyGILState_Release(__pyx_gilstate_save);
   __pyx_L0:;
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":128
+/* "dearcygui/layout.pyx":204
  *         return cur_content_area
  * 
  *     cdef bint check_change(self) noexcept nogil:             # <<<<<<<<<<<<<<
- *         cdef Vec2 cur_content_area = self.state.cur.content_region_size
- *         cdef Vec2 prev_content_area = self.state.prev.content_region_size
+ *         """
+ *         Check if the layout has changed since the last frame.
 */
 
 static int __pyx_f_9dearcygui_6layout_6Layout_check_change(struct __pyx_obj_9dearcygui_6layout_Layout *__pyx_v_self) {
@@ -30359,9 +30363,9 @@ static int __pyx_f_9dearcygui_6layout_6Layout_check_change(struct __pyx_obj_9dea
   int __pyx_t_2;
   int __pyx_t_3;
 
-  /* "dearcygui/layout.pyx":129
- * 
- *     cdef bint check_change(self) noexcept nogil:
+  /* "dearcygui/layout.pyx":208
+ *         Check if the layout has changed since the last frame.
+ *         """
  *         cdef Vec2 cur_content_area = self.state.cur.content_region_size             # <<<<<<<<<<<<<<
  *         cdef Vec2 prev_content_area = self.state.prev.content_region_size
  *         cdef Vec2 cur_spacing = ImVec2Vec2(imgui.GetStyle().ItemSpacing)
@@ -30369,8 +30373,8 @@ static int __pyx_f_9dearcygui_6layout_6Layout_check_change(struct __pyx_obj_9dea
   __pyx_t_1 = __pyx_v_self->__pyx_base.state.cur.content_region_size;
   __pyx_v_cur_content_area = __pyx_t_1;
 
-  /* "dearcygui/layout.pyx":130
- *     cdef bint check_change(self) noexcept nogil:
+  /* "dearcygui/layout.pyx":209
+ *         """
  *         cdef Vec2 cur_content_area = self.state.cur.content_region_size
  *         cdef Vec2 prev_content_area = self.state.prev.content_region_size             # <<<<<<<<<<<<<<
  *         cdef Vec2 cur_spacing = ImVec2Vec2(imgui.GetStyle().ItemSpacing)
@@ -30379,7 +30383,7 @@ static int __pyx_f_9dearcygui_6layout_6Layout_check_change(struct __pyx_obj_9dea
   __pyx_t_1 = __pyx_v_self->__pyx_base.state.prev.content_region_size;
   __pyx_v_prev_content_area = __pyx_t_1;
 
-  /* "dearcygui/layout.pyx":131
+  /* "dearcygui/layout.pyx":210
  *         cdef Vec2 cur_content_area = self.state.cur.content_region_size
  *         cdef Vec2 prev_content_area = self.state.prev.content_region_size
  *         cdef Vec2 cur_spacing = ImVec2Vec2(imgui.GetStyle().ItemSpacing)             # <<<<<<<<<<<<<<
@@ -30388,7 +30392,7 @@ static int __pyx_f_9dearcygui_6layout_6Layout_check_change(struct __pyx_obj_9dea
 */
   __pyx_v_cur_spacing = __pyx_f_9dearcygui_11imgui_types_ImVec2Vec2(ImGui::GetStyle().ItemSpacing);
 
-  /* "dearcygui/layout.pyx":132
+  /* "dearcygui/layout.pyx":211
  *         cdef Vec2 prev_content_area = self.state.prev.content_region_size
  *         cdef Vec2 cur_spacing = ImVec2Vec2(imgui.GetStyle().ItemSpacing)
  *         cdef bint changed = False             # <<<<<<<<<<<<<<
@@ -30397,7 +30401,7 @@ static int __pyx_f_9dearcygui_6layout_6Layout_check_change(struct __pyx_obj_9dea
 */
   __pyx_v_changed = 0;
 
-  /* "dearcygui/layout.pyx":133
+  /* "dearcygui/layout.pyx":212
  *         cdef Vec2 cur_spacing = ImVec2Vec2(imgui.GetStyle().ItemSpacing)
  *         cdef bint changed = False
  *         if cur_content_area.x != prev_content_area.x or \             # <<<<<<<<<<<<<<
@@ -30411,7 +30415,7 @@ static int __pyx_f_9dearcygui_6layout_6Layout_check_change(struct __pyx_obj_9dea
     goto __pyx_L4_bool_binop_done;
   }
 
-  /* "dearcygui/layout.pyx":134
+  /* "dearcygui/layout.pyx":213
  *         cdef bint changed = False
  *         if cur_content_area.x != prev_content_area.x or \
  *            cur_content_area.y != prev_content_area.y or \             # <<<<<<<<<<<<<<
@@ -30425,7 +30429,7 @@ static int __pyx_f_9dearcygui_6layout_6Layout_check_change(struct __pyx_obj_9dea
     goto __pyx_L4_bool_binop_done;
   }
 
-  /* "dearcygui/layout.pyx":135
+  /* "dearcygui/layout.pyx":214
  *         if cur_content_area.x != prev_content_area.x or \
  *            cur_content_area.y != prev_content_area.y or \
  *            self._previous_last_child != <PyObject*>self.last_widgets_child or \             # <<<<<<<<<<<<<<
@@ -30439,7 +30443,7 @@ static int __pyx_f_9dearcygui_6layout_6Layout_check_change(struct __pyx_obj_9dea
     goto __pyx_L4_bool_binop_done;
   }
 
-  /* "dearcygui/layout.pyx":136
+  /* "dearcygui/layout.pyx":215
  *            cur_content_area.y != prev_content_area.y or \
  *            self._previous_last_child != <PyObject*>self.last_widgets_child or \
  *            cur_spacing.x != self._spacing.x or \             # <<<<<<<<<<<<<<
@@ -30453,7 +30457,7 @@ static int __pyx_f_9dearcygui_6layout_6Layout_check_change(struct __pyx_obj_9dea
     goto __pyx_L4_bool_binop_done;
   }
 
-  /* "dearcygui/layout.pyx":137
+  /* "dearcygui/layout.pyx":216
  *            self._previous_last_child != <PyObject*>self.last_widgets_child or \
  *            cur_spacing.x != self._spacing.x or \
  *            cur_spacing.y != self._spacing.y or \             # <<<<<<<<<<<<<<
@@ -30467,7 +30471,7 @@ static int __pyx_f_9dearcygui_6layout_6Layout_check_change(struct __pyx_obj_9dea
     goto __pyx_L4_bool_binop_done;
   }
 
-  /* "dearcygui/layout.pyx":138
+  /* "dearcygui/layout.pyx":217
  *            cur_spacing.x != self._spacing.x or \
  *            cur_spacing.y != self._spacing.y or \
  *            self._force_update:             # <<<<<<<<<<<<<<
@@ -30477,7 +30481,7 @@ static int __pyx_f_9dearcygui_6layout_6Layout_check_change(struct __pyx_obj_9dea
   __pyx_t_2 = __pyx_v_self->_force_update;
   __pyx_L4_bool_binop_done:;
 
-  /* "dearcygui/layout.pyx":133
+  /* "dearcygui/layout.pyx":212
  *         cdef Vec2 cur_spacing = ImVec2Vec2(imgui.GetStyle().ItemSpacing)
  *         cdef bint changed = False
  *         if cur_content_area.x != prev_content_area.x or \             # <<<<<<<<<<<<<<
@@ -30486,7 +30490,7 @@ static int __pyx_f_9dearcygui_6layout_6Layout_check_change(struct __pyx_obj_9dea
 */
   if (__pyx_t_2) {
 
-    /* "dearcygui/layout.pyx":139
+    /* "dearcygui/layout.pyx":218
  *            cur_spacing.y != self._spacing.y or \
  *            self._force_update:
  *             changed = True             # <<<<<<<<<<<<<<
@@ -30495,7 +30499,7 @@ static int __pyx_f_9dearcygui_6layout_6Layout_check_change(struct __pyx_obj_9dea
 */
     __pyx_v_changed = 1;
 
-    /* "dearcygui/layout.pyx":140
+    /* "dearcygui/layout.pyx":219
  *            self._force_update:
  *             changed = True
  *             self._spacing = cur_spacing             # <<<<<<<<<<<<<<
@@ -30504,7 +30508,7 @@ static int __pyx_f_9dearcygui_6layout_6Layout_check_change(struct __pyx_obj_9dea
 */
     __pyx_v_self->_spacing = __pyx_v_cur_spacing;
 
-    /* "dearcygui/layout.pyx":141
+    /* "dearcygui/layout.pyx":220
  *             changed = True
  *             self._spacing = cur_spacing
  *             self._previous_last_child = <PyObject*>self.last_widgets_child             # <<<<<<<<<<<<<<
@@ -30513,7 +30517,7 @@ static int __pyx_f_9dearcygui_6layout_6Layout_check_change(struct __pyx_obj_9dea
 */
     __pyx_v_self->_previous_last_child = ((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.last_widgets_child);
 
-    /* "dearcygui/layout.pyx":142
+    /* "dearcygui/layout.pyx":221
  *             self._spacing = cur_spacing
  *             self._previous_last_child = <PyObject*>self.last_widgets_child
  *             self._force_update = False             # <<<<<<<<<<<<<<
@@ -30522,7 +30526,7 @@ static int __pyx_f_9dearcygui_6layout_6Layout_check_change(struct __pyx_obj_9dea
 */
     __pyx_v_self->_force_update = 0;
 
-    /* "dearcygui/layout.pyx":133
+    /* "dearcygui/layout.pyx":212
  *         cdef Vec2 cur_spacing = ImVec2Vec2(imgui.GetStyle().ItemSpacing)
  *         cdef bint changed = False
  *         if cur_content_area.x != prev_content_area.x or \             # <<<<<<<<<<<<<<
@@ -30531,7 +30535,7 @@ static int __pyx_f_9dearcygui_6layout_6Layout_check_change(struct __pyx_obj_9dea
 */
   }
 
-  /* "dearcygui/layout.pyx":143
+  /* "dearcygui/layout.pyx":222
  *             self._previous_last_child = <PyObject*>self.last_widgets_child
  *             self._force_update = False
  *         return changed             # <<<<<<<<<<<<<<
@@ -30541,12 +30545,12 @@ static int __pyx_f_9dearcygui_6layout_6Layout_check_change(struct __pyx_obj_9dea
   __pyx_r = __pyx_v_changed;
   goto __pyx_L0;
 
-  /* "dearcygui/layout.pyx":128
+  /* "dearcygui/layout.pyx":204
  *         return cur_content_area
  * 
  *     cdef bint check_change(self) noexcept nogil:             # <<<<<<<<<<<<<<
- *         cdef Vec2 cur_content_area = self.state.cur.content_region_size
- *         cdef Vec2 prev_content_area = self.state.prev.content_region_size
+ *         """
+ *         Check if the layout has changed since the last frame.
 */
 
   /* function exit code */
@@ -30554,33 +30558,33 @@ static int __pyx_f_9dearcygui_6layout_6Layout_check_change(struct __pyx_obj_9dea
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":145
+/* "dearcygui/layout.pyx":224
  *         return changed
  * 
  *     @cython.final             # <<<<<<<<<<<<<<
  *     cdef void draw_child(self, uiItem child) noexcept nogil:
- *         child.draw()
+ *         # Draw the child
 */
 
 static void __pyx_f_9dearcygui_6layout_6Layout_draw_child(struct __pyx_obj_9dearcygui_6layout_Layout *__pyx_v_self, struct __pyx_obj_9dearcygui_4core_uiItem *__pyx_v_child) {
   int __pyx_t_1;
   int __pyx_t_2;
 
-  /* "dearcygui/layout.pyx":147
- *     @cython.final
+  /* "dearcygui/layout.pyx":227
  *     cdef void draw_child(self, uiItem child) noexcept nogil:
+ *         # Draw the child
  *         child.draw()             # <<<<<<<<<<<<<<
- *         if child.state.cur.rect_size.x != child.state.prev.rect_size.x or \
- *            child.state.cur.rect_size.y != child.state.prev.rect_size.y:
+ * 
+ *         # If the size of the child changed, mark for redraw. Indeed
 */
   ((struct __pyx_vtabstruct_9dearcygui_4core_uiItem *)__pyx_v_child->__pyx_base.__pyx_vtab)->draw(__pyx_v_child);
 
-  /* "dearcygui/layout.pyx":148
- *     cdef void draw_child(self, uiItem child) noexcept nogil:
- *         child.draw()
+  /* "dearcygui/layout.pyx":232
+ *         # the size of the layout may be affected, which might
+ *         #change other items including the layout.
  *         if child.state.cur.rect_size.x != child.state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
  *            child.state.cur.rect_size.y != child.state.prev.rect_size.y:
- *             child.context.viewport.redraw_needed = True
+ *             child.context.viewport.ask_immediate_redraw()
 */
   __pyx_t_2 = (__pyx_v_child->state.cur.rect_size.x != __pyx_v_child->state.prev.rect_size.x);
   if (!__pyx_t_2) {
@@ -30589,65 +30593,65 @@ static void __pyx_f_9dearcygui_6layout_6Layout_draw_child(struct __pyx_obj_9dear
     goto __pyx_L4_bool_binop_done;
   }
 
-  /* "dearcygui/layout.pyx":149
- *         child.draw()
+  /* "dearcygui/layout.pyx":233
+ *         #change other items including the layout.
  *         if child.state.cur.rect_size.x != child.state.prev.rect_size.x or \
  *            child.state.cur.rect_size.y != child.state.prev.rect_size.y:             # <<<<<<<<<<<<<<
- *             child.context.viewport.redraw_needed = True
+ *             child.context.viewport.ask_immediate_redraw()
  *             self._force_update = True
 */
   __pyx_t_2 = (__pyx_v_child->state.cur.rect_size.y != __pyx_v_child->state.prev.rect_size.y);
   __pyx_t_1 = __pyx_t_2;
   __pyx_L4_bool_binop_done:;
 
-  /* "dearcygui/layout.pyx":148
- *     cdef void draw_child(self, uiItem child) noexcept nogil:
- *         child.draw()
+  /* "dearcygui/layout.pyx":232
+ *         # the size of the layout may be affected, which might
+ *         #change other items including the layout.
  *         if child.state.cur.rect_size.x != child.state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
  *            child.state.cur.rect_size.y != child.state.prev.rect_size.y:
- *             child.context.viewport.redraw_needed = True
+ *             child.context.viewport.ask_immediate_redraw()
 */
   if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":150
+    /* "dearcygui/layout.pyx":234
  *         if child.state.cur.rect_size.x != child.state.prev.rect_size.x or \
  *            child.state.cur.rect_size.y != child.state.prev.rect_size.y:
- *             child.context.viewport.redraw_needed = True             # <<<<<<<<<<<<<<
+ *             child.context.viewport.ask_immediate_redraw()             # <<<<<<<<<<<<<<
  *             self._force_update = True
  * 
 */
-    __pyx_v_child->__pyx_base.context->viewport->redraw_needed = 1;
+    ((struct __pyx_vtabstruct_9dearcygui_4core_Viewport *)__pyx_v_child->__pyx_base.context->viewport->__pyx_base.__pyx_vtab)->ask_immediate_redraw(__pyx_v_child->__pyx_base.context->viewport);
 
-    /* "dearcygui/layout.pyx":151
+    /* "dearcygui/layout.pyx":235
  *            child.state.cur.rect_size.y != child.state.prev.rect_size.y:
- *             child.context.viewport.redraw_needed = True
+ *             child.context.viewport.ask_immediate_redraw()
  *             self._force_update = True             # <<<<<<<<<<<<<<
  * 
  *     @cython.final
 */
     __pyx_v_self->_force_update = 1;
 
-    /* "dearcygui/layout.pyx":148
- *     cdef void draw_child(self, uiItem child) noexcept nogil:
- *         child.draw()
+    /* "dearcygui/layout.pyx":232
+ *         # the size of the layout may be affected, which might
+ *         #change other items including the layout.
  *         if child.state.cur.rect_size.x != child.state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
  *            child.state.cur.rect_size.y != child.state.prev.rect_size.y:
- *             child.context.viewport.redraw_needed = True
+ *             child.context.viewport.ask_immediate_redraw()
 */
   }
 
-  /* "dearcygui/layout.pyx":145
+  /* "dearcygui/layout.pyx":224
  *         return changed
  * 
  *     @cython.final             # <<<<<<<<<<<<<<
  *     cdef void draw_child(self, uiItem child) noexcept nogil:
- *         child.draw()
+ *         # Draw the child
 */
 
   /* function exit code */
 }
 
-/* "dearcygui/layout.pyx":153
+/* "dearcygui/layout.pyx":237
  *             self._force_update = True
  * 
  *     @cython.final             # <<<<<<<<<<<<<<
@@ -30661,7 +30665,7 @@ static void __pyx_f_9dearcygui_6layout_6Layout_draw_children(struct __pyx_obj_9d
   int __pyx_t_1;
   Vec2 __pyx_t_2;
 
-  /* "dearcygui/layout.pyx":159
+  /* "dearcygui/layout.pyx":243
  *         any change relative to expected sizes
  *         """
  *         if self.last_widgets_child is None:             # <<<<<<<<<<<<<<
@@ -30671,7 +30675,7 @@ static void __pyx_f_9dearcygui_6layout_6Layout_draw_children(struct __pyx_obj_9d
   __pyx_t_1 = (((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.last_widgets_child) == Py_None);
   if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":160
+    /* "dearcygui/layout.pyx":244
  *         """
  *         if self.last_widgets_child is None:
  *             return             # <<<<<<<<<<<<<<
@@ -30680,7 +30684,7 @@ static void __pyx_f_9dearcygui_6layout_6Layout_draw_children(struct __pyx_obj_9d
 */
     goto __pyx_L0;
 
-    /* "dearcygui/layout.pyx":159
+    /* "dearcygui/layout.pyx":243
  *         any change relative to expected sizes
  *         """
  *         if self.last_widgets_child is None:             # <<<<<<<<<<<<<<
@@ -30689,7 +30693,7 @@ static void __pyx_f_9dearcygui_6layout_6Layout_draw_children(struct __pyx_obj_9d
 */
   }
 
-  /* "dearcygui/layout.pyx":161
+  /* "dearcygui/layout.pyx":245
  *         if self.last_widgets_child is None:
  *             return
  *         cdef Vec2 parent_size_backup = self.context.viewport.parent_size             # <<<<<<<<<<<<<<
@@ -30699,7 +30703,7 @@ static void __pyx_f_9dearcygui_6layout_6Layout_draw_children(struct __pyx_obj_9d
   __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.context->viewport->parent_size;
   __pyx_v_parent_size_backup = __pyx_t_2;
 
-  /* "dearcygui/layout.pyx":162
+  /* "dearcygui/layout.pyx":246
  *             return
  *         cdef Vec2 parent_size_backup = self.context.viewport.parent_size
  *         self.context.viewport.parent_size = self.state.cur.content_region_size             # <<<<<<<<<<<<<<
@@ -30709,7 +30713,7 @@ static void __pyx_f_9dearcygui_6layout_6Layout_draw_children(struct __pyx_obj_9d
   __pyx_t_2 = __pyx_v_self->__pyx_base.state.cur.content_region_size;
   __pyx_v_self->__pyx_base.__pyx_base.context->viewport->parent_size = __pyx_t_2;
 
-  /* "dearcygui/layout.pyx":163
+  /* "dearcygui/layout.pyx":247
  *         cdef Vec2 parent_size_backup = self.context.viewport.parent_size
  *         self.context.viewport.parent_size = self.state.cur.content_region_size
  *         cdef PyObject *child = <PyObject*> self.last_widgets_child             # <<<<<<<<<<<<<<
@@ -30718,7 +30722,7 @@ static void __pyx_f_9dearcygui_6layout_6Layout_draw_children(struct __pyx_obj_9d
 */
   __pyx_v_child = ((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.last_widgets_child);
 
-  /* "dearcygui/layout.pyx":164
+  /* "dearcygui/layout.pyx":248
  *         self.context.viewport.parent_size = self.state.cur.content_region_size
  *         cdef PyObject *child = <PyObject*> self.last_widgets_child
  *         while (<uiItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
@@ -30729,7 +30733,7 @@ static void __pyx_f_9dearcygui_6layout_6Layout_draw_children(struct __pyx_obj_9d
     __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "dearcygui/layout.pyx":165
+    /* "dearcygui/layout.pyx":249
  *         cdef PyObject *child = <PyObject*> self.last_widgets_child
  *         while (<uiItem>child).prev_sibling is not None:
  *             child = <PyObject *>(<uiItem>child).prev_sibling             # <<<<<<<<<<<<<<
@@ -30739,7 +30743,7 @@ static void __pyx_f_9dearcygui_6layout_6Layout_draw_children(struct __pyx_obj_9d
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling);
   }
 
-  /* "dearcygui/layout.pyx":166
+  /* "dearcygui/layout.pyx":250
  *         while (<uiItem>child).prev_sibling is not None:
  *             child = <PyObject *>(<uiItem>child).prev_sibling
  *         while (<uiItem>child) is not None:             # <<<<<<<<<<<<<<
@@ -30750,7 +30754,7 @@ static void __pyx_f_9dearcygui_6layout_6Layout_draw_children(struct __pyx_obj_9d
     __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "dearcygui/layout.pyx":167
+    /* "dearcygui/layout.pyx":251
  *             child = <PyObject *>(<uiItem>child).prev_sibling
  *         while (<uiItem>child) is not None:
  *             self.draw_child(<uiItem>child)             # <<<<<<<<<<<<<<
@@ -30759,7 +30763,7 @@ static void __pyx_f_9dearcygui_6layout_6Layout_draw_children(struct __pyx_obj_9d
 */
     __pyx_f_9dearcygui_6layout_6Layout_draw_child(__pyx_v_self, ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child));
 
-    /* "dearcygui/layout.pyx":168
+    /* "dearcygui/layout.pyx":252
  *         while (<uiItem>child) is not None:
  *             self.draw_child(<uiItem>child)
  *             child = <PyObject *>(<uiItem>child).next_sibling             # <<<<<<<<<<<<<<
@@ -30769,7 +30773,7 @@ static void __pyx_f_9dearcygui_6layout_6Layout_draw_children(struct __pyx_obj_9d
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.next_sibling);
   }
 
-  /* "dearcygui/layout.pyx":169
+  /* "dearcygui/layout.pyx":253
  *             self.draw_child(<uiItem>child)
  *             child = <PyObject *>(<uiItem>child).next_sibling
  *         self.context.viewport.parent_size = parent_size_backup             # <<<<<<<<<<<<<<
@@ -30778,7 +30782,7 @@ static void __pyx_f_9dearcygui_6layout_6Layout_draw_children(struct __pyx_obj_9d
 */
   __pyx_v_self->__pyx_base.__pyx_base.context->viewport->parent_size = __pyx_v_parent_size_backup;
 
-  /* "dearcygui/layout.pyx":153
+  /* "dearcygui/layout.pyx":237
  *             self._force_update = True
  * 
  *     @cython.final             # <<<<<<<<<<<<<<
@@ -30790,12 +30794,12 @@ static void __pyx_f_9dearcygui_6layout_6Layout_draw_children(struct __pyx_obj_9d
   __pyx_L0:;
 }
 
-/* "dearcygui/layout.pyx":171
+/* "dearcygui/layout.pyx":255
  *         self.context.viewport.parent_size = parent_size_backup
  * 
  *     cdef bint draw_item(self) noexcept nogil:             # <<<<<<<<<<<<<<
- *         if self.last_widgets_child is None:# or \
- *             #cur_content_area.x <= 0 or \
+ *         if self.last_widgets_child is None:
+ *             return False
 */
 
 static int __pyx_f_9dearcygui_6layout_6Layout_draw_item(struct __pyx_obj_9dearcygui_6layout_Layout *__pyx_v_self) {
@@ -30804,64 +30808,64 @@ static int __pyx_f_9dearcygui_6layout_6Layout_draw_item(struct __pyx_obj_9dearcy
   int __pyx_r;
   int __pyx_t_1;
 
-  /* "dearcygui/layout.pyx":172
+  /* "dearcygui/layout.pyx":256
  * 
  *     cdef bint draw_item(self) noexcept nogil:
- *         if self.last_widgets_child is None:# or \             # <<<<<<<<<<<<<<
- *             #cur_content_area.x <= 0 or \
- *             #cur_content_area.y <= 0: # <= 0 occurs when not visible
+ *         if self.last_widgets_child is None:             # <<<<<<<<<<<<<<
+ *             return False
+ * 
 */
   __pyx_t_1 = (((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.last_widgets_child) == Py_None);
   if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":176
- *             #cur_content_area.y <= 0: # <= 0 occurs when not visible
- *             #self.set_hidden_no_handler_and_propagate_to_children_with_handlers()
+    /* "dearcygui/layout.pyx":257
+ *     cdef bint draw_item(self) noexcept nogil:
+ *         if self.last_widgets_child is None:
  *             return False             # <<<<<<<<<<<<<<
- *         self.update_content_area()
- *         cdef bint changed = self.check_change()
+ * 
+ *         # Note: when the item is not visible, it may get an empty
 */
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "dearcygui/layout.pyx":172
+    /* "dearcygui/layout.pyx":256
  * 
  *     cdef bint draw_item(self) noexcept nogil:
- *         if self.last_widgets_child is None:# or \             # <<<<<<<<<<<<<<
- *             #cur_content_area.x <= 0 or \
- *             #cur_content_area.y <= 0: # <= 0 occurs when not visible
+ *         if self.last_widgets_child is None:             # <<<<<<<<<<<<<<
+ *             return False
+ * 
 */
   }
 
-  /* "dearcygui/layout.pyx":177
- *             #self.set_hidden_no_handler_and_propagate_to_children_with_handlers()
- *             return False
+  /* "dearcygui/layout.pyx":265
+ * 
+ *         # Compute the content area
  *         self.update_content_area()             # <<<<<<<<<<<<<<
- *         cdef bint changed = self.check_change()
- *         imgui.PushID(self.uuid)
+ * 
+ *         # Check whether the callback should be called
 */
   (void)(__pyx_f_9dearcygui_6layout_6Layout_update_content_area(__pyx_v_self));
 
-  /* "dearcygui/layout.pyx":178
- *             return False
- *         self.update_content_area()
+  /* "dearcygui/layout.pyx":269
+ *         # Check whether the callback should be called
+ *         # and reset _force_update
  *         cdef bint changed = self.check_change()             # <<<<<<<<<<<<<<
- *         imgui.PushID(self.uuid)
- *         imgui.BeginGroup()
+ * 
+ *         #Pack the children inside a group to get
 */
   __pyx_v_changed = ((struct __pyx_vtabstruct_9dearcygui_6layout_Layout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_vtab)->check_change(__pyx_v_self);
 
-  /* "dearcygui/layout.pyx":179
- *         self.update_content_area()
- *         cdef bint changed = self.check_change()
+  /* "dearcygui/layout.pyx":273
+ *         #Pack the children inside a group to get
+ *         # the correct states
  *         imgui.PushID(self.uuid)             # <<<<<<<<<<<<<<
  *         imgui.BeginGroup()
  *         cdef Vec2 pos_p
 */
   ImGui::PushID(__pyx_v_self->__pyx_base.__pyx_base.uuid);
 
-  /* "dearcygui/layout.pyx":180
- *         cdef bint changed = self.check_change()
+  /* "dearcygui/layout.pyx":274
+ *         # the correct states
  *         imgui.PushID(self.uuid)
  *         imgui.BeginGroup()             # <<<<<<<<<<<<<<
  *         cdef Vec2 pos_p
@@ -30869,7 +30873,7 @@ static int __pyx_f_9dearcygui_6layout_6Layout_draw_item(struct __pyx_obj_9dearcy
 */
   ImGui::BeginGroup();
 
-  /* "dearcygui/layout.pyx":182
+  /* "dearcygui/layout.pyx":276
  *         imgui.BeginGroup()
  *         cdef Vec2 pos_p
  *         if self.last_widgets_child is not None:             # <<<<<<<<<<<<<<
@@ -30879,7 +30883,7 @@ static int __pyx_f_9dearcygui_6layout_6Layout_draw_item(struct __pyx_obj_9dearcy
   __pyx_t_1 = (((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.last_widgets_child) != Py_None);
   if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":183
+    /* "dearcygui/layout.pyx":277
  *         cdef Vec2 pos_p
  *         if self.last_widgets_child is not None:
  *             pos_p = ImVec2Vec2(imgui.GetCursorScreenPos())             # <<<<<<<<<<<<<<
@@ -30888,7 +30892,7 @@ static int __pyx_f_9dearcygui_6layout_6Layout_draw_item(struct __pyx_obj_9dearcy
 */
     __pyx_v_pos_p = __pyx_f_9dearcygui_11imgui_types_ImVec2Vec2(ImGui::GetCursorScreenPos());
 
-    /* "dearcygui/layout.pyx":184
+    /* "dearcygui/layout.pyx":278
  *         if self.last_widgets_child is not None:
  *             pos_p = ImVec2Vec2(imgui.GetCursorScreenPos())
  *             swap_Vec2(pos_p, self.context.viewport.parent_pos)             # <<<<<<<<<<<<<<
@@ -30897,25 +30901,25 @@ static int __pyx_f_9dearcygui_6layout_6Layout_draw_item(struct __pyx_obj_9dearcy
 */
     __pyx_f_9dearcygui_7c_types_swap_Vec2(__pyx_v_pos_p, __pyx_v_self->__pyx_base.__pyx_base.context->viewport->parent_pos);
 
-    /* "dearcygui/layout.pyx":185
+    /* "dearcygui/layout.pyx":279
  *             pos_p = ImVec2Vec2(imgui.GetCursorScreenPos())
  *             swap_Vec2(pos_p, self.context.viewport.parent_pos)
  *             self.draw_children()             # <<<<<<<<<<<<<<
  *             self.context.viewport.parent_pos = pos_p
- *         #imgui.PushStyleVar(imgui.ImGuiStyleVar_ItemSpacing,
+ *         imgui.EndGroup()
 */
     __pyx_f_9dearcygui_6layout_6Layout_draw_children(__pyx_v_self);
 
-    /* "dearcygui/layout.pyx":186
+    /* "dearcygui/layout.pyx":280
  *             swap_Vec2(pos_p, self.context.viewport.parent_pos)
  *             self.draw_children()
  *             self.context.viewport.parent_pos = pos_p             # <<<<<<<<<<<<<<
- *         #imgui.PushStyleVar(imgui.ImGuiStyleVar_ItemSpacing,
- *         #                       imgui.ImVec2(0., 0.))
+ *         imgui.EndGroup()
+ *         imgui.PopID()
 */
     __pyx_v_self->__pyx_base.__pyx_base.context->viewport->parent_pos = __pyx_v_pos_p;
 
-    /* "dearcygui/layout.pyx":182
+    /* "dearcygui/layout.pyx":276
  *         imgui.BeginGroup()
  *         cdef Vec2 pos_p
  *         if self.last_widgets_child is not None:             # <<<<<<<<<<<<<<
@@ -30924,35 +30928,35 @@ static int __pyx_f_9dearcygui_6layout_6Layout_draw_item(struct __pyx_obj_9dearcy
 */
   }
 
-  /* "dearcygui/layout.pyx":189
- *         #imgui.PushStyleVar(imgui.ImGuiStyleVar_ItemSpacing,
- *         #                       imgui.ImVec2(0., 0.))
+  /* "dearcygui/layout.pyx":281
+ *             self.draw_children()
+ *             self.context.viewport.parent_pos = pos_p
  *         imgui.EndGroup()             # <<<<<<<<<<<<<<
- *         #imgui.PopStyleVar(1)
  *         imgui.PopID()
+ * 
 */
   ImGui::EndGroup();
 
-  /* "dearcygui/layout.pyx":191
+  /* "dearcygui/layout.pyx":282
+ *             self.context.viewport.parent_pos = pos_p
  *         imgui.EndGroup()
- *         #imgui.PopStyleVar(1)
  *         imgui.PopID()             # <<<<<<<<<<<<<<
- *         self.update_current_state()
- *         return changed
+ * 
+ *         # Update states by reading from the group.
 */
   ImGui::PopID();
 
-  /* "dearcygui/layout.pyx":192
- *         #imgui.PopStyleVar(1)
- *         imgui.PopID()
+  /* "dearcygui/layout.pyx":285
+ * 
+ *         # Update states by reading from the group.
  *         self.update_current_state()             # <<<<<<<<<<<<<<
  *         return changed
  * 
 */
   ((struct __pyx_vtabstruct_9dearcygui_6layout_Layout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_vtab)->__pyx_base.update_current_state(((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_self));
 
-  /* "dearcygui/layout.pyx":193
- *         imgui.PopID()
+  /* "dearcygui/layout.pyx":286
+ *         # Update states by reading from the group.
  *         self.update_current_state()
  *         return changed             # <<<<<<<<<<<<<<
  * 
@@ -30961,12 +30965,12 @@ static int __pyx_f_9dearcygui_6layout_6Layout_draw_item(struct __pyx_obj_9dearcy
   __pyx_r = __pyx_v_changed;
   goto __pyx_L0;
 
-  /* "dearcygui/layout.pyx":171
+  /* "dearcygui/layout.pyx":255
  *         self.context.viewport.parent_size = parent_size_backup
  * 
  *     cdef bint draw_item(self) noexcept nogil:             # <<<<<<<<<<<<<<
- *         if self.last_widgets_child is None:# or \
- *             #cur_content_area.x <= 0 or \
+ *         if self.last_widgets_child is None:
+ *             return False
 */
 
   /* function exit code */
@@ -30974,8 +30978,8 @@ static int __pyx_f_9dearcygui_6layout_6Layout_draw_item(struct __pyx_obj_9dearcy
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":211
- *     to clip the content, use a `ChildWindow` instead.
+/* "dearcygui/layout.pyx":305
+ *     children's sizing expressions.
  *     """
  *     def __cinit__(self):             # <<<<<<<<<<<<<<
  *         self._alignment_mode = Alignment.LEFT
@@ -31010,7 +31014,7 @@ static int __pyx_pw_9dearcygui_6layout_16HorizontalLayout_1__cinit__(PyObject *_
 static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout___cinit__(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *__pyx_v_self) {
   int __pyx_r;
 
-  /* "dearcygui/layout.pyx":212
+  /* "dearcygui/layout.pyx":306
  *     """
  *     def __cinit__(self):
  *         self._alignment_mode = Alignment.LEFT             # <<<<<<<<<<<<<<
@@ -31019,8 +31023,8 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout___cinit__(struct __pyx
 */
   __pyx_v_self->_alignment_mode = __pyx_t_9dearcygui_5types_Alignment::LEFT;
 
-  /* "dearcygui/layout.pyx":211
- *     to clip the content, use a `ChildWindow` instead.
+  /* "dearcygui/layout.pyx":305
+ *     children's sizing expressions.
  *     """
  *     def __cinit__(self):             # <<<<<<<<<<<<<<
  *         self._alignment_mode = Alignment.LEFT
@@ -31032,7 +31036,7 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout___cinit__(struct __pyx
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":214
+/* "dearcygui/layout.pyx":308
  *         self._alignment_mode = Alignment.LEFT
  * 
  *     @property             # <<<<<<<<<<<<<<
@@ -31065,7 +31069,7 @@ static PyObject *__pyx_pf_9dearcygui_6layout_16HorizontalLayout_14alignment_mode
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "dearcygui/layout.pyx":230
+  /* "dearcygui/layout.pyx":324
  *         """
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)             # <<<<<<<<<<<<<<
@@ -31074,7 +31078,7 @@ static PyObject *__pyx_pf_9dearcygui_6layout_16HorizontalLayout_14alignment_mode
 */
   __pyx_f_9dearcygui_4core_lock_gil_friendly(__pyx_v_m, __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.mutex);
 
-  /* "dearcygui/layout.pyx":231
+  /* "dearcygui/layout.pyx":325
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)
  *         return self._alignment_mode             # <<<<<<<<<<<<<<
@@ -31082,13 +31086,13 @@ static PyObject *__pyx_pf_9dearcygui_6layout_16HorizontalLayout_14alignment_mode
  *     @alignment_mode.setter
 */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_Enum_8fb560__9dearcygui_5types__dunder_PYX_ENUM_CLASS_DECL___etc_to_py(__pyx_v_self->_alignment_mode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 231, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Enum_8fb560__9dearcygui_5types__dunder_PYX_ENUM_CLASS_DECL___etc_to_py(__pyx_v_self->_alignment_mode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 325, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "dearcygui/layout.pyx":214
+  /* "dearcygui/layout.pyx":308
  *         self._alignment_mode = Alignment.LEFT
  * 
  *     @property             # <<<<<<<<<<<<<<
@@ -31107,7 +31111,7 @@ static PyObject *__pyx_pf_9dearcygui_6layout_16HorizontalLayout_14alignment_mode
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":233
+/* "dearcygui/layout.pyx":327
  *         return self._alignment_mode
  * 
  *     @alignment_mode.setter             # <<<<<<<<<<<<<<
@@ -31128,7 +31132,7 @@ static int __pyx_pw_9dearcygui_6layout_16HorizontalLayout_14alignment_mode_3__se
   __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
   __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
   assert(__pyx_arg_value); {
-    __pyx_v_value = (__pyx_t_9dearcygui_5types_Alignment)__Pyx_PyLong_As_int(__pyx_arg_value); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 234, __pyx_L3_error)
+    __pyx_v_value = (__pyx_t_9dearcygui_5types_Alignment)__Pyx_PyLong_As_int(__pyx_arg_value); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 328, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -31152,12 +31156,14 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_14alignment_mode_2__se
   PyObject *__pyx_t_3 = NULL;
   PyObject *__pyx_t_4 = NULL;
   size_t __pyx_t_5;
+  PyObject *__pyx_t_6 = NULL;
+  PyObject *__pyx_t_7 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__set__", 0);
 
-  /* "dearcygui/layout.pyx":236
+  /* "dearcygui/layout.pyx":330
  *     def alignment_mode(self, Alignment value):
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)             # <<<<<<<<<<<<<<
@@ -31166,7 +31172,7 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_14alignment_mode_2__se
 */
   __pyx_f_9dearcygui_4core_lock_gil_friendly(__pyx_v_m, __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.mutex);
 
-  /* "dearcygui/layout.pyx":237
+  /* "dearcygui/layout.pyx":331
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)
  *         if <int>value < 0 or value > Alignment.MANUAL:             # <<<<<<<<<<<<<<
@@ -31184,7 +31190,7 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_14alignment_mode_2__se
   __pyx_L4_bool_binop_done:;
   if (unlikely(__pyx_t_1)) {
 
-    /* "dearcygui/layout.pyx":238
+    /* "dearcygui/layout.pyx":332
  *         lock_gil_friendly(m, self.mutex)
  *         if <int>value < 0 or value > Alignment.MANUAL:
  *             raise ValueError("Invalid alignment value")             # <<<<<<<<<<<<<<
@@ -31197,14 +31203,14 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_14alignment_mode_2__se
       PyObject *__pyx_callargs[2] = {__pyx_t_4, __pyx_mstate_global->__pyx_kp_u_Invalid_alignment_value};
       __pyx_t_3 = __Pyx_PyObject_FastCall((PyObject*)(((PyTypeObject*)PyExc_ValueError)), __pyx_callargs+__pyx_t_5, (2-__pyx_t_5) | (__pyx_t_5*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 238, __pyx_L1_error)
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 332, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
     }
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __PYX_ERR(0, 238, __pyx_L1_error)
+    __PYX_ERR(0, 332, __pyx_L1_error)
 
-    /* "dearcygui/layout.pyx":237
+    /* "dearcygui/layout.pyx":331
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)
  *         if <int>value < 0 or value > Alignment.MANUAL:             # <<<<<<<<<<<<<<
@@ -31213,46 +31219,101 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_14alignment_mode_2__se
 */
   }
 
-  /* "dearcygui/layout.pyx":239
+  /* "dearcygui/layout.pyx":333
  *         if <int>value < 0 or value > Alignment.MANUAL:
  *             raise ValueError("Invalid alignment value")
  *         if value == self._alignment_mode:             # <<<<<<<<<<<<<<
  *             return
- *         self._force_update = True
+ *         if value == Alignment.MANUAL:
 */
   __pyx_t_1 = (__pyx_v_value == __pyx_v_self->_alignment_mode);
   if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":240
+    /* "dearcygui/layout.pyx":334
  *             raise ValueError("Invalid alignment value")
  *         if value == self._alignment_mode:
  *             return             # <<<<<<<<<<<<<<
- *         self._force_update = True
- *         self._alignment_mode = value
+ *         if value == Alignment.MANUAL:
+ *             _warn("MANUAL alignment mode is deprecated. Use string-based positioning (e.g. item.x = '10') on children instead.", DeprecationWarning, stacklevel=2)
 */
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "dearcygui/layout.pyx":239
+    /* "dearcygui/layout.pyx":333
  *         if <int>value < 0 or value > Alignment.MANUAL:
  *             raise ValueError("Invalid alignment value")
  *         if value == self._alignment_mode:             # <<<<<<<<<<<<<<
  *             return
+ *         if value == Alignment.MANUAL:
+*/
+  }
+
+  /* "dearcygui/layout.pyx":335
+ *         if value == self._alignment_mode:
+ *             return
+ *         if value == Alignment.MANUAL:             # <<<<<<<<<<<<<<
+ *             _warn("MANUAL alignment mode is deprecated. Use string-based positioning (e.g. item.x = '10') on children instead.", DeprecationWarning, stacklevel=2)
+ *         self._force_update = True
+*/
+  __pyx_t_1 = (__pyx_v_value == __pyx_t_9dearcygui_5types_Alignment::MANUAL);
+  if (__pyx_t_1) {
+
+    /* "dearcygui/layout.pyx":336
+ *             return
+ *         if value == Alignment.MANUAL:
+ *             _warn("MANUAL alignment mode is deprecated. Use string-based positioning (e.g. item.x = '10') on children instead.", DeprecationWarning, stacklevel=2)             # <<<<<<<<<<<<<<
+ *         self._force_update = True
+ *         self._alignment_mode = value
+*/
+    __pyx_t_4 = NULL;
+    __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_warn_2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 336, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_5 = 1;
+    #if CYTHON_UNPACK_METHODS
+    if (unlikely(PyMethod_Check(__pyx_t_6))) {
+      __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_6);
+      assert(__pyx_t_4);
+      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_6);
+      __Pyx_INCREF(__pyx_t_4);
+      __Pyx_INCREF(__pyx__function);
+      __Pyx_DECREF_SET(__pyx_t_6, __pyx__function);
+      __pyx_t_5 = 0;
+    }
+    #endif
+    {
+      PyObject *__pyx_callargs[3 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_4, __pyx_mstate_global->__pyx_kp_u_MANUAL_alignment_mode_is_depreca, ((PyObject *)(((PyTypeObject*)PyExc_DeprecationWarning)))};
+      __pyx_t_7 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 336, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_7);
+      if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_stacklevel, __pyx_mstate_global->__pyx_int_2, __pyx_t_7, __pyx_callargs+3, 0) < (0)) __PYX_ERR(0, 336, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_t_6, __pyx_callargs+__pyx_t_5, (3-__pyx_t_5) | (__pyx_t_5*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_7);
+      __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 336, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+    }
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+
+    /* "dearcygui/layout.pyx":335
+ *         if value == self._alignment_mode:
+ *             return
+ *         if value == Alignment.MANUAL:             # <<<<<<<<<<<<<<
+ *             _warn("MANUAL alignment mode is deprecated. Use string-based positioning (e.g. item.x = '10') on children instead.", DeprecationWarning, stacklevel=2)
  *         self._force_update = True
 */
   }
 
-  /* "dearcygui/layout.pyx":241
- *         if value == self._alignment_mode:
- *             return
+  /* "dearcygui/layout.pyx":337
+ *         if value == Alignment.MANUAL:
+ *             _warn("MANUAL alignment mode is deprecated. Use string-based positioning (e.g. item.x = '10') on children instead.", DeprecationWarning, stacklevel=2)
  *         self._force_update = True             # <<<<<<<<<<<<<<
  *         self._alignment_mode = value
  * 
 */
   __pyx_v_self->__pyx_base._force_update = 1;
 
-  /* "dearcygui/layout.pyx":242
- *             return
+  /* "dearcygui/layout.pyx":338
+ *             _warn("MANUAL alignment mode is deprecated. Use string-based positioning (e.g. item.x = '10') on children instead.", DeprecationWarning, stacklevel=2)
  *         self._force_update = True
  *         self._alignment_mode = value             # <<<<<<<<<<<<<<
  * 
@@ -31260,7 +31321,7 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_14alignment_mode_2__se
 */
   __pyx_v_self->_alignment_mode = __pyx_v_value;
 
-  /* "dearcygui/layout.pyx":233
+  /* "dearcygui/layout.pyx":327
  *         return self._alignment_mode
  * 
  *     @alignment_mode.setter             # <<<<<<<<<<<<<<
@@ -31274,6 +31335,8 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_14alignment_mode_2__se
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_6);
+  __Pyx_XDECREF(__pyx_t_7);
   __Pyx_AddTraceback("dearcygui.layout.HorizontalLayout.alignment_mode.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
@@ -31281,7 +31344,7 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_14alignment_mode_2__se
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":244
+/* "dearcygui/layout.pyx":340
  *         self._alignment_mode = value
  * 
  *     @property             # <<<<<<<<<<<<<<
@@ -31314,7 +31377,7 @@ static PyObject *__pyx_pf_9dearcygui_6layout_16HorizontalLayout_7no_wrap___get__
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "dearcygui/layout.pyx":254
+  /* "dearcygui/layout.pyx":350
  *         """
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)             # <<<<<<<<<<<<<<
@@ -31323,7 +31386,7 @@ static PyObject *__pyx_pf_9dearcygui_6layout_16HorizontalLayout_7no_wrap___get__
 */
   __pyx_f_9dearcygui_4core_lock_gil_friendly(__pyx_v_m, __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.mutex);
 
-  /* "dearcygui/layout.pyx":255
+  /* "dearcygui/layout.pyx":351
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)
  *         return self._no_wrap             # <<<<<<<<<<<<<<
@@ -31331,13 +31394,13 @@ static PyObject *__pyx_pf_9dearcygui_6layout_16HorizontalLayout_7no_wrap___get__
  *     @no_wrap.setter
 */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->_no_wrap); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 255, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->_no_wrap); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 351, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "dearcygui/layout.pyx":244
+  /* "dearcygui/layout.pyx":340
  *         self._alignment_mode = value
  * 
  *     @property             # <<<<<<<<<<<<<<
@@ -31356,7 +31419,7 @@ static PyObject *__pyx_pf_9dearcygui_6layout_16HorizontalLayout_7no_wrap___get__
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":257
+/* "dearcygui/layout.pyx":353
  *         return self._no_wrap
  * 
  *     @no_wrap.setter             # <<<<<<<<<<<<<<
@@ -31377,7 +31440,7 @@ static int __pyx_pw_9dearcygui_6layout_16HorizontalLayout_7no_wrap_3__set__(PyOb
   __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
   __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
   assert(__pyx_arg_value); {
-    __pyx_v_value = __Pyx_PyObject_IsTrue(__pyx_arg_value); if (unlikely((__pyx_v_value == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 258, __pyx_L3_error)
+    __pyx_v_value = __Pyx_PyObject_IsTrue(__pyx_arg_value); if (unlikely((__pyx_v_value == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 354, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -31397,7 +31460,7 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_7no_wrap_2__set__(stru
   int __pyx_r;
   int __pyx_t_1;
 
-  /* "dearcygui/layout.pyx":260
+  /* "dearcygui/layout.pyx":356
  *     def no_wrap(self, bint value):
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)             # <<<<<<<<<<<<<<
@@ -31406,7 +31469,7 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_7no_wrap_2__set__(stru
 */
   __pyx_f_9dearcygui_4core_lock_gil_friendly(__pyx_v_m, __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.mutex);
 
-  /* "dearcygui/layout.pyx":261
+  /* "dearcygui/layout.pyx":357
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)
  *         if value == self._no_wrap:             # <<<<<<<<<<<<<<
@@ -31416,7 +31479,7 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_7no_wrap_2__set__(stru
   __pyx_t_1 = (__pyx_v_value == __pyx_v_self->_no_wrap);
   if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":262
+    /* "dearcygui/layout.pyx":358
  *         lock_gil_friendly(m, self.mutex)
  *         if value == self._no_wrap:
  *             return             # <<<<<<<<<<<<<<
@@ -31426,7 +31489,7 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_7no_wrap_2__set__(stru
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "dearcygui/layout.pyx":261
+    /* "dearcygui/layout.pyx":357
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)
  *         if value == self._no_wrap:             # <<<<<<<<<<<<<<
@@ -31435,7 +31498,7 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_7no_wrap_2__set__(stru
 */
   }
 
-  /* "dearcygui/layout.pyx":263
+  /* "dearcygui/layout.pyx":359
  *         if value == self._no_wrap:
  *             return
  *         self._force_update = True             # <<<<<<<<<<<<<<
@@ -31444,7 +31507,7 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_7no_wrap_2__set__(stru
 */
   __pyx_v_self->__pyx_base._force_update = 1;
 
-  /* "dearcygui/layout.pyx":264
+  /* "dearcygui/layout.pyx":360
  *             return
  *         self._force_update = True
  *         self._no_wrap = value             # <<<<<<<<<<<<<<
@@ -31453,7 +31516,7 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_7no_wrap_2__set__(stru
 */
   __pyx_v_self->_no_wrap = __pyx_v_value;
 
-  /* "dearcygui/layout.pyx":257
+  /* "dearcygui/layout.pyx":353
  *         return self._no_wrap
  * 
  *     @no_wrap.setter             # <<<<<<<<<<<<<<
@@ -31467,7 +31530,7 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_7no_wrap_2__set__(stru
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":266
+/* "dearcygui/layout.pyx":362
  *         self._no_wrap = value
  * 
  *     @property             # <<<<<<<<<<<<<<
@@ -31500,7 +31563,7 @@ static PyObject *__pyx_pf_9dearcygui_6layout_16HorizontalLayout_6wrap_x___get__(
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "dearcygui/layout.pyx":277
+  /* "dearcygui/layout.pyx":373
  *         """
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)             # <<<<<<<<<<<<<<
@@ -31509,7 +31572,7 @@ static PyObject *__pyx_pf_9dearcygui_6layout_16HorizontalLayout_6wrap_x___get__(
 */
   __pyx_f_9dearcygui_4core_lock_gil_friendly(__pyx_v_m, __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.mutex);
 
-  /* "dearcygui/layout.pyx":278
+  /* "dearcygui/layout.pyx":374
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)
  *         return self._wrap_x             # <<<<<<<<<<<<<<
@@ -31517,13 +31580,13 @@ static PyObject *__pyx_pf_9dearcygui_6layout_16HorizontalLayout_6wrap_x___get__(
  *     @wrap_x.setter
 */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->_wrap_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 278, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->_wrap_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 374, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "dearcygui/layout.pyx":266
+  /* "dearcygui/layout.pyx":362
  *         self._no_wrap = value
  * 
  *     @property             # <<<<<<<<<<<<<<
@@ -31542,7 +31605,7 @@ static PyObject *__pyx_pf_9dearcygui_6layout_16HorizontalLayout_6wrap_x___get__(
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":280
+/* "dearcygui/layout.pyx":376
  *         return self._wrap_x
  * 
  *     @wrap_x.setter             # <<<<<<<<<<<<<<
@@ -31563,7 +31626,7 @@ static int __pyx_pw_9dearcygui_6layout_16HorizontalLayout_6wrap_x_3__set__(PyObj
   __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
   __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
   assert(__pyx_arg_value); {
-    __pyx_v_value = __Pyx_PyFloat_AsFloat(__pyx_arg_value); if (unlikely((__pyx_v_value == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 281, __pyx_L3_error)
+    __pyx_v_value = __Pyx_PyFloat_AsFloat(__pyx_arg_value); if (unlikely((__pyx_v_value == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 377, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -31592,7 +31655,7 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_6wrap_x_2__set__(struc
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__set__", 0);
 
-  /* "dearcygui/layout.pyx":283
+  /* "dearcygui/layout.pyx":379
  *     def wrap_x(self, float value):
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)             # <<<<<<<<<<<<<<
@@ -31601,7 +31664,7 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_6wrap_x_2__set__(struc
 */
   __pyx_f_9dearcygui_4core_lock_gil_friendly(__pyx_v_m, __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.mutex);
 
-  /* "dearcygui/layout.pyx":284
+  /* "dearcygui/layout.pyx":380
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)
  *         self._wrap_x = value             # <<<<<<<<<<<<<<
@@ -31610,7 +31673,7 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_6wrap_x_2__set__(struc
 */
   __pyx_v_self->_wrap_x = __pyx_v_value;
 
-  /* "dearcygui/layout.pyx":285
+  /* "dearcygui/layout.pyx":381
  *         lock_gil_friendly(m, self.mutex)
  *         self._wrap_x = value
  *         if value != 0.0:             # <<<<<<<<<<<<<<
@@ -31620,7 +31683,7 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_6wrap_x_2__set__(struc
   __pyx_t_1 = (__pyx_v_value != 0.0);
   if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":286
+    /* "dearcygui/layout.pyx":382
  *         self._wrap_x = value
  *         if value != 0.0:
  *             _warn("wrap_x is deprecated, it will be replaced by a new interface", DeprecationWarning)             # <<<<<<<<<<<<<<
@@ -31628,7 +31691,7 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_6wrap_x_2__set__(struc
  * 
 */
     __pyx_t_3 = NULL;
-    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_warn_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 286, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_warn_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 382, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_5 = 1;
     #if CYTHON_UNPACK_METHODS
@@ -31647,12 +31710,12 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_6wrap_x_2__set__(struc
       __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_4, __pyx_callargs+__pyx_t_5, (3-__pyx_t_5) | (__pyx_t_5*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 286, __pyx_L1_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 382, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
     }
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "dearcygui/layout.pyx":285
+    /* "dearcygui/layout.pyx":381
  *         lock_gil_friendly(m, self.mutex)
  *         self._wrap_x = value
  *         if value != 0.0:             # <<<<<<<<<<<<<<
@@ -31661,7 +31724,7 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_6wrap_x_2__set__(struc
 */
   }
 
-  /* "dearcygui/layout.pyx":287
+  /* "dearcygui/layout.pyx":383
  *         if value != 0.0:
  *             _warn("wrap_x is deprecated, it will be replaced by a new interface", DeprecationWarning)
  *         self._force_update = True             # <<<<<<<<<<<<<<
@@ -31670,7 +31733,7 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_6wrap_x_2__set__(struc
 */
   __pyx_v_self->__pyx_base._force_update = 1;
 
-  /* "dearcygui/layout.pyx":280
+  /* "dearcygui/layout.pyx":376
  *         return self._wrap_x
  * 
  *     @wrap_x.setter             # <<<<<<<<<<<<<<
@@ -31692,7 +31755,7 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_6wrap_x_2__set__(struc
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":289
+/* "dearcygui/layout.pyx":385
  *         self._force_update = True
  * 
  *     @property             # <<<<<<<<<<<<<<
@@ -31731,7 +31794,7 @@ static PyObject *__pyx_pf_9dearcygui_6layout_16HorizontalLayout_9positions___get
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "dearcygui/layout.pyx":305
+  /* "dearcygui/layout.pyx":409
  *         """
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)             # <<<<<<<<<<<<<<
@@ -31740,19 +31803,19 @@ static PyObject *__pyx_pf_9dearcygui_6layout_16HorizontalLayout_9positions___get
 */
   __pyx_f_9dearcygui_4core_lock_gil_friendly(__pyx_v_m, __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.mutex);
 
-  /* "dearcygui/layout.pyx":306
+  /* "dearcygui/layout.pyx":410
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)
  *         result = []             # <<<<<<<<<<<<<<
  *         cdef int i
  *         for i in range(<int>self._positions.size()):
 */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 306, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 410, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_result = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "dearcygui/layout.pyx":308
+  /* "dearcygui/layout.pyx":412
  *         result = []
  *         cdef int i
  *         for i in range(<int>self._positions.size()):             # <<<<<<<<<<<<<<
@@ -31764,20 +31827,20 @@ static PyObject *__pyx_pf_9dearcygui_6layout_16HorizontalLayout_9positions___get
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_i = __pyx_t_4;
 
-    /* "dearcygui/layout.pyx":309
+    /* "dearcygui/layout.pyx":413
  *         cdef int i
  *         for i in range(<int>self._positions.size()):
  *             result.append(self._positions[i])             # <<<<<<<<<<<<<<
  *         return result
  * 
 */
-    __pyx_t_1 = PyFloat_FromDouble((__pyx_v_self->_positions[__pyx_v_i])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 309, __pyx_L1_error)
+    __pyx_t_1 = PyFloat_FromDouble((__pyx_v_self->_positions[__pyx_v_i])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 413, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_5 = __Pyx_PyObject_Append(__pyx_v_result, __pyx_t_1); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 309, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_Append(__pyx_v_result, __pyx_t_1); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 413, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "dearcygui/layout.pyx":310
+  /* "dearcygui/layout.pyx":414
  *         for i in range(<int>self._positions.size()):
  *             result.append(self._positions[i])
  *         return result             # <<<<<<<<<<<<<<
@@ -31789,7 +31852,7 @@ static PyObject *__pyx_pf_9dearcygui_6layout_16HorizontalLayout_9positions___get
   __pyx_r = __pyx_v_result;
   goto __pyx_L0;
 
-  /* "dearcygui/layout.pyx":289
+  /* "dearcygui/layout.pyx":385
  *         self._force_update = True
  * 
  *     @property             # <<<<<<<<<<<<<<
@@ -31809,7 +31872,7 @@ static PyObject *__pyx_pf_9dearcygui_6layout_16HorizontalLayout_9positions___get
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":312
+/* "dearcygui/layout.pyx":416
  *         return result
  * 
  *     @positions.setter             # <<<<<<<<<<<<<<
@@ -31840,53 +31903,92 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_9positions_2__set__(st
   Py_ssize_t __pyx_t_1;
   int __pyx_t_2;
   PyObject *__pyx_t_3 = NULL;
-  PyObject *(*__pyx_t_4)(PyObject *);
+  PyObject *__pyx_t_4 = NULL;
   PyObject *__pyx_t_5 = NULL;
-  float __pyx_t_6;
+  size_t __pyx_t_6;
+  PyObject *__pyx_t_7 = NULL;
+  PyObject *(*__pyx_t_8)(PyObject *);
+  float __pyx_t_9;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__set__", 0);
 
-  /* "dearcygui/layout.pyx":315
+  /* "dearcygui/layout.pyx":419
  *     def positions(self, value):
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)             # <<<<<<<<<<<<<<
  *         if len(value) > 0:
- *             self._alignment_mode = Alignment.MANUAL
+ *             _warn("positions and MANUAL alignment mode are deprecated. Use string-based positioning (e.g. item.x = '10') on children instead.", DeprecationWarning, stacklevel=2)
 */
   __pyx_f_9dearcygui_4core_lock_gil_friendly(__pyx_v_m, __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.mutex);
 
-  /* "dearcygui/layout.pyx":316
+  /* "dearcygui/layout.pyx":420
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)
  *         if len(value) > 0:             # <<<<<<<<<<<<<<
+ *             _warn("positions and MANUAL alignment mode are deprecated. Use string-based positioning (e.g. item.x = '10') on children instead.", DeprecationWarning, stacklevel=2)
  *             self._alignment_mode = Alignment.MANUAL
- *         # TODO: checks
 */
-  __pyx_t_1 = PyObject_Length(__pyx_v_value); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 316, __pyx_L1_error)
+  __pyx_t_1 = PyObject_Length(__pyx_v_value); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 420, __pyx_L1_error)
   __pyx_t_2 = (__pyx_t_1 > 0);
   if (__pyx_t_2) {
 
-    /* "dearcygui/layout.pyx":317
+    /* "dearcygui/layout.pyx":421
  *         lock_gil_friendly(m, self.mutex)
  *         if len(value) > 0:
+ *             _warn("positions and MANUAL alignment mode are deprecated. Use string-based positioning (e.g. item.x = '10') on children instead.", DeprecationWarning, stacklevel=2)             # <<<<<<<<<<<<<<
+ *             self._alignment_mode = Alignment.MANUAL
+ *         # TODO: checks
+*/
+    __pyx_t_4 = NULL;
+    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_warn_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 421, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_6 = 1;
+    #if CYTHON_UNPACK_METHODS
+    if (unlikely(PyMethod_Check(__pyx_t_5))) {
+      __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_5);
+      assert(__pyx_t_4);
+      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_5);
+      __Pyx_INCREF(__pyx_t_4);
+      __Pyx_INCREF(__pyx__function);
+      __Pyx_DECREF_SET(__pyx_t_5, __pyx__function);
+      __pyx_t_6 = 0;
+    }
+    #endif
+    {
+      PyObject *__pyx_callargs[3 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_4, __pyx_mstate_global->__pyx_kp_u_positions_and_MANUAL_alignment_m, ((PyObject *)(((PyTypeObject*)PyExc_DeprecationWarning)))};
+      __pyx_t_7 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 421, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_7);
+      if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_stacklevel, __pyx_mstate_global->__pyx_int_2, __pyx_t_7, __pyx_callargs+3, 0) < (0)) __PYX_ERR(0, 421, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_t_5, __pyx_callargs+__pyx_t_6, (3-__pyx_t_6) | (__pyx_t_6*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_7);
+      __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 421, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+    }
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+
+    /* "dearcygui/layout.pyx":422
+ *         if len(value) > 0:
+ *             _warn("positions and MANUAL alignment mode are deprecated. Use string-based positioning (e.g. item.x = '10') on children instead.", DeprecationWarning, stacklevel=2)
  *             self._alignment_mode = Alignment.MANUAL             # <<<<<<<<<<<<<<
  *         # TODO: checks
  *         self._positions.clear()
 */
     __pyx_v_self->_alignment_mode = __pyx_t_9dearcygui_5types_Alignment::MANUAL;
 
-    /* "dearcygui/layout.pyx":316
+    /* "dearcygui/layout.pyx":420
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)
  *         if len(value) > 0:             # <<<<<<<<<<<<<<
+ *             _warn("positions and MANUAL alignment mode are deprecated. Use string-based positioning (e.g. item.x = '10') on children instead.", DeprecationWarning, stacklevel=2)
  *             self._alignment_mode = Alignment.MANUAL
- *         # TODO: checks
 */
   }
 
-  /* "dearcygui/layout.pyx":319
+  /* "dearcygui/layout.pyx":424
  *             self._alignment_mode = Alignment.MANUAL
  *         # TODO: checks
  *         self._positions.clear()             # <<<<<<<<<<<<<<
@@ -31895,7 +31997,7 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_9positions_2__set__(st
 */
   __pyx_v_self->_positions.clear();
 
-  /* "dearcygui/layout.pyx":320
+  /* "dearcygui/layout.pyx":425
  *         # TODO: checks
  *         self._positions.clear()
  *         for v in value:             # <<<<<<<<<<<<<<
@@ -31905,19 +32007,19 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_9positions_2__set__(st
   if (likely(PyList_CheckExact(__pyx_v_value)) || PyTuple_CheckExact(__pyx_v_value)) {
     __pyx_t_3 = __pyx_v_value; __Pyx_INCREF(__pyx_t_3);
     __pyx_t_1 = 0;
-    __pyx_t_4 = NULL;
+    __pyx_t_8 = NULL;
   } else {
-    __pyx_t_1 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_v_value); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 320, __pyx_L1_error)
+    __pyx_t_1 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_v_value); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 425, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 320, __pyx_L1_error)
+    __pyx_t_8 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 425, __pyx_L1_error)
   }
   for (;;) {
-    if (likely(!__pyx_t_4)) {
+    if (likely(!__pyx_t_8)) {
       if (likely(PyList_CheckExact(__pyx_t_3))) {
         {
           Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_3);
           #if !CYTHON_ASSUME_SAFE_SIZE
-          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 320, __pyx_L1_error)
+          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 425, __pyx_L1_error)
           #endif
           if (__pyx_t_1 >= __pyx_temp) break;
         }
@@ -31927,7 +32029,7 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_9positions_2__set__(st
         {
           Py_ssize_t __pyx_temp = __Pyx_PyTuple_GET_SIZE(__pyx_t_3);
           #if !CYTHON_ASSUME_SAFE_SIZE
-          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 320, __pyx_L1_error)
+          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 425, __pyx_L1_error)
           #endif
           if (__pyx_t_1 >= __pyx_temp) break;
         }
@@ -31938,13 +32040,13 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_9positions_2__set__(st
         #endif
         ++__pyx_t_1;
       }
-      if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 320, __pyx_L1_error)
+      if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 425, __pyx_L1_error)
     } else {
-      __pyx_t_5 = __pyx_t_4(__pyx_t_3);
+      __pyx_t_5 = __pyx_t_8(__pyx_t_3);
       if (unlikely(!__pyx_t_5)) {
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
-          if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) __PYX_ERR(0, 320, __pyx_L1_error)
+          if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) __PYX_ERR(0, 425, __pyx_L1_error)
           PyErr_Clear();
         }
         break;
@@ -31954,22 +32056,22 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_9positions_2__set__(st
     __Pyx_XDECREF_SET(__pyx_v_v, __pyx_t_5);
     __pyx_t_5 = 0;
 
-    /* "dearcygui/layout.pyx":321
+    /* "dearcygui/layout.pyx":426
  *         self._positions.clear()
  *         for v in value:
  *             self._positions.push_back(v)             # <<<<<<<<<<<<<<
  *         self._force_update = True
  * 
 */
-    __pyx_t_6 = __Pyx_PyFloat_AsFloat(__pyx_v_v); if (unlikely((__pyx_t_6 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 321, __pyx_L1_error)
+    __pyx_t_9 = __Pyx_PyFloat_AsFloat(__pyx_v_v); if (unlikely((__pyx_t_9 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 426, __pyx_L1_error)
     try {
-      __pyx_v_self->_positions.push_back(__pyx_t_6);
+      __pyx_v_self->_positions.push_back(__pyx_t_9);
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      __PYX_ERR(0, 321, __pyx_L1_error)
+      __PYX_ERR(0, 426, __pyx_L1_error)
     }
 
-    /* "dearcygui/layout.pyx":320
+    /* "dearcygui/layout.pyx":425
  *         # TODO: checks
  *         self._positions.clear()
  *         for v in value:             # <<<<<<<<<<<<<<
@@ -31979,16 +32081,16 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_9positions_2__set__(st
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "dearcygui/layout.pyx":322
+  /* "dearcygui/layout.pyx":427
  *         for v in value:
  *             self._positions.push_back(v)
  *         self._force_update = True             # <<<<<<<<<<<<<<
  * 
- *     def update_layout(self):
+ *     cdef bint __check_children_neutral(self) noexcept nogil:
 */
   __pyx_v_self->__pyx_base._force_update = 1;
 
-  /* "dearcygui/layout.pyx":312
+  /* "dearcygui/layout.pyx":416
  *         return result
  * 
  *     @positions.setter             # <<<<<<<<<<<<<<
@@ -32001,7 +32103,9 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_9positions_2__set__(st
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_7);
   __Pyx_AddTraceback("dearcygui.layout.HorizontalLayout.positions.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
@@ -32010,1725 +32114,2702 @@ static int __pyx_pf_9dearcygui_6layout_16HorizontalLayout_9positions_2__set__(st
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":324
+/* "dearcygui/layout.pyx":429
  *         self._force_update = True
  * 
- *     def update_layout(self):             # <<<<<<<<<<<<<<
+ *     cdef bint __check_children_neutral(self) noexcept nogil:             # <<<<<<<<<<<<<<
  *         """
- *         Force an update of the layout next time the scene is rendered.
+ *         Returns True if all children are already in neutral positioning state:
 */
 
-/* Python wrapper */
-static PyObject *__pyx_pw_9dearcygui_6layout_16HorizontalLayout_3update_layout(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-PyDoc_STRVAR(__pyx_doc_9dearcygui_6layout_16HorizontalLayout_2update_layout, "\n        Force an update of the layout next time the scene is rendered.\n        \n        This method triggers the recalculation of item positions and sizes \n        within the layout. It's useful when the automated update detection \n        is not sufficient to detect layout changes.\n        ");
-static PyMethodDef __pyx_mdef_9dearcygui_6layout_16HorizontalLayout_3update_layout = {"update_layout", (PyCFunction)__pyx_pw_9dearcygui_6layout_16HorizontalLayout_3update_layout, METH_NOARGS, __pyx_doc_9dearcygui_6layout_16HorizontalLayout_2update_layout};
-static PyObject *__pyx_pw_9dearcygui_6layout_16HorizontalLayout_3update_layout(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
-  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("update_layout (wrapper)", 0);
-  __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
-  __pyx_r = __pyx_pf_9dearcygui_6layout_16HorizontalLayout_2update_layout(((struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *)__pyx_v_self));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_9dearcygui_6layout_16HorizontalLayout_2update_layout(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *__pyx_v_self) {
-  std::unique_lock<DCGMutex>  __pyx_v_m;
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("update_layout", 0);
-
-  /* "dearcygui/layout.pyx":333
- *         """
- *         cdef unique_lock[DCGMutex] m
- *         lock_gil_friendly(m, self.mutex)             # <<<<<<<<<<<<<<
- *         self._force_update = True
- * 
-*/
-  __pyx_f_9dearcygui_4core_lock_gil_friendly(__pyx_v_m, __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.mutex);
-
-  /* "dearcygui/layout.pyx":334
- *         cdef unique_lock[DCGMutex] m
- *         lock_gil_friendly(m, self.mutex)
- *         self._force_update = True             # <<<<<<<<<<<<<<
- * 
- *     cdef void __update_layout_manual(self):
-*/
-  __pyx_v_self->__pyx_base._force_update = 1;
-
-  /* "dearcygui/layout.pyx":324
- *         self._force_update = True
- * 
- *     def update_layout(self):             # <<<<<<<<<<<<<<
- *         """
- *         Force an update of the layout next time the scene is rendered.
-*/
-
-  /* function exit code */
-  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "dearcygui/layout.pyx":336
- *         self._force_update = True
- * 
- *     cdef void __update_layout_manual(self):             # <<<<<<<<<<<<<<
- *         """Position items at manually specified x positions"""
- *         # assumes children are locked and > 0
-*/
-
-static void __pyx_f_9dearcygui_6layout_16HorizontalLayout__HorizontalLayout__update_layout_manual(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *__pyx_v_self) {
-  float __pyx_v_available_width;
-  float __pyx_v_pos_start;
-  int32_t __pyx_v_i;
+static int __pyx_f_9dearcygui_6layout_16HorizontalLayout__HorizontalLayout__check_children_neutral(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *__pyx_v_self) {
   PyObject *__pyx_v_child;
-  int __pyx_v_pos_change;
-  __Pyx_RefNannyDeclarations
-  float __pyx_t_1;
+  int __pyx_r;
+  int __pyx_t_1;
   int __pyx_t_2;
-  long __pyx_t_3;
-  int32_t __pyx_t_4;
-  long __pyx_t_5;
-  float __pyx_t_6;
-  PyObject *__pyx_t_7 = NULL;
-  PyObject *__pyx_t_8 = NULL;
-  PyObject *__pyx_t_9 = NULL;
-  PyObject *__pyx_t_10 = NULL;
-  PyObject *__pyx_t_11 = NULL;
-  PyObject *__pyx_t_12 = NULL;
-  PyObject *__pyx_t_13 = NULL;
-  size_t __pyx_t_14;
-  PyObject *__pyx_t_15 = NULL;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("_HorizontalLayout__update_layout_manual", 0);
 
-  /* "dearcygui/layout.pyx":339
- *         """Position items at manually specified x positions"""
- *         # assumes children are locked and > 0
- *         cdef float available_width = self.state.cur.content_region_size.x             # <<<<<<<<<<<<<<
- *         cdef float pos_start = 0.
- *         cdef int32_t i = 0
-*/
-  __pyx_t_1 = __pyx_v_self->__pyx_base.__pyx_base.state.cur.content_region_size.x;
-  __pyx_v_available_width = __pyx_t_1;
-
-  /* "dearcygui/layout.pyx":340
- *         # assumes children are locked and > 0
- *         cdef float available_width = self.state.cur.content_region_size.x
- *         cdef float pos_start = 0.             # <<<<<<<<<<<<<<
- *         cdef int32_t i = 0
- *         cdef PyObject *child = <PyObject*>self.last_widgets_child
-*/
-  __pyx_v_pos_start = 0.;
-
-  /* "dearcygui/layout.pyx":341
- *         cdef float available_width = self.state.cur.content_region_size.x
- *         cdef float pos_start = 0.
- *         cdef int32_t i = 0             # <<<<<<<<<<<<<<
- *         cdef PyObject *child = <PyObject*>self.last_widgets_child
- *         cdef bint pos_change = False
-*/
-  __pyx_v_i = 0;
-
-  /* "dearcygui/layout.pyx":342
- *         cdef float pos_start = 0.
- *         cdef int32_t i = 0
- *         cdef PyObject *child = <PyObject*>self.last_widgets_child             # <<<<<<<<<<<<<<
- *         cdef bint pos_change = False
+  /* "dearcygui/layout.pyx":441
+ *         doesn't require GIL.
+ *         """
+ *         if self.last_widgets_child is None:             # <<<<<<<<<<<<<<
+ *             return True
  * 
+*/
+  __pyx_t_1 = (((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child) == Py_None);
+  if (__pyx_t_1) {
+
+    /* "dearcygui/layout.pyx":442
+ *         """
+ *         if self.last_widgets_child is None:
+ *             return True             # <<<<<<<<<<<<<<
+ * 
+ *         # Walk backwards to the first sibling
+*/
+    __pyx_r = 1;
+    goto __pyx_L0;
+
+    /* "dearcygui/layout.pyx":441
+ *         doesn't require GIL.
+ *         """
+ *         if self.last_widgets_child is None:             # <<<<<<<<<<<<<<
+ *             return True
+ * 
+*/
+  }
+
+  /* "dearcygui/layout.pyx":445
+ * 
+ *         # Walk backwards to the first sibling
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child             # <<<<<<<<<<<<<<
+ *         while (<uiItem>child).prev_sibling is not None:
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
 */
   __pyx_v_child = ((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child);
 
-  /* "dearcygui/layout.pyx":343
- *         cdef int32_t i = 0
+  /* "dearcygui/layout.pyx":446
+ *         # Walk backwards to the first sibling
  *         cdef PyObject *child = <PyObject*>self.last_widgets_child
- *         cdef bint pos_change = False             # <<<<<<<<<<<<<<
- * 
- *         # Get back to first child
-*/
-  __pyx_v_pos_change = 0;
-
-  /* "dearcygui/layout.pyx":346
- * 
- *         # Get back to first child
  *         while (<uiItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
- *             child = <PyObject*>((<uiItem>child).prev_sibling)
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
  * 
 */
   while (1) {
-    __pyx_t_2 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling) != Py_None);
-    if (!__pyx_t_2) break;
+    __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling) != Py_None);
+    if (!__pyx_t_1) break;
 
-    /* "dearcygui/layout.pyx":347
- *         # Get back to first child
+    /* "dearcygui/layout.pyx":447
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child
  *         while (<uiItem>child).prev_sibling is not None:
- *             child = <PyObject*>((<uiItem>child).prev_sibling)             # <<<<<<<<<<<<<<
+ *             child = <PyObject*>(<uiItem>child).prev_sibling             # <<<<<<<<<<<<<<
  * 
- *         # Position each item at specified x coordinate
+ *         # Check every child for any positioning override
 */
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling);
   }
 
-  /* "dearcygui/layout.pyx":350
+  /* "dearcygui/layout.pyx":450
  * 
- *         # Position each item at specified x coordinate
+ *         # Check every child for any positioning override
  *         while (<uiItem>child) is not None:             # <<<<<<<<<<<<<<
- *             # Get position from positions list or default to 0
+ *             if (<uiItem>child).no_newline or \
+ *                (<uiItem>child).requested_x.is_item() or \
+*/
+  while (1) {
+    __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
+    if (!__pyx_t_1) break;
+
+    /* "dearcygui/layout.pyx":451
+ *         # Check every child for any positioning override
+ *         while (<uiItem>child) is not None:
+ *             if (<uiItem>child).no_newline or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).requested_x.is_item() or \
+ *                (<uiItem>child).requested_y.is_item() or \
+*/
+    if (!((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->no_newline) {
+    } else {
+      __pyx_t_1 = ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->no_newline;
+      goto __pyx_L9_bool_binop_done;
+    }
+
+    /* "dearcygui/layout.pyx":452
+ *         while (<uiItem>child) is not None:
+ *             if (<uiItem>child).no_newline or \
+ *                (<uiItem>child).requested_x.is_item() or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).requested_y.is_item() or \
+ *                (<uiItem>child).requested_x.get_value() != 0. or \
+*/
+    __pyx_t_2 = ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->requested_x.is_item();
+    if (!__pyx_t_2) {
+    } else {
+      __pyx_t_1 = __pyx_t_2;
+      goto __pyx_L9_bool_binop_done;
+    }
+
+    /* "dearcygui/layout.pyx":453
+ *             if (<uiItem>child).no_newline or \
+ *                (<uiItem>child).requested_x.is_item() or \
+ *                (<uiItem>child).requested_y.is_item() or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).requested_x.get_value() != 0. or \
+ *                (<uiItem>child).requested_y.get_value() != 0.:
+*/
+    __pyx_t_2 = ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->requested_y.is_item();
+    if (!__pyx_t_2) {
+    } else {
+      __pyx_t_1 = __pyx_t_2;
+      goto __pyx_L9_bool_binop_done;
+    }
+
+    /* "dearcygui/layout.pyx":454
+ *                (<uiItem>child).requested_x.is_item() or \
+ *                (<uiItem>child).requested_y.is_item() or \
+ *                (<uiItem>child).requested_x.get_value() != 0. or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).requested_y.get_value() != 0.:
+ *                 return False
+*/
+    __pyx_t_2 = (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->requested_x.get_value() != 0.);
+    if (!__pyx_t_2) {
+    } else {
+      __pyx_t_1 = __pyx_t_2;
+      goto __pyx_L9_bool_binop_done;
+    }
+
+    /* "dearcygui/layout.pyx":455
+ *                (<uiItem>child).requested_y.is_item() or \
+ *                (<uiItem>child).requested_x.get_value() != 0. or \
+ *                (<uiItem>child).requested_y.get_value() != 0.:             # <<<<<<<<<<<<<<
+ *                 return False
+ *             child = <PyObject*>(<uiItem>child).next_sibling
+*/
+    __pyx_t_2 = (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->requested_y.get_value() != 0.);
+    __pyx_t_1 = __pyx_t_2;
+    __pyx_L9_bool_binop_done:;
+
+    /* "dearcygui/layout.pyx":451
+ *         # Check every child for any positioning override
+ *         while (<uiItem>child) is not None:
+ *             if (<uiItem>child).no_newline or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).requested_x.is_item() or \
+ *                (<uiItem>child).requested_y.is_item() or \
+*/
+    if (__pyx_t_1) {
+
+      /* "dearcygui/layout.pyx":456
+ *                (<uiItem>child).requested_x.get_value() != 0. or \
+ *                (<uiItem>child).requested_y.get_value() != 0.:
+ *                 return False             # <<<<<<<<<<<<<<
+ *             child = <PyObject*>(<uiItem>child).next_sibling
+ *         return True
+*/
+      __pyx_r = 0;
+      goto __pyx_L0;
+
+      /* "dearcygui/layout.pyx":451
+ *         # Check every child for any positioning override
+ *         while (<uiItem>child) is not None:
+ *             if (<uiItem>child).no_newline or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).requested_x.is_item() or \
+ *                (<uiItem>child).requested_y.is_item() or \
+*/
+    }
+
+    /* "dearcygui/layout.pyx":457
+ *                (<uiItem>child).requested_y.get_value() != 0.:
+ *                 return False
+ *             child = <PyObject*>(<uiItem>child).next_sibling             # <<<<<<<<<<<<<<
+ *         return True
+ * 
+*/
+    __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.next_sibling);
+  }
+
+  /* "dearcygui/layout.pyx":458
+ *                 return False
+ *             child = <PyObject*>(<uiItem>child).next_sibling
+ *         return True             # <<<<<<<<<<<<<<
+ * 
+ *     cdef void __apply_children_neutral(self):
+*/
+  __pyx_r = 1;
+  goto __pyx_L0;
+
+  /* "dearcygui/layout.pyx":429
+ *         self._force_update = True
+ * 
+ *     cdef bint __check_children_neutral(self) noexcept nogil:             # <<<<<<<<<<<<<<
+ *         """
+ *         Returns True if all children are already in neutral positioning state:
+*/
+
+  /* function exit code */
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+/* "dearcygui/layout.pyx":460
+ *         return True
+ * 
+ *     cdef void __apply_children_neutral(self):             # <<<<<<<<<<<<<<
+ *         """
+ *         Reset all children to neutral positioning state (no overrides).
+*/
+
+static void __pyx_f_9dearcygui_6layout_16HorizontalLayout__HorizontalLayout__apply_children_neutral(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *__pyx_v_self) {
+  PyObject *__pyx_v_child;
+  int __pyx_t_1;
+
+  /* "dearcygui/layout.pyx":465
+ *         Requires the GIL because set_value() may call Python code.
+ *         """
+ *         if self.last_widgets_child is None:             # <<<<<<<<<<<<<<
+ *             return
+ * 
+*/
+  __pyx_t_1 = (((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child) == Py_None);
+  if (__pyx_t_1) {
+
+    /* "dearcygui/layout.pyx":466
+ *         """
+ *         if self.last_widgets_child is None:
+ *             return             # <<<<<<<<<<<<<<
+ * 
+ *         # Walk backwards to the first sibling
+*/
+    goto __pyx_L0;
+
+    /* "dearcygui/layout.pyx":465
+ *         Requires the GIL because set_value() may call Python code.
+ *         """
+ *         if self.last_widgets_child is None:             # <<<<<<<<<<<<<<
+ *             return
+ * 
+*/
+  }
+
+  /* "dearcygui/layout.pyx":469
+ * 
+ *         # Walk backwards to the first sibling
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child             # <<<<<<<<<<<<<<
+ *         while (<uiItem>child).prev_sibling is not None:
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
+*/
+  __pyx_v_child = ((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child);
+
+  /* "dearcygui/layout.pyx":470
+ *         # Walk backwards to the first sibling
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child
+ *         while (<uiItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
+ * 
+*/
+  while (1) {
+    __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling) != Py_None);
+    if (!__pyx_t_1) break;
+
+    /* "dearcygui/layout.pyx":471
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child
+ *         while (<uiItem>child).prev_sibling is not None:
+ *             child = <PyObject*>(<uiItem>child).prev_sibling             # <<<<<<<<<<<<<<
+ * 
+ *         # Clear every positioning override
+*/
+    __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling);
+  }
+
+  /* "dearcygui/layout.pyx":474
+ * 
+ *         # Clear every positioning override
+ *         while (<uiItem>child) is not None:             # <<<<<<<<<<<<<<
+ *             (<uiItem>child).no_newline = False
+ *             (<uiItem>child).requested_x.set_value(0.)
+*/
+  while (1) {
+    __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
+    if (!__pyx_t_1) break;
+
+    /* "dearcygui/layout.pyx":475
+ *         # Clear every positioning override
+ *         while (<uiItem>child) is not None:
+ *             (<uiItem>child).no_newline = False             # <<<<<<<<<<<<<<
+ *             (<uiItem>child).requested_x.set_value(0.)
+ *             (<uiItem>child).requested_y.set_value(0.)
+*/
+    ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->no_newline = 0;
+
+    /* "dearcygui/layout.pyx":476
+ *         while (<uiItem>child) is not None:
+ *             (<uiItem>child).no_newline = False
+ *             (<uiItem>child).requested_x.set_value(0.)             # <<<<<<<<<<<<<<
+ *             (<uiItem>child).requested_y.set_value(0.)
+ *             child = <PyObject*>(<uiItem>child).next_sibling
+*/
+    ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->requested_x.set_value(0.);
+
+    /* "dearcygui/layout.pyx":477
+ *             (<uiItem>child).no_newline = False
+ *             (<uiItem>child).requested_x.set_value(0.)
+ *             (<uiItem>child).requested_y.set_value(0.)             # <<<<<<<<<<<<<<
+ *             child = <PyObject*>(<uiItem>child).next_sibling
+ * 
+*/
+    ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->requested_y.set_value(0.);
+
+    /* "dearcygui/layout.pyx":478
+ *             (<uiItem>child).requested_x.set_value(0.)
+ *             (<uiItem>child).requested_y.set_value(0.)
+ *             child = <PyObject*>(<uiItem>child).next_sibling             # <<<<<<<<<<<<<<
+ * 
+ *     cdef bint __draw_item_left_no_wrap(self) noexcept nogil:
+*/
+    __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.next_sibling);
+  }
+
+  /* "dearcygui/layout.pyx":460
+ *         return True
+ * 
+ *     cdef void __apply_children_neutral(self):             # <<<<<<<<<<<<<<
+ *         """
+ *         Reset all children to neutral positioning state (no overrides).
+*/
+
+  /* function exit code */
+  __pyx_L0:;
+}
+
+/* "dearcygui/layout.pyx":480
+ *             child = <PyObject*>(<uiItem>child).next_sibling
+ * 
+ *     cdef bint __draw_item_left_no_wrap(self) noexcept nogil:             # <<<<<<<<<<<<<<
+ *         """
+ *         LEFT alignment, no wrapping: draw items left-to-right using SameLine.
+*/
+
+static int __pyx_f_9dearcygui_6layout_16HorizontalLayout__HorizontalLayout__draw_item_left_no_wrap(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *__pyx_v_self) {
+  PyObject *__pyx_v_child;
+  float __pyx_v_spacing_x;
+  float __pyx_v_cursor_y_before;
+  int __pyx_v_changed;
+  int __pyx_v_first_item_drawn;
+  int __pyx_r;
+  int __pyx_t_1;
+  float __pyx_t_2;
+  int __pyx_t_3;
+
+  /* "dearcygui/layout.pyx":487
+ *         """
+ *         # Walk backwards to the first sibling
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child             # <<<<<<<<<<<<<<
+ *         while (<uiItem>child).prev_sibling is not None:
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
+*/
+  __pyx_v_child = ((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child);
+
+  /* "dearcygui/layout.pyx":488
+ *         # Walk backwards to the first sibling
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child
+ *         while (<uiItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
+ * 
+*/
+  while (1) {
+    __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling) != Py_None);
+    if (!__pyx_t_1) break;
+
+    /* "dearcygui/layout.pyx":489
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child
+ *         while (<uiItem>child).prev_sibling is not None:
+ *             child = <PyObject*>(<uiItem>child).prev_sibling             # <<<<<<<<<<<<<<
+ * 
+ *         cdef float spacing_x = imgui.GetStyle().ItemSpacing.x
+*/
+    __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling);
+  }
+
+  /* "dearcygui/layout.pyx":491
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
+ * 
+ *         cdef float spacing_x = imgui.GetStyle().ItemSpacing.x             # <<<<<<<<<<<<<<
+ *         cdef float cursor_y_before  # sampled before draw to detect vertical advancement
+ *         cdef bint changed = False
+*/
+  __pyx_t_2 = ImGui::GetStyle().ItemSpacing.x;
+  __pyx_v_spacing_x = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":493
+ *         cdef float spacing_x = imgui.GetStyle().ItemSpacing.x
+ *         cdef float cursor_y_before  # sampled before draw to detect vertical advancement
+ *         cdef bint changed = False             # <<<<<<<<<<<<<<
+ *         cdef bint first_item_drawn = False  # True after a visible item moved the cursor down
+ * 
+*/
+  __pyx_v_changed = 0;
+
+  /* "dearcygui/layout.pyx":494
+ *         cdef float cursor_y_before  # sampled before draw to detect vertical advancement
+ *         cdef bint changed = False
+ *         cdef bint first_item_drawn = False  # True after a visible item moved the cursor down             # <<<<<<<<<<<<<<
+ * 
+ *         while (<uiItem>child) is not None:
+*/
+  __pyx_v_first_item_drawn = 0;
+
+  /* "dearcygui/layout.pyx":496
+ *         cdef bint first_item_drawn = False  # True after a visible item moved the cursor down
+ * 
+ *         while (<uiItem>child) is not None:             # <<<<<<<<<<<<<<
+ *             # Stay on the same row as the previous item.
+ *             # The first_item_drawn condition helps prevent applying spacing_x
+*/
+  while (1) {
+    __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
+    if (!__pyx_t_1) break;
+
+    /* "dearcygui/layout.pyx":501
+ *             # before the first item.
+ *             # Note the last SameLine call overwrites the previous one.
+ *             if first_item_drawn:             # <<<<<<<<<<<<<<
+ *                 imgui.SameLine(0., spacing_x)
+ * 
+*/
+    if (__pyx_v_first_item_drawn) {
+
+      /* "dearcygui/layout.pyx":502
+ *             # Note the last SameLine call overwrites the previous one.
+ *             if first_item_drawn:
+ *                 imgui.SameLine(0., spacing_x)             # <<<<<<<<<<<<<<
+ * 
+ *             # Catch original y cursor
+*/
+      ImGui::SameLine(0., __pyx_v_spacing_x);
+
+      /* "dearcygui/layout.pyx":501
+ *             # before the first item.
+ *             # Note the last SameLine call overwrites the previous one.
+ *             if first_item_drawn:             # <<<<<<<<<<<<<<
+ *                 imgui.SameLine(0., spacing_x)
+ * 
+*/
+    }
+
+    /* "dearcygui/layout.pyx":505
+ * 
+ *             # Catch original y cursor
+ *             cursor_y_before = imgui.GetCursorScreenPos().y             # <<<<<<<<<<<<<<
+ * 
+ *             # Draw the item
+*/
+    __pyx_t_2 = ImGui::GetCursorScreenPos().y;
+    __pyx_v_cursor_y_before = __pyx_t_2;
+
+    /* "dearcygui/layout.pyx":508
+ * 
+ *             # Draw the item
+ *             (<uiItem>child).draw()             # <<<<<<<<<<<<<<
+ * 
+ *             # Track size changes so the parent knows to redraw next frame
+*/
+    ((struct __pyx_vtabstruct_9dearcygui_4core_uiItem *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.__pyx_vtab)->draw(((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child));
+
+    /* "dearcygui/layout.pyx":511
+ * 
+ *             # Track size changes so the parent knows to redraw next frame
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:
+ *                 changed = True
+*/
+    __pyx_t_3 = (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cur.rect_size.x != ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.prev.rect_size.x);
+    if (!__pyx_t_3) {
+    } else {
+      __pyx_t_1 = __pyx_t_3;
+      goto __pyx_L9_bool_binop_done;
+    }
+
+    /* "dearcygui/layout.pyx":512
+ *             # Track size changes so the parent knows to redraw next frame
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:             # <<<<<<<<<<<<<<
+ *                 changed = True
+ * 
+*/
+    __pyx_t_3 = (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cur.rect_size.y != ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.prev.rect_size.y);
+    __pyx_t_1 = __pyx_t_3;
+    __pyx_L9_bool_binop_done:;
+
+    /* "dearcygui/layout.pyx":511
+ * 
+ *             # Track size changes so the parent knows to redraw next frame
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:
+ *                 changed = True
+*/
+    if (__pyx_t_1) {
+
+      /* "dearcygui/layout.pyx":513
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:
+ *                 changed = True             # <<<<<<<<<<<<<<
+ * 
+ *             # Check if anything moved the cursor (Tooltip or items with show=False don't)
+*/
+      __pyx_v_changed = 1;
+
+      /* "dearcygui/layout.pyx":511
+ * 
+ *             # Track size changes so the parent knows to redraw next frame
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:
+ *                 changed = True
+*/
+    }
+
+    /* "dearcygui/layout.pyx":516
+ * 
+ *             # Check if anything moved the cursor (Tooltip or items with show=False don't)
+ *             if not first_item_drawn:             # <<<<<<<<<<<<<<
+ *                 first_item_drawn = imgui.GetCursorScreenPos().y > cursor_y_before
+ *             child = <PyObject*>(<uiItem>child).next_sibling
+*/
+    __pyx_t_1 = (!__pyx_v_first_item_drawn);
+    if (__pyx_t_1) {
+
+      /* "dearcygui/layout.pyx":517
+ *             # Check if anything moved the cursor (Tooltip or items with show=False don't)
+ *             if not first_item_drawn:
+ *                 first_item_drawn = imgui.GetCursorScreenPos().y > cursor_y_before             # <<<<<<<<<<<<<<
+ *             child = <PyObject*>(<uiItem>child).next_sibling
+ *         return changed
+*/
+      __pyx_v_first_item_drawn = (ImGui::GetCursorScreenPos().y > __pyx_v_cursor_y_before);
+
+      /* "dearcygui/layout.pyx":516
+ * 
+ *             # Check if anything moved the cursor (Tooltip or items with show=False don't)
+ *             if not first_item_drawn:             # <<<<<<<<<<<<<<
+ *                 first_item_drawn = imgui.GetCursorScreenPos().y > cursor_y_before
+ *             child = <PyObject*>(<uiItem>child).next_sibling
+*/
+    }
+
+    /* "dearcygui/layout.pyx":518
+ *             if not first_item_drawn:
+ *                 first_item_drawn = imgui.GetCursorScreenPos().y > cursor_y_before
+ *             child = <PyObject*>(<uiItem>child).next_sibling             # <<<<<<<<<<<<<<
+ *         return changed
+ * 
+*/
+    __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.next_sibling);
+  }
+
+  /* "dearcygui/layout.pyx":519
+ *                 first_item_drawn = imgui.GetCursorScreenPos().y > cursor_y_before
+ *             child = <PyObject*>(<uiItem>child).next_sibling
+ *         return changed             # <<<<<<<<<<<<<<
+ * 
+ *     cdef bint __draw_item_left_wrap(self) noexcept nogil:
+*/
+  __pyx_r = __pyx_v_changed;
+  goto __pyx_L0;
+
+  /* "dearcygui/layout.pyx":480
+ *             child = <PyObject*>(<uiItem>child).next_sibling
+ * 
+ *     cdef bint __draw_item_left_no_wrap(self) noexcept nogil:             # <<<<<<<<<<<<<<
+ *         """
+ *         LEFT alignment, no wrapping: draw items left-to-right using SameLine.
+*/
+
+  /* function exit code */
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+/* "dearcygui/layout.pyx":521
+ *         return changed
+ * 
+ *     cdef bint __draw_item_left_wrap(self) noexcept nogil:             # <<<<<<<<<<<<<<
+ *         """
+ *         LEFT alignment, wrapping enabled: draw items left-to-right, starting a
+*/
+
+static int __pyx_f_9dearcygui_6layout_16HorizontalLayout__HorizontalLayout__draw_item_left_wrap(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *__pyx_v_self) {
+  PyObject *__pyx_v_child;
+  float __pyx_v_spacing_x;
+  float __pyx_v_parent_start_x;
+  float __pyx_v_end_x;
+  float __pyx_v_wrap_start_x;
+  float __pyx_v_cursor_y_before;
+  int __pyx_v_changed;
+  int __pyx_v_first_item_drawn;
+  int __pyx_v_first_item_on_row_drawn;
+  int __pyx_v_has_sz;
+  int __pyx_r;
+  int __pyx_t_1;
+  float __pyx_t_2;
+  int __pyx_t_3;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyGILState_STATE __pyx_gilstate_save;
+
+  /* "dearcygui/layout.pyx":529
+ *         """
+ *         # Walk backwards to the first sibling
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child             # <<<<<<<<<<<<<<
+ *         while (<uiItem>child).prev_sibling is not None:
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
+*/
+  __pyx_v_child = ((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child);
+
+  /* "dearcygui/layout.pyx":530
+ *         # Walk backwards to the first sibling
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child
+ *         while (<uiItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
+ * 
+*/
+  while (1) {
+    __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling) != Py_None);
+    if (!__pyx_t_1) break;
+
+    /* "dearcygui/layout.pyx":531
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child
+ *         while (<uiItem>child).prev_sibling is not None:
+ *             child = <PyObject*>(<uiItem>child).prev_sibling             # <<<<<<<<<<<<<<
+ * 
+ *         # Retrieve horizontal spacing
+*/
+    __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling);
+  }
+
+  /* "dearcygui/layout.pyx":534
+ * 
+ *         # Retrieve horizontal spacing
+ *         cdef float spacing_x = imgui.GetStyle().ItemSpacing.x             # <<<<<<<<<<<<<<
+ * 
+ *         # Retrieve min/max x bounds
+*/
+  __pyx_t_2 = ImGui::GetStyle().ItemSpacing.x;
+  __pyx_v_spacing_x = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":537
+ * 
+ *         # Retrieve min/max x bounds
+ *         cdef float parent_start_x = self.context.viewport.parent_pos.x             # <<<<<<<<<<<<<<
+ *         cdef float end_x = parent_start_x + self.state.cur.content_region_size.x
+ * 
+*/
+  __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->parent_pos.x;
+  __pyx_v_parent_start_x = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":538
+ *         # Retrieve min/max x bounds
+ *         cdef float parent_start_x = self.context.viewport.parent_pos.x
+ *         cdef float end_x = parent_start_x + self.state.cur.content_region_size.x             # <<<<<<<<<<<<<<
+ * 
+ *         # Deduce wrapping start region.
+*/
+  __pyx_v_end_x = (__pyx_v_parent_start_x + __pyx_v_self->__pyx_base.__pyx_base.state.cur.content_region_size.x);
+
+  /* "dearcygui/layout.pyx":542
+ *         # Deduce wrapping start region.
+ *         # First row starts at parent_start_x; wrapped rows start at wrap_start_x.
+ *         cdef float wrap_start_x = parent_start_x + fmax(-self.state.cur.pos_to_window.x, self._wrap_x)             # <<<<<<<<<<<<<<
+ *         wrap_start_x = fmax(parent_start_x, wrap_start_x)
+ * 
+*/
+  try {
+    __pyx_t_2 = std::fmax((-__pyx_v_self->__pyx_base.__pyx_base.state.cur.pos_to_window.x), __pyx_v_self->_wrap_x);
+  } catch(...) {
+    PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+    __Pyx_CppExn2PyErr();
+    __Pyx_PyGILState_Release(__pyx_gilstate_save);
+    __PYX_ERR(0, 542, __pyx_L1_error)
+  }
+  __pyx_v_wrap_start_x = (__pyx_v_parent_start_x + __pyx_t_2);
+
+  /* "dearcygui/layout.pyx":543
+ *         # First row starts at parent_start_x; wrapped rows start at wrap_start_x.
+ *         cdef float wrap_start_x = parent_start_x + fmax(-self.state.cur.pos_to_window.x, self._wrap_x)
+ *         wrap_start_x = fmax(parent_start_x, wrap_start_x)             # <<<<<<<<<<<<<<
+ * 
+ *         cdef float cursor_y_before # Y coordinate before drawing the item
+*/
+  try {
+    __pyx_t_2 = std::fmax(__pyx_v_parent_start_x, __pyx_v_wrap_start_x);
+  } catch(...) {
+    PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+    __Pyx_CppExn2PyErr();
+    __Pyx_PyGILState_Release(__pyx_gilstate_save);
+    __PYX_ERR(0, 543, __pyx_L1_error)
+  }
+  __pyx_v_wrap_start_x = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":546
+ * 
+ *         cdef float cursor_y_before # Y coordinate before drawing the item
+ *         cdef bint changed = False             # <<<<<<<<<<<<<<
+ *         cdef bint first_item_drawn = False  # True after a visible item moved the cursor down
+ *         cdef bint first_item_on_row_drawn = False  # True after a visible item moved the cursor down for this row
+*/
+  __pyx_v_changed = 0;
+
+  /* "dearcygui/layout.pyx":547
+ *         cdef float cursor_y_before # Y coordinate before drawing the item
+ *         cdef bint changed = False
+ *         cdef bint first_item_drawn = False  # True after a visible item moved the cursor down             # <<<<<<<<<<<<<<
+ *         cdef bint first_item_on_row_drawn = False  # True after a visible item moved the cursor down for this row
+ *         cdef bint has_sz  # whether the current child has a rect size
+*/
+  __pyx_v_first_item_drawn = 0;
+
+  /* "dearcygui/layout.pyx":548
+ *         cdef bint changed = False
+ *         cdef bint first_item_drawn = False  # True after a visible item moved the cursor down
+ *         cdef bint first_item_on_row_drawn = False  # True after a visible item moved the cursor down for this row             # <<<<<<<<<<<<<<
+ *         cdef bint has_sz  # whether the current child has a rect size
+ * 
+*/
+  __pyx_v_first_item_on_row_drawn = 0;
+
+  /* "dearcygui/layout.pyx":551
+ *         cdef bint has_sz  # whether the current child has a rect size
+ * 
+ *         while (<uiItem>child) is not None:             # <<<<<<<<<<<<<<
+ *             # Tooltips have no size.
+ *             has_sz = (<uiItem>child).state.cap.has_rect_size
+*/
+  while (1) {
+    __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
+    if (!__pyx_t_1) break;
+
+    /* "dearcygui/layout.pyx":553
+ *         while (<uiItem>child) is not None:
+ *             # Tooltips have no size.
+ *             has_sz = (<uiItem>child).state.cap.has_rect_size             # <<<<<<<<<<<<<<
+ * 
+ *             #If the previous item moved y (not same line), use SameLine
+*/
+    __pyx_t_1 = ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cap.has_rect_size;
+    __pyx_v_has_sz = __pyx_t_1;
+
+    /* "dearcygui/layout.pyx":559
+ *             # first_item_on_row_drawn enables to avoid applying spacing_x
+ *             # before any item is drawn on a row..
+ *             if first_item_on_row_drawn:             # <<<<<<<<<<<<<<
+ *                 imgui.SameLine(0., spacing_x)
+ * 
+*/
+    if (__pyx_v_first_item_on_row_drawn) {
+
+      /* "dearcygui/layout.pyx":560
+ *             # before any item is drawn on a row..
+ *             if first_item_on_row_drawn:
+ *                 imgui.SameLine(0., spacing_x)             # <<<<<<<<<<<<<<
+ * 
+ *                 # Change line if item doesn't fit (wrapping)
+*/
+      ImGui::SameLine(0., __pyx_v_spacing_x);
+
+      /* "dearcygui/layout.pyx":563
+ * 
+ *                 # Change line if item doesn't fit (wrapping)
+ *                 if has_sz and \             # <<<<<<<<<<<<<<
+ *                    imgui.GetCursorScreenPos().x + (<uiItem>child).state.cur.rect_size.x > end_x:
+ *                     # Item doesn't fit: move to next line
+*/
+      if (__pyx_v_has_sz) {
+      } else {
+        __pyx_t_1 = __pyx_v_has_sz;
+        goto __pyx_L9_bool_binop_done;
+      }
+
+      /* "dearcygui/layout.pyx":564
+ *                 # Change line if item doesn't fit (wrapping)
+ *                 if has_sz and \
+ *                    imgui.GetCursorScreenPos().x + (<uiItem>child).state.cur.rect_size.x > end_x:             # <<<<<<<<<<<<<<
+ *                     # Item doesn't fit: move to next line
+ *                     # Cancel previous sameline
+*/
+      __pyx_t_3 = ((ImGui::GetCursorScreenPos().x + ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cur.rect_size.x) > __pyx_v_end_x);
+      __pyx_t_1 = __pyx_t_3;
+      __pyx_L9_bool_binop_done:;
+
+      /* "dearcygui/layout.pyx":563
+ * 
+ *                 # Change line if item doesn't fit (wrapping)
+ *                 if has_sz and \             # <<<<<<<<<<<<<<
+ *                    imgui.GetCursorScreenPos().x + (<uiItem>child).state.cur.rect_size.x > end_x:
+ *                     # Item doesn't fit: move to next line
+*/
+      if (__pyx_t_1) {
+
+        /* "dearcygui/layout.pyx":573
+ *                     # drawn (SameLine overwrites previous calls).
+ *                     # This simplifies end_x tracking (becomes imgui.GetCursorScreenPos().x)
+ *                     imgui.SameLine(0., 0.)             # <<<<<<<<<<<<<<
+ *                     imgui.Dummy(imgui.ImVec2(0., 0.))
+ * 
+*/
+        ImGui::SameLine(0., 0.);
+
+        /* "dearcygui/layout.pyx":574
+ *                     # This simplifies end_x tracking (becomes imgui.GetCursorScreenPos().x)
+ *                     imgui.SameLine(0., 0.)
+ *                     imgui.Dummy(imgui.ImVec2(0., 0.))             # <<<<<<<<<<<<<<
+ * 
+ *                     # Reposition x to the wrap indent when one is configured.
+*/
+        ImGui::Dummy(ImVec2(0., 0.));
+
+        /* "dearcygui/layout.pyx":577
+ * 
+ *                     # Reposition x to the wrap indent when one is configured.
+ *                     if self._wrap_x != 0. or -self.state.cur.pos_to_window.x > 0.:             # <<<<<<<<<<<<<<
+ *                         imgui.SetCursorScreenPos(
+ *                             imgui.ImVec2(
+*/
+        __pyx_t_3 = (__pyx_v_self->_wrap_x != 0.);
+        if (!__pyx_t_3) {
+        } else {
+          __pyx_t_1 = __pyx_t_3;
+          goto __pyx_L12_bool_binop_done;
+        }
+        __pyx_t_3 = ((-__pyx_v_self->__pyx_base.__pyx_base.state.cur.pos_to_window.x) > 0.);
+        __pyx_t_1 = __pyx_t_3;
+        __pyx_L12_bool_binop_done:;
+        if (__pyx_t_1) {
+
+          /* "dearcygui/layout.pyx":578
+ *                     # Reposition x to the wrap indent when one is configured.
+ *                     if self._wrap_x != 0. or -self.state.cur.pos_to_window.x > 0.:
+ *                         imgui.SetCursorScreenPos(             # <<<<<<<<<<<<<<
+ *                             imgui.ImVec2(
+ *                                 wrap_start_x,
+*/
+          ImGui::SetCursorScreenPos(ImVec2(__pyx_v_wrap_start_x, ImGui::GetCursorScreenPos().y));
+
+          /* "dearcygui/layout.pyx":577
+ * 
+ *                     # Reposition x to the wrap indent when one is configured.
+ *                     if self._wrap_x != 0. or -self.state.cur.pos_to_window.x > 0.:             # <<<<<<<<<<<<<<
+ *                         imgui.SetCursorScreenPos(
+ *                             imgui.ImVec2(
+*/
+        }
+
+        /* "dearcygui/layout.pyx":586
+ * 
+ *                     # Reset row statistics
+ *                     first_item_on_row_drawn = False             # <<<<<<<<<<<<<<
+ * 
+ *             # Retrieve y before the item is drawn
+*/
+        __pyx_v_first_item_on_row_drawn = 0;
+
+        /* "dearcygui/layout.pyx":563
+ * 
+ *                 # Change line if item doesn't fit (wrapping)
+ *                 if has_sz and \             # <<<<<<<<<<<<<<
+ *                    imgui.GetCursorScreenPos().x + (<uiItem>child).state.cur.rect_size.x > end_x:
+ *                     # Item doesn't fit: move to next line
+*/
+      }
+
+      /* "dearcygui/layout.pyx":559
+ *             # first_item_on_row_drawn enables to avoid applying spacing_x
+ *             # before any item is drawn on a row..
+ *             if first_item_on_row_drawn:             # <<<<<<<<<<<<<<
+ *                 imgui.SameLine(0., spacing_x)
+ * 
+*/
+    }
+
+    /* "dearcygui/layout.pyx":589
+ * 
+ *             # Retrieve y before the item is drawn
+ *             cursor_y_before = imgui.GetCursorScreenPos().y             # <<<<<<<<<<<<<<
+ * 
+ *             # Draw the item
+*/
+    __pyx_t_2 = ImGui::GetCursorScreenPos().y;
+    __pyx_v_cursor_y_before = __pyx_t_2;
+
+    /* "dearcygui/layout.pyx":592
+ * 
+ *             # Draw the item
+ *             (<uiItem>child).draw()             # <<<<<<<<<<<<<<
+ * 
+ *             # Track whether the item size changed, in which case we trigger a redraw (for size convergence)
+*/
+    ((struct __pyx_vtabstruct_9dearcygui_4core_uiItem *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.__pyx_vtab)->draw(((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child));
+
+    /* "dearcygui/layout.pyx":595
+ * 
+ *             # Track whether the item size changed, in which case we trigger a redraw (for size convergence)
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:
+ *                 changed = True
+*/
+    __pyx_t_3 = (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cur.rect_size.x != ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.prev.rect_size.x);
+    if (!__pyx_t_3) {
+    } else {
+      __pyx_t_1 = __pyx_t_3;
+      goto __pyx_L15_bool_binop_done;
+    }
+
+    /* "dearcygui/layout.pyx":596
+ *             # Track whether the item size changed, in which case we trigger a redraw (for size convergence)
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:             # <<<<<<<<<<<<<<
+ *                 changed = True
+ * 
+*/
+    __pyx_t_3 = (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cur.rect_size.y != ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.prev.rect_size.y);
+    __pyx_t_1 = __pyx_t_3;
+    __pyx_L15_bool_binop_done:;
+
+    /* "dearcygui/layout.pyx":595
+ * 
+ *             # Track whether the item size changed, in which case we trigger a redraw (for size convergence)
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:
+ *                 changed = True
+*/
+    if (__pyx_t_1) {
+
+      /* "dearcygui/layout.pyx":597
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:
+ *                 changed = True             # <<<<<<<<<<<<<<
+ * 
+ *             # Track whether anything was drawn and moved the cursor.
+*/
+      __pyx_v_changed = 1;
+
+      /* "dearcygui/layout.pyx":595
+ * 
+ *             # Track whether the item size changed, in which case we trigger a redraw (for size convergence)
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:
+ *                 changed = True
+*/
+    }
+
+    /* "dearcygui/layout.pyx":600
+ * 
+ *             # Track whether anything was drawn and moved the cursor.
+ *             if imgui.GetCursorScreenPos().y > cursor_y_before:             # <<<<<<<<<<<<<<
+ *                 first_item_drawn = True
+ *                 first_item_on_row_drawn = True
+*/
+    __pyx_t_1 = (ImGui::GetCursorScreenPos().y > __pyx_v_cursor_y_before);
+    if (__pyx_t_1) {
+
+      /* "dearcygui/layout.pyx":601
+ *             # Track whether anything was drawn and moved the cursor.
+ *             if imgui.GetCursorScreenPos().y > cursor_y_before:
+ *                 first_item_drawn = True             # <<<<<<<<<<<<<<
+ *                 first_item_on_row_drawn = True
+ *             else:
+*/
+      __pyx_v_first_item_drawn = 1;
+
+      /* "dearcygui/layout.pyx":602
+ *             if imgui.GetCursorScreenPos().y > cursor_y_before:
+ *                 first_item_drawn = True
+ *                 first_item_on_row_drawn = True             # <<<<<<<<<<<<<<
+ *             else:
+ *                 # If the jumped line but nothing was drawn (show=False for instance), undo the line break.
+*/
+      __pyx_v_first_item_on_row_drawn = 1;
+
+      /* "dearcygui/layout.pyx":600
+ * 
+ *             # Track whether anything was drawn and moved the cursor.
+ *             if imgui.GetCursorScreenPos().y > cursor_y_before:             # <<<<<<<<<<<<<<
+ *                 first_item_drawn = True
+ *                 first_item_on_row_drawn = True
+*/
+      goto __pyx_L17;
+    }
+
+    /* "dearcygui/layout.pyx":605
+ *             else:
+ *                 # If the jumped line but nothing was drawn (show=False for instance), undo the line break.
+ *                 if first_item_drawn:             # <<<<<<<<<<<<<<
+ *                     first_item_on_row_drawn = True
+ * 
+*/
+    /*else*/ {
+      if (__pyx_v_first_item_drawn) {
+
+        /* "dearcygui/layout.pyx":606
+ *                 # If the jumped line but nothing was drawn (show=False for instance), undo the line break.
+ *                 if first_item_drawn:
+ *                     first_item_on_row_drawn = True             # <<<<<<<<<<<<<<
+ * 
+ *             # Move on to next child
+*/
+        __pyx_v_first_item_on_row_drawn = 1;
+
+        /* "dearcygui/layout.pyx":605
+ *             else:
+ *                 # If the jumped line but nothing was drawn (show=False for instance), undo the line break.
+ *                 if first_item_drawn:             # <<<<<<<<<<<<<<
+ *                     first_item_on_row_drawn = True
+ * 
+*/
+      }
+    }
+    __pyx_L17:;
+
+    /* "dearcygui/layout.pyx":609
+ * 
+ *             # Move on to next child
+ *             child = <PyObject*>(<uiItem>child).next_sibling             # <<<<<<<<<<<<<<
+ *         return changed
+ * 
+*/
+    __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.next_sibling);
+  }
+
+  /* "dearcygui/layout.pyx":610
+ *             # Move on to next child
+ *             child = <PyObject*>(<uiItem>child).next_sibling
+ *         return changed             # <<<<<<<<<<<<<<
+ * 
+ *     cdef bint __draw_item_manual(self) noexcept nogil:
+*/
+  __pyx_r = __pyx_v_changed;
+  goto __pyx_L0;
+
+  /* "dearcygui/layout.pyx":521
+ *         return changed
+ * 
+ *     cdef bint __draw_item_left_wrap(self) noexcept nogil:             # <<<<<<<<<<<<<<
+ *         """
+ *         LEFT alignment, wrapping enabled: draw items left-to-right, starting a
+*/
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+  __Pyx_WriteUnraisable("dearcygui.layout.HorizontalLayout._HorizontalLayout__draw_item_left_wrap", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __pyx_r = 0;
+  __Pyx_PyGILState_Release(__pyx_gilstate_save);
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+/* "dearcygui/layout.pyx":612
+ *         return changed
+ * 
+ *     cdef bint __draw_item_manual(self) noexcept nogil:             # <<<<<<<<<<<<<<
+ *         """
+ *         MANUAL mode: draw each child at the absolute x position given by
+*/
+
+static int __pyx_f_9dearcygui_6layout_16HorizontalLayout__HorizontalLayout__draw_item_manual(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *__pyx_v_self) {
+  PyObject *__pyx_v_child;
+  float __pyx_v_available_width;
+  float __pyx_v_parent_start_x;
+  float __pyx_v_start_y;
+  float __pyx_v_pos_start;
+  int32_t __pyx_v_i;
+  int __pyx_v_changed;
+  int __pyx_r;
+  int __pyx_t_1;
+  float __pyx_t_2;
+  long __pyx_t_3;
+  int32_t __pyx_t_4;
+  long __pyx_t_5;
+  double __pyx_t_6;
+  double __pyx_t_7;
+  int __pyx_t_8;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyGILState_STATE __pyx_gilstate_save;
+
+  /* "dearcygui/layout.pyx":619
+ *         """
+ *         # Walk backwards to the first sibling
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child             # <<<<<<<<<<<<<<
+ *         while (<uiItem>child).prev_sibling is not None:
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
+*/
+  __pyx_v_child = ((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child);
+
+  /* "dearcygui/layout.pyx":620
+ *         # Walk backwards to the first sibling
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child
+ *         while (<uiItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
+ * 
+*/
+  while (1) {
+    __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling) != Py_None);
+    if (!__pyx_t_1) break;
+
+    /* "dearcygui/layout.pyx":621
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child
+ *         while (<uiItem>child).prev_sibling is not None:
+ *             child = <PyObject*>(<uiItem>child).prev_sibling             # <<<<<<<<<<<<<<
+ * 
+ *         cdef float available_width = self.state.cur.content_region_size.x
+*/
+    __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling);
+  }
+
+  /* "dearcygui/layout.pyx":623
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
+ * 
+ *         cdef float available_width = self.state.cur.content_region_size.x             # <<<<<<<<<<<<<<
+ *         cdef float parent_start_x = self.context.viewport.parent_pos.x
+ *         cdef float start_y = imgui.GetCursorScreenPos().y  # fixed y baseline for all children
+*/
+  __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.state.cur.content_region_size.x;
+  __pyx_v_available_width = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":624
+ * 
+ *         cdef float available_width = self.state.cur.content_region_size.x
+ *         cdef float parent_start_x = self.context.viewport.parent_pos.x             # <<<<<<<<<<<<<<
+ *         cdef float start_y = imgui.GetCursorScreenPos().y  # fixed y baseline for all children
+ *         cdef float pos_start = 0.  # resolved x offset for the current child
+*/
+  __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->parent_pos.x;
+  __pyx_v_parent_start_x = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":625
+ *         cdef float available_width = self.state.cur.content_region_size.x
+ *         cdef float parent_start_x = self.context.viewport.parent_pos.x
+ *         cdef float start_y = imgui.GetCursorScreenPos().y  # fixed y baseline for all children             # <<<<<<<<<<<<<<
+ *         cdef float pos_start = 0.  # resolved x offset for the current child
+ *         cdef int32_t i = 0
+*/
+  __pyx_t_2 = ImGui::GetCursorScreenPos().y;
+  __pyx_v_start_y = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":626
+ *         cdef float parent_start_x = self.context.viewport.parent_pos.x
+ *         cdef float start_y = imgui.GetCursorScreenPos().y  # fixed y baseline for all children
+ *         cdef float pos_start = 0.  # resolved x offset for the current child             # <<<<<<<<<<<<<<
+ *         cdef int32_t i = 0
+ *         cdef bint changed = False
+*/
+  __pyx_v_pos_start = 0.;
+
+  /* "dearcygui/layout.pyx":627
+ *         cdef float start_y = imgui.GetCursorScreenPos().y  # fixed y baseline for all children
+ *         cdef float pos_start = 0.  # resolved x offset for the current child
+ *         cdef int32_t i = 0             # <<<<<<<<<<<<<<
+ *         cdef bint changed = False
+ * 
+*/
+  __pyx_v_i = 0;
+
+  /* "dearcygui/layout.pyx":628
+ *         cdef float pos_start = 0.  # resolved x offset for the current child
+ *         cdef int32_t i = 0
+ *         cdef bint changed = False             # <<<<<<<<<<<<<<
+ * 
+ *         while (<uiItem>child) is not None:
+*/
+  __pyx_v_changed = 0;
+
+  /* "dearcygui/layout.pyx":630
+ *         cdef bint changed = False
+ * 
+ *         while (<uiItem>child) is not None:             # <<<<<<<<<<<<<<
+ *             # Read the configured position (last entry repeated for extra children)
  *             if not(self._positions.empty()):
 */
   while (1) {
-    __pyx_t_2 = (((PyObject *)__pyx_v_child) != Py_None);
-    if (!__pyx_t_2) break;
+    __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
+    if (!__pyx_t_1) break;
 
-    /* "dearcygui/layout.pyx":352
+    /* "dearcygui/layout.pyx":632
  *         while (<uiItem>child) is not None:
- *             # Get position from positions list or default to 0
+ *             # Read the configured position (last entry repeated for extra children)
  *             if not(self._positions.empty()):             # <<<<<<<<<<<<<<
  *                 pos_start = self._positions[min(i, <int>self._positions.size()-1)]
  * 
 */
-    __pyx_t_2 = (!__pyx_v_self->_positions.empty());
-    if (__pyx_t_2) {
+    __pyx_t_1 = (!__pyx_v_self->_positions.empty());
+    if (__pyx_t_1) {
 
-      /* "dearcygui/layout.pyx":353
- *             # Get position from positions list or default to 0
+      /* "dearcygui/layout.pyx":633
+ *             # Read the configured position (last entry repeated for extra children)
  *             if not(self._positions.empty()):
  *                 pos_start = self._positions[min(i, <int>self._positions.size()-1)]             # <<<<<<<<<<<<<<
  * 
- *             # Convert relative (0-1) or negative positions
+ *             # Normalise: fraction (0-1)  pixels; negative  offset from right edge
 */
       __pyx_t_3 = (((int)__pyx_v_self->_positions.size()) - 1);
       __pyx_t_4 = __pyx_v_i;
-      __pyx_t_2 = (__pyx_t_3 < __pyx_t_4);
-      if (__pyx_t_2) {
+      __pyx_t_1 = (__pyx_t_3 < __pyx_t_4);
+      if (__pyx_t_1) {
         __pyx_t_5 = __pyx_t_3;
       } else {
         __pyx_t_5 = __pyx_t_4;
       }
       __pyx_v_pos_start = (__pyx_v_self->_positions[__pyx_t_5]);
 
-      /* "dearcygui/layout.pyx":352
+      /* "dearcygui/layout.pyx":632
  *         while (<uiItem>child) is not None:
- *             # Get position from positions list or default to 0
+ *             # Read the configured position (last entry repeated for extra children)
  *             if not(self._positions.empty()):             # <<<<<<<<<<<<<<
  *                 pos_start = self._positions[min(i, <int>self._positions.size()-1)]
  * 
 */
     }
 
-    /* "dearcygui/layout.pyx":356
+    /* "dearcygui/layout.pyx":636
  * 
- *             # Convert relative (0-1) or negative positions
+ *             # Normalise: fraction (0-1)  pixels; negative  offset from right edge
  *             if pos_start > 0.:             # <<<<<<<<<<<<<<
  *                 if pos_start < 1.:
- *                     pos_start *= available_width
+ *                     pos_start = floor(pos_start * available_width)
 */
-    __pyx_t_2 = (__pyx_v_pos_start > 0.);
-    if (__pyx_t_2) {
+    __pyx_t_1 = (__pyx_v_pos_start > 0.);
+    if (__pyx_t_1) {
 
-      /* "dearcygui/layout.pyx":357
- *             # Convert relative (0-1) or negative positions
+      /* "dearcygui/layout.pyx":637
+ *             # Normalise: fraction (0-1)  pixels; negative  offset from right edge
  *             if pos_start > 0.:
  *                 if pos_start < 1.:             # <<<<<<<<<<<<<<
- *                     pos_start *= available_width
- *                     pos_start = floor(pos_start)
-*/
-      __pyx_t_2 = (__pyx_v_pos_start < 1.);
-      if (__pyx_t_2) {
-
-        /* "dearcygui/layout.pyx":358
- *             if pos_start > 0.:
- *                 if pos_start < 1.:
- *                     pos_start *= available_width             # <<<<<<<<<<<<<<
- *                     pos_start = floor(pos_start)
+ *                     pos_start = floor(pos_start * available_width)
  *             elif pos_start < 0:
 */
-        __pyx_v_pos_start = (__pyx_v_pos_start * __pyx_v_available_width);
+      __pyx_t_1 = (__pyx_v_pos_start < 1.);
+      if (__pyx_t_1) {
 
-        /* "dearcygui/layout.pyx":359
+        /* "dearcygui/layout.pyx":638
+ *             if pos_start > 0.:
  *                 if pos_start < 1.:
- *                     pos_start *= available_width
- *                     pos_start = floor(pos_start)             # <<<<<<<<<<<<<<
+ *                     pos_start = floor(pos_start * available_width)             # <<<<<<<<<<<<<<
  *             elif pos_start < 0:
  *                 if pos_start > -1.:
 */
         try {
-          __pyx_t_1 = std::floor(__pyx_v_pos_start);
+          __pyx_t_2 = std::floor((__pyx_v_pos_start * __pyx_v_available_width));
         } catch(...) {
+          PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
           __Pyx_CppExn2PyErr();
-          __PYX_ERR(0, 359, __pyx_L1_error)
+          __Pyx_PyGILState_Release(__pyx_gilstate_save);
+          __PYX_ERR(0, 638, __pyx_L1_error)
         }
-        __pyx_v_pos_start = __pyx_t_1;
+        __pyx_v_pos_start = __pyx_t_2;
 
-        /* "dearcygui/layout.pyx":357
- *             # Convert relative (0-1) or negative positions
+        /* "dearcygui/layout.pyx":637
+ *             # Normalise: fraction (0-1)  pixels; negative  offset from right edge
  *             if pos_start > 0.:
  *                 if pos_start < 1.:             # <<<<<<<<<<<<<<
- *                     pos_start *= available_width
- *                     pos_start = floor(pos_start)
+ *                     pos_start = floor(pos_start * available_width)
+ *             elif pos_start < 0:
 */
       }
 
-      /* "dearcygui/layout.pyx":356
+      /* "dearcygui/layout.pyx":636
  * 
- *             # Convert relative (0-1) or negative positions
+ *             # Normalise: fraction (0-1)  pixels; negative  offset from right edge
  *             if pos_start > 0.:             # <<<<<<<<<<<<<<
  *                 if pos_start < 1.:
- *                     pos_start *= available_width
+ *                     pos_start = floor(pos_start * available_width)
 */
       goto __pyx_L8;
     }
 
-    /* "dearcygui/layout.pyx":360
- *                     pos_start *= available_width
- *                     pos_start = floor(pos_start)
+    /* "dearcygui/layout.pyx":639
+ *                 if pos_start < 1.:
+ *                     pos_start = floor(pos_start * available_width)
  *             elif pos_start < 0:             # <<<<<<<<<<<<<<
  *                 if pos_start > -1.:
- *                     pos_start *= available_width
+ *                     pos_start = floor(pos_start * available_width + available_width)
 */
-    __pyx_t_2 = (__pyx_v_pos_start < 0.0);
-    if (__pyx_t_2) {
+    __pyx_t_1 = (__pyx_v_pos_start < 0.0);
+    if (__pyx_t_1) {
 
-      /* "dearcygui/layout.pyx":361
- *                     pos_start = floor(pos_start)
+      /* "dearcygui/layout.pyx":640
+ *                     pos_start = floor(pos_start * available_width)
  *             elif pos_start < 0:
  *                 if pos_start > -1.:             # <<<<<<<<<<<<<<
- *                     pos_start *= available_width
- *                     pos_start += available_width
+ *                     pos_start = floor(pos_start * available_width + available_width)
+ *                 else:
 */
-      __pyx_t_2 = (__pyx_v_pos_start > -1.);
-      if (__pyx_t_2) {
+      __pyx_t_1 = (__pyx_v_pos_start > -1.);
+      if (__pyx_t_1) {
 
-        /* "dearcygui/layout.pyx":362
+        /* "dearcygui/layout.pyx":641
  *             elif pos_start < 0:
  *                 if pos_start > -1.:
- *                     pos_start *= available_width             # <<<<<<<<<<<<<<
- *                     pos_start += available_width
- *                     pos_start = floor(pos_start)
-*/
-        __pyx_v_pos_start = (__pyx_v_pos_start * __pyx_v_available_width);
-
-        /* "dearcygui/layout.pyx":363
- *                 if pos_start > -1.:
- *                     pos_start *= available_width
- *                     pos_start += available_width             # <<<<<<<<<<<<<<
- *                     pos_start = floor(pos_start)
+ *                     pos_start = floor(pos_start * available_width + available_width)             # <<<<<<<<<<<<<<
  *                 else:
-*/
-        __pyx_v_pos_start = (__pyx_v_pos_start + __pyx_v_available_width);
-
-        /* "dearcygui/layout.pyx":364
- *                     pos_start *= available_width
- *                     pos_start += available_width
- *                     pos_start = floor(pos_start)             # <<<<<<<<<<<<<<
- *                 else:
- *                     pos_start += available_width
+ *                     pos_start = pos_start + available_width
 */
         try {
-          __pyx_t_1 = std::floor(__pyx_v_pos_start);
+          __pyx_t_2 = std::floor(((__pyx_v_pos_start * __pyx_v_available_width) + __pyx_v_available_width));
         } catch(...) {
+          PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
           __Pyx_CppExn2PyErr();
-          __PYX_ERR(0, 364, __pyx_L1_error)
+          __Pyx_PyGILState_Release(__pyx_gilstate_save);
+          __PYX_ERR(0, 641, __pyx_L1_error)
         }
-        __pyx_v_pos_start = __pyx_t_1;
+        __pyx_v_pos_start = __pyx_t_2;
 
-        /* "dearcygui/layout.pyx":361
- *                     pos_start = floor(pos_start)
+        /* "dearcygui/layout.pyx":640
+ *                     pos_start = floor(pos_start * available_width)
  *             elif pos_start < 0:
  *                 if pos_start > -1.:             # <<<<<<<<<<<<<<
- *                     pos_start *= available_width
- *                     pos_start += available_width
+ *                     pos_start = floor(pos_start * available_width + available_width)
+ *                 else:
 */
         goto __pyx_L10;
       }
 
-      /* "dearcygui/layout.pyx":366
- *                     pos_start = floor(pos_start)
+      /* "dearcygui/layout.pyx":643
+ *                     pos_start = floor(pos_start * available_width + available_width)
  *                 else:
- *                     pos_start += available_width             # <<<<<<<<<<<<<<
+ *                     pos_start = pos_start + available_width             # <<<<<<<<<<<<<<
+ *             pos_start = max(0., pos_start)
  * 
- *             # Set item position and ensure it stays within bounds
 */
       /*else*/ {
         __pyx_v_pos_start = (__pyx_v_pos_start + __pyx_v_available_width);
       }
       __pyx_L10:;
 
-      /* "dearcygui/layout.pyx":360
- *                     pos_start *= available_width
- *                     pos_start = floor(pos_start)
+      /* "dearcygui/layout.pyx":639
+ *                 if pos_start < 1.:
+ *                     pos_start = floor(pos_start * available_width)
  *             elif pos_start < 0:             # <<<<<<<<<<<<<<
  *                 if pos_start > -1.:
- *                     pos_start *= available_width
+ *                     pos_start = floor(pos_start * available_width + available_width)
 */
     }
     __pyx_L8:;
 
-    /* "dearcygui/layout.pyx":369
+    /* "dearcygui/layout.pyx":644
+ *                 else:
+ *                     pos_start = pos_start + available_width
+ *             pos_start = max(0., pos_start)             # <<<<<<<<<<<<<<
  * 
- *             # Set item position and ensure it stays within bounds
- *             pos_start = max(0, pos_start)             # <<<<<<<<<<<<<<
- *             pos_change |= pos_start != (<uiItem>child).state.cur.pos_to_parent.x ## cur or prev ? -> to double check
- *             (<uiItem>child).requested_x.set_item_o(_Size.ADD(_Size.PARENT_X1(), _Size.FIXED(pos_start)))
+ *             imgui.SetCursorScreenPos(imgui.ImVec2(parent_start_x + pos_start, start_y))
 */
-    __pyx_t_1 = __pyx_v_pos_start;
-    __pyx_t_5 = 0;
-    __pyx_t_2 = (__pyx_t_1 > __pyx_t_5);
-    if (__pyx_t_2) {
-      __pyx_t_6 = __pyx_t_1;
+    __pyx_t_2 = __pyx_v_pos_start;
+    __pyx_t_6 = 0.;
+    __pyx_t_1 = (__pyx_t_2 > __pyx_t_6);
+    if (__pyx_t_1) {
+      __pyx_t_7 = __pyx_t_2;
     } else {
-      __pyx_t_6 = __pyx_t_5;
+      __pyx_t_7 = __pyx_t_6;
     }
-    __pyx_v_pos_start = __pyx_t_6;
+    __pyx_v_pos_start = __pyx_t_7;
 
-    /* "dearcygui/layout.pyx":370
- *             # Set item position and ensure it stays within bounds
- *             pos_start = max(0, pos_start)
- *             pos_change |= pos_start != (<uiItem>child).state.cur.pos_to_parent.x ## cur or prev ? -> to double check             # <<<<<<<<<<<<<<
- *             (<uiItem>child).requested_x.set_item_o(_Size.ADD(_Size.PARENT_X1(), _Size.FIXED(pos_start)))
- *             (<uiItem>child).requested_y.set_value(0)
-*/
-    __pyx_v_pos_change = (__pyx_v_pos_change | (__pyx_v_pos_start != ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cur.pos_to_parent.x));
-
-    /* "dearcygui/layout.pyx":371
- *             pos_start = max(0, pos_start)
- *             pos_change |= pos_start != (<uiItem>child).state.cur.pos_to_parent.x ## cur or prev ? -> to double check
- *             (<uiItem>child).requested_x.set_item_o(_Size.ADD(_Size.PARENT_X1(), _Size.FIXED(pos_start)))             # <<<<<<<<<<<<<<
- *             (<uiItem>child).requested_y.set_value(0)
- *             (<uiItem>child).no_newline = True
-*/
-    __pyx_t_8 = NULL;
-    __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_mstate_global->__pyx_n_u_Size); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 371, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_9);
-    __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_mstate_global->__pyx_n_u_ADD); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 371, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_10);
-    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-    __pyx_t_11 = NULL;
-    __Pyx_GetModuleGlobalName(__pyx_t_12, __pyx_mstate_global->__pyx_n_u_Size); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 371, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_12);
-    __pyx_t_13 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_mstate_global->__pyx_n_u_PARENT_X1); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 371, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_13);
-    __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-    __pyx_t_14 = 1;
-    #if CYTHON_UNPACK_METHODS
-    if (unlikely(PyMethod_Check(__pyx_t_13))) {
-      __pyx_t_11 = PyMethod_GET_SELF(__pyx_t_13);
-      assert(__pyx_t_11);
-      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_13);
-      __Pyx_INCREF(__pyx_t_11);
-      __Pyx_INCREF(__pyx__function);
-      __Pyx_DECREF_SET(__pyx_t_13, __pyx__function);
-      __pyx_t_14 = 0;
-    }
-    #endif
-    {
-      PyObject *__pyx_callargs[2] = {__pyx_t_11, NULL};
-      __pyx_t_9 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_13, __pyx_callargs+__pyx_t_14, (1-__pyx_t_14) | (__pyx_t_14*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-      __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
-      __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
-      if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 371, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_9);
-    }
-    __pyx_t_11 = NULL;
-    __Pyx_GetModuleGlobalName(__pyx_t_12, __pyx_mstate_global->__pyx_n_u_Size); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 371, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_12);
-    __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_mstate_global->__pyx_n_u_FIXED); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 371, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_15);
-    __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-    __pyx_t_12 = PyFloat_FromDouble(__pyx_v_pos_start); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 371, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_12);
-    __pyx_t_14 = 1;
-    #if CYTHON_UNPACK_METHODS
-    if (unlikely(PyMethod_Check(__pyx_t_15))) {
-      __pyx_t_11 = PyMethod_GET_SELF(__pyx_t_15);
-      assert(__pyx_t_11);
-      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_15);
-      __Pyx_INCREF(__pyx_t_11);
-      __Pyx_INCREF(__pyx__function);
-      __Pyx_DECREF_SET(__pyx_t_15, __pyx__function);
-      __pyx_t_14 = 0;
-    }
-    #endif
-    {
-      PyObject *__pyx_callargs[2] = {__pyx_t_11, __pyx_t_12};
-      __pyx_t_13 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_15, __pyx_callargs+__pyx_t_14, (2-__pyx_t_14) | (__pyx_t_14*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-      __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
-      __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-      __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-      if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 371, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_13);
-    }
-    __pyx_t_14 = 1;
-    #if CYTHON_UNPACK_METHODS
-    if (unlikely(PyMethod_Check(__pyx_t_10))) {
-      __pyx_t_8 = PyMethod_GET_SELF(__pyx_t_10);
-      assert(__pyx_t_8);
-      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_10);
-      __Pyx_INCREF(__pyx_t_8);
-      __Pyx_INCREF(__pyx__function);
-      __Pyx_DECREF_SET(__pyx_t_10, __pyx__function);
-      __pyx_t_14 = 0;
-    }
-    #endif
-    {
-      PyObject *__pyx_callargs[3] = {__pyx_t_8, __pyx_t_9, __pyx_t_13};
-      __pyx_t_7 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_10, __pyx_callargs+__pyx_t_14, (3-__pyx_t_14) | (__pyx_t_14*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-      __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-      __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
-      __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-      if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 371, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-    }
-    ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->requested_x.set_item_o(__pyx_t_7);
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-
-    /* "dearcygui/layout.pyx":372
- *             pos_change |= pos_start != (<uiItem>child).state.cur.pos_to_parent.x ## cur or prev ? -> to double check
- *             (<uiItem>child).requested_x.set_item_o(_Size.ADD(_Size.PARENT_X1(), _Size.FIXED(pos_start)))
- *             (<uiItem>child).requested_y.set_value(0)             # <<<<<<<<<<<<<<
- *             (<uiItem>child).no_newline = True
+    /* "dearcygui/layout.pyx":646
+ *             pos_start = max(0., pos_start)
+ * 
+ *             imgui.SetCursorScreenPos(imgui.ImVec2(parent_start_x + pos_start, start_y))             # <<<<<<<<<<<<<<
+ *             (<uiItem>child).draw()
  * 
 */
-    ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->requested_y.set_value(0.0);
+    ImGui::SetCursorScreenPos(ImVec2((__pyx_v_parent_start_x + __pyx_v_pos_start), __pyx_v_start_y));
 
-    /* "dearcygui/layout.pyx":373
- *             (<uiItem>child).requested_x.set_item_o(_Size.ADD(_Size.PARENT_X1(), _Size.FIXED(pos_start)))
- *             (<uiItem>child).requested_y.set_value(0)
- *             (<uiItem>child).no_newline = True             # <<<<<<<<<<<<<<
+    /* "dearcygui/layout.pyx":647
+ * 
+ *             imgui.SetCursorScreenPos(imgui.ImVec2(parent_start_x + pos_start, start_y))
+ *             (<uiItem>child).draw()             # <<<<<<<<<<<<<<
+ * 
+ *             # Track size changes so the parent knows to redraw next frame
+*/
+    ((struct __pyx_vtabstruct_9dearcygui_4core_uiItem *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.__pyx_vtab)->draw(((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child));
+
+    /* "dearcygui/layout.pyx":650
+ * 
+ *             # Track size changes so the parent knows to redraw next frame
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:
+ *                 changed = True
+*/
+    __pyx_t_8 = (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cur.rect_size.x != ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.prev.rect_size.x);
+    if (!__pyx_t_8) {
+    } else {
+      __pyx_t_1 = __pyx_t_8;
+      goto __pyx_L12_bool_binop_done;
+    }
+
+    /* "dearcygui/layout.pyx":651
+ *             # Track size changes so the parent knows to redraw next frame
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:             # <<<<<<<<<<<<<<
+ *                 changed = True
+ * 
+*/
+    __pyx_t_8 = (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cur.rect_size.y != ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.prev.rect_size.y);
+    __pyx_t_1 = __pyx_t_8;
+    __pyx_L12_bool_binop_done:;
+
+    /* "dearcygui/layout.pyx":650
+ * 
+ *             # Track size changes so the parent knows to redraw next frame
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:
+ *                 changed = True
+*/
+    if (__pyx_t_1) {
+
+      /* "dearcygui/layout.pyx":652
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:
+ *                 changed = True             # <<<<<<<<<<<<<<
+ * 
+ *             # SameLine keeps ImGui's group bounding-box calculation from treating
+*/
+      __pyx_v_changed = 1;
+
+      /* "dearcygui/layout.pyx":650
+ * 
+ *             # Track size changes so the parent knows to redraw next frame
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:
+ *                 changed = True
+*/
+    }
+
+    /* "dearcygui/layout.pyx":657
+ *             # each manually-positioned item as the start of a new line.
+ *             # Might be useless though.
+ *             if (<uiItem>child).next_sibling is not None:             # <<<<<<<<<<<<<<
+ *                 imgui.SameLine(0., 0.)
+ * 
+*/
+    __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.next_sibling) != Py_None);
+    if (__pyx_t_1) {
+
+      /* "dearcygui/layout.pyx":658
+ *             # Might be useless though.
+ *             if (<uiItem>child).next_sibling is not None:
+ *                 imgui.SameLine(0., 0.)             # <<<<<<<<<<<<<<
  * 
  *             child = <PyObject*>(<uiItem>child).next_sibling
 */
-    ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->no_newline = 1;
+      ImGui::SameLine(0., 0.);
 
-    /* "dearcygui/layout.pyx":375
- *             (<uiItem>child).no_newline = True
+      /* "dearcygui/layout.pyx":657
+ *             # each manually-positioned item as the start of a new line.
+ *             # Might be useless though.
+ *             if (<uiItem>child).next_sibling is not None:             # <<<<<<<<<<<<<<
+ *                 imgui.SameLine(0., 0.)
+ * 
+*/
+    }
+
+    /* "dearcygui/layout.pyx":660
+ *                 imgui.SameLine(0., 0.)
  * 
  *             child = <PyObject*>(<uiItem>child).next_sibling             # <<<<<<<<<<<<<<
  *             i += 1
- * 
+ *         return changed
 */
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.next_sibling);
 
-    /* "dearcygui/layout.pyx":376
+    /* "dearcygui/layout.pyx":661
  * 
  *             child = <PyObject*>(<uiItem>child).next_sibling
  *             i += 1             # <<<<<<<<<<<<<<
+ *         return changed
  * 
- *         # Ensure last item allows newline
 */
     __pyx_v_i = (__pyx_v_i + 1);
   }
 
-  /* "dearcygui/layout.pyx":379
+  /* "dearcygui/layout.pyx":662
+ *             child = <PyObject*>(<uiItem>child).next_sibling
+ *             i += 1
+ *         return changed             # <<<<<<<<<<<<<<
  * 
- *         # Ensure last item allows newline
- *         if self.last_widgets_child is not None:             # <<<<<<<<<<<<<<
- *             self.last_widgets_child.no_newline = False
- * 
+ *     cdef bint __draw_item_aligned(self) noexcept nogil:
 */
-  __pyx_t_2 = (((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child) != Py_None);
-  if (__pyx_t_2) {
+  __pyx_r = __pyx_v_changed;
+  goto __pyx_L0;
 
-    /* "dearcygui/layout.pyx":380
- *         # Ensure last item allows newline
- *         if self.last_widgets_child is not None:
- *             self.last_widgets_child.no_newline = False             # <<<<<<<<<<<<<<
+  /* "dearcygui/layout.pyx":612
+ *         return changed
  * 
- *         # Force update if positions changed
-*/
-    __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child->no_newline = 0;
-
-    /* "dearcygui/layout.pyx":379
- * 
- *         # Ensure last item allows newline
- *         if self.last_widgets_child is not None:             # <<<<<<<<<<<<<<
- *             self.last_widgets_child.no_newline = False
- * 
-*/
-  }
-
-  /* "dearcygui/layout.pyx":383
- * 
- *         # Force update if positions changed
- *         if pos_change:             # <<<<<<<<<<<<<<
- *             self._force_update = True
- *             self.context.viewport.redraw_needed = True
-*/
-  if (__pyx_v_pos_change) {
-
-    /* "dearcygui/layout.pyx":384
- *         # Force update if positions changed
- *         if pos_change:
- *             self._force_update = True             # <<<<<<<<<<<<<<
- *             self.context.viewport.redraw_needed = True
- * 
-*/
-    __pyx_v_self->__pyx_base._force_update = 1;
-
-    /* "dearcygui/layout.pyx":385
- *         if pos_change:
- *             self._force_update = True
- *             self.context.viewport.redraw_needed = True             # <<<<<<<<<<<<<<
- * 
- *     cdef void __update_layout(self):
-*/
-    __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->redraw_needed = 1;
-
-    /* "dearcygui/layout.pyx":383
- * 
- *         # Force update if positions changed
- *         if pos_change:             # <<<<<<<<<<<<<<
- *             self._force_update = True
- *             self.context.viewport.redraw_needed = True
-*/
-  }
-
-  /* "dearcygui/layout.pyx":336
- *         self._force_update = True
- * 
- *     cdef void __update_layout_manual(self):             # <<<<<<<<<<<<<<
- *         """Position items at manually specified x positions"""
- *         # assumes children are locked and > 0
+ *     cdef bint __draw_item_manual(self) noexcept nogil:             # <<<<<<<<<<<<<<
+ *         """
+ *         MANUAL mode: draw each child at the absolute x position given by
 */
 
   /* function exit code */
-  goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_7);
-  __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_XDECREF(__pyx_t_9);
-  __Pyx_XDECREF(__pyx_t_10);
-  __Pyx_XDECREF(__pyx_t_11);
-  __Pyx_XDECREF(__pyx_t_12);
-  __Pyx_XDECREF(__pyx_t_13);
-  __Pyx_XDECREF(__pyx_t_15);
-  __Pyx_AddTraceback("dearcygui.layout.HorizontalLayout._HorizontalLayout__update_layout_manual", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+  __Pyx_WriteUnraisable("dearcygui.layout.HorizontalLayout._HorizontalLayout__draw_item_manual", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __pyx_r = 0;
+  __Pyx_PyGILState_Release(__pyx_gilstate_save);
   __pyx_L0:;
-  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":387
- *             self.context.viewport.redraw_needed = True
+/* "dearcygui/layout.pyx":664
+ *         return changed
  * 
- *     cdef void __update_layout(self):             # <<<<<<<<<<<<<<
- *         if self._alignment_mode == Alignment.MANUAL:
- *             self.__update_layout_manual()
+ *     cdef bint __draw_item_aligned(self) noexcept nogil:             # <<<<<<<<<<<<<<
+ *         """
+ *         RIGHT / CENTER / JUSTIFIED alignment.
 */
 
-static void __pyx_f_9dearcygui_6layout_16HorizontalLayout__HorizontalLayout__update_layout(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *__pyx_v_self) {
+static int __pyx_f_9dearcygui_6layout_16HorizontalLayout__HorizontalLayout__draw_item_aligned(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *__pyx_v_self) {
   PyObject *__pyx_v_child;
+  float __pyx_v_spacing_x;
+  float __pyx_v_parent_start_x;
   float __pyx_v_end_x;
   float __pyx_v_available_width;
-  float __pyx_v_spacing_x;
-  PyObject *__pyx_v_sibling;
-  int32_t __pyx_v_i;
-  int32_t __pyx_v_n_items_this_row;
-  int32_t __pyx_v_row;
-  float __pyx_v_target_x;
-  float __pyx_v_expected_x;
-  float __pyx_v_expected_size;
-  float __pyx_v_expected_size_next;
-  float __pyx_v_wrap_x;
-  int __pyx_v_pos_change;
-  float __pyx_v_global_scale_inv;
-  int __pyx_t_1;
-  float __pyx_t_2;
-  float __pyx_t_3;
-  float __pyx_t_4;
-  double __pyx_t_5;
-  int __pyx_t_6;
-  long __pyx_t_7;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-
-  /* "dearcygui/layout.pyx":388
- * 
- *     cdef void __update_layout(self):
- *         if self._alignment_mode == Alignment.MANUAL:             # <<<<<<<<<<<<<<
- *             self.__update_layout_manual()
- *             return
-*/
-  __pyx_t_1 = (__pyx_v_self->_alignment_mode == __pyx_t_9dearcygui_5types_Alignment::MANUAL);
-  if (__pyx_t_1) {
-
-    /* "dearcygui/layout.pyx":389
- *     cdef void __update_layout(self):
- *         if self._alignment_mode == Alignment.MANUAL:
- *             self.__update_layout_manual()             # <<<<<<<<<<<<<<
- *             return
- *         # Assumes all children are locked
-*/
-    ((struct __pyx_vtabstruct_9dearcygui_6layout_HorizontalLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.__pyx_vtab)->_HorizontalLayout__update_layout_manual(__pyx_v_self); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 389, __pyx_L1_error)
-
-    /* "dearcygui/layout.pyx":390
- *         if self._alignment_mode == Alignment.MANUAL:
- *             self.__update_layout_manual()
- *             return             # <<<<<<<<<<<<<<
- *         # Assumes all children are locked
- *         cdef PyObject *child = <PyObject*>self.last_widgets_child
-*/
-    goto __pyx_L0;
-
-    /* "dearcygui/layout.pyx":388
- * 
- *     cdef void __update_layout(self):
- *         if self._alignment_mode == Alignment.MANUAL:             # <<<<<<<<<<<<<<
- *             self.__update_layout_manual()
- *             return
-*/
-  }
-
-  /* "dearcygui/layout.pyx":392
- *             return
- *         # Assumes all children are locked
- *         cdef PyObject *child = <PyObject*>self.last_widgets_child             # <<<<<<<<<<<<<<
- *         cdef float end_x = self.state.cur.content_region_size.x
- *         cdef float available_width = end_x
-*/
-  __pyx_v_child = ((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child);
-
-  /* "dearcygui/layout.pyx":393
- *         # Assumes all children are locked
- *         cdef PyObject *child = <PyObject*>self.last_widgets_child
- *         cdef float end_x = self.state.cur.content_region_size.x             # <<<<<<<<<<<<<<
- *         cdef float available_width = end_x
- *         # cdef float available_height = self.prev_content_area.y
-*/
-  __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.state.cur.content_region_size.x;
-  __pyx_v_end_x = __pyx_t_2;
-
-  /* "dearcygui/layout.pyx":394
- *         cdef PyObject *child = <PyObject*>self.last_widgets_child
- *         cdef float end_x = self.state.cur.content_region_size.x
- *         cdef float available_width = end_x             # <<<<<<<<<<<<<<
- *         # cdef float available_height = self.prev_content_area.y
- *         cdef float spacing_x = self._spacing.x
-*/
-  __pyx_v_available_width = __pyx_v_end_x;
-
-  /* "dearcygui/layout.pyx":396
- *         cdef float available_width = end_x
- *         # cdef float available_height = self.prev_content_area.y
- *         cdef float spacing_x = self._spacing.x             # <<<<<<<<<<<<<<
- *         # cdef float spacing_y = self._spacing.y
- *         # Get back to the first child
-*/
-  __pyx_t_2 = __pyx_v_self->__pyx_base._spacing.x;
-  __pyx_v_spacing_x = __pyx_t_2;
-
-  /* "dearcygui/layout.pyx":399
- *         # cdef float spacing_y = self._spacing.y
- *         # Get back to the first child
- *         while ((<uiItem>child).prev_sibling) is not None:             # <<<<<<<<<<<<<<
- *             child = <PyObject*>((<uiItem>child).prev_sibling)
- *         cdef PyObject *sibling
-*/
-  while (1) {
-    __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling) != Py_None);
-    if (!__pyx_t_1) break;
-
-    /* "dearcygui/layout.pyx":400
- *         # Get back to the first child
- *         while ((<uiItem>child).prev_sibling) is not None:
- *             child = <PyObject*>((<uiItem>child).prev_sibling)             # <<<<<<<<<<<<<<
- *         cdef PyObject *sibling
- *         cdef int32_t i, n_items_this_row, row
-*/
-    __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling);
-  }
-
-  /* "dearcygui/layout.pyx":405
- *         cdef float target_x, expected_x, expected_size, expected_size_next
- *         # cdef float y, next_y = 0
- *         cdef float wrap_x = max(-self.state.cur.pos_to_window.x, self._wrap_x)             # <<<<<<<<<<<<<<
- *         cdef bint pos_change = False
- *         cdef float global_scale_inv = 1./fmax(self.context.viewport.global_scale, 0.00001)
-*/
-  __pyx_t_2 = __pyx_v_self->_wrap_x;
-  __pyx_t_3 = (-__pyx_v_self->__pyx_base.__pyx_base.state.cur.pos_to_window.x);
-  __pyx_t_1 = (__pyx_t_2 > __pyx_t_3);
-  if (__pyx_t_1) {
-    __pyx_t_4 = __pyx_t_2;
-  } else {
-    __pyx_t_4 = __pyx_t_3;
-  }
-  __pyx_v_wrap_x = __pyx_t_4;
-
-  /* "dearcygui/layout.pyx":406
- *         # cdef float y, next_y = 0
- *         cdef float wrap_x = max(-self.state.cur.pos_to_window.x, self._wrap_x)
- *         cdef bint pos_change = False             # <<<<<<<<<<<<<<
- *         cdef float global_scale_inv = 1./fmax(self.context.viewport.global_scale, 0.00001)
- *         row = 0
-*/
-  __pyx_v_pos_change = 0;
-
-  /* "dearcygui/layout.pyx":407
- *         cdef float wrap_x = max(-self.state.cur.pos_to_window.x, self._wrap_x)
- *         cdef bint pos_change = False
- *         cdef float global_scale_inv = 1./fmax(self.context.viewport.global_scale, 0.00001)             # <<<<<<<<<<<<<<
- *         row = 0
- *         while (<uiItem>child) is not None:
-*/
-  try {
-    __pyx_t_5 = std::fmax(__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->global_scale, 0.00001);
-  } catch(...) {
-    __Pyx_CppExn2PyErr();
-    __PYX_ERR(0, 407, __pyx_L1_error)
-  }
-  __pyx_v_global_scale_inv = (1. / __pyx_t_5);
-
-  /* "dearcygui/layout.pyx":408
- *         cdef bint pos_change = False
- *         cdef float global_scale_inv = 1./fmax(self.context.viewport.global_scale, 0.00001)
- *         row = 0             # <<<<<<<<<<<<<<
- *         while (<uiItem>child) is not None:
- *             # Compute the number of items on this row
-*/
-  __pyx_v_row = 0;
-
-  /* "dearcygui/layout.pyx":409
- *         cdef float global_scale_inv = 1./fmax(self.context.viewport.global_scale, 0.00001)
- *         row = 0
- *         while (<uiItem>child) is not None:             # <<<<<<<<<<<<<<
- *             # Compute the number of items on this row
- *             if row == 1:
-*/
-  while (1) {
-    __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
-    if (!__pyx_t_1) break;
-
-    /* "dearcygui/layout.pyx":411
- *         while (<uiItem>child) is not None:
- *             # Compute the number of items on this row
- *             if row == 1:             # <<<<<<<<<<<<<<
- *                 # starting from the second row, begin to wrap at the target
- *                 available_width -= wrap_x
-*/
-    __pyx_t_1 = (__pyx_v_row == 1);
-    if (__pyx_t_1) {
-
-      /* "dearcygui/layout.pyx":413
- *             if row == 1:
- *                 # starting from the second row, begin to wrap at the target
- *                 available_width -= wrap_x             # <<<<<<<<<<<<<<
- *             #y = next_y
- *             n_items_this_row = 1
-*/
-      __pyx_v_available_width = (__pyx_v_available_width - __pyx_v_wrap_x);
-
-      /* "dearcygui/layout.pyx":411
- *         while (<uiItem>child) is not None:
- *             # Compute the number of items on this row
- *             if row == 1:             # <<<<<<<<<<<<<<
- *                 # starting from the second row, begin to wrap at the target
- *                 available_width -= wrap_x
-*/
-    }
-
-    /* "dearcygui/layout.pyx":415
- *                 available_width -= wrap_x
- *             #y = next_y
- *             n_items_this_row = 1             # <<<<<<<<<<<<<<
- *             expected_size = (<uiItem>child).state.cur.rect_size.x
- *             #next_y = (<uiItem>child).state.cur.rect_size.y
-*/
-    __pyx_v_n_items_this_row = 1;
-
-    /* "dearcygui/layout.pyx":416
- *             #y = next_y
- *             n_items_this_row = 1
- *             expected_size = (<uiItem>child).state.cur.rect_size.x             # <<<<<<<<<<<<<<
- *             #next_y = (<uiItem>child).state.cur.rect_size.y
- *             sibling = child
-*/
-    __pyx_t_4 = ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cur.rect_size.x;
-    __pyx_v_expected_size = __pyx_t_4;
-
-    /* "dearcygui/layout.pyx":418
- *             expected_size = (<uiItem>child).state.cur.rect_size.x
- *             #next_y = (<uiItem>child).state.cur.rect_size.y
- *             sibling = child             # <<<<<<<<<<<<<<
- *             while (<uiItem>sibling).next_sibling is not None:
- *                 # Does the next item fit ?
-*/
-    __pyx_v_sibling = __pyx_v_child;
-
-    /* "dearcygui/layout.pyx":419
- *             #next_y = (<uiItem>child).state.cur.rect_size.y
- *             sibling = child
- *             while (<uiItem>sibling).next_sibling is not None:             # <<<<<<<<<<<<<<
- *                 # Does the next item fit ?
- *                 expected_size_next = expected_size + self._spacing.x + \
-*/
-    while (1) {
-      __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->__pyx_base.next_sibling) != Py_None);
-      if (!__pyx_t_1) break;
-
-      /* "dearcygui/layout.pyx":421
- *             while (<uiItem>sibling).next_sibling is not None:
- *                 # Does the next item fit ?
- *                 expected_size_next = expected_size + self._spacing.x + \             # <<<<<<<<<<<<<<
- *                     (<uiItem>(<uiItem>sibling).next_sibling).state.cur.rect_size.x
- *                 # No: stop there
-*/
-      __pyx_v_expected_size_next = ((__pyx_v_expected_size + __pyx_v_self->__pyx_base._spacing.x) + ((struct __pyx_obj_9dearcygui_4core_uiItem *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->__pyx_base.next_sibling)->state.cur.rect_size.x);
-
-      /* "dearcygui/layout.pyx":424
- *                     (<uiItem>(<uiItem>sibling).next_sibling).state.cur.rect_size.x
- *                 # No: stop there
- *                 if expected_size_next > available_width and not(self._no_wrap):             # <<<<<<<<<<<<<<
- *                     break
- *                 expected_size = expected_size_next
-*/
-      __pyx_t_6 = (__pyx_v_expected_size_next > __pyx_v_available_width);
-      if (__pyx_t_6) {
-      } else {
-        __pyx_t_1 = __pyx_t_6;
-        goto __pyx_L12_bool_binop_done;
-      }
-      __pyx_t_6 = (!__pyx_v_self->_no_wrap);
-      __pyx_t_1 = __pyx_t_6;
-      __pyx_L12_bool_binop_done:;
-      if (__pyx_t_1) {
-
-        /* "dearcygui/layout.pyx":425
- *                 # No: stop there
- *                 if expected_size_next > available_width and not(self._no_wrap):
- *                     break             # <<<<<<<<<<<<<<
- *                 expected_size = expected_size_next
- *                 if not((<uiItem>sibling).state.cap.has_rect_size):
-*/
-        goto __pyx_L10_break;
-
-        /* "dearcygui/layout.pyx":424
- *                     (<uiItem>(<uiItem>sibling).next_sibling).state.cur.rect_size.x
- *                 # No: stop there
- *                 if expected_size_next > available_width and not(self._no_wrap):             # <<<<<<<<<<<<<<
- *                     break
- *                 expected_size = expected_size_next
-*/
-      }
-
-      /* "dearcygui/layout.pyx":426
- *                 if expected_size_next > available_width and not(self._no_wrap):
- *                     break
- *                 expected_size = expected_size_next             # <<<<<<<<<<<<<<
- *                 if not((<uiItem>sibling).state.cap.has_rect_size):
- *                     # Items without rect size (tooltips for instance) do not count in the layout
-*/
-      __pyx_v_expected_size = __pyx_v_expected_size_next;
-
-      /* "dearcygui/layout.pyx":427
- *                     break
- *                 expected_size = expected_size_next
- *                 if not((<uiItem>sibling).state.cap.has_rect_size):             # <<<<<<<<<<<<<<
- *                     # Items without rect size (tooltips for instance) do not count in the layout
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling
-*/
-      __pyx_t_1 = (!((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->state.cap.has_rect_size);
-      if (__pyx_t_1) {
-
-        /* "dearcygui/layout.pyx":429
- *                 if not((<uiItem>sibling).state.cap.has_rect_size):
- *                     # Items without rect size (tooltips for instance) do not count in the layout
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling             # <<<<<<<<<<<<<<
- *                     continue
- *                 #next_y = max(next_y, y + (<uiItem>sibling).state.cur.rect_size.y)
-*/
-        __pyx_v_sibling = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->__pyx_base.next_sibling);
-
-        /* "dearcygui/layout.pyx":430
- *                     # Items without rect size (tooltips for instance) do not count in the layout
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling
- *                     continue             # <<<<<<<<<<<<<<
- *                 #next_y = max(next_y, y + (<uiItem>sibling).state.cur.rect_size.y)
- *                 sibling = <PyObject*>(<uiItem>sibling).next_sibling
-*/
-        goto __pyx_L9_continue;
-
-        /* "dearcygui/layout.pyx":427
- *                     break
- *                 expected_size = expected_size_next
- *                 if not((<uiItem>sibling).state.cap.has_rect_size):             # <<<<<<<<<<<<<<
- *                     # Items without rect size (tooltips for instance) do not count in the layout
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling
-*/
-      }
-
-      /* "dearcygui/layout.pyx":432
- *                     continue
- *                 #next_y = max(next_y, y + (<uiItem>sibling).state.cur.rect_size.y)
- *                 sibling = <PyObject*>(<uiItem>sibling).next_sibling             # <<<<<<<<<<<<<<
- *                 n_items_this_row += 1
- *             #next_y = next_y + spacing_y
-*/
-      __pyx_v_sibling = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->__pyx_base.next_sibling);
-
-      /* "dearcygui/layout.pyx":433
- *                 #next_y = max(next_y, y + (<uiItem>sibling).state.cur.rect_size.y)
- *                 sibling = <PyObject*>(<uiItem>sibling).next_sibling
- *                 n_items_this_row += 1             # <<<<<<<<<<<<<<
- *             #next_y = next_y + spacing_y
- * 
-*/
-      __pyx_v_n_items_this_row = (__pyx_v_n_items_this_row + 1);
-      __pyx_L9_continue:;
-    }
-    __pyx_L10_break:;
-
-    /* "dearcygui/layout.pyx":437
- * 
- *             # Determine the element positions
- *             sibling = child             # <<<<<<<<<<<<<<
- *             if self._alignment_mode == Alignment.LEFT:
- *                 target_x = 0 if row == 0 else wrap_x
-*/
-    __pyx_v_sibling = __pyx_v_child;
-
-    /* "dearcygui/layout.pyx":438
- *             # Determine the element positions
- *             sibling = child
- *             if self._alignment_mode == Alignment.LEFT:             # <<<<<<<<<<<<<<
- *                 target_x = 0 if row == 0 else wrap_x
- *             elif self._alignment_mode == Alignment.RIGHT:
-*/
-    __pyx_t_1 = (__pyx_v_self->_alignment_mode == __pyx_t_9dearcygui_5types_Alignment::LEFT);
-    if (__pyx_t_1) {
-
-      /* "dearcygui/layout.pyx":439
- *             sibling = child
- *             if self._alignment_mode == Alignment.LEFT:
- *                 target_x = 0 if row == 0 else wrap_x             # <<<<<<<<<<<<<<
- *             elif self._alignment_mode == Alignment.RIGHT:
- *                 target_x = end_x - expected_size
-*/
-      __pyx_t_1 = (__pyx_v_row == 0);
-      if (__pyx_t_1) {
-        __pyx_t_4 = 0.0;
-      } else {
-        __pyx_t_4 = __pyx_v_wrap_x;
-      }
-      __pyx_v_target_x = __pyx_t_4;
-
-      /* "dearcygui/layout.pyx":438
- *             # Determine the element positions
- *             sibling = child
- *             if self._alignment_mode == Alignment.LEFT:             # <<<<<<<<<<<<<<
- *                 target_x = 0 if row == 0 else wrap_x
- *             elif self._alignment_mode == Alignment.RIGHT:
-*/
-      goto __pyx_L15;
-    }
-
-    /* "dearcygui/layout.pyx":440
- *             if self._alignment_mode == Alignment.LEFT:
- *                 target_x = 0 if row == 0 else wrap_x
- *             elif self._alignment_mode == Alignment.RIGHT:             # <<<<<<<<<<<<<<
- *                 target_x = end_x - expected_size
- *             elif self._alignment_mode == Alignment.CENTER:
-*/
-    __pyx_t_1 = (__pyx_v_self->_alignment_mode == __pyx_t_9dearcygui_5types_Alignment::RIGHT);
-    if (__pyx_t_1) {
-
-      /* "dearcygui/layout.pyx":441
- *                 target_x = 0 if row == 0 else wrap_x
- *             elif self._alignment_mode == Alignment.RIGHT:
- *                 target_x = end_x - expected_size             # <<<<<<<<<<<<<<
- *             elif self._alignment_mode == Alignment.CENTER:
- *                 # Center right away (not waiting the second row) with wrap_x
-*/
-      __pyx_v_target_x = (__pyx_v_end_x - __pyx_v_expected_size);
-
-      /* "dearcygui/layout.pyx":440
- *             if self._alignment_mode == Alignment.LEFT:
- *                 target_x = 0 if row == 0 else wrap_x
- *             elif self._alignment_mode == Alignment.RIGHT:             # <<<<<<<<<<<<<<
- *                 target_x = end_x - expected_size
- *             elif self._alignment_mode == Alignment.CENTER:
-*/
-      goto __pyx_L15;
-    }
-
-    /* "dearcygui/layout.pyx":442
- *             elif self._alignment_mode == Alignment.RIGHT:
- *                 target_x = end_x - expected_size
- *             elif self._alignment_mode == Alignment.CENTER:             # <<<<<<<<<<<<<<
- *                 # Center right away (not waiting the second row) with wrap_x
- *                 target_x = (end_x + wrap_x) // 2 - \
-*/
-    __pyx_t_1 = (__pyx_v_self->_alignment_mode == __pyx_t_9dearcygui_5types_Alignment::CENTER);
-    if (__pyx_t_1) {
-
-      /* "dearcygui/layout.pyx":444
- *             elif self._alignment_mode == Alignment.CENTER:
- *                 # Center right away (not waiting the second row) with wrap_x
- *                 target_x = (end_x + wrap_x) // 2 - \             # <<<<<<<<<<<<<<
- *                     expected_size // 2 # integer rounding to avoid blurring
- *             else: #self._alignment_mode == Alignment.JUSTIFIED:
-*/
-      __pyx_v_target_x = (floor((__pyx_v_end_x + __pyx_v_wrap_x) / 2.0) - floor(__pyx_v_expected_size / 2.0));
-
-      /* "dearcygui/layout.pyx":442
- *             elif self._alignment_mode == Alignment.RIGHT:
- *                 target_x = end_x - expected_size
- *             elif self._alignment_mode == Alignment.CENTER:             # <<<<<<<<<<<<<<
- *                 # Center right away (not waiting the second row) with wrap_x
- *                 target_x = (end_x + wrap_x) // 2 - \
-*/
-      goto __pyx_L15;
-    }
-
-    /* "dearcygui/layout.pyx":447
- *                     expected_size // 2 # integer rounding to avoid blurring
- *             else: #self._alignment_mode == Alignment.JUSTIFIED:
- *                 target_x = 0 if row == 0 else wrap_x             # <<<<<<<<<<<<<<
- *                 # Increase spacing to fit target space
- *                 spacing_x = self._spacing.x + \
-*/
-    /*else*/ {
-      __pyx_t_1 = (__pyx_v_row == 0);
-      if (__pyx_t_1) {
-        __pyx_t_4 = 0.0;
-      } else {
-        __pyx_t_4 = __pyx_v_wrap_x;
-      }
-      __pyx_v_target_x = __pyx_t_4;
-
-      /* "dearcygui/layout.pyx":451
- *                 spacing_x = self._spacing.x + \
- *                     max(0, \
- *                         floor((available_width - expected_size) /             # <<<<<<<<<<<<<<
- *                                (n_items_this_row-1)))
- * 
-*/
-      try {
-        __pyx_t_4 = std::floor(((__pyx_v_available_width - __pyx_v_expected_size) / ((float)(__pyx_v_n_items_this_row - 1))));
-      } catch(...) {
-        __Pyx_CppExn2PyErr();
-        __PYX_ERR(0, 451, __pyx_L1_error)
-      }
-      __pyx_t_7 = 0;
-      __pyx_t_1 = (__pyx_t_4 > __pyx_t_7);
-      if (__pyx_t_1) {
-        __pyx_t_2 = __pyx_t_4;
-      } else {
-        __pyx_t_2 = __pyx_t_7;
-      }
-
-      /* "dearcygui/layout.pyx":449
- *                 target_x = 0 if row == 0 else wrap_x
- *                 # Increase spacing to fit target space
- *                 spacing_x = self._spacing.x + \             # <<<<<<<<<<<<<<
- *                     max(0, \
- *                         floor((available_width - expected_size) /
-*/
-      __pyx_v_spacing_x = (__pyx_v_self->__pyx_base._spacing.x + __pyx_t_2);
-    }
-    __pyx_L15:;
-
-    /* "dearcygui/layout.pyx":455
- * 
- *             # Important for auto fit windows
- *             target_x = max(0 if row == 0 else wrap_x, target_x)             # <<<<<<<<<<<<<<
- * 
- *             expected_x = 0
-*/
-    __pyx_t_2 = __pyx_v_target_x;
-    __pyx_t_1 = (__pyx_v_row == 0);
-    if (__pyx_t_1) {
-      __pyx_t_4 = 0;
-    } else {
-      __pyx_t_4 = __pyx_v_wrap_x;
-    }
-    __pyx_t_1 = (__pyx_t_2 > __pyx_t_4);
-    if (__pyx_t_1) {
-      __pyx_t_3 = __pyx_t_2;
-    } else {
-      __pyx_t_3 = __pyx_t_4;
-    }
-    __pyx_v_target_x = __pyx_t_3;
-
-    /* "dearcygui/layout.pyx":457
- *             target_x = max(0 if row == 0 else wrap_x, target_x)
- * 
- *             expected_x = 0             # <<<<<<<<<<<<<<
- *             i = 0
- *             while i < n_items_this_row-1:
-*/
-    __pyx_v_expected_x = 0.0;
-
-    /* "dearcygui/layout.pyx":458
- * 
- *             expected_x = 0
- *             i = 0             # <<<<<<<<<<<<<<
- *             while i < n_items_this_row-1:
- *                 if not((<uiItem>sibling).state.cap.has_rect_size):
-*/
-    __pyx_v_i = 0;
-
-    /* "dearcygui/layout.pyx":459
- *             expected_x = 0
- *             i = 0
- *             while i < n_items_this_row-1:             # <<<<<<<<<<<<<<
- *                 if not((<uiItem>sibling).state.cap.has_rect_size):
- *                     # Items without rect size do not count in the layout
-*/
-    while (1) {
-      __pyx_t_1 = (__pyx_v_i < (__pyx_v_n_items_this_row - 1));
-      if (!__pyx_t_1) break;
-
-      /* "dearcygui/layout.pyx":460
- *             i = 0
- *             while i < n_items_this_row-1:
- *                 if not((<uiItem>sibling).state.cap.has_rect_size):             # <<<<<<<<<<<<<<
- *                     # Items without rect size do not count in the layout
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling
-*/
-      __pyx_t_1 = (!((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->state.cap.has_rect_size);
-      if (__pyx_t_1) {
-
-        /* "dearcygui/layout.pyx":462
- *                 if not((<uiItem>sibling).state.cap.has_rect_size):
- *                     # Items without rect size do not count in the layout
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling             # <<<<<<<<<<<<<<
- *                     continue
- *                 pos_change |= (<uiItem>sibling).requested_x.is_item() or\
-*/
-        __pyx_v_sibling = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->__pyx_base.next_sibling);
-
-        /* "dearcygui/layout.pyx":463
- *                     # Items without rect size do not count in the layout
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling
- *                     continue             # <<<<<<<<<<<<<<
- *                 pos_change |= (<uiItem>sibling).requested_x.is_item() or\
- *                     (target_x - expected_x) * global_scale_inv != (<uiItem>sibling).requested_x.get_value()
-*/
-        goto __pyx_L16_continue;
-
-        /* "dearcygui/layout.pyx":460
- *             i = 0
- *             while i < n_items_this_row-1:
- *                 if not((<uiItem>sibling).state.cap.has_rect_size):             # <<<<<<<<<<<<<<
- *                     # Items without rect size do not count in the layout
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling
-*/
-      }
-
-      /* "dearcygui/layout.pyx":464
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling
- *                     continue
- *                 pos_change |= (<uiItem>sibling).requested_x.is_item() or\             # <<<<<<<<<<<<<<
- *                     (target_x - expected_x) * global_scale_inv != (<uiItem>sibling).requested_x.get_value()
- *                 (<uiItem>sibling).requested_x.set_value((target_x - expected_x) * global_scale_inv) # delta to default position
-*/
-      __pyx_t_6 = ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->requested_x.is_item();
-      if (!__pyx_t_6) {
-      } else {
-        __pyx_t_1 = __pyx_t_6;
-        goto __pyx_L19_bool_binop_done;
-      }
-
-      /* "dearcygui/layout.pyx":465
- *                     continue
- *                 pos_change |= (<uiItem>sibling).requested_x.is_item() or\
- *                     (target_x - expected_x) * global_scale_inv != (<uiItem>sibling).requested_x.get_value()             # <<<<<<<<<<<<<<
- *                 (<uiItem>sibling).requested_x.set_value((target_x - expected_x) * global_scale_inv) # delta to default position
- *                 (<uiItem>sibling).requested_y.set_value(0.) # default position
-*/
-      __pyx_t_6 = (((__pyx_v_target_x - __pyx_v_expected_x) * __pyx_v_global_scale_inv) != ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->requested_x.get_value());
-      __pyx_t_1 = __pyx_t_6;
-      __pyx_L19_bool_binop_done:;
-
-      /* "dearcygui/layout.pyx":464
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling
- *                     continue
- *                 pos_change |= (<uiItem>sibling).requested_x.is_item() or\             # <<<<<<<<<<<<<<
- *                     (target_x - expected_x) * global_scale_inv != (<uiItem>sibling).requested_x.get_value()
- *                 (<uiItem>sibling).requested_x.set_value((target_x - expected_x) * global_scale_inv) # delta to default position
-*/
-      __pyx_v_pos_change = (__pyx_v_pos_change | __pyx_t_1);
-
-      /* "dearcygui/layout.pyx":466
- *                 pos_change |= (<uiItem>sibling).requested_x.is_item() or\
- *                     (target_x - expected_x) * global_scale_inv != (<uiItem>sibling).requested_x.get_value()
- *                 (<uiItem>sibling).requested_x.set_value((target_x - expected_x) * global_scale_inv) # delta to default position             # <<<<<<<<<<<<<<
- *                 (<uiItem>sibling).requested_y.set_value(0.) # default position
- *                 (<uiItem>sibling).no_newline = True
-*/
-      ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->requested_x.set_value(((__pyx_v_target_x - __pyx_v_expected_x) * __pyx_v_global_scale_inv));
-
-      /* "dearcygui/layout.pyx":467
- *                     (target_x - expected_x) * global_scale_inv != (<uiItem>sibling).requested_x.get_value()
- *                 (<uiItem>sibling).requested_x.set_value((target_x - expected_x) * global_scale_inv) # delta to default position
- *                 (<uiItem>sibling).requested_y.set_value(0.) # default position             # <<<<<<<<<<<<<<
- *                 (<uiItem>sibling).no_newline = True
- *                 expected_x = target_x + self._spacing.x + (<uiItem>sibling).state.cur.rect_size.x
-*/
-      ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->requested_y.set_value(0.);
-
-      /* "dearcygui/layout.pyx":468
- *                 (<uiItem>sibling).requested_x.set_value((target_x - expected_x) * global_scale_inv) # delta to default position
- *                 (<uiItem>sibling).requested_y.set_value(0.) # default position
- *                 (<uiItem>sibling).no_newline = True             # <<<<<<<<<<<<<<
- *                 expected_x = target_x + self._spacing.x + (<uiItem>sibling).state.cur.rect_size.x
- *                 target_x = target_x + spacing_x + (<uiItem>sibling).state.cur.rect_size.x
-*/
-      ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->no_newline = 1;
-
-      /* "dearcygui/layout.pyx":469
- *                 (<uiItem>sibling).requested_y.set_value(0.) # default position
- *                 (<uiItem>sibling).no_newline = True
- *                 expected_x = target_x + self._spacing.x + (<uiItem>sibling).state.cur.rect_size.x             # <<<<<<<<<<<<<<
- *                 target_x = target_x + spacing_x + (<uiItem>sibling).state.cur.rect_size.x
- *                 sibling = <PyObject*>(<uiItem>sibling).next_sibling
-*/
-      __pyx_v_expected_x = ((__pyx_v_target_x + __pyx_v_self->__pyx_base._spacing.x) + ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->state.cur.rect_size.x);
-
-      /* "dearcygui/layout.pyx":470
- *                 (<uiItem>sibling).no_newline = True
- *                 expected_x = target_x + self._spacing.x + (<uiItem>sibling).state.cur.rect_size.x
- *                 target_x = target_x + spacing_x + (<uiItem>sibling).state.cur.rect_size.x             # <<<<<<<<<<<<<<
- *                 sibling = <PyObject*>(<uiItem>sibling).next_sibling
- *                 i = i + 1
-*/
-      __pyx_v_target_x = ((__pyx_v_target_x + __pyx_v_spacing_x) + ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->state.cur.rect_size.x);
-
-      /* "dearcygui/layout.pyx":471
- *                 expected_x = target_x + self._spacing.x + (<uiItem>sibling).state.cur.rect_size.x
- *                 target_x = target_x + spacing_x + (<uiItem>sibling).state.cur.rect_size.x
- *                 sibling = <PyObject*>(<uiItem>sibling).next_sibling             # <<<<<<<<<<<<<<
- *                 i = i + 1
- *             if i != 0:
-*/
-      __pyx_v_sibling = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->__pyx_base.next_sibling);
-
-      /* "dearcygui/layout.pyx":472
- *                 target_x = target_x + spacing_x + (<uiItem>sibling).state.cur.rect_size.x
- *                 sibling = <PyObject*>(<uiItem>sibling).next_sibling
- *                 i = i + 1             # <<<<<<<<<<<<<<
- *             if i != 0:
- *                 while (<uiItem>sibling).next_sibling is not None and \
-*/
-      __pyx_v_i = (__pyx_v_i + 1);
-      __pyx_L16_continue:;
-    }
-
-    /* "dearcygui/layout.pyx":473
- *                 sibling = <PyObject*>(<uiItem>sibling).next_sibling
- *                 i = i + 1
- *             if i != 0:             # <<<<<<<<<<<<<<
- *                 while (<uiItem>sibling).next_sibling is not None and \
- *                       not((<uiItem>sibling).state.cap.has_rect_size):
-*/
-    __pyx_t_1 = (__pyx_v_i != 0);
-    if (__pyx_t_1) {
-
-      /* "dearcygui/layout.pyx":474
- *                 i = i + 1
- *             if i != 0:
- *                 while (<uiItem>sibling).next_sibling is not None and \             # <<<<<<<<<<<<<<
- *                       not((<uiItem>sibling).state.cap.has_rect_size):
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling
-*/
-      while (1) {
-        __pyx_t_6 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->__pyx_base.next_sibling) != Py_None);
-        if (__pyx_t_6) {
-        } else {
-          __pyx_t_1 = __pyx_t_6;
-          goto __pyx_L24_bool_binop_done;
-        }
-
-        /* "dearcygui/layout.pyx":475
- *             if i != 0:
- *                 while (<uiItem>sibling).next_sibling is not None and \
- *                       not((<uiItem>sibling).state.cap.has_rect_size):             # <<<<<<<<<<<<<<
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling
- *                     continue
-*/
-        __pyx_t_6 = (!((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->state.cap.has_rect_size);
-        __pyx_t_1 = __pyx_t_6;
-        __pyx_L24_bool_binop_done:;
-        if (!__pyx_t_1) break;
-
-        /* "dearcygui/layout.pyx":476
- *                 while (<uiItem>sibling).next_sibling is not None and \
- *                       not((<uiItem>sibling).state.cap.has_rect_size):
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling             # <<<<<<<<<<<<<<
- *                     continue
- *             # Last item of the row
-*/
-        __pyx_v_sibling = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->__pyx_base.next_sibling);
-
-        /* "dearcygui/layout.pyx":477
- *                       not((<uiItem>sibling).state.cap.has_rect_size):
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling
- *                     continue             # <<<<<<<<<<<<<<
- *             # Last item of the row
- *             if (self._alignment_mode == Alignment.RIGHT or \
-*/
-        goto __pyx_L22_continue;
-        __pyx_L22_continue:;
-      }
-
-      /* "dearcygui/layout.pyx":473
- *                 sibling = <PyObject*>(<uiItem>sibling).next_sibling
- *                 i = i + 1
- *             if i != 0:             # <<<<<<<<<<<<<<
- *                 while (<uiItem>sibling).next_sibling is not None and \
- *                       not((<uiItem>sibling).state.cap.has_rect_size):
-*/
-    }
-
-    /* "dearcygui/layout.pyx":479
- *                     continue
- *             # Last item of the row
- *             if (self._alignment_mode == Alignment.RIGHT or \             # <<<<<<<<<<<<<<
- *                (self._alignment_mode == Alignment.JUSTIFIED and n_items_this_row != 1)) and \
- *                (<uiItem>child).state.cur.rect_size.x == (<uiItem>child).state.prev.rect_size.x:
-*/
-    __pyx_t_6 = (__pyx_v_self->_alignment_mode == __pyx_t_9dearcygui_5types_Alignment::RIGHT);
-    if (!__pyx_t_6) {
-    } else {
-      goto __pyx_L28_next_and;
-    }
-
-    /* "dearcygui/layout.pyx":480
- *             # Last item of the row
- *             if (self._alignment_mode == Alignment.RIGHT or \
- *                (self._alignment_mode == Alignment.JUSTIFIED and n_items_this_row != 1)) and \             # <<<<<<<<<<<<<<
- *                (<uiItem>child).state.cur.rect_size.x == (<uiItem>child).state.prev.rect_size.x:
- *                 # Align right item properly even if rounding
-*/
-    __pyx_t_6 = (__pyx_v_self->_alignment_mode == __pyx_t_9dearcygui_5types_Alignment::JUSTIFIED);
-    if (__pyx_t_6) {
-    } else {
-      __pyx_t_1 = __pyx_t_6;
-      goto __pyx_L27_bool_binop_done;
-    }
-    __pyx_t_6 = (__pyx_v_n_items_this_row != 1);
-    if (__pyx_t_6) {
-    } else {
-      __pyx_t_1 = __pyx_t_6;
-      goto __pyx_L27_bool_binop_done;
-    }
-    __pyx_L28_next_and:;
-
-    /* "dearcygui/layout.pyx":481
- *             if (self._alignment_mode == Alignment.RIGHT or \
- *                (self._alignment_mode == Alignment.JUSTIFIED and n_items_this_row != 1)) and \
- *                (<uiItem>child).state.cur.rect_size.x == (<uiItem>child).state.prev.rect_size.x:             # <<<<<<<<<<<<<<
- *                 # Align right item properly even if rounding
- *                 # occured on spacing.
-*/
-    __pyx_t_6 = (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cur.rect_size.x == ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.prev.rect_size.x);
-    __pyx_t_1 = __pyx_t_6;
-    __pyx_L27_bool_binop_done:;
-
-    /* "dearcygui/layout.pyx":479
- *                     continue
- *             # Last item of the row
- *             if (self._alignment_mode == Alignment.RIGHT or \             # <<<<<<<<<<<<<<
- *                (self._alignment_mode == Alignment.JUSTIFIED and n_items_this_row != 1)) and \
- *                (<uiItem>child).state.cur.rect_size.x == (<uiItem>child).state.prev.rect_size.x:
-*/
-    if (__pyx_t_1) {
-
-      /* "dearcygui/layout.pyx":487
- *                 # to the available content, it can lead to convergence issues
- *                 # undo previous spacing
- *                 target_x -= spacing_x             # <<<<<<<<<<<<<<
- *                 # ideal spacing
- *                 spacing_x = \
-*/
-      __pyx_v_target_x = (__pyx_v_target_x - __pyx_v_spacing_x);
-
-      /* "dearcygui/layout.pyx":490
- *                 # ideal spacing
- *                 spacing_x = \
- *                     end_x - (target_x + (<uiItem>sibling).state.cur.rect_size.x)             # <<<<<<<<<<<<<<
- *                 # real spacing
- *                 target_x += max(spacing_x, self._spacing.x)
-*/
-      __pyx_v_spacing_x = (__pyx_v_end_x - (__pyx_v_target_x + ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->state.cur.rect_size.x));
-
-      /* "dearcygui/layout.pyx":492
- *                     end_x - (target_x + (<uiItem>sibling).state.cur.rect_size.x)
- *                 # real spacing
- *                 target_x += max(spacing_x, self._spacing.x)             # <<<<<<<<<<<<<<
- * 
- *             pos_change |= (<uiItem>sibling).requested_x.is_item() or\
-*/
-      __pyx_t_3 = __pyx_v_self->__pyx_base._spacing.x;
-      __pyx_t_2 = __pyx_v_spacing_x;
-      __pyx_t_1 = (__pyx_t_3 > __pyx_t_2);
-      if (__pyx_t_1) {
-        __pyx_t_4 = __pyx_t_3;
-      } else {
-        __pyx_t_4 = __pyx_t_2;
-      }
-      __pyx_v_target_x = (__pyx_v_target_x + __pyx_t_4);
-
-      /* "dearcygui/layout.pyx":479
- *                     continue
- *             # Last item of the row
- *             if (self._alignment_mode == Alignment.RIGHT or \             # <<<<<<<<<<<<<<
- *                (self._alignment_mode == Alignment.JUSTIFIED and n_items_this_row != 1)) and \
- *                (<uiItem>child).state.cur.rect_size.x == (<uiItem>child).state.prev.rect_size.x:
-*/
-    }
-
-    /* "dearcygui/layout.pyx":494
- *                 target_x += max(spacing_x, self._spacing.x)
- * 
- *             pos_change |= (<uiItem>sibling).requested_x.is_item() or\             # <<<<<<<<<<<<<<
- *                 (target_x - expected_x) * global_scale_inv != (<uiItem>sibling).requested_x.get_value()
- *             (<uiItem>sibling).requested_x.set_value((target_x - expected_x) * global_scale_inv) # delta to default position
-*/
-    __pyx_t_6 = ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->requested_x.is_item();
-    if (!__pyx_t_6) {
-    } else {
-      __pyx_t_1 = __pyx_t_6;
-      goto __pyx_L31_bool_binop_done;
-    }
-
-    /* "dearcygui/layout.pyx":495
- * 
- *             pos_change |= (<uiItem>sibling).requested_x.is_item() or\
- *                 (target_x - expected_x) * global_scale_inv != (<uiItem>sibling).requested_x.get_value()             # <<<<<<<<<<<<<<
- *             (<uiItem>sibling).requested_x.set_value((target_x - expected_x) * global_scale_inv) # delta to default position
- *             (<uiItem>sibling).requested_y.set_value(0.) # default position
-*/
-    __pyx_t_6 = (((__pyx_v_target_x - __pyx_v_expected_x) * __pyx_v_global_scale_inv) != ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->requested_x.get_value());
-    __pyx_t_1 = __pyx_t_6;
-    __pyx_L31_bool_binop_done:;
-
-    /* "dearcygui/layout.pyx":494
- *                 target_x += max(spacing_x, self._spacing.x)
- * 
- *             pos_change |= (<uiItem>sibling).requested_x.is_item() or\             # <<<<<<<<<<<<<<
- *                 (target_x - expected_x) * global_scale_inv != (<uiItem>sibling).requested_x.get_value()
- *             (<uiItem>sibling).requested_x.set_value((target_x - expected_x) * global_scale_inv) # delta to default position
-*/
-    __pyx_v_pos_change = (__pyx_v_pos_change | __pyx_t_1);
-
-    /* "dearcygui/layout.pyx":496
- *             pos_change |= (<uiItem>sibling).requested_x.is_item() or\
- *                 (target_x - expected_x) * global_scale_inv != (<uiItem>sibling).requested_x.get_value()
- *             (<uiItem>sibling).requested_x.set_value((target_x - expected_x) * global_scale_inv) # delta to default position             # <<<<<<<<<<<<<<
- *             (<uiItem>sibling).requested_y.set_value(0.) # default position
- *             (<uiItem>sibling).no_newline = False
-*/
-    ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->requested_x.set_value(((__pyx_v_target_x - __pyx_v_expected_x) * __pyx_v_global_scale_inv));
-
-    /* "dearcygui/layout.pyx":497
- *                 (target_x - expected_x) * global_scale_inv != (<uiItem>sibling).requested_x.get_value()
- *             (<uiItem>sibling).requested_x.set_value((target_x - expected_x) * global_scale_inv) # delta to default position
- *             (<uiItem>sibling).requested_y.set_value(0.) # default position             # <<<<<<<<<<<<<<
- *             (<uiItem>sibling).no_newline = False
- *             child = <PyObject*>(<uiItem>sibling).next_sibling
-*/
-    ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->requested_y.set_value(0.);
-
-    /* "dearcygui/layout.pyx":498
- *             (<uiItem>sibling).requested_x.set_value((target_x - expected_x) * global_scale_inv) # delta to default position
- *             (<uiItem>sibling).requested_y.set_value(0.) # default position
- *             (<uiItem>sibling).no_newline = False             # <<<<<<<<<<<<<<
- *             child = <PyObject*>(<uiItem>sibling).next_sibling
- *             row += 1
-*/
-    ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->no_newline = 0;
-
-    /* "dearcygui/layout.pyx":499
- *             (<uiItem>sibling).requested_y.set_value(0.) # default position
- *             (<uiItem>sibling).no_newline = False
- *             child = <PyObject*>(<uiItem>sibling).next_sibling             # <<<<<<<<<<<<<<
- *             row += 1
- *         # A change in position change alter the size for some items
-*/
-    __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->__pyx_base.next_sibling);
-
-    /* "dearcygui/layout.pyx":500
- *             (<uiItem>sibling).no_newline = False
- *             child = <PyObject*>(<uiItem>sibling).next_sibling
- *             row += 1             # <<<<<<<<<<<<<<
- *         # A change in position change alter the size for some items
- *         if pos_change:
-*/
-    __pyx_v_row = (__pyx_v_row + 1);
-  }
-
-  /* "dearcygui/layout.pyx":502
- *             row += 1
- *         # A change in position change alter the size for some items
- *         if pos_change:             # <<<<<<<<<<<<<<
- *             self._force_update = True
- *             self.context.viewport.redraw_needed = True
-*/
-  if (__pyx_v_pos_change) {
-
-    /* "dearcygui/layout.pyx":503
- *         # A change in position change alter the size for some items
- *         if pos_change:
- *             self._force_update = True             # <<<<<<<<<<<<<<
- *             self.context.viewport.redraw_needed = True
- * 
-*/
-    __pyx_v_self->__pyx_base._force_update = 1;
-
-    /* "dearcygui/layout.pyx":504
- *         if pos_change:
- *             self._force_update = True
- *             self.context.viewport.redraw_needed = True             # <<<<<<<<<<<<<<
- * 
- * 
-*/
-    __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->redraw_needed = 1;
-
-    /* "dearcygui/layout.pyx":502
- *             row += 1
- *         # A change in position change alter the size for some items
- *         if pos_change:             # <<<<<<<<<<<<<<
- *             self._force_update = True
- *             self.context.viewport.redraw_needed = True
-*/
-  }
-
-  /* "dearcygui/layout.pyx":387
- *             self.context.viewport.redraw_needed = True
- * 
- *     cdef void __update_layout(self):             # <<<<<<<<<<<<<<
- *         if self._alignment_mode == Alignment.MANUAL:
- *             self.__update_layout_manual()
-*/
-
-  /* function exit code */
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __Pyx_AddTraceback("dearcygui.layout.HorizontalLayout._HorizontalLayout__update_layout", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_L0:;
-}
-
-/* "dearcygui/layout.pyx":507
- * 
- * 
- *     cdef bint draw_item(self) noexcept nogil:             # <<<<<<<<<<<<<<
- *         if self.last_widgets_child is None:# or \
- *             #cur_content_area.x <= 0 or \
-*/
-
-static int __pyx_f_9dearcygui_6layout_16HorizontalLayout_draw_item(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *__pyx_v_self) {
+  float __pyx_v_wrap_start_x;
   int __pyx_v_changed;
-  Vec2 __pyx_v_pos_p;
+  int __pyx_v_is_first_row;
+  float __pyx_v_cur_y;
+  float __pyx_v_row_avail;
+  float __pyx_v_row_sx;
+  float __pyx_v_expected_size;
+  float __pyx_v_sz;
+  float __pyx_v_next_sz;
+  int32_t __pyx_v_n_with_size;
+  PyObject *__pyx_v_last_with_size;
+  PyObject *__pyx_v_s;
+  PyObject *__pyx_v_row_end;
+  float __pyx_v_target_x;
+  float __pyx_v_row_spacing_x;
+  int __pyx_v_first_on_row;
+  int __pyx_v_has_sz;
+  float __pyx_v_cursor_y_before;
+  PyObject *__pyx_v_row_start;
   int __pyx_r;
   int __pyx_t_1;
-  int __pyx_t_2;
+  float __pyx_t_2;
+  double __pyx_t_3;
+  int __pyx_t_4;
+  float __pyx_t_5;
+  float __pyx_t_6;
+  double __pyx_t_7;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   PyGILState_STATE __pyx_gilstate_save;
 
-  /* "dearcygui/layout.pyx":508
+  /* "dearcygui/layout.pyx":690
+ *         """
+ *         # Walk backwards to the first sibling
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child             # <<<<<<<<<<<<<<
+ *         while (<uiItem>child).prev_sibling is not None:
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
+*/
+  __pyx_v_child = ((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child);
+
+  /* "dearcygui/layout.pyx":691
+ *         # Walk backwards to the first sibling
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child
+ *         while (<uiItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
+ * 
+*/
+  while (1) {
+    __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling) != Py_None);
+    if (!__pyx_t_1) break;
+
+    /* "dearcygui/layout.pyx":692
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child
+ *         while (<uiItem>child).prev_sibling is not None:
+ *             child = <PyObject*>(<uiItem>child).prev_sibling             # <<<<<<<<<<<<<<
+ * 
+ *         # Retrieve horizontal spacing
+*/
+    __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling);
+  }
+
+  /* "dearcygui/layout.pyx":695
+ * 
+ *         # Retrieve horizontal spacing
+ *         cdef float spacing_x = imgui.GetStyle().ItemSpacing.x             # <<<<<<<<<<<<<<
+ * 
+ *         # Retrieve min/max x bounds
+*/
+  __pyx_t_2 = ImGui::GetStyle().ItemSpacing.x;
+  __pyx_v_spacing_x = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":698
+ * 
+ *         # Retrieve min/max x bounds
+ *         cdef float parent_start_x = self.context.viewport.parent_pos.x             # <<<<<<<<<<<<<<
+ *         cdef float end_x = parent_start_x + self.state.cur.content_region_size.x
+ *         cdef float available_width = self.state.cur.content_region_size.x
+*/
+  __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->parent_pos.x;
+  __pyx_v_parent_start_x = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":699
+ *         # Retrieve min/max x bounds
+ *         cdef float parent_start_x = self.context.viewport.parent_pos.x
+ *         cdef float end_x = parent_start_x + self.state.cur.content_region_size.x             # <<<<<<<<<<<<<<
+ *         cdef float available_width = self.state.cur.content_region_size.x
+ * 
+*/
+  __pyx_v_end_x = (__pyx_v_parent_start_x + __pyx_v_self->__pyx_base.__pyx_base.state.cur.content_region_size.x);
+
+  /* "dearcygui/layout.pyx":700
+ *         cdef float parent_start_x = self.context.viewport.parent_pos.x
+ *         cdef float end_x = parent_start_x + self.state.cur.content_region_size.x
+ *         cdef float available_width = self.state.cur.content_region_size.x             # <<<<<<<<<<<<<<
+ * 
+ *         # Deduce wrapping start region.
+*/
+  __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.state.cur.content_region_size.x;
+  __pyx_v_available_width = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":704
+ *         # Deduce wrapping start region.
+ *         # First row starts at parent_start_x; wrapped rows start at wrap_start_x.
+ *         cdef float wrap_start_x = parent_start_x + fmax(-self.state.cur.pos_to_window.x, self._wrap_x)             # <<<<<<<<<<<<<<
+ *         wrap_start_x = fmax(parent_start_x, wrap_start_x)
+ * 
+*/
+  try {
+    __pyx_t_2 = std::fmax((-__pyx_v_self->__pyx_base.__pyx_base.state.cur.pos_to_window.x), __pyx_v_self->_wrap_x);
+  } catch(...) {
+    PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+    __Pyx_CppExn2PyErr();
+    __Pyx_PyGILState_Release(__pyx_gilstate_save);
+    __PYX_ERR(0, 704, __pyx_L1_error)
+  }
+  __pyx_v_wrap_start_x = (__pyx_v_parent_start_x + __pyx_t_2);
+
+  /* "dearcygui/layout.pyx":705
+ *         # First row starts at parent_start_x; wrapped rows start at wrap_start_x.
+ *         cdef float wrap_start_x = parent_start_x + fmax(-self.state.cur.pos_to_window.x, self._wrap_x)
+ *         wrap_start_x = fmax(parent_start_x, wrap_start_x)             # <<<<<<<<<<<<<<
+ * 
+ *         cdef bint changed = False
+*/
+  try {
+    __pyx_t_2 = std::fmax(__pyx_v_parent_start_x, __pyx_v_wrap_start_x);
+  } catch(...) {
+    PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+    __Pyx_CppExn2PyErr();
+    __Pyx_PyGILState_Release(__pyx_gilstate_save);
+    __PYX_ERR(0, 705, __pyx_L1_error)
+  }
+  __pyx_v_wrap_start_x = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":707
+ *         wrap_start_x = fmax(parent_start_x, wrap_start_x)
+ * 
+ *         cdef bint changed = False             # <<<<<<<<<<<<<<
+ *         cdef bint is_first_row = True
+ *         cdef float cur_y = imgui.GetCursorScreenPos().y  # screen-y of the current row's top
+*/
+  __pyx_v_changed = 0;
+
+  /* "dearcygui/layout.pyx":708
+ * 
+ *         cdef bint changed = False
+ *         cdef bint is_first_row = True             # <<<<<<<<<<<<<<
+ *         cdef float cur_y = imgui.GetCursorScreenPos().y  # screen-y of the current row's top
+ * 
+*/
+  __pyx_v_is_first_row = 1;
+
+  /* "dearcygui/layout.pyx":709
+ *         cdef bint changed = False
+ *         cdef bint is_first_row = True
+ *         cdef float cur_y = imgui.GetCursorScreenPos().y  # screen-y of the current row's top             # <<<<<<<<<<<<<<
+ * 
+ *         # Loop variables: declared here because Cython forbids cdef inside loops.
+*/
+  __pyx_t_2 = ImGui::GetCursorScreenPos().y;
+  __pyx_v_cur_y = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":727
+ *         cdef float cursor_y_before  # cursor y sampled before each draw, to detect advancement
+ * 
+ *         cdef PyObject *row_start = child             # <<<<<<<<<<<<<<
+ *         while (<uiItem>row_start) is not None:
+ *             # Width budget: first row uses full content width; wrapped rows use
+*/
+  __pyx_v_row_start = __pyx_v_child;
+
+  /* "dearcygui/layout.pyx":728
+ * 
+ *         cdef PyObject *row_start = child
+ *         while (<uiItem>row_start) is not None:             # <<<<<<<<<<<<<<
+ *             # Width budget: first row uses full content width; wrapped rows use
+ *             # the narrower region starting at wrap_start_x.
+*/
+  while (1) {
+    __pyx_t_1 = (((PyObject *)__pyx_v_row_start) != Py_None);
+    if (!__pyx_t_1) break;
+
+    /* "dearcygui/layout.pyx":731
+ *             # Width budget: first row uses full content width; wrapped rows use
+ *             # the narrower region starting at wrap_start_x.
+ *             row_avail = available_width if is_first_row else (end_x - wrap_start_x)             # <<<<<<<<<<<<<<
+ *             row_sx = parent_start_x if is_first_row else wrap_start_x
+ * 
+*/
+    if (__pyx_v_is_first_row) {
+      __pyx_t_2 = __pyx_v_available_width;
+    } else {
+      __pyx_t_2 = (__pyx_v_end_x - __pyx_v_wrap_start_x);
+    }
+    __pyx_v_row_avail = __pyx_t_2;
+
+    /* "dearcygui/layout.pyx":732
+ *             # the narrower region starting at wrap_start_x.
+ *             row_avail = available_width if is_first_row else (end_x - wrap_start_x)
+ *             row_sx = parent_start_x if is_first_row else wrap_start_x             # <<<<<<<<<<<<<<
+ * 
+ *             # Pre-pass: walk siblings to determine which items belong to this row
+*/
+    if (__pyx_v_is_first_row) {
+      __pyx_t_2 = __pyx_v_parent_start_x;
+    } else {
+      __pyx_t_2 = __pyx_v_wrap_start_x;
+    }
+    __pyx_v_row_sx = __pyx_t_2;
+
+    /* "dearcygui/layout.pyx":745
+ *             # The row-break condition uses n_with_size (traversed items only), so
+ *             # hidden items never cause a row break by themselves.
+ *             expected_size = 0.             # <<<<<<<<<<<<<<
+ *             n_with_size = 0
+ *             last_with_size = NULL
+*/
+    __pyx_v_expected_size = 0.;
+
+    /* "dearcygui/layout.pyx":746
+ *             # hidden items never cause a row break by themselves.
+ *             expected_size = 0.
+ *             n_with_size = 0             # <<<<<<<<<<<<<<
+ *             last_with_size = NULL
+ *             s = row_start
+*/
+    __pyx_v_n_with_size = 0;
+
+    /* "dearcygui/layout.pyx":747
+ *             expected_size = 0.
+ *             n_with_size = 0
+ *             last_with_size = NULL             # <<<<<<<<<<<<<<
+ *             s = row_start
+ *             while (<uiItem>s) is not None:
+*/
+    __pyx_v_last_with_size = NULL;
+
+    /* "dearcygui/layout.pyx":748
+ *             n_with_size = 0
+ *             last_with_size = NULL
+ *             s = row_start             # <<<<<<<<<<<<<<
+ *             while (<uiItem>s) is not None:
+ *                 if (<uiItem>s).state.cap.has_rect_size and (<uiItem>s).state.cur.traversed:
+*/
+    __pyx_v_s = __pyx_v_row_start;
+
+    /* "dearcygui/layout.pyx":749
+ *             last_with_size = NULL
+ *             s = row_start
+ *             while (<uiItem>s) is not None:             # <<<<<<<<<<<<<<
+ *                 if (<uiItem>s).state.cap.has_rect_size and (<uiItem>s).state.cur.traversed:
+ *                     sz = (<uiItem>s).state.cur.rect_size.x
+*/
+    while (1) {
+      __pyx_t_1 = (((PyObject *)__pyx_v_s) != Py_None);
+      if (!__pyx_t_1) break;
+
+      /* "dearcygui/layout.pyx":750
+ *             s = row_start
+ *             while (<uiItem>s) is not None:
+ *                 if (<uiItem>s).state.cap.has_rect_size and (<uiItem>s).state.cur.traversed:             # <<<<<<<<<<<<<<
+ *                     sz = (<uiItem>s).state.cur.rect_size.x
+ *                     next_sz = expected_size + (spacing_x if n_with_size > 0 else 0.) + sz
+*/
+      if (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.cap.has_rect_size) {
+      } else {
+        __pyx_t_1 = ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.cap.has_rect_size;
+        goto __pyx_L10_bool_binop_done;
+      }
+      __pyx_t_1 = ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.cur.traversed;
+      __pyx_L10_bool_binop_done:;
+      if (__pyx_t_1) {
+
+        /* "dearcygui/layout.pyx":751
+ *             while (<uiItem>s) is not None:
+ *                 if (<uiItem>s).state.cap.has_rect_size and (<uiItem>s).state.cur.traversed:
+ *                     sz = (<uiItem>s).state.cur.rect_size.x             # <<<<<<<<<<<<<<
+ *                     next_sz = expected_size + (spacing_x if n_with_size > 0 else 0.) + sz
+ *                     # Overflow: stop here (only when wrapping is allowed)
+*/
+        __pyx_t_2 = ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.cur.rect_size.x;
+        __pyx_v_sz = __pyx_t_2;
+
+        /* "dearcygui/layout.pyx":752
+ *                 if (<uiItem>s).state.cap.has_rect_size and (<uiItem>s).state.cur.traversed:
+ *                     sz = (<uiItem>s).state.cur.rect_size.x
+ *                     next_sz = expected_size + (spacing_x if n_with_size > 0 else 0.) + sz             # <<<<<<<<<<<<<<
+ *                     # Overflow: stop here (only when wrapping is allowed)
+ *                     if not(self._no_wrap) and next_sz > row_avail and n_with_size > 0:
+*/
+        __pyx_t_1 = (__pyx_v_n_with_size > 0);
+        if (__pyx_t_1) {
+          __pyx_t_3 = __pyx_v_spacing_x;
+        } else {
+          __pyx_t_3 = 0.;
+        }
+        __pyx_v_next_sz = ((__pyx_v_expected_size + __pyx_t_3) + __pyx_v_sz);
+
+        /* "dearcygui/layout.pyx":754
+ *                     next_sz = expected_size + (spacing_x if n_with_size > 0 else 0.) + sz
+ *                     # Overflow: stop here (only when wrapping is allowed)
+ *                     if not(self._no_wrap) and next_sz > row_avail and n_with_size > 0:             # <<<<<<<<<<<<<<
+ *                         break
+ *                     expected_size = next_sz
+*/
+        __pyx_t_4 = (!__pyx_v_self->_no_wrap);
+        if (__pyx_t_4) {
+        } else {
+          __pyx_t_1 = __pyx_t_4;
+          goto __pyx_L13_bool_binop_done;
+        }
+        __pyx_t_4 = (__pyx_v_next_sz > __pyx_v_row_avail);
+        if (__pyx_t_4) {
+        } else {
+          __pyx_t_1 = __pyx_t_4;
+          goto __pyx_L13_bool_binop_done;
+        }
+        __pyx_t_4 = (__pyx_v_n_with_size > 0);
+        __pyx_t_1 = __pyx_t_4;
+        __pyx_L13_bool_binop_done:;
+        if (__pyx_t_1) {
+
+          /* "dearcygui/layout.pyx":755
+ *                     # Overflow: stop here (only when wrapping is allowed)
+ *                     if not(self._no_wrap) and next_sz > row_avail and n_with_size > 0:
+ *                         break             # <<<<<<<<<<<<<<
+ *                     expected_size = next_sz
+ *                     n_with_size += 1
+*/
+          goto __pyx_L8_break;
+
+          /* "dearcygui/layout.pyx":754
+ *                     next_sz = expected_size + (spacing_x if n_with_size > 0 else 0.) + sz
+ *                     # Overflow: stop here (only when wrapping is allowed)
+ *                     if not(self._no_wrap) and next_sz > row_avail and n_with_size > 0:             # <<<<<<<<<<<<<<
+ *                         break
+ *                     expected_size = next_sz
+*/
+        }
+
+        /* "dearcygui/layout.pyx":756
+ *                     if not(self._no_wrap) and next_sz > row_avail and n_with_size > 0:
+ *                         break
+ *                     expected_size = next_sz             # <<<<<<<<<<<<<<
+ *                     n_with_size += 1
+ *                     last_with_size = s
+*/
+        __pyx_v_expected_size = __pyx_v_next_sz;
+
+        /* "dearcygui/layout.pyx":757
+ *                         break
+ *                     expected_size = next_sz
+ *                     n_with_size += 1             # <<<<<<<<<<<<<<
+ *                     last_with_size = s
+ *                 s = <PyObject*>(<uiItem>s).next_sibling
+*/
+        __pyx_v_n_with_size = (__pyx_v_n_with_size + 1);
+
+        /* "dearcygui/layout.pyx":758
+ *                     expected_size = next_sz
+ *                     n_with_size += 1
+ *                     last_with_size = s             # <<<<<<<<<<<<<<
+ *                 s = <PyObject*>(<uiItem>s).next_sibling
+ *             # s is None (end of list) or the first item that starts the next row
+*/
+        __pyx_v_last_with_size = __pyx_v_s;
+
+        /* "dearcygui/layout.pyx":750
+ *             s = row_start
+ *             while (<uiItem>s) is not None:
+ *                 if (<uiItem>s).state.cap.has_rect_size and (<uiItem>s).state.cur.traversed:             # <<<<<<<<<<<<<<
+ *                     sz = (<uiItem>s).state.cur.rect_size.x
+ *                     next_sz = expected_size + (spacing_x if n_with_size > 0 else 0.) + sz
+*/
+      }
+
+      /* "dearcygui/layout.pyx":759
+ *                     n_with_size += 1
+ *                     last_with_size = s
+ *                 s = <PyObject*>(<uiItem>s).next_sibling             # <<<<<<<<<<<<<<
+ *             # s is None (end of list) or the first item that starts the next row
+ *             row_end = s
+*/
+      __pyx_v_s = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->__pyx_base.next_sibling);
+    }
+    __pyx_L8_break:;
+
+    /* "dearcygui/layout.pyx":761
+ *                 s = <PyObject*>(<uiItem>s).next_sibling
+ *             # s is None (end of list) or the first item that starts the next row
+ *             row_end = s             # <<<<<<<<<<<<<<
+ * 
+ *             # Compute the row's start x and per-gap spacing
+*/
+    __pyx_v_row_end = __pyx_v_s;
+
+    /* "dearcygui/layout.pyx":764
+ * 
+ *             # Compute the row's start x and per-gap spacing
+ *             row_spacing_x = spacing_x             # <<<<<<<<<<<<<<
+ *             if self._alignment_mode == Alignment.RIGHT:
+ *                 target_x = max(row_sx, end_x - expected_size)
+*/
+    __pyx_v_row_spacing_x = __pyx_v_spacing_x;
+
+    /* "dearcygui/layout.pyx":765
+ *             # Compute the row's start x and per-gap spacing
+ *             row_spacing_x = spacing_x
+ *             if self._alignment_mode == Alignment.RIGHT:             # <<<<<<<<<<<<<<
+ *                 target_x = max(row_sx, end_x - expected_size)
+ *             elif self._alignment_mode == Alignment.CENTER:
+*/
+    __pyx_t_1 = (__pyx_v_self->_alignment_mode == __pyx_t_9dearcygui_5types_Alignment::RIGHT);
+    if (__pyx_t_1) {
+
+      /* "dearcygui/layout.pyx":766
+ *             row_spacing_x = spacing_x
+ *             if self._alignment_mode == Alignment.RIGHT:
+ *                 target_x = max(row_sx, end_x - expected_size)             # <<<<<<<<<<<<<<
+ *             elif self._alignment_mode == Alignment.CENTER:
+ *                 target_x = row_sx + floor((row_avail - expected_size) / 2.)
+*/
+      __pyx_t_2 = (__pyx_v_end_x - __pyx_v_expected_size);
+      __pyx_t_5 = __pyx_v_row_sx;
+      __pyx_t_1 = (__pyx_t_2 > __pyx_t_5);
+      if (__pyx_t_1) {
+        __pyx_t_6 = __pyx_t_2;
+      } else {
+        __pyx_t_6 = __pyx_t_5;
+      }
+      __pyx_v_target_x = __pyx_t_6;
+
+      /* "dearcygui/layout.pyx":765
+ *             # Compute the row's start x and per-gap spacing
+ *             row_spacing_x = spacing_x
+ *             if self._alignment_mode == Alignment.RIGHT:             # <<<<<<<<<<<<<<
+ *                 target_x = max(row_sx, end_x - expected_size)
+ *             elif self._alignment_mode == Alignment.CENTER:
+*/
+      goto __pyx_L16;
+    }
+
+    /* "dearcygui/layout.pyx":767
+ *             if self._alignment_mode == Alignment.RIGHT:
+ *                 target_x = max(row_sx, end_x - expected_size)
+ *             elif self._alignment_mode == Alignment.CENTER:             # <<<<<<<<<<<<<<
+ *                 target_x = row_sx + floor((row_avail - expected_size) / 2.)
+ *                 target_x = max(row_sx, target_x)
+*/
+    __pyx_t_1 = (__pyx_v_self->_alignment_mode == __pyx_t_9dearcygui_5types_Alignment::CENTER);
+    if (__pyx_t_1) {
+
+      /* "dearcygui/layout.pyx":768
+ *                 target_x = max(row_sx, end_x - expected_size)
+ *             elif self._alignment_mode == Alignment.CENTER:
+ *                 target_x = row_sx + floor((row_avail - expected_size) / 2.)             # <<<<<<<<<<<<<<
+ *                 target_x = max(row_sx, target_x)
+ *             else:  # JUSTIFIED
+*/
+      try {
+        __pyx_t_3 = std::floor((((double)(__pyx_v_row_avail - __pyx_v_expected_size)) / 2.));
+      } catch(...) {
+        PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+        __Pyx_CppExn2PyErr();
+        __Pyx_PyGILState_Release(__pyx_gilstate_save);
+        __PYX_ERR(0, 768, __pyx_L1_error)
+      }
+      __pyx_v_target_x = (__pyx_v_row_sx + __pyx_t_3);
+
+      /* "dearcygui/layout.pyx":769
+ *             elif self._alignment_mode == Alignment.CENTER:
+ *                 target_x = row_sx + floor((row_avail - expected_size) / 2.)
+ *                 target_x = max(row_sx, target_x)             # <<<<<<<<<<<<<<
+ *             else:  # JUSTIFIED
+ *                 target_x = row_sx
+*/
+      __pyx_t_6 = __pyx_v_target_x;
+      __pyx_t_2 = __pyx_v_row_sx;
+      __pyx_t_1 = (__pyx_t_6 > __pyx_t_2);
+      if (__pyx_t_1) {
+        __pyx_t_5 = __pyx_t_6;
+      } else {
+        __pyx_t_5 = __pyx_t_2;
+      }
+      __pyx_v_target_x = __pyx_t_5;
+
+      /* "dearcygui/layout.pyx":767
+ *             if self._alignment_mode == Alignment.RIGHT:
+ *                 target_x = max(row_sx, end_x - expected_size)
+ *             elif self._alignment_mode == Alignment.CENTER:             # <<<<<<<<<<<<<<
+ *                 target_x = row_sx + floor((row_avail - expected_size) / 2.)
+ *                 target_x = max(row_sx, target_x)
+*/
+      goto __pyx_L16;
+    }
+
+    /* "dearcygui/layout.pyx":771
+ *                 target_x = max(row_sx, target_x)
+ *             else:  # JUSTIFIED
+ *                 target_x = row_sx             # <<<<<<<<<<<<<<
+ *                 if n_with_size > 1:
+ *                     # Spread the extra space evenly; floor() avoids overshoot
+*/
+    /*else*/ {
+      __pyx_v_target_x = __pyx_v_row_sx;
+
+      /* "dearcygui/layout.pyx":772
+ *             else:  # JUSTIFIED
+ *                 target_x = row_sx
+ *                 if n_with_size > 1:             # <<<<<<<<<<<<<<
+ *                     # Spread the extra space evenly; floor() avoids overshoot
+ *                     row_spacing_x = spacing_x + max(0., floor(
+*/
+      __pyx_t_1 = (__pyx_v_n_with_size > 1);
+      if (__pyx_t_1) {
+
+        /* "dearcygui/layout.pyx":774
+ *                 if n_with_size > 1:
+ *                     # Spread the extra space evenly; floor() avoids overshoot
+ *                     row_spacing_x = spacing_x + max(0., floor(             # <<<<<<<<<<<<<<
+ *                         (row_avail - expected_size) / (n_with_size - 1)))
+ * 
+*/
+        try {
+          __pyx_t_5 = std::floor(((__pyx_v_row_avail - __pyx_v_expected_size) / ((float)(__pyx_v_n_with_size - 1))));
+        } catch(...) {
+          PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+          __Pyx_CppExn2PyErr();
+          __Pyx_PyGILState_Release(__pyx_gilstate_save);
+          __PYX_ERR(0, 774, __pyx_L1_error)
+        }
+        __pyx_t_3 = 0.;
+        __pyx_t_1 = (__pyx_t_5 > __pyx_t_3);
+        if (__pyx_t_1) {
+          __pyx_t_7 = __pyx_t_5;
+        } else {
+          __pyx_t_7 = __pyx_t_3;
+        }
+        __pyx_v_row_spacing_x = (__pyx_v_spacing_x + __pyx_t_7);
+
+        /* "dearcygui/layout.pyx":772
+ *             else:  # JUSTIFIED
+ *                 target_x = row_sx
+ *                 if n_with_size > 1:             # <<<<<<<<<<<<<<
+ *                     # Spread the extra space evenly; floor() avoids overshoot
+ *                     row_spacing_x = spacing_x + max(0., floor(
+*/
+      }
+    }
+    __pyx_L16:;
+
+    /* "dearcygui/layout.pyx":778
+ * 
+ *             # Position the ImGui cursor at the row's starting point
+ *             imgui.SetCursorScreenPos(imgui.ImVec2(target_x, cur_y))             # <<<<<<<<<<<<<<
+ * 
+ *             # Draw pass: emit items with SameLine/SetCursorScreenPos between items.
+*/
+    ImGui::SetCursorScreenPos(ImVec2(__pyx_v_target_x, __pyx_v_cur_y));
+
+    /* "dearcygui/layout.pyx":785
+ *             # an item was actually drawn, matching the __draw_item_left_wrap technique:
+ *             # hidden items do not flip first_on_row and leave the row state consistent.
+ *             s = row_start             # <<<<<<<<<<<<<<
+ *             first_on_row = True
+ *             while s is not row_end:
+*/
+    __pyx_v_s = __pyx_v_row_start;
+
+    /* "dearcygui/layout.pyx":786
+ *             # hidden items do not flip first_on_row and leave the row state consistent.
+ *             s = row_start
+ *             first_on_row = True             # <<<<<<<<<<<<<<
+ *             while s is not row_end:
+ *                 has_sz = (<uiItem>s).state.cap.has_rect_size
+*/
+    __pyx_v_first_on_row = 1;
+
+    /* "dearcygui/layout.pyx":787
+ *             s = row_start
+ *             first_on_row = True
+ *             while s is not row_end:             # <<<<<<<<<<<<<<
+ *                 has_sz = (<uiItem>s).state.cap.has_rect_size
+ * 
+*/
+    while (1) {
+      __pyx_t_1 = (__pyx_v_s != __pyx_v_row_end);
+      if (!__pyx_t_1) break;
+
+      /* "dearcygui/layout.pyx":788
+ *             first_on_row = True
+ *             while s is not row_end:
+ *                 has_sz = (<uiItem>s).state.cap.has_rect_size             # <<<<<<<<<<<<<<
+ * 
+ *                 if not first_on_row:
+*/
+      __pyx_t_1 = ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.cap.has_rect_size;
+      __pyx_v_has_sz = __pyx_t_1;
+
+      /* "dearcygui/layout.pyx":790
+ *                 has_sz = (<uiItem>s).state.cap.has_rect_size
+ * 
+ *                 if not first_on_row:             # <<<<<<<<<<<<<<
+ *                     if has_sz:
+ *                         if s == last_with_size and n_with_size > 1 and \
+*/
+      __pyx_t_1 = (!__pyx_v_first_on_row);
+      if (__pyx_t_1) {
+
+        /* "dearcygui/layout.pyx":791
+ * 
+ *                 if not first_on_row:
+ *                     if has_sz:             # <<<<<<<<<<<<<<
+ *                         if s == last_with_size and n_with_size > 1 and \
+ *                            (self._alignment_mode == Alignment.RIGHT or
+*/
+        if (__pyx_v_has_sz) {
+
+          /* "dearcygui/layout.pyx":792
+ *                 if not first_on_row:
+ *                     if has_sz:
+ *                         if s == last_with_size and n_with_size > 1 and \             # <<<<<<<<<<<<<<
+ *                            (self._alignment_mode == Alignment.RIGHT or
+ *                             self._alignment_mode == Alignment.JUSTIFIED) and \
+*/
+          __pyx_t_4 = (__pyx_v_s == __pyx_v_last_with_size);
+          if (__pyx_t_4) {
+          } else {
+            __pyx_t_1 = __pyx_t_4;
+            goto __pyx_L23_bool_binop_done;
+          }
+          __pyx_t_4 = (__pyx_v_n_with_size > 1);
+          if (__pyx_t_4) {
+          } else {
+            __pyx_t_1 = __pyx_t_4;
+            goto __pyx_L23_bool_binop_done;
+          }
+
+          /* "dearcygui/layout.pyx":793
+ *                     if has_sz:
+ *                         if s == last_with_size and n_with_size > 1 and \
+ *                            (self._alignment_mode == Alignment.RIGHT or             # <<<<<<<<<<<<<<
+ *                             self._alignment_mode == Alignment.JUSTIFIED) and \
+ *                            (<uiItem>s).state.cur.rect_size.x == (<uiItem>s).state.prev.rect_size.x:
+*/
+          __pyx_t_4 = (__pyx_v_self->_alignment_mode == __pyx_t_9dearcygui_5types_Alignment::RIGHT);
+          if (!__pyx_t_4) {
+          } else {
+            goto __pyx_L26_next_and;
+          }
+
+          /* "dearcygui/layout.pyx":794
+ *                         if s == last_with_size and n_with_size > 1 and \
+ *                            (self._alignment_mode == Alignment.RIGHT or
+ *                             self._alignment_mode == Alignment.JUSTIFIED) and \             # <<<<<<<<<<<<<<
+ *                            (<uiItem>s).state.cur.rect_size.x == (<uiItem>s).state.prev.rect_size.x:
+ *                             # Snap right edge to end_x (eliminates floor() rounding error).
+*/
+          __pyx_t_4 = (__pyx_v_self->_alignment_mode == __pyx_t_9dearcygui_5types_Alignment::JUSTIFIED);
+          if (__pyx_t_4) {
+          } else {
+            __pyx_t_1 = __pyx_t_4;
+            goto __pyx_L23_bool_binop_done;
+          }
+          __pyx_L26_next_and:;
+
+          /* "dearcygui/layout.pyx":795
+ *                            (self._alignment_mode == Alignment.RIGHT or
+ *                             self._alignment_mode == Alignment.JUSTIFIED) and \
+ *                            (<uiItem>s).state.cur.rect_size.x == (<uiItem>s).state.prev.rect_size.x:             # <<<<<<<<<<<<<<
+ *                             # Snap right edge to end_x (eliminates floor() rounding error).
+ *                             # Use cur_y explicitly: GetCursorScreenPos().y may be wrong here
+*/
+          __pyx_t_4 = (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.cur.rect_size.x == ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.prev.rect_size.x);
+          __pyx_t_1 = __pyx_t_4;
+          __pyx_L23_bool_binop_done:;
+
+          /* "dearcygui/layout.pyx":792
+ *                 if not first_on_row:
+ *                     if has_sz:
+ *                         if s == last_with_size and n_with_size > 1 and \             # <<<<<<<<<<<<<<
+ *                            (self._alignment_mode == Alignment.RIGHT or
+ *                             self._alignment_mode == Alignment.JUSTIFIED) and \
+*/
+          if (__pyx_t_1) {
+
+            /* "dearcygui/layout.pyx":801
+ *                             # no SameLine was called (e.g. after a visible item drew and
+ *                             # advanced the cursor), y would be the next-row y.
+ *                             imgui.SetCursorScreenPos(imgui.ImVec2(             # <<<<<<<<<<<<<<
+ *                                 end_x - (<uiItem>s).state.cur.rect_size.x,
+ *                                 cur_y))
+*/
+            ImGui::SetCursorScreenPos(ImVec2((__pyx_v_end_x - ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.cur.rect_size.x), __pyx_v_cur_y));
+
+            /* "dearcygui/layout.pyx":792
+ *                 if not first_on_row:
+ *                     if has_sz:
+ *                         if s == last_with_size and n_with_size > 1 and \             # <<<<<<<<<<<<<<
+ *                            (self._alignment_mode == Alignment.RIGHT or
+ *                             self._alignment_mode == Alignment.JUSTIFIED) and \
+*/
+            goto __pyx_L22;
+          }
+
+          /* "dearcygui/layout.pyx":805
+ *                                 cur_y))
+ *                         else:
+ *                             imgui.SameLine(0., row_spacing_x)             # <<<<<<<<<<<<<<
+ *                     else:
+ *                         # No-size items (tooltips etc.): attach inline, no gap
+*/
+          /*else*/ {
+            ImGui::SameLine(0., __pyx_v_row_spacing_x);
+          }
+          __pyx_L22:;
+
+          /* "dearcygui/layout.pyx":791
+ * 
+ *                 if not first_on_row:
+ *                     if has_sz:             # <<<<<<<<<<<<<<
+ *                         if s == last_with_size and n_with_size > 1 and \
+ *                            (self._alignment_mode == Alignment.RIGHT or
+*/
+          goto __pyx_L21;
+        }
+
+        /* "dearcygui/layout.pyx":808
+ *                     else:
+ *                         # No-size items (tooltips etc.): attach inline, no gap
+ *                         imgui.SameLine(0., 0.)             # <<<<<<<<<<<<<<
+ * 
+ *                 cursor_y_before = imgui.GetCursorScreenPos().y
+*/
+        /*else*/ {
+          ImGui::SameLine(0., 0.);
+        }
+        __pyx_L21:;
+
+        /* "dearcygui/layout.pyx":790
+ *                 has_sz = (<uiItem>s).state.cap.has_rect_size
+ * 
+ *                 if not first_on_row:             # <<<<<<<<<<<<<<
+ *                     if has_sz:
+ *                         if s == last_with_size and n_with_size > 1 and \
+*/
+      }
+
+      /* "dearcygui/layout.pyx":810
+ *                         imgui.SameLine(0., 0.)
+ * 
+ *                 cursor_y_before = imgui.GetCursorScreenPos().y             # <<<<<<<<<<<<<<
+ *                 (<uiItem>s).draw()
+ * 
+*/
+      __pyx_t_5 = ImGui::GetCursorScreenPos().y;
+      __pyx_v_cursor_y_before = __pyx_t_5;
+
+      /* "dearcygui/layout.pyx":811
+ * 
+ *                 cursor_y_before = imgui.GetCursorScreenPos().y
+ *                 (<uiItem>s).draw()             # <<<<<<<<<<<<<<
+ * 
+ *                 # Track size changes so the parent knows to redraw next frame
+*/
+      ((struct __pyx_vtabstruct_9dearcygui_4core_uiItem *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->__pyx_base.__pyx_vtab)->draw(((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s));
+
+      /* "dearcygui/layout.pyx":814
+ * 
+ *                 # Track size changes so the parent knows to redraw next frame
+ *                 if (<uiItem>s).state.cur.rect_size.x != (<uiItem>s).state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
+ *                    (<uiItem>s).state.cur.rect_size.y != (<uiItem>s).state.prev.rect_size.y or \
+ *                    (<uiItem>s).state.cur.rendered != (<uiItem>s).state.prev.rendered:
+*/
+      __pyx_t_4 = (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.cur.rect_size.x != ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.prev.rect_size.x);
+      if (!__pyx_t_4) {
+      } else {
+        __pyx_t_1 = __pyx_t_4;
+        goto __pyx_L29_bool_binop_done;
+      }
+
+      /* "dearcygui/layout.pyx":815
+ *                 # Track size changes so the parent knows to redraw next frame
+ *                 if (<uiItem>s).state.cur.rect_size.x != (<uiItem>s).state.prev.rect_size.x or \
+ *                    (<uiItem>s).state.cur.rect_size.y != (<uiItem>s).state.prev.rect_size.y or \             # <<<<<<<<<<<<<<
+ *                    (<uiItem>s).state.cur.rendered != (<uiItem>s).state.prev.rendered:
+ *                     changed = True
+*/
+      __pyx_t_4 = (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.cur.rect_size.y != ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.prev.rect_size.y);
+      if (!__pyx_t_4) {
+      } else {
+        __pyx_t_1 = __pyx_t_4;
+        goto __pyx_L29_bool_binop_done;
+      }
+
+      /* "dearcygui/layout.pyx":816
+ *                 if (<uiItem>s).state.cur.rect_size.x != (<uiItem>s).state.prev.rect_size.x or \
+ *                    (<uiItem>s).state.cur.rect_size.y != (<uiItem>s).state.prev.rect_size.y or \
+ *                    (<uiItem>s).state.cur.rendered != (<uiItem>s).state.prev.rendered:             # <<<<<<<<<<<<<<
+ *                     changed = True
+ * 
+*/
+      __pyx_t_4 = (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.cur.rendered != ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.prev.rendered);
+      __pyx_t_1 = __pyx_t_4;
+      __pyx_L29_bool_binop_done:;
+
+      /* "dearcygui/layout.pyx":814
+ * 
+ *                 # Track size changes so the parent knows to redraw next frame
+ *                 if (<uiItem>s).state.cur.rect_size.x != (<uiItem>s).state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
+ *                    (<uiItem>s).state.cur.rect_size.y != (<uiItem>s).state.prev.rect_size.y or \
+ *                    (<uiItem>s).state.cur.rendered != (<uiItem>s).state.prev.rendered:
+*/
+      if (__pyx_t_1) {
+
+        /* "dearcygui/layout.pyx":817
+ *                    (<uiItem>s).state.cur.rect_size.y != (<uiItem>s).state.prev.rect_size.y or \
+ *                    (<uiItem>s).state.cur.rendered != (<uiItem>s).state.prev.rendered:
+ *                     changed = True             # <<<<<<<<<<<<<<
+ * 
+ *                 # Only mark the row as having a visible item when the cursor
+*/
+        __pyx_v_changed = 1;
+
+        /* "dearcygui/layout.pyx":814
+ * 
+ *                 # Track size changes so the parent knows to redraw next frame
+ *                 if (<uiItem>s).state.cur.rect_size.x != (<uiItem>s).state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
+ *                    (<uiItem>s).state.cur.rect_size.y != (<uiItem>s).state.prev.rect_size.y or \
+ *                    (<uiItem>s).state.cur.rendered != (<uiItem>s).state.prev.rendered:
+*/
+      }
+
+      /* "dearcygui/layout.pyx":823
+ *                 # (show=False) return early from draw() without calling ItemSize,
+ *                 # so the cursor does not move and first_on_row is left unchanged.
+ *                 if imgui.GetCursorScreenPos().y > cursor_y_before:             # <<<<<<<<<<<<<<
+ *                     first_on_row = False
+ * 
+*/
+      __pyx_t_1 = (ImGui::GetCursorScreenPos().y > __pyx_v_cursor_y_before);
+      if (__pyx_t_1) {
+
+        /* "dearcygui/layout.pyx":824
+ *                 # so the cursor does not move and first_on_row is left unchanged.
+ *                 if imgui.GetCursorScreenPos().y > cursor_y_before:
+ *                     first_on_row = False             # <<<<<<<<<<<<<<
+ * 
+ *                 s = <PyObject*>(<uiItem>s).next_sibling
+*/
+        __pyx_v_first_on_row = 0;
+
+        /* "dearcygui/layout.pyx":823
+ *                 # (show=False) return early from draw() without calling ItemSize,
+ *                 # so the cursor does not move and first_on_row is left unchanged.
+ *                 if imgui.GetCursorScreenPos().y > cursor_y_before:             # <<<<<<<<<<<<<<
+ *                     first_on_row = False
+ * 
+*/
+      }
+
+      /* "dearcygui/layout.pyx":826
+ *                     first_on_row = False
+ * 
+ *                 s = <PyObject*>(<uiItem>s).next_sibling             # <<<<<<<<<<<<<<
+ * 
+ *             # If the row ended with a hidden item, SameLine will have pulled the
+*/
+      __pyx_v_s = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->__pyx_base.next_sibling);
+    }
+
+    /* "dearcygui/layout.pyx":834
+ *             # with IsSameLine=true, which uses CurrLineSize.y (the max row height
+ *             # preserved by SameLine) to advance the cursor past the row.
+ *             if not first_on_row and not (imgui.GetCursorScreenPos().y > cur_y):             # <<<<<<<<<<<<<<
+ *                 imgui.SameLine(0., 0.)
+ *                 imgui.Dummy(imgui.ImVec2(0., 0.))
+*/
+    __pyx_t_4 = (!__pyx_v_first_on_row);
+    if (__pyx_t_4) {
+    } else {
+      __pyx_t_1 = __pyx_t_4;
+      goto __pyx_L34_bool_binop_done;
+    }
+    __pyx_t_4 = (!(ImGui::GetCursorScreenPos().y > __pyx_v_cur_y));
+    __pyx_t_1 = __pyx_t_4;
+    __pyx_L34_bool_binop_done:;
+    if (__pyx_t_1) {
+
+      /* "dearcygui/layout.pyx":835
+ *             # preserved by SameLine) to advance the cursor past the row.
+ *             if not first_on_row and not (imgui.GetCursorScreenPos().y > cur_y):
+ *                 imgui.SameLine(0., 0.)             # <<<<<<<<<<<<<<
+ *                 imgui.Dummy(imgui.ImVec2(0., 0.))
+ * 
+*/
+      ImGui::SameLine(0., 0.);
+
+      /* "dearcygui/layout.pyx":836
+ *             if not first_on_row and not (imgui.GetCursorScreenPos().y > cur_y):
+ *                 imgui.SameLine(0., 0.)
+ *                 imgui.Dummy(imgui.ImVec2(0., 0.))             # <<<<<<<<<<<<<<
+ * 
+ *             # After the row ImGui's cursor is on the next line; record its y
+*/
+      ImGui::Dummy(ImVec2(0., 0.));
+
+      /* "dearcygui/layout.pyx":834
+ *             # with IsSameLine=true, which uses CurrLineSize.y (the max row height
+ *             # preserved by SameLine) to advance the cursor past the row.
+ *             if not first_on_row and not (imgui.GetCursorScreenPos().y > cur_y):             # <<<<<<<<<<<<<<
+ *                 imgui.SameLine(0., 0.)
+ *                 imgui.Dummy(imgui.ImVec2(0., 0.))
+*/
+    }
+
+    /* "dearcygui/layout.pyx":839
+ * 
+ *             # After the row ImGui's cursor is on the next line; record its y
+ *             cur_y = imgui.GetCursorScreenPos().y             # <<<<<<<<<<<<<<
+ *             row_start = row_end
+ *             is_first_row = False
+*/
+    __pyx_t_5 = ImGui::GetCursorScreenPos().y;
+    __pyx_v_cur_y = __pyx_t_5;
+
+    /* "dearcygui/layout.pyx":840
+ *             # After the row ImGui's cursor is on the next line; record its y
+ *             cur_y = imgui.GetCursorScreenPos().y
+ *             row_start = row_end             # <<<<<<<<<<<<<<
+ *             is_first_row = False
+ *         return changed
+*/
+    __pyx_v_row_start = __pyx_v_row_end;
+
+    /* "dearcygui/layout.pyx":841
+ *             cur_y = imgui.GetCursorScreenPos().y
+ *             row_start = row_end
+ *             is_first_row = False             # <<<<<<<<<<<<<<
+ *         return changed
+ * 
+*/
+    __pyx_v_is_first_row = 0;
+  }
+
+  /* "dearcygui/layout.pyx":842
+ *             row_start = row_end
+ *             is_first_row = False
+ *         return changed             # <<<<<<<<<<<<<<
  * 
  *     cdef bint draw_item(self) noexcept nogil:
- *         if self.last_widgets_child is None:# or \             # <<<<<<<<<<<<<<
- *             #cur_content_area.x <= 0 or \
- *             #cur_content_area.y <= 0: # <= 0 occurs when not visible
+*/
+  __pyx_r = __pyx_v_changed;
+  goto __pyx_L0;
+
+  /* "dearcygui/layout.pyx":664
+ *         return changed
+ * 
+ *     cdef bint __draw_item_aligned(self) noexcept nogil:             # <<<<<<<<<<<<<<
+ *         """
+ *         RIGHT / CENTER / JUSTIFIED alignment.
+*/
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+  __Pyx_WriteUnraisable("dearcygui.layout.HorizontalLayout._HorizontalLayout__draw_item_aligned", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __pyx_r = 0;
+  __Pyx_PyGILState_Release(__pyx_gilstate_save);
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+/* "dearcygui/layout.pyx":844
+ *         return changed
+ * 
+ *     cdef bint draw_item(self) noexcept nogil:             # <<<<<<<<<<<<<<
+ *         if self.last_widgets_child is None:
+ *             return False
+*/
+
+static int __pyx_f_9dearcygui_6layout_16HorizontalLayout_draw_item(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *__pyx_v_self) {
+  int __pyx_v_forced;
+  int __pyx_v_children_changed;
+  Vec2 __pyx_v_parent_size_backup;
+  Vec2 __pyx_v_parent_pos_backup;
+  int __pyx_r;
+  int __pyx_t_1;
+  Vec2 __pyx_t_2;
+  int __pyx_t_3;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyGILState_STATE __pyx_gilstate_save;
+
+  /* "dearcygui/layout.pyx":845
+ * 
+ *     cdef bint draw_item(self) noexcept nogil:
+ *         if self.last_widgets_child is None:             # <<<<<<<<<<<<<<
+ *             return False
+ * 
 */
   __pyx_t_1 = (((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child) == Py_None);
   if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":512
- *             #cur_content_area.y <= 0: # <= 0 occurs when not visible
- *             # self.set_hidden_no_handler_and_propagate_to_children_with_handlers()
+    /* "dearcygui/layout.pyx":846
+ *     cdef bint draw_item(self) noexcept nogil:
+ *         if self.last_widgets_child is None:
  *             return False             # <<<<<<<<<<<<<<
- *         self.update_content_area()
- *         cdef bint changed = self.check_change()
+ * 
+ *         # Compute available content area from parent context and requested size
 */
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "dearcygui/layout.pyx":508
+    /* "dearcygui/layout.pyx":845
  * 
  *     cdef bint draw_item(self) noexcept nogil:
- *         if self.last_widgets_child is None:# or \             # <<<<<<<<<<<<<<
- *             #cur_content_area.x <= 0 or \
- *             #cur_content_area.y <= 0: # <= 0 occurs when not visible
+ *         if self.last_widgets_child is None:             # <<<<<<<<<<<<<<
+ *             return False
+ * 
 */
   }
 
-  /* "dearcygui/layout.pyx":513
- *             # self.set_hidden_no_handler_and_propagate_to_children_with_handlers()
- *             return False
+  /* "dearcygui/layout.pyx":849
+ * 
+ *         # Compute available content area from parent context and requested size
  *         self.update_content_area()             # <<<<<<<<<<<<<<
- *         cdef bint changed = self.check_change()
- *         if changed:
+ * 
+ *         # Capture _force_update before clearing it so that update_layout() callers
 */
   (void)(((struct __pyx_vtabstruct_9dearcygui_6layout_HorizontalLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.__pyx_vtab)->__pyx_base.update_content_area(((struct __pyx_obj_9dearcygui_6layout_Layout *)__pyx_v_self)));
 
-  /* "dearcygui/layout.pyx":514
- *             return False
- *         self.update_content_area()
- *         cdef bint changed = self.check_change()             # <<<<<<<<<<<<<<
- *         if changed:
- *             self.last_widgets_child.lock_and_previous_siblings()
+  /* "dearcygui/layout.pyx":853
+ *         # Capture _force_update before clearing it so that update_layout() callers
+ *         # trigger callbacks even when the layout is otherwise stable this frame.
+ *         cdef bint forced = self._force_update             # <<<<<<<<<<<<<<
+ *         self._force_update = False
+ *         cdef bint children_changed = False
 */
-  __pyx_v_changed = ((struct __pyx_vtabstruct_9dearcygui_6layout_HorizontalLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.__pyx_vtab)->__pyx_base.check_change(((struct __pyx_obj_9dearcygui_6layout_Layout *)__pyx_v_self));
+  __pyx_t_1 = __pyx_v_self->__pyx_base._force_update;
+  __pyx_v_forced = __pyx_t_1;
 
-  /* "dearcygui/layout.pyx":515
- *         self.update_content_area()
- *         cdef bint changed = self.check_change()
- *         if changed:             # <<<<<<<<<<<<<<
- *             self.last_widgets_child.lock_and_previous_siblings()
- *             with gil:
+  /* "dearcygui/layout.pyx":854
+ *         # trigger callbacks even when the layout is otherwise stable this frame.
+ *         cdef bint forced = self._force_update
+ *         self._force_update = False             # <<<<<<<<<<<<<<
+ *         cdef bint children_changed = False
+ * 
 */
-  if (__pyx_v_changed) {
+  __pyx_v_self->__pyx_base._force_update = 0;
 
-    /* "dearcygui/layout.pyx":516
- *         cdef bint changed = self.check_change()
- *         if changed:
- *             self.last_widgets_child.lock_and_previous_siblings()             # <<<<<<<<<<<<<<
- *             with gil:
- *                 self.__update_layout()
-*/
-    ((struct __pyx_vtabstruct_9dearcygui_4core_uiItem *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child->__pyx_base.__pyx_vtab)->__pyx_base.lock_and_previous_siblings(((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child));
-
-    /* "dearcygui/layout.pyx":517
- *         if changed:
- *             self.last_widgets_child.lock_and_previous_siblings()
- *             with gil:             # <<<<<<<<<<<<<<
- *                 self.__update_layout()
+  /* "dearcygui/layout.pyx":855
+ *         cdef bint forced = self._force_update
+ *         self._force_update = False
+ *         cdef bint children_changed = False             # <<<<<<<<<<<<<<
+ * 
  *         imgui.PushID(self.uuid)
+*/
+  __pyx_v_children_changed = 0;
+
+  /* "dearcygui/layout.pyx":857
+ *         cdef bint children_changed = False
+ * 
+ *         imgui.PushID(self.uuid)             # <<<<<<<<<<<<<<
+ *         imgui.BeginGroup()
+ * 
+*/
+  ImGui::PushID(__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.uuid);
+
+  /* "dearcygui/layout.pyx":858
+ * 
+ *         imgui.PushID(self.uuid)
+ *         imgui.BeginGroup()             # <<<<<<<<<<<<<<
+ * 
+ *         # Expose this layout's content area as the parent context so that children
+*/
+  ImGui::BeginGroup();
+
+  /* "dearcygui/layout.pyx":862
+ *         # Expose this layout's content area as the parent context so that children
+ *         # can resolve sizing expressions like "fillx", "fullx", etc.
+ *         cdef Vec2 parent_size_backup = self.context.viewport.parent_size             # <<<<<<<<<<<<<<
+ *         cdef Vec2 parent_pos_backup = self.context.viewport.parent_pos
+ *         self.context.viewport.parent_size = self.state.cur.content_region_size
+*/
+  __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->parent_size;
+  __pyx_v_parent_size_backup = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":863
+ *         # can resolve sizing expressions like "fillx", "fullx", etc.
+ *         cdef Vec2 parent_size_backup = self.context.viewport.parent_size
+ *         cdef Vec2 parent_pos_backup = self.context.viewport.parent_pos             # <<<<<<<<<<<<<<
+ *         self.context.viewport.parent_size = self.state.cur.content_region_size
+ *         self.context.viewport.parent_pos = ImVec2Vec2(imgui.GetCursorScreenPos())
+*/
+  __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->parent_pos;
+  __pyx_v_parent_pos_backup = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":864
+ *         cdef Vec2 parent_size_backup = self.context.viewport.parent_size
+ *         cdef Vec2 parent_pos_backup = self.context.viewport.parent_pos
+ *         self.context.viewport.parent_size = self.state.cur.content_region_size             # <<<<<<<<<<<<<<
+ *         self.context.viewport.parent_pos = ImVec2Vec2(imgui.GetCursorScreenPos())
+ * 
+*/
+  __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.state.cur.content_region_size;
+  __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->parent_size = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":865
+ *         cdef Vec2 parent_pos_backup = self.context.viewport.parent_pos
+ *         self.context.viewport.parent_size = self.state.cur.content_region_size
+ *         self.context.viewport.parent_pos = ImVec2Vec2(imgui.GetCursorScreenPos())             # <<<<<<<<<<<<<<
+ * 
+ *         # Lock all siblings for the entire draw to prevent concurrent modification
+*/
+  __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->parent_pos = __pyx_f_9dearcygui_11imgui_types_ImVec2Vec2(ImGui::GetCursorScreenPos());
+
+  /* "dearcygui/layout.pyx":869
+ *         # Lock all siblings for the entire draw to prevent concurrent modification
+ *         # of child positions while ImGui draw calls are being emitted.
+ *         self.last_widgets_child.lock_and_previous_siblings()             # <<<<<<<<<<<<<<
+ * 
+ *         # Clear any stale positioning overrides left by previous code paths
+*/
+  ((struct __pyx_vtabstruct_9dearcygui_4core_uiItem *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child->__pyx_base.__pyx_vtab)->__pyx_base.lock_and_previous_siblings(((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child));
+
+  /* "dearcygui/layout.pyx":878
+ *         # which should be attached to the previous item but should not induce
+ *         # spacing.
+ *         if not(self.__check_children_neutral()):             # <<<<<<<<<<<<<<
+ *             with gil:
+ *                 self.__apply_children_neutral()
+*/
+  __pyx_t_1 = (!((struct __pyx_vtabstruct_9dearcygui_6layout_HorizontalLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.__pyx_vtab)->_HorizontalLayout__check_children_neutral(__pyx_v_self));
+  if (__pyx_t_1) {
+
+    /* "dearcygui/layout.pyx":879
+ *         # spacing.
+ *         if not(self.__check_children_neutral()):
+ *             with gil:             # <<<<<<<<<<<<<<
+ *                 self.__apply_children_neutral()
+ * 
 */
     {
         PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
         /*try:*/ {
 
-          /* "dearcygui/layout.pyx":518
- *             self.last_widgets_child.lock_and_previous_siblings()
+          /* "dearcygui/layout.pyx":880
+ *         if not(self.__check_children_neutral()):
  *             with gil:
- *                 self.__update_layout()             # <<<<<<<<<<<<<<
- *         imgui.PushID(self.uuid)
- *         imgui.BeginGroup()
+ *                 self.__apply_children_neutral()             # <<<<<<<<<<<<<<
+ * 
+ *         # Dispatch to the appropriate inline drawing strategy
 */
-          ((struct __pyx_vtabstruct_9dearcygui_6layout_HorizontalLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.__pyx_vtab)->_HorizontalLayout__update_layout(__pyx_v_self); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 518, __pyx_L6_error)
+          ((struct __pyx_vtabstruct_9dearcygui_6layout_HorizontalLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.__pyx_vtab)->_HorizontalLayout__apply_children_neutral(__pyx_v_self); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 880, __pyx_L6_error)
         }
 
-        /* "dearcygui/layout.pyx":517
- *         if changed:
- *             self.last_widgets_child.lock_and_previous_siblings()
+        /* "dearcygui/layout.pyx":879
+ *         # spacing.
+ *         if not(self.__check_children_neutral()):
  *             with gil:             # <<<<<<<<<<<<<<
- *                 self.__update_layout()
- *         imgui.PushID(self.uuid)
+ *                 self.__apply_children_neutral()
+ * 
 */
         /*finally:*/ {
           /*normal exit:*/{
@@ -33743,219 +34824,274 @@ static int __pyx_f_9dearcygui_6layout_16HorizontalLayout_draw_item(struct __pyx_
         }
     }
 
-    /* "dearcygui/layout.pyx":515
- *         self.update_content_area()
- *         cdef bint changed = self.check_change()
- *         if changed:             # <<<<<<<<<<<<<<
- *             self.last_widgets_child.lock_and_previous_siblings()
+    /* "dearcygui/layout.pyx":878
+ *         # which should be attached to the previous item but should not induce
+ *         # spacing.
+ *         if not(self.__check_children_neutral()):             # <<<<<<<<<<<<<<
  *             with gil:
+ *                 self.__apply_children_neutral()
 */
   }
 
-  /* "dearcygui/layout.pyx":519
- *             with gil:
- *                 self.__update_layout()
- *         imgui.PushID(self.uuid)             # <<<<<<<<<<<<<<
- *         imgui.BeginGroup()
- *         cdef Vec2 pos_p
+  /* "dearcygui/layout.pyx":883
+ * 
+ *         # Dispatch to the appropriate inline drawing strategy
+ *         if self._alignment_mode == Alignment.MANUAL:             # <<<<<<<<<<<<<<
+ *             children_changed = self.__draw_item_manual()
+ *         elif self._alignment_mode == Alignment.LEFT:
 */
-  ImGui::PushID(__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.uuid);
-
-  /* "dearcygui/layout.pyx":520
- *                 self.__update_layout()
- *         imgui.PushID(self.uuid)
- *         imgui.BeginGroup()             # <<<<<<<<<<<<<<
- *         cdef Vec2 pos_p
- *         if self.last_widgets_child is not None:
-*/
-  ImGui::BeginGroup();
-
-  /* "dearcygui/layout.pyx":522
- *         imgui.BeginGroup()
- *         cdef Vec2 pos_p
- *         if self.last_widgets_child is not None:             # <<<<<<<<<<<<<<
- *             pos_p = ImVec2Vec2(imgui.GetCursorScreenPos())
- *             swap_Vec2(pos_p, self.context.viewport.parent_pos)
-*/
-  __pyx_t_1 = (((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child) != Py_None);
+  __pyx_t_1 = (__pyx_v_self->_alignment_mode == __pyx_t_9dearcygui_5types_Alignment::MANUAL);
   if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":523
- *         cdef Vec2 pos_p
- *         if self.last_widgets_child is not None:
- *             pos_p = ImVec2Vec2(imgui.GetCursorScreenPos())             # <<<<<<<<<<<<<<
- *             swap_Vec2(pos_p, self.context.viewport.parent_pos)
- *             self.draw_children()
+    /* "dearcygui/layout.pyx":884
+ *         # Dispatch to the appropriate inline drawing strategy
+ *         if self._alignment_mode == Alignment.MANUAL:
+ *             children_changed = self.__draw_item_manual()             # <<<<<<<<<<<<<<
+ *         elif self._alignment_mode == Alignment.LEFT:
+ *             if self._no_wrap:
 */
-    __pyx_v_pos_p = __pyx_f_9dearcygui_11imgui_types_ImVec2Vec2(ImGui::GetCursorScreenPos());
+    __pyx_v_children_changed = ((struct __pyx_vtabstruct_9dearcygui_6layout_HorizontalLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.__pyx_vtab)->_HorizontalLayout__draw_item_manual(__pyx_v_self);
 
-    /* "dearcygui/layout.pyx":524
- *         if self.last_widgets_child is not None:
- *             pos_p = ImVec2Vec2(imgui.GetCursorScreenPos())
- *             swap_Vec2(pos_p, self.context.viewport.parent_pos)             # <<<<<<<<<<<<<<
- *             self.draw_children()
- *             self.context.viewport.parent_pos = pos_p
+    /* "dearcygui/layout.pyx":883
+ * 
+ *         # Dispatch to the appropriate inline drawing strategy
+ *         if self._alignment_mode == Alignment.MANUAL:             # <<<<<<<<<<<<<<
+ *             children_changed = self.__draw_item_manual()
+ *         elif self._alignment_mode == Alignment.LEFT:
 */
-    __pyx_f_9dearcygui_7c_types_swap_Vec2(__pyx_v_pos_p, __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->parent_pos);
-
-    /* "dearcygui/layout.pyx":525
- *             pos_p = ImVec2Vec2(imgui.GetCursorScreenPos())
- *             swap_Vec2(pos_p, self.context.viewport.parent_pos)
- *             self.draw_children()             # <<<<<<<<<<<<<<
- *             self.context.viewport.parent_pos = pos_p
- *         if changed:
-*/
-    ((struct __pyx_vtabstruct_9dearcygui_6layout_HorizontalLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.__pyx_vtab)->__pyx_base.draw_children(((struct __pyx_obj_9dearcygui_6layout_Layout *)__pyx_v_self));
-
-    /* "dearcygui/layout.pyx":526
- *             swap_Vec2(pos_p, self.context.viewport.parent_pos)
- *             self.draw_children()
- *             self.context.viewport.parent_pos = pos_p             # <<<<<<<<<<<<<<
- *         if changed:
- *             # We maintain the lock during the rendering
-*/
-    __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->parent_pos = __pyx_v_pos_p;
-
-    /* "dearcygui/layout.pyx":522
- *         imgui.BeginGroup()
- *         cdef Vec2 pos_p
- *         if self.last_widgets_child is not None:             # <<<<<<<<<<<<<<
- *             pos_p = ImVec2Vec2(imgui.GetCursorScreenPos())
- *             swap_Vec2(pos_p, self.context.viewport.parent_pos)
-*/
+    goto __pyx_L8;
   }
 
-  /* "dearcygui/layout.pyx":527
- *             self.draw_children()
- *             self.context.viewport.parent_pos = pos_p
- *         if changed:             # <<<<<<<<<<<<<<
- *             # We maintain the lock during the rendering
- *             # just to be sure the user doesn't change the
+  /* "dearcygui/layout.pyx":885
+ *         if self._alignment_mode == Alignment.MANUAL:
+ *             children_changed = self.__draw_item_manual()
+ *         elif self._alignment_mode == Alignment.LEFT:             # <<<<<<<<<<<<<<
+ *             if self._no_wrap:
+ *                 children_changed = self.__draw_item_left_no_wrap()
 */
-  if (__pyx_v_changed) {
+  __pyx_t_1 = (__pyx_v_self->_alignment_mode == __pyx_t_9dearcygui_5types_Alignment::LEFT);
+  if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":531
- *             # just to be sure the user doesn't change the
- *             # Positioning we took care to manage :-)
- *             self.last_widgets_child.unlock_and_previous_siblings()             # <<<<<<<<<<<<<<
- *         #imgui.PushStyleVar(imgui.ImGuiStyleVar_ItemSpacing,
- *         #                   imgui.ImVec2(0., 0.))
+    /* "dearcygui/layout.pyx":886
+ *             children_changed = self.__draw_item_manual()
+ *         elif self._alignment_mode == Alignment.LEFT:
+ *             if self._no_wrap:             # <<<<<<<<<<<<<<
+ *                 children_changed = self.__draw_item_left_no_wrap()
+ *             else:
 */
-    ((struct __pyx_vtabstruct_9dearcygui_4core_uiItem *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child->__pyx_base.__pyx_vtab)->__pyx_base.unlock_and_previous_siblings(((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child));
+    if (__pyx_v_self->_no_wrap) {
 
-    /* "dearcygui/layout.pyx":527
- *             self.draw_children()
- *             self.context.viewport.parent_pos = pos_p
- *         if changed:             # <<<<<<<<<<<<<<
- *             # We maintain the lock during the rendering
- *             # just to be sure the user doesn't change the
+      /* "dearcygui/layout.pyx":887
+ *         elif self._alignment_mode == Alignment.LEFT:
+ *             if self._no_wrap:
+ *                 children_changed = self.__draw_item_left_no_wrap()             # <<<<<<<<<<<<<<
+ *             else:
+ *                 children_changed = self.__draw_item_left_wrap()
 */
+      __pyx_v_children_changed = ((struct __pyx_vtabstruct_9dearcygui_6layout_HorizontalLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.__pyx_vtab)->_HorizontalLayout__draw_item_left_no_wrap(__pyx_v_self);
+
+      /* "dearcygui/layout.pyx":886
+ *             children_changed = self.__draw_item_manual()
+ *         elif self._alignment_mode == Alignment.LEFT:
+ *             if self._no_wrap:             # <<<<<<<<<<<<<<
+ *                 children_changed = self.__draw_item_left_no_wrap()
+ *             else:
+*/
+      goto __pyx_L9;
+    }
+
+    /* "dearcygui/layout.pyx":889
+ *                 children_changed = self.__draw_item_left_no_wrap()
+ *             else:
+ *                 children_changed = self.__draw_item_left_wrap()             # <<<<<<<<<<<<<<
+ *         else:  # RIGHT, CENTER, JUSTIFIED
+ *             children_changed = self.__draw_item_aligned()
+*/
+    /*else*/ {
+      __pyx_v_children_changed = ((struct __pyx_vtabstruct_9dearcygui_6layout_HorizontalLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.__pyx_vtab)->_HorizontalLayout__draw_item_left_wrap(__pyx_v_self);
+    }
+    __pyx_L9:;
+
+    /* "dearcygui/layout.pyx":885
+ *         if self._alignment_mode == Alignment.MANUAL:
+ *             children_changed = self.__draw_item_manual()
+ *         elif self._alignment_mode == Alignment.LEFT:             # <<<<<<<<<<<<<<
+ *             if self._no_wrap:
+ *                 children_changed = self.__draw_item_left_no_wrap()
+*/
+    goto __pyx_L8;
   }
 
-  /* "dearcygui/layout.pyx":534
- *         #imgui.PushStyleVar(imgui.ImGuiStyleVar_ItemSpacing,
- *         #                   imgui.ImVec2(0., 0.))
+  /* "dearcygui/layout.pyx":891
+ *                 children_changed = self.__draw_item_left_wrap()
+ *         else:  # RIGHT, CENTER, JUSTIFIED
+ *             children_changed = self.__draw_item_aligned()             # <<<<<<<<<<<<<<
+ * 
+ *         self.last_widgets_child.unlock_and_previous_siblings()
+*/
+  /*else*/ {
+    __pyx_v_children_changed = ((struct __pyx_vtabstruct_9dearcygui_6layout_HorizontalLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.__pyx_vtab)->_HorizontalLayout__draw_item_aligned(__pyx_v_self);
+  }
+  __pyx_L8:;
+
+  /* "dearcygui/layout.pyx":893
+ *             children_changed = self.__draw_item_aligned()
+ * 
+ *         self.last_widgets_child.unlock_and_previous_siblings()             # <<<<<<<<<<<<<<
+ * 
+ *         imgui.EndGroup()
+*/
+  ((struct __pyx_vtabstruct_9dearcygui_4core_uiItem *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child->__pyx_base.__pyx_vtab)->__pyx_base.unlock_and_previous_siblings(((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child));
+
+  /* "dearcygui/layout.pyx":895
+ *         self.last_widgets_child.unlock_and_previous_siblings()
+ * 
  *         imgui.EndGroup()             # <<<<<<<<<<<<<<
- *         #imgui.PopStyleVar(1)
  *         imgui.PopID()
+ * 
 */
   ImGui::EndGroup();
 
-  /* "dearcygui/layout.pyx":536
+  /* "dearcygui/layout.pyx":896
+ * 
  *         imgui.EndGroup()
- *         #imgui.PopStyleVar(1)
  *         imgui.PopID()             # <<<<<<<<<<<<<<
- *         self.update_current_state()
- *         if self.state.cur.rect_size.x != self.state.prev.rect_size.x or \
+ * 
+ *         # Restore parent context so siblings drawn after us see the correct values
 */
   ImGui::PopID();
 
-  /* "dearcygui/layout.pyx":537
- *         #imgui.PopStyleVar(1)
- *         imgui.PopID()
+  /* "dearcygui/layout.pyx":899
+ * 
+ *         # Restore parent context so siblings drawn after us see the correct values
+ *         self.context.viewport.parent_size = parent_size_backup             # <<<<<<<<<<<<<<
+ *         self.context.viewport.parent_pos = parent_pos_backup
+ * 
+*/
+  __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->parent_size = __pyx_v_parent_size_backup;
+
+  /* "dearcygui/layout.pyx":900
+ *         # Restore parent context so siblings drawn after us see the correct values
+ *         self.context.viewport.parent_size = parent_size_backup
+ *         self.context.viewport.parent_pos = parent_pos_backup             # <<<<<<<<<<<<<<
+ * 
+ *         # EndGroup + update_current_state records the actual bounding box
+*/
+  __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->parent_pos = __pyx_v_parent_pos_backup;
+
+  /* "dearcygui/layout.pyx":903
+ * 
+ *         # EndGroup + update_current_state records the actual bounding box
  *         self.update_current_state()             # <<<<<<<<<<<<<<
- *         if self.state.cur.rect_size.x != self.state.prev.rect_size.x or \
- *            self.state.cur.rect_size.y != self.state.prev.rect_size.y:
+ * 
+ *         # If our bounding box changed, the parent layout must also re-evaluate
 */
   ((struct __pyx_vtabstruct_9dearcygui_6layout_HorizontalLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.__pyx_vtab)->__pyx_base.__pyx_base.update_current_state(((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_self));
 
-  /* "dearcygui/layout.pyx":538
- *         imgui.PopID()
- *         self.update_current_state()
+  /* "dearcygui/layout.pyx":906
+ * 
+ *         # If our bounding box changed, the parent layout must also re-evaluate
  *         if self.state.cur.rect_size.x != self.state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
  *            self.state.cur.rect_size.y != self.state.prev.rect_size.y:
- *             self._force_update = True
+ *             self.context.viewport.ask_immediate_redraw()
 */
-  __pyx_t_2 = (__pyx_v_self->__pyx_base.__pyx_base.state.cur.rect_size.x != __pyx_v_self->__pyx_base.__pyx_base.state.prev.rect_size.x);
-  if (!__pyx_t_2) {
+  __pyx_t_3 = (__pyx_v_self->__pyx_base.__pyx_base.state.cur.rect_size.x != __pyx_v_self->__pyx_base.__pyx_base.state.prev.rect_size.x);
+  if (!__pyx_t_3) {
   } else {
-    __pyx_t_1 = __pyx_t_2;
+    __pyx_t_1 = __pyx_t_3;
     goto __pyx_L11_bool_binop_done;
   }
 
-  /* "dearcygui/layout.pyx":539
- *         self.update_current_state()
+  /* "dearcygui/layout.pyx":907
+ *         # If our bounding box changed, the parent layout must also re-evaluate
  *         if self.state.cur.rect_size.x != self.state.prev.rect_size.x or \
  *            self.state.cur.rect_size.y != self.state.prev.rect_size.y:             # <<<<<<<<<<<<<<
- *             self._force_update = True
- *             self.context.viewport.redraw_needed = True
+ *             self.context.viewport.ask_immediate_redraw()
+ * 
 */
-  __pyx_t_2 = (__pyx_v_self->__pyx_base.__pyx_base.state.cur.rect_size.y != __pyx_v_self->__pyx_base.__pyx_base.state.prev.rect_size.y);
-  __pyx_t_1 = __pyx_t_2;
+  __pyx_t_3 = (__pyx_v_self->__pyx_base.__pyx_base.state.cur.rect_size.y != __pyx_v_self->__pyx_base.__pyx_base.state.prev.rect_size.y);
+  __pyx_t_1 = __pyx_t_3;
   __pyx_L11_bool_binop_done:;
 
-  /* "dearcygui/layout.pyx":538
- *         imgui.PopID()
- *         self.update_current_state()
+  /* "dearcygui/layout.pyx":906
+ * 
+ *         # If our bounding box changed, the parent layout must also re-evaluate
  *         if self.state.cur.rect_size.x != self.state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
  *            self.state.cur.rect_size.y != self.state.prev.rect_size.y:
- *             self._force_update = True
+ *             self.context.viewport.ask_immediate_redraw()
 */
   if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":540
+    /* "dearcygui/layout.pyx":908
  *         if self.state.cur.rect_size.x != self.state.prev.rect_size.x or \
  *            self.state.cur.rect_size.y != self.state.prev.rect_size.y:
- *             self._force_update = True             # <<<<<<<<<<<<<<
- *             self.context.viewport.redraw_needed = True
- *         return changed
-*/
-    __pyx_v_self->__pyx_base._force_update = 1;
-
-    /* "dearcygui/layout.pyx":541
- *            self.state.cur.rect_size.y != self.state.prev.rect_size.y:
- *             self._force_update = True
- *             self.context.viewport.redraw_needed = True             # <<<<<<<<<<<<<<
- *         return changed
+ *             self.context.viewport.ask_immediate_redraw()             # <<<<<<<<<<<<<<
  * 
+ *         # If child bounding boxes actually changed, schedule one more redraw so
 */
-    __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->redraw_needed = 1;
+    ((struct __pyx_vtabstruct_9dearcygui_4core_Viewport *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->__pyx_base.__pyx_vtab)->ask_immediate_redraw(__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport);
 
-    /* "dearcygui/layout.pyx":538
- *         imgui.PopID()
- *         self.update_current_state()
+    /* "dearcygui/layout.pyx":906
+ * 
+ *         # If our bounding box changed, the parent layout must also re-evaluate
  *         if self.state.cur.rect_size.x != self.state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
  *            self.state.cur.rect_size.y != self.state.prev.rect_size.y:
- *             self._force_update = True
+ *             self.context.viewport.ask_immediate_redraw()
 */
   }
 
-  /* "dearcygui/layout.pyx":542
+  /* "dearcygui/layout.pyx":914
+ *         # children genuinely changed this frame  not when we merely consumed a
+ *         # prior _force_update  to prevent an infinite redraw loop.
+ *         if children_changed:             # <<<<<<<<<<<<<<
  *             self._force_update = True
- *             self.context.viewport.redraw_needed = True
- *         return changed             # <<<<<<<<<<<<<<
+ *             self.context.viewport.ask_immediate_redraw()
+*/
+  if (__pyx_v_children_changed) {
+
+    /* "dearcygui/layout.pyx":915
+ *         # prior _force_update  to prevent an infinite redraw loop.
+ *         if children_changed:
+ *             self._force_update = True             # <<<<<<<<<<<<<<
+ *             self.context.viewport.ask_immediate_redraw()
+ * 
+*/
+    __pyx_v_self->__pyx_base._force_update = 1;
+
+    /* "dearcygui/layout.pyx":916
+ *         if children_changed:
+ *             self._force_update = True
+ *             self.context.viewport.ask_immediate_redraw()             # <<<<<<<<<<<<<<
+ * 
+ *         return forced | children_changed
+*/
+    ((struct __pyx_vtabstruct_9dearcygui_4core_Viewport *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->__pyx_base.__pyx_vtab)->ask_immediate_redraw(__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport);
+
+    /* "dearcygui/layout.pyx":914
+ *         # children genuinely changed this frame  not when we merely consumed a
+ *         # prior _force_update  to prevent an infinite redraw loop.
+ *         if children_changed:             # <<<<<<<<<<<<<<
+ *             self._force_update = True
+ *             self.context.viewport.ask_immediate_redraw()
+*/
+  }
+
+  /* "dearcygui/layout.pyx":918
+ *             self.context.viewport.ask_immediate_redraw()
+ * 
+ *         return forced | children_changed             # <<<<<<<<<<<<<<
  * 
  * cdef class VerticalLayout(Layout):
 */
-  __pyx_r = __pyx_v_changed;
+  __pyx_r = (__pyx_v_forced | __pyx_v_children_changed);
   goto __pyx_L0;
 
-  /* "dearcygui/layout.pyx":507
- * 
+  /* "dearcygui/layout.pyx":844
+ *         return changed
  * 
  *     cdef bint draw_item(self) noexcept nogil:             # <<<<<<<<<<<<<<
- *         if self.last_widgets_child is None:# or \
- *             #cur_content_area.x <= 0 or \
+ *         if self.last_widgets_child is None:
+ *             return False
 */
 
   /* function exit code */
@@ -33968,8 +35104,8 @@ static int __pyx_f_9dearcygui_6layout_16HorizontalLayout_draw_item(struct __pyx_
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":560
- *     to clip the content, use a `ChildWindow` instead.
+/* "dearcygui/layout.pyx":937
+ *     sizing expressions.
  *     """
  *     def __cinit__(self):             # <<<<<<<<<<<<<<
  *         self._alignment_mode = Alignment.TOP
@@ -34004,7 +35140,7 @@ static int __pyx_pw_9dearcygui_6layout_14VerticalLayout_1__cinit__(PyObject *__p
 static int __pyx_pf_9dearcygui_6layout_14VerticalLayout___cinit__(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *__pyx_v_self) {
   int __pyx_r;
 
-  /* "dearcygui/layout.pyx":561
+  /* "dearcygui/layout.pyx":938
  *     """
  *     def __cinit__(self):
  *         self._alignment_mode = Alignment.TOP             # <<<<<<<<<<<<<<
@@ -34013,7 +35149,7 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout___cinit__(struct __pyx_o
 */
   __pyx_v_self->_alignment_mode = __pyx_t_9dearcygui_5types_Alignment::TOP;
 
-  /* "dearcygui/layout.pyx":562
+  /* "dearcygui/layout.pyx":939
  *     def __cinit__(self):
  *         self._alignment_mode = Alignment.TOP
  *         self._no_wrap = True             # <<<<<<<<<<<<<<
@@ -34022,7 +35158,7 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout___cinit__(struct __pyx_o
 */
   __pyx_v_self->_no_wrap = 1;
 
-  /* "dearcygui/layout.pyx":563
+  /* "dearcygui/layout.pyx":940
  *         self._alignment_mode = Alignment.TOP
  *         self._no_wrap = True
  *         self._wrap_y = 0.0             # <<<<<<<<<<<<<<
@@ -34031,8 +35167,8 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout___cinit__(struct __pyx_o
 */
   __pyx_v_self->_wrap_y = 0.0;
 
-  /* "dearcygui/layout.pyx":560
- *     to clip the content, use a `ChildWindow` instead.
+  /* "dearcygui/layout.pyx":937
+ *     sizing expressions.
  *     """
  *     def __cinit__(self):             # <<<<<<<<<<<<<<
  *         self._alignment_mode = Alignment.TOP
@@ -34044,7 +35180,7 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout___cinit__(struct __pyx_o
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":565
+/* "dearcygui/layout.pyx":942
  *         self._wrap_y = 0.0
  * 
  *     @property             # <<<<<<<<<<<<<<
@@ -34077,7 +35213,7 @@ static PyObject *__pyx_pf_9dearcygui_6layout_14VerticalLayout_14alignment_mode__
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "dearcygui/layout.pyx":581
+  /* "dearcygui/layout.pyx":958
  *         """
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)             # <<<<<<<<<<<<<<
@@ -34086,7 +35222,7 @@ static PyObject *__pyx_pf_9dearcygui_6layout_14VerticalLayout_14alignment_mode__
 */
   __pyx_f_9dearcygui_4core_lock_gil_friendly(__pyx_v_m, __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.mutex);
 
-  /* "dearcygui/layout.pyx":582
+  /* "dearcygui/layout.pyx":959
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)
  *         return self._alignment_mode             # <<<<<<<<<<<<<<
@@ -34094,13 +35230,13 @@ static PyObject *__pyx_pf_9dearcygui_6layout_14VerticalLayout_14alignment_mode__
  *     @alignment_mode.setter
 */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_Enum_8fb560__9dearcygui_5types__dunder_PYX_ENUM_CLASS_DECL___etc_to_py(__pyx_v_self->_alignment_mode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 582, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Enum_8fb560__9dearcygui_5types__dunder_PYX_ENUM_CLASS_DECL___etc_to_py(__pyx_v_self->_alignment_mode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 959, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "dearcygui/layout.pyx":565
+  /* "dearcygui/layout.pyx":942
  *         self._wrap_y = 0.0
  * 
  *     @property             # <<<<<<<<<<<<<<
@@ -34119,7 +35255,7 @@ static PyObject *__pyx_pf_9dearcygui_6layout_14VerticalLayout_14alignment_mode__
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":584
+/* "dearcygui/layout.pyx":961
  *         return self._alignment_mode
  * 
  *     @alignment_mode.setter             # <<<<<<<<<<<<<<
@@ -34140,7 +35276,7 @@ static int __pyx_pw_9dearcygui_6layout_14VerticalLayout_14alignment_mode_3__set_
   __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
   __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
   assert(__pyx_arg_value); {
-    __pyx_v_value = (__pyx_t_9dearcygui_5types_Alignment)__Pyx_PyLong_As_int(__pyx_arg_value); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 585, __pyx_L3_error)
+    __pyx_v_value = (__pyx_t_9dearcygui_5types_Alignment)__Pyx_PyLong_As_int(__pyx_arg_value); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 962, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -34164,12 +35300,14 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_14alignment_mode_2__set_
   PyObject *__pyx_t_3 = NULL;
   PyObject *__pyx_t_4 = NULL;
   size_t __pyx_t_5;
+  PyObject *__pyx_t_6 = NULL;
+  PyObject *__pyx_t_7 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__set__", 0);
 
-  /* "dearcygui/layout.pyx":587
+  /* "dearcygui/layout.pyx":964
  *     def alignment_mode(self, Alignment value):
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)             # <<<<<<<<<<<<<<
@@ -34178,7 +35316,7 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_14alignment_mode_2__set_
 */
   __pyx_f_9dearcygui_4core_lock_gil_friendly(__pyx_v_m, __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.mutex);
 
-  /* "dearcygui/layout.pyx":588
+  /* "dearcygui/layout.pyx":965
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)
  *         if <int>value < 0 or value > Alignment.MANUAL:             # <<<<<<<<<<<<<<
@@ -34196,7 +35334,7 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_14alignment_mode_2__set_
   __pyx_L4_bool_binop_done:;
   if (unlikely(__pyx_t_1)) {
 
-    /* "dearcygui/layout.pyx":589
+    /* "dearcygui/layout.pyx":966
  *         lock_gil_friendly(m, self.mutex)
  *         if <int>value < 0 or value > Alignment.MANUAL:
  *             raise ValueError("Invalid alignment value")             # <<<<<<<<<<<<<<
@@ -34209,14 +35347,14 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_14alignment_mode_2__set_
       PyObject *__pyx_callargs[2] = {__pyx_t_4, __pyx_mstate_global->__pyx_kp_u_Invalid_alignment_value};
       __pyx_t_3 = __Pyx_PyObject_FastCall((PyObject*)(((PyTypeObject*)PyExc_ValueError)), __pyx_callargs+__pyx_t_5, (2-__pyx_t_5) | (__pyx_t_5*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 589, __pyx_L1_error)
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 966, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
     }
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __PYX_ERR(0, 589, __pyx_L1_error)
+    __PYX_ERR(0, 966, __pyx_L1_error)
 
-    /* "dearcygui/layout.pyx":588
+    /* "dearcygui/layout.pyx":965
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)
  *         if <int>value < 0 or value > Alignment.MANUAL:             # <<<<<<<<<<<<<<
@@ -34225,46 +35363,101 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_14alignment_mode_2__set_
 */
   }
 
-  /* "dearcygui/layout.pyx":590
+  /* "dearcygui/layout.pyx":967
  *         if <int>value < 0 or value > Alignment.MANUAL:
  *             raise ValueError("Invalid alignment value")
  *         if value == self._alignment_mode:             # <<<<<<<<<<<<<<
  *             return
- *         self._force_update = True
+ *         if value == Alignment.MANUAL:
 */
   __pyx_t_1 = (__pyx_v_value == __pyx_v_self->_alignment_mode);
   if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":591
+    /* "dearcygui/layout.pyx":968
  *             raise ValueError("Invalid alignment value")
  *         if value == self._alignment_mode:
  *             return             # <<<<<<<<<<<<<<
- *         self._force_update = True
- *         self._alignment_mode = value
+ *         if value == Alignment.MANUAL:
+ *             _warn("MANUAL alignment mode is deprecated. Use string-based positioning (e.g. item.y = '10') on children instead.", DeprecationWarning, stacklevel=2)
 */
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "dearcygui/layout.pyx":590
+    /* "dearcygui/layout.pyx":967
  *         if <int>value < 0 or value > Alignment.MANUAL:
  *             raise ValueError("Invalid alignment value")
  *         if value == self._alignment_mode:             # <<<<<<<<<<<<<<
  *             return
+ *         if value == Alignment.MANUAL:
+*/
+  }
+
+  /* "dearcygui/layout.pyx":969
+ *         if value == self._alignment_mode:
+ *             return
+ *         if value == Alignment.MANUAL:             # <<<<<<<<<<<<<<
+ *             _warn("MANUAL alignment mode is deprecated. Use string-based positioning (e.g. item.y = '10') on children instead.", DeprecationWarning, stacklevel=2)
+ *         self._force_update = True
+*/
+  __pyx_t_1 = (__pyx_v_value == __pyx_t_9dearcygui_5types_Alignment::MANUAL);
+  if (__pyx_t_1) {
+
+    /* "dearcygui/layout.pyx":970
+ *             return
+ *         if value == Alignment.MANUAL:
+ *             _warn("MANUAL alignment mode is deprecated. Use string-based positioning (e.g. item.y = '10') on children instead.", DeprecationWarning, stacklevel=2)             # <<<<<<<<<<<<<<
+ *         self._force_update = True
+ *         self._alignment_mode = value
+*/
+    __pyx_t_4 = NULL;
+    __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_mstate_global->__pyx_n_u_warn_2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 970, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_5 = 1;
+    #if CYTHON_UNPACK_METHODS
+    if (unlikely(PyMethod_Check(__pyx_t_6))) {
+      __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_6);
+      assert(__pyx_t_4);
+      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_6);
+      __Pyx_INCREF(__pyx_t_4);
+      __Pyx_INCREF(__pyx__function);
+      __Pyx_DECREF_SET(__pyx_t_6, __pyx__function);
+      __pyx_t_5 = 0;
+    }
+    #endif
+    {
+      PyObject *__pyx_callargs[3 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_4, __pyx_mstate_global->__pyx_kp_u_MANUAL_alignment_mode_is_depreca_2, ((PyObject *)(((PyTypeObject*)PyExc_DeprecationWarning)))};
+      __pyx_t_7 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 970, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_7);
+      if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_stacklevel, __pyx_mstate_global->__pyx_int_2, __pyx_t_7, __pyx_callargs+3, 0) < (0)) __PYX_ERR(0, 970, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_t_6, __pyx_callargs+__pyx_t_5, (3-__pyx_t_5) | (__pyx_t_5*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_7);
+      __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 970, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+    }
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+
+    /* "dearcygui/layout.pyx":969
+ *         if value == self._alignment_mode:
+ *             return
+ *         if value == Alignment.MANUAL:             # <<<<<<<<<<<<<<
+ *             _warn("MANUAL alignment mode is deprecated. Use string-based positioning (e.g. item.y = '10') on children instead.", DeprecationWarning, stacklevel=2)
  *         self._force_update = True
 */
   }
 
-  /* "dearcygui/layout.pyx":592
- *         if value == self._alignment_mode:
- *             return
+  /* "dearcygui/layout.pyx":971
+ *         if value == Alignment.MANUAL:
+ *             _warn("MANUAL alignment mode is deprecated. Use string-based positioning (e.g. item.y = '10') on children instead.", DeprecationWarning, stacklevel=2)
  *         self._force_update = True             # <<<<<<<<<<<<<<
  *         self._alignment_mode = value
  * 
 */
   __pyx_v_self->__pyx_base._force_update = 1;
 
-  /* "dearcygui/layout.pyx":593
- *             return
+  /* "dearcygui/layout.pyx":972
+ *             _warn("MANUAL alignment mode is deprecated. Use string-based positioning (e.g. item.y = '10') on children instead.", DeprecationWarning, stacklevel=2)
  *         self._force_update = True
  *         self._alignment_mode = value             # <<<<<<<<<<<<<<
  * 
@@ -34272,7 +35465,7 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_14alignment_mode_2__set_
 */
   __pyx_v_self->_alignment_mode = __pyx_v_value;
 
-  /* "dearcygui/layout.pyx":584
+  /* "dearcygui/layout.pyx":961
  *         return self._alignment_mode
  * 
  *     @alignment_mode.setter             # <<<<<<<<<<<<<<
@@ -34286,6 +35479,8 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_14alignment_mode_2__set_
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_6);
+  __Pyx_XDECREF(__pyx_t_7);
   __Pyx_AddTraceback("dearcygui.layout.VerticalLayout.alignment_mode.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
@@ -34293,7 +35488,7 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_14alignment_mode_2__set_
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":595
+/* "dearcygui/layout.pyx":974
  *         self._alignment_mode = value
  * 
  *     @property             # <<<<<<<<<<<<<<
@@ -34326,7 +35521,7 @@ static PyObject *__pyx_pf_9dearcygui_6layout_14VerticalLayout_4wrap___get__(stru
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "dearcygui/layout.pyx":605
+  /* "dearcygui/layout.pyx":984
  *         """
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)             # <<<<<<<<<<<<<<
@@ -34335,7 +35530,7 @@ static PyObject *__pyx_pf_9dearcygui_6layout_14VerticalLayout_4wrap___get__(stru
 */
   __pyx_f_9dearcygui_4core_lock_gil_friendly(__pyx_v_m, __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.mutex);
 
-  /* "dearcygui/layout.pyx":606
+  /* "dearcygui/layout.pyx":985
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)
  *         return not(self._no_wrap)             # <<<<<<<<<<<<<<
@@ -34343,13 +35538,13 @@ static PyObject *__pyx_pf_9dearcygui_6layout_14VerticalLayout_4wrap___get__(stru
  *     @wrap.setter
 */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBool_FromLong((!__pyx_v_self->_no_wrap)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 606, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBool_FromLong((!__pyx_v_self->_no_wrap)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 985, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "dearcygui/layout.pyx":595
+  /* "dearcygui/layout.pyx":974
  *         self._alignment_mode = value
  * 
  *     @property             # <<<<<<<<<<<<<<
@@ -34368,7 +35563,7 @@ static PyObject *__pyx_pf_9dearcygui_6layout_14VerticalLayout_4wrap___get__(stru
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":608
+/* "dearcygui/layout.pyx":987
  *         return not(self._no_wrap)
  * 
  *     @wrap.setter             # <<<<<<<<<<<<<<
@@ -34389,7 +35584,7 @@ static int __pyx_pw_9dearcygui_6layout_14VerticalLayout_4wrap_3__set__(PyObject 
   __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
   __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
   assert(__pyx_arg_value); {
-    __pyx_v_value = __Pyx_PyObject_IsTrue(__pyx_arg_value); if (unlikely((__pyx_v_value == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 609, __pyx_L3_error)
+    __pyx_v_value = __Pyx_PyObject_IsTrue(__pyx_arg_value); if (unlikely((__pyx_v_value == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 988, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -34409,7 +35604,7 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_4wrap_2__set__(struct __
   int __pyx_r;
   int __pyx_t_1;
 
-  /* "dearcygui/layout.pyx":611
+  /* "dearcygui/layout.pyx":990
  *     def wrap(self, bint value):
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)             # <<<<<<<<<<<<<<
@@ -34418,7 +35613,7 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_4wrap_2__set__(struct __
 */
   __pyx_f_9dearcygui_4core_lock_gil_friendly(__pyx_v_m, __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.mutex);
 
-  /* "dearcygui/layout.pyx":612
+  /* "dearcygui/layout.pyx":991
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)
  *         if not(value) == self._no_wrap:             # <<<<<<<<<<<<<<
@@ -34428,7 +35623,7 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_4wrap_2__set__(struct __
   __pyx_t_1 = (!(__pyx_v_value == __pyx_v_self->_no_wrap));
   if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":613
+    /* "dearcygui/layout.pyx":992
  *         lock_gil_friendly(m, self.mutex)
  *         if not(value) == self._no_wrap:
  *             return             # <<<<<<<<<<<<<<
@@ -34438,7 +35633,7 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_4wrap_2__set__(struct __
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "dearcygui/layout.pyx":612
+    /* "dearcygui/layout.pyx":991
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)
  *         if not(value) == self._no_wrap:             # <<<<<<<<<<<<<<
@@ -34447,7 +35642,7 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_4wrap_2__set__(struct __
 */
   }
 
-  /* "dearcygui/layout.pyx":614
+  /* "dearcygui/layout.pyx":993
  *         if not(value) == self._no_wrap:
  *             return
  *         self._force_update = True             # <<<<<<<<<<<<<<
@@ -34456,7 +35651,7 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_4wrap_2__set__(struct __
 */
   __pyx_v_self->__pyx_base._force_update = 1;
 
-  /* "dearcygui/layout.pyx":615
+  /* "dearcygui/layout.pyx":994
  *             return
  *         self._force_update = True
  *         self._no_wrap = not(value)             # <<<<<<<<<<<<<<
@@ -34465,7 +35660,7 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_4wrap_2__set__(struct __
 */
   __pyx_v_self->_no_wrap = (!__pyx_v_value);
 
-  /* "dearcygui/layout.pyx":608
+  /* "dearcygui/layout.pyx":987
  *         return not(self._no_wrap)
  * 
  *     @wrap.setter             # <<<<<<<<<<<<<<
@@ -34479,7 +35674,7 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_4wrap_2__set__(struct __
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":617
+/* "dearcygui/layout.pyx":996
  *         self._no_wrap = not(value)
  * 
  *     @property             # <<<<<<<<<<<<<<
@@ -34512,7 +35707,7 @@ static PyObject *__pyx_pf_9dearcygui_6layout_14VerticalLayout_6wrap_y___get__(st
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "dearcygui/layout.pyx":628
+  /* "dearcygui/layout.pyx":1007
  *         """
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)             # <<<<<<<<<<<<<<
@@ -34521,7 +35716,7 @@ static PyObject *__pyx_pf_9dearcygui_6layout_14VerticalLayout_6wrap_y___get__(st
 */
   __pyx_f_9dearcygui_4core_lock_gil_friendly(__pyx_v_m, __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.mutex);
 
-  /* "dearcygui/layout.pyx":629
+  /* "dearcygui/layout.pyx":1008
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)
  *         return self._wrap_y             # <<<<<<<<<<<<<<
@@ -34529,13 +35724,13 @@ static PyObject *__pyx_pf_9dearcygui_6layout_14VerticalLayout_6wrap_y___get__(st
  *     @wrap_y.setter
 */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->_wrap_y); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 629, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->_wrap_y); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1008, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "dearcygui/layout.pyx":617
+  /* "dearcygui/layout.pyx":996
  *         self._no_wrap = not(value)
  * 
  *     @property             # <<<<<<<<<<<<<<
@@ -34554,7 +35749,7 @@ static PyObject *__pyx_pf_9dearcygui_6layout_14VerticalLayout_6wrap_y___get__(st
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":631
+/* "dearcygui/layout.pyx":1010
  *         return self._wrap_y
  * 
  *     @wrap_y.setter             # <<<<<<<<<<<<<<
@@ -34575,7 +35770,7 @@ static int __pyx_pw_9dearcygui_6layout_14VerticalLayout_6wrap_y_3__set__(PyObjec
   __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
   __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
   assert(__pyx_arg_value); {
-    __pyx_v_value = __Pyx_PyFloat_AsFloat(__pyx_arg_value); if (unlikely((__pyx_v_value == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 632, __pyx_L3_error)
+    __pyx_v_value = __Pyx_PyFloat_AsFloat(__pyx_arg_value); if (unlikely((__pyx_v_value == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 1011, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -34604,7 +35799,7 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_6wrap_y_2__set__(struct 
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__set__", 0);
 
-  /* "dearcygui/layout.pyx":634
+  /* "dearcygui/layout.pyx":1013
  *     def wrap_y(self, float value):
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)             # <<<<<<<<<<<<<<
@@ -34613,7 +35808,7 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_6wrap_y_2__set__(struct 
 */
   __pyx_f_9dearcygui_4core_lock_gil_friendly(__pyx_v_m, __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.mutex);
 
-  /* "dearcygui/layout.pyx":635
+  /* "dearcygui/layout.pyx":1014
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)
  *         self._wrap_y = value             # <<<<<<<<<<<<<<
@@ -34622,7 +35817,7 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_6wrap_y_2__set__(struct 
 */
   __pyx_v_self->_wrap_y = __pyx_v_value;
 
-  /* "dearcygui/layout.pyx":636
+  /* "dearcygui/layout.pyx":1015
  *         lock_gil_friendly(m, self.mutex)
  *         self._wrap_y = value
  *         if value != 0.0:             # <<<<<<<<<<<<<<
@@ -34632,7 +35827,7 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_6wrap_y_2__set__(struct 
   __pyx_t_1 = (__pyx_v_value != 0.0);
   if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":637
+    /* "dearcygui/layout.pyx":1016
  *         self._wrap_y = value
  *         if value != 0.0:
  *             _warn("wrap_y is deprecated, it will be replaced by a new interface", DeprecationWarning)             # <<<<<<<<<<<<<<
@@ -34640,7 +35835,7 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_6wrap_y_2__set__(struct 
  * 
 */
     __pyx_t_3 = NULL;
-    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_warn_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 637, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_mstate_global->__pyx_n_u_warn_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1016, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_5 = 1;
     #if CYTHON_UNPACK_METHODS
@@ -34659,12 +35854,12 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_6wrap_y_2__set__(struct 
       __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_4, __pyx_callargs+__pyx_t_5, (3-__pyx_t_5) | (__pyx_t_5*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 637, __pyx_L1_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1016, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
     }
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "dearcygui/layout.pyx":636
+    /* "dearcygui/layout.pyx":1015
  *         lock_gil_friendly(m, self.mutex)
  *         self._wrap_y = value
  *         if value != 0.0:             # <<<<<<<<<<<<<<
@@ -34673,7 +35868,7 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_6wrap_y_2__set__(struct 
 */
   }
 
-  /* "dearcygui/layout.pyx":638
+  /* "dearcygui/layout.pyx":1017
  *         if value != 0.0:
  *             _warn("wrap_y is deprecated, it will be replaced by a new interface", DeprecationWarning)
  *         self._force_update = True             # <<<<<<<<<<<<<<
@@ -34682,7 +35877,7 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_6wrap_y_2__set__(struct 
 */
   __pyx_v_self->__pyx_base._force_update = 1;
 
-  /* "dearcygui/layout.pyx":631
+  /* "dearcygui/layout.pyx":1010
  *         return self._wrap_y
  * 
  *     @wrap_y.setter             # <<<<<<<<<<<<<<
@@ -34704,7 +35899,7 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_6wrap_y_2__set__(struct 
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":640
+/* "dearcygui/layout.pyx":1019
  *         self._force_update = True
  * 
  *     @property             # <<<<<<<<<<<<<<
@@ -34743,7 +35938,7 @@ static PyObject *__pyx_pf_9dearcygui_6layout_14VerticalLayout_9positions___get__
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "dearcygui/layout.pyx":656
+  /* "dearcygui/layout.pyx":1043
  *         """
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)             # <<<<<<<<<<<<<<
@@ -34752,19 +35947,19 @@ static PyObject *__pyx_pf_9dearcygui_6layout_14VerticalLayout_9positions___get__
 */
   __pyx_f_9dearcygui_4core_lock_gil_friendly(__pyx_v_m, __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.mutex);
 
-  /* "dearcygui/layout.pyx":657
+  /* "dearcygui/layout.pyx":1044
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)
  *         result = []             # <<<<<<<<<<<<<<
  *         cdef int i
  *         for i in range(<int>self._positions.size()):
 */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 657, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1044, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_result = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "dearcygui/layout.pyx":659
+  /* "dearcygui/layout.pyx":1046
  *         result = []
  *         cdef int i
  *         for i in range(<int>self._positions.size()):             # <<<<<<<<<<<<<<
@@ -34776,20 +35971,20 @@ static PyObject *__pyx_pf_9dearcygui_6layout_14VerticalLayout_9positions___get__
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_i = __pyx_t_4;
 
-    /* "dearcygui/layout.pyx":660
+    /* "dearcygui/layout.pyx":1047
  *         cdef int i
  *         for i in range(<int>self._positions.size()):
  *             result.append(self._positions[i])             # <<<<<<<<<<<<<<
  *         return result
  * 
 */
-    __pyx_t_1 = PyFloat_FromDouble((__pyx_v_self->_positions[__pyx_v_i])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 660, __pyx_L1_error)
+    __pyx_t_1 = PyFloat_FromDouble((__pyx_v_self->_positions[__pyx_v_i])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1047, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_5 = __Pyx_PyObject_Append(__pyx_v_result, __pyx_t_1); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 660, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_Append(__pyx_v_result, __pyx_t_1); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 1047, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   }
 
-  /* "dearcygui/layout.pyx":661
+  /* "dearcygui/layout.pyx":1048
  *         for i in range(<int>self._positions.size()):
  *             result.append(self._positions[i])
  *         return result             # <<<<<<<<<<<<<<
@@ -34801,7 +35996,7 @@ static PyObject *__pyx_pf_9dearcygui_6layout_14VerticalLayout_9positions___get__
   __pyx_r = __pyx_v_result;
   goto __pyx_L0;
 
-  /* "dearcygui/layout.pyx":640
+  /* "dearcygui/layout.pyx":1019
  *         self._force_update = True
  * 
  *     @property             # <<<<<<<<<<<<<<
@@ -34821,7 +36016,7 @@ static PyObject *__pyx_pf_9dearcygui_6layout_14VerticalLayout_9positions___get__
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":663
+/* "dearcygui/layout.pyx":1050
  *         return result
  * 
  *     @positions.setter             # <<<<<<<<<<<<<<
@@ -34852,53 +36047,92 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_9positions_2__set__(stru
   Py_ssize_t __pyx_t_1;
   int __pyx_t_2;
   PyObject *__pyx_t_3 = NULL;
-  PyObject *(*__pyx_t_4)(PyObject *);
+  PyObject *__pyx_t_4 = NULL;
   PyObject *__pyx_t_5 = NULL;
-  float __pyx_t_6;
+  size_t __pyx_t_6;
+  PyObject *__pyx_t_7 = NULL;
+  PyObject *(*__pyx_t_8)(PyObject *);
+  float __pyx_t_9;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__set__", 0);
 
-  /* "dearcygui/layout.pyx":666
+  /* "dearcygui/layout.pyx":1053
  *     def positions(self, value):
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)             # <<<<<<<<<<<<<<
  *         if len(value) > 0:
- *             self._alignment_mode = Alignment.MANUAL
+ *             _warn("positions and MANUAL alignment mode are deprecated. Use string-based positioning (e.g. item.y = '10') on children instead.", DeprecationWarning, stacklevel=2)
 */
   __pyx_f_9dearcygui_4core_lock_gil_friendly(__pyx_v_m, __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.mutex);
 
-  /* "dearcygui/layout.pyx":667
+  /* "dearcygui/layout.pyx":1054
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)
  *         if len(value) > 0:             # <<<<<<<<<<<<<<
+ *             _warn("positions and MANUAL alignment mode are deprecated. Use string-based positioning (e.g. item.y = '10') on children instead.", DeprecationWarning, stacklevel=2)
  *             self._alignment_mode = Alignment.MANUAL
- *         # TODO: checks
 */
-  __pyx_t_1 = PyObject_Length(__pyx_v_value); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 667, __pyx_L1_error)
+  __pyx_t_1 = PyObject_Length(__pyx_v_value); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 1054, __pyx_L1_error)
   __pyx_t_2 = (__pyx_t_1 > 0);
   if (__pyx_t_2) {
 
-    /* "dearcygui/layout.pyx":668
+    /* "dearcygui/layout.pyx":1055
  *         lock_gil_friendly(m, self.mutex)
  *         if len(value) > 0:
+ *             _warn("positions and MANUAL alignment mode are deprecated. Use string-based positioning (e.g. item.y = '10') on children instead.", DeprecationWarning, stacklevel=2)             # <<<<<<<<<<<<<<
+ *             self._alignment_mode = Alignment.MANUAL
+ *         # TODO: checks
+*/
+    __pyx_t_4 = NULL;
+    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_mstate_global->__pyx_n_u_warn_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1055, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_6 = 1;
+    #if CYTHON_UNPACK_METHODS
+    if (unlikely(PyMethod_Check(__pyx_t_5))) {
+      __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_5);
+      assert(__pyx_t_4);
+      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_5);
+      __Pyx_INCREF(__pyx_t_4);
+      __Pyx_INCREF(__pyx__function);
+      __Pyx_DECREF_SET(__pyx_t_5, __pyx__function);
+      __pyx_t_6 = 0;
+    }
+    #endif
+    {
+      PyObject *__pyx_callargs[3 + ((CYTHON_VECTORCALL) ? 1 : 0)] = {__pyx_t_4, __pyx_mstate_global->__pyx_kp_u_positions_and_MANUAL_alignment_m_2, ((PyObject *)(((PyTypeObject*)PyExc_DeprecationWarning)))};
+      __pyx_t_7 = __Pyx_MakeVectorcallBuilderKwds(1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 1055, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_7);
+      if (__Pyx_VectorcallBuilder_AddArg(__pyx_mstate_global->__pyx_n_u_stacklevel, __pyx_mstate_global->__pyx_int_2, __pyx_t_7, __pyx_callargs+3, 0) < (0)) __PYX_ERR(0, 1055, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_Object_Vectorcall_CallFromBuilder((PyObject*)__pyx_t_5, __pyx_callargs+__pyx_t_6, (3-__pyx_t_6) | (__pyx_t_6*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET), __pyx_t_7);
+      __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1055, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+    }
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+
+    /* "dearcygui/layout.pyx":1056
+ *         if len(value) > 0:
+ *             _warn("positions and MANUAL alignment mode are deprecated. Use string-based positioning (e.g. item.y = '10') on children instead.", DeprecationWarning, stacklevel=2)
  *             self._alignment_mode = Alignment.MANUAL             # <<<<<<<<<<<<<<
  *         # TODO: checks
  *         self._positions.clear()
 */
     __pyx_v_self->_alignment_mode = __pyx_t_9dearcygui_5types_Alignment::MANUAL;
 
-    /* "dearcygui/layout.pyx":667
+    /* "dearcygui/layout.pyx":1054
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)
  *         if len(value) > 0:             # <<<<<<<<<<<<<<
+ *             _warn("positions and MANUAL alignment mode are deprecated. Use string-based positioning (e.g. item.y = '10') on children instead.", DeprecationWarning, stacklevel=2)
  *             self._alignment_mode = Alignment.MANUAL
- *         # TODO: checks
 */
   }
 
-  /* "dearcygui/layout.pyx":670
+  /* "dearcygui/layout.pyx":1058
  *             self._alignment_mode = Alignment.MANUAL
  *         # TODO: checks
  *         self._positions.clear()             # <<<<<<<<<<<<<<
@@ -34907,7 +36141,7 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_9positions_2__set__(stru
 */
   __pyx_v_self->_positions.clear();
 
-  /* "dearcygui/layout.pyx":671
+  /* "dearcygui/layout.pyx":1059
  *         # TODO: checks
  *         self._positions.clear()
  *         for v in value:             # <<<<<<<<<<<<<<
@@ -34917,19 +36151,19 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_9positions_2__set__(stru
   if (likely(PyList_CheckExact(__pyx_v_value)) || PyTuple_CheckExact(__pyx_v_value)) {
     __pyx_t_3 = __pyx_v_value; __Pyx_INCREF(__pyx_t_3);
     __pyx_t_1 = 0;
-    __pyx_t_4 = NULL;
+    __pyx_t_8 = NULL;
   } else {
-    __pyx_t_1 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_v_value); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 671, __pyx_L1_error)
+    __pyx_t_1 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_v_value); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1059, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 671, __pyx_L1_error)
+    __pyx_t_8 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_3); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 1059, __pyx_L1_error)
   }
   for (;;) {
-    if (likely(!__pyx_t_4)) {
+    if (likely(!__pyx_t_8)) {
       if (likely(PyList_CheckExact(__pyx_t_3))) {
         {
           Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_3);
           #if !CYTHON_ASSUME_SAFE_SIZE
-          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 671, __pyx_L1_error)
+          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 1059, __pyx_L1_error)
           #endif
           if (__pyx_t_1 >= __pyx_temp) break;
         }
@@ -34939,7 +36173,7 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_9positions_2__set__(stru
         {
           Py_ssize_t __pyx_temp = __Pyx_PyTuple_GET_SIZE(__pyx_t_3);
           #if !CYTHON_ASSUME_SAFE_SIZE
-          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 671, __pyx_L1_error)
+          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 1059, __pyx_L1_error)
           #endif
           if (__pyx_t_1 >= __pyx_temp) break;
         }
@@ -34950,13 +36184,13 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_9positions_2__set__(stru
         #endif
         ++__pyx_t_1;
       }
-      if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 671, __pyx_L1_error)
+      if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1059, __pyx_L1_error)
     } else {
-      __pyx_t_5 = __pyx_t_4(__pyx_t_3);
+      __pyx_t_5 = __pyx_t_8(__pyx_t_3);
       if (unlikely(!__pyx_t_5)) {
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
-          if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) __PYX_ERR(0, 671, __pyx_L1_error)
+          if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) __PYX_ERR(0, 1059, __pyx_L1_error)
           PyErr_Clear();
         }
         break;
@@ -34966,22 +36200,22 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_9positions_2__set__(stru
     __Pyx_XDECREF_SET(__pyx_v_v, __pyx_t_5);
     __pyx_t_5 = 0;
 
-    /* "dearcygui/layout.pyx":672
+    /* "dearcygui/layout.pyx":1060
  *         self._positions.clear()
  *         for v in value:
  *             self._positions.push_back(v)             # <<<<<<<<<<<<<<
  *         self._force_update = True
  * 
 */
-    __pyx_t_6 = __Pyx_PyFloat_AsFloat(__pyx_v_v); if (unlikely((__pyx_t_6 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 672, __pyx_L1_error)
+    __pyx_t_9 = __Pyx_PyFloat_AsFloat(__pyx_v_v); if (unlikely((__pyx_t_9 == (float)-1) && PyErr_Occurred())) __PYX_ERR(0, 1060, __pyx_L1_error)
     try {
-      __pyx_v_self->_positions.push_back(__pyx_t_6);
+      __pyx_v_self->_positions.push_back(__pyx_t_9);
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      __PYX_ERR(0, 672, __pyx_L1_error)
+      __PYX_ERR(0, 1060, __pyx_L1_error)
     }
 
-    /* "dearcygui/layout.pyx":671
+    /* "dearcygui/layout.pyx":1059
  *         # TODO: checks
  *         self._positions.clear()
  *         for v in value:             # <<<<<<<<<<<<<<
@@ -34991,16 +36225,16 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_9positions_2__set__(stru
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "dearcygui/layout.pyx":673
+  /* "dearcygui/layout.pyx":1061
  *         for v in value:
  *             self._positions.push_back(v)
  *         self._force_update = True             # <<<<<<<<<<<<<<
  * 
- *     def update_layout(self):
+ *     cdef bint __check_children_neutral(self) noexcept nogil:
 */
   __pyx_v_self->__pyx_base._force_update = 1;
 
-  /* "dearcygui/layout.pyx":663
+  /* "dearcygui/layout.pyx":1050
  *         return result
  * 
  *     @positions.setter             # <<<<<<<<<<<<<<
@@ -35013,7 +36247,9 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_9positions_2__set__(stru
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_7);
   __Pyx_AddTraceback("dearcygui.layout.VerticalLayout.positions.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
@@ -35022,753 +36258,1687 @@ static int __pyx_pf_9dearcygui_6layout_14VerticalLayout_9positions_2__set__(stru
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":675
+/* "dearcygui/layout.pyx":1063
  *         self._force_update = True
  * 
- *     def update_layout(self):             # <<<<<<<<<<<<<<
+ *     cdef bint __check_children_neutral(self) noexcept nogil:             # <<<<<<<<<<<<<<
  *         """
- *         Force an update of the layout next time the scene is rendered.
+ *         Returns True if all children are already in neutral positioning state:
 */
 
-/* Python wrapper */
-static PyObject *__pyx_pw_9dearcygui_6layout_14VerticalLayout_3update_layout(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-PyDoc_STRVAR(__pyx_doc_9dearcygui_6layout_14VerticalLayout_2update_layout, "\n        Force an update of the layout next time the scene is rendered.\n        \n        This method triggers the recalculation of item positions and sizes \n        within the layout. It's useful when the automated update detection \n        is not sufficient to detect layout changes.\n        ");
-static PyMethodDef __pyx_mdef_9dearcygui_6layout_14VerticalLayout_3update_layout = {"update_layout", (PyCFunction)__pyx_pw_9dearcygui_6layout_14VerticalLayout_3update_layout, METH_NOARGS, __pyx_doc_9dearcygui_6layout_14VerticalLayout_2update_layout};
-static PyObject *__pyx_pw_9dearcygui_6layout_14VerticalLayout_3update_layout(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
-  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("update_layout (wrapper)", 0);
-  __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
-  __pyx_r = __pyx_pf_9dearcygui_6layout_14VerticalLayout_2update_layout(((struct __pyx_obj_9dearcygui_6layout_VerticalLayout *)__pyx_v_self));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_9dearcygui_6layout_14VerticalLayout_2update_layout(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *__pyx_v_self) {
-  std::unique_lock<DCGMutex>  __pyx_v_m;
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("update_layout", 0);
-
-  /* "dearcygui/layout.pyx":684
- *         """
- *         cdef unique_lock[DCGMutex] m
- *         lock_gil_friendly(m, self.mutex)             # <<<<<<<<<<<<<<
- *         self._force_update = True
- * 
-*/
-  __pyx_f_9dearcygui_4core_lock_gil_friendly(__pyx_v_m, __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.mutex);
-
-  /* "dearcygui/layout.pyx":685
- *         cdef unique_lock[DCGMutex] m
- *         lock_gil_friendly(m, self.mutex)
- *         self._force_update = True             # <<<<<<<<<<<<<<
- * 
- *     cdef void __update_layout_manual(self):
-*/
-  __pyx_v_self->__pyx_base._force_update = 1;
-
-  /* "dearcygui/layout.pyx":675
- *         self._force_update = True
- * 
- *     def update_layout(self):             # <<<<<<<<<<<<<<
- *         """
- *         Force an update of the layout next time the scene is rendered.
-*/
-
-  /* function exit code */
-  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "dearcygui/layout.pyx":687
- *         self._force_update = True
- * 
- *     cdef void __update_layout_manual(self):             # <<<<<<<<<<<<<<
- *         """Position items at manually specified y positions"""
- *         # assumes children are locked and > 0
-*/
-
-static void __pyx_f_9dearcygui_6layout_14VerticalLayout__VerticalLayout__update_layout_manual(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *__pyx_v_self) {
-  float __pyx_v_available_height;
-  float __pyx_v_pos_start;
-  int32_t __pyx_v_i;
+static int __pyx_f_9dearcygui_6layout_14VerticalLayout__VerticalLayout__check_children_neutral(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *__pyx_v_self) {
   PyObject *__pyx_v_child;
-  int __pyx_v_pos_change;
-  __Pyx_RefNannyDeclarations
-  float __pyx_t_1;
+  int __pyx_r;
+  int __pyx_t_1;
   int __pyx_t_2;
-  long __pyx_t_3;
-  int32_t __pyx_t_4;
-  long __pyx_t_5;
-  float __pyx_t_6;
-  PyObject *__pyx_t_7 = NULL;
-  PyObject *__pyx_t_8 = NULL;
-  PyObject *__pyx_t_9 = NULL;
-  PyObject *__pyx_t_10 = NULL;
-  PyObject *__pyx_t_11 = NULL;
-  PyObject *__pyx_t_12 = NULL;
-  PyObject *__pyx_t_13 = NULL;
-  size_t __pyx_t_14;
-  PyObject *__pyx_t_15 = NULL;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("_VerticalLayout__update_layout_manual", 0);
 
-  /* "dearcygui/layout.pyx":690
- *         """Position items at manually specified y positions"""
- *         # assumes children are locked and > 0
- *         cdef float available_height = self.state.cur.content_region_size.y             # <<<<<<<<<<<<<<
- *         cdef float pos_start = 0.
- *         cdef int32_t i = 0
-*/
-  __pyx_t_1 = __pyx_v_self->__pyx_base.__pyx_base.state.cur.content_region_size.y;
-  __pyx_v_available_height = __pyx_t_1;
-
-  /* "dearcygui/layout.pyx":691
- *         # assumes children are locked and > 0
- *         cdef float available_height = self.state.cur.content_region_size.y
- *         cdef float pos_start = 0.             # <<<<<<<<<<<<<<
- *         cdef int32_t i = 0
- *         cdef PyObject *child = <PyObject*>self.last_widgets_child
-*/
-  __pyx_v_pos_start = 0.;
-
-  /* "dearcygui/layout.pyx":692
- *         cdef float available_height = self.state.cur.content_region_size.y
- *         cdef float pos_start = 0.
- *         cdef int32_t i = 0             # <<<<<<<<<<<<<<
- *         cdef PyObject *child = <PyObject*>self.last_widgets_child
- *         cdef bint pos_change = False
-*/
-  __pyx_v_i = 0;
-
-  /* "dearcygui/layout.pyx":693
- *         cdef float pos_start = 0.
- *         cdef int32_t i = 0
- *         cdef PyObject *child = <PyObject*>self.last_widgets_child             # <<<<<<<<<<<<<<
- *         cdef bint pos_change = False
+  /* "dearcygui/layout.pyx":1075
+ *         doesn't require GIL.
+ *         """
+ *         if self.last_widgets_child is None:             # <<<<<<<<<<<<<<
+ *             return True
  * 
+*/
+  __pyx_t_1 = (((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child) == Py_None);
+  if (__pyx_t_1) {
+
+    /* "dearcygui/layout.pyx":1076
+ *         """
+ *         if self.last_widgets_child is None:
+ *             return True             # <<<<<<<<<<<<<<
+ * 
+ *         # Walk backwards to the first sibling
+*/
+    __pyx_r = 1;
+    goto __pyx_L0;
+
+    /* "dearcygui/layout.pyx":1075
+ *         doesn't require GIL.
+ *         """
+ *         if self.last_widgets_child is None:             # <<<<<<<<<<<<<<
+ *             return True
+ * 
+*/
+  }
+
+  /* "dearcygui/layout.pyx":1079
+ * 
+ *         # Walk backwards to the first sibling
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child             # <<<<<<<<<<<<<<
+ *         while (<uiItem>child).prev_sibling is not None:
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
 */
   __pyx_v_child = ((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child);
 
-  /* "dearcygui/layout.pyx":694
- *         cdef int32_t i = 0
+  /* "dearcygui/layout.pyx":1080
+ *         # Walk backwards to the first sibling
  *         cdef PyObject *child = <PyObject*>self.last_widgets_child
- *         cdef bint pos_change = False             # <<<<<<<<<<<<<<
- * 
- *         # Get back to first child
-*/
-  __pyx_v_pos_change = 0;
-
-  /* "dearcygui/layout.pyx":697
- * 
- *         # Get back to first child
  *         while (<uiItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
- *             child = <PyObject*>((<uiItem>child).prev_sibling)
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
  * 
 */
   while (1) {
-    __pyx_t_2 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling) != Py_None);
-    if (!__pyx_t_2) break;
+    __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling) != Py_None);
+    if (!__pyx_t_1) break;
 
-    /* "dearcygui/layout.pyx":698
- *         # Get back to first child
+    /* "dearcygui/layout.pyx":1081
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child
  *         while (<uiItem>child).prev_sibling is not None:
- *             child = <PyObject*>((<uiItem>child).prev_sibling)             # <<<<<<<<<<<<<<
+ *             child = <PyObject*>(<uiItem>child).prev_sibling             # <<<<<<<<<<<<<<
  * 
- *         # Position each item at specified y coordinate
+ *         # Check every child for any positioning override
 */
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling);
   }
 
-  /* "dearcygui/layout.pyx":701
+  /* "dearcygui/layout.pyx":1084
  * 
- *         # Position each item at specified y coordinate
+ *         # Check every child for any positioning override
  *         while (<uiItem>child) is not None:             # <<<<<<<<<<<<<<
- *             # Get position from positions list or default to 0
+ *             if (<uiItem>child).no_newline or \
+ *                (<uiItem>child).requested_x.is_item() or \
+*/
+  while (1) {
+    __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
+    if (!__pyx_t_1) break;
+
+    /* "dearcygui/layout.pyx":1085
+ *         # Check every child for any positioning override
+ *         while (<uiItem>child) is not None:
+ *             if (<uiItem>child).no_newline or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).requested_x.is_item() or \
+ *                (<uiItem>child).requested_y.is_item() or \
+*/
+    if (!((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->no_newline) {
+    } else {
+      __pyx_t_1 = ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->no_newline;
+      goto __pyx_L9_bool_binop_done;
+    }
+
+    /* "dearcygui/layout.pyx":1086
+ *         while (<uiItem>child) is not None:
+ *             if (<uiItem>child).no_newline or \
+ *                (<uiItem>child).requested_x.is_item() or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).requested_y.is_item() or \
+ *                (<uiItem>child).requested_x.get_value() != 0. or \
+*/
+    __pyx_t_2 = ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->requested_x.is_item();
+    if (!__pyx_t_2) {
+    } else {
+      __pyx_t_1 = __pyx_t_2;
+      goto __pyx_L9_bool_binop_done;
+    }
+
+    /* "dearcygui/layout.pyx":1087
+ *             if (<uiItem>child).no_newline or \
+ *                (<uiItem>child).requested_x.is_item() or \
+ *                (<uiItem>child).requested_y.is_item() or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).requested_x.get_value() != 0. or \
+ *                (<uiItem>child).requested_y.get_value() != 0.:
+*/
+    __pyx_t_2 = ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->requested_y.is_item();
+    if (!__pyx_t_2) {
+    } else {
+      __pyx_t_1 = __pyx_t_2;
+      goto __pyx_L9_bool_binop_done;
+    }
+
+    /* "dearcygui/layout.pyx":1088
+ *                (<uiItem>child).requested_x.is_item() or \
+ *                (<uiItem>child).requested_y.is_item() or \
+ *                (<uiItem>child).requested_x.get_value() != 0. or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).requested_y.get_value() != 0.:
+ *                 return False
+*/
+    __pyx_t_2 = (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->requested_x.get_value() != 0.);
+    if (!__pyx_t_2) {
+    } else {
+      __pyx_t_1 = __pyx_t_2;
+      goto __pyx_L9_bool_binop_done;
+    }
+
+    /* "dearcygui/layout.pyx":1089
+ *                (<uiItem>child).requested_y.is_item() or \
+ *                (<uiItem>child).requested_x.get_value() != 0. or \
+ *                (<uiItem>child).requested_y.get_value() != 0.:             # <<<<<<<<<<<<<<
+ *                 return False
+ *             child = <PyObject*>(<uiItem>child).next_sibling
+*/
+    __pyx_t_2 = (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->requested_y.get_value() != 0.);
+    __pyx_t_1 = __pyx_t_2;
+    __pyx_L9_bool_binop_done:;
+
+    /* "dearcygui/layout.pyx":1085
+ *         # Check every child for any positioning override
+ *         while (<uiItem>child) is not None:
+ *             if (<uiItem>child).no_newline or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).requested_x.is_item() or \
+ *                (<uiItem>child).requested_y.is_item() or \
+*/
+    if (__pyx_t_1) {
+
+      /* "dearcygui/layout.pyx":1090
+ *                (<uiItem>child).requested_x.get_value() != 0. or \
+ *                (<uiItem>child).requested_y.get_value() != 0.:
+ *                 return False             # <<<<<<<<<<<<<<
+ *             child = <PyObject*>(<uiItem>child).next_sibling
+ *         return True
+*/
+      __pyx_r = 0;
+      goto __pyx_L0;
+
+      /* "dearcygui/layout.pyx":1085
+ *         # Check every child for any positioning override
+ *         while (<uiItem>child) is not None:
+ *             if (<uiItem>child).no_newline or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).requested_x.is_item() or \
+ *                (<uiItem>child).requested_y.is_item() or \
+*/
+    }
+
+    /* "dearcygui/layout.pyx":1091
+ *                (<uiItem>child).requested_y.get_value() != 0.:
+ *                 return False
+ *             child = <PyObject*>(<uiItem>child).next_sibling             # <<<<<<<<<<<<<<
+ *         return True
+ * 
+*/
+    __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.next_sibling);
+  }
+
+  /* "dearcygui/layout.pyx":1092
+ *                 return False
+ *             child = <PyObject*>(<uiItem>child).next_sibling
+ *         return True             # <<<<<<<<<<<<<<
+ * 
+ *     cdef void __apply_children_neutral(self):
+*/
+  __pyx_r = 1;
+  goto __pyx_L0;
+
+  /* "dearcygui/layout.pyx":1063
+ *         self._force_update = True
+ * 
+ *     cdef bint __check_children_neutral(self) noexcept nogil:             # <<<<<<<<<<<<<<
+ *         """
+ *         Returns True if all children are already in neutral positioning state:
+*/
+
+  /* function exit code */
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+/* "dearcygui/layout.pyx":1094
+ *         return True
+ * 
+ *     cdef void __apply_children_neutral(self):             # <<<<<<<<<<<<<<
+ *         """
+ *         Reset all children to neutral positioning state (no overrides).
+*/
+
+static void __pyx_f_9dearcygui_6layout_14VerticalLayout__VerticalLayout__apply_children_neutral(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *__pyx_v_self) {
+  PyObject *__pyx_v_child;
+  int __pyx_t_1;
+
+  /* "dearcygui/layout.pyx":1099
+ *         Requires the GIL because set_value() may call Python code.
+ *         """
+ *         if self.last_widgets_child is None:             # <<<<<<<<<<<<<<
+ *             return
+ * 
+*/
+  __pyx_t_1 = (((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child) == Py_None);
+  if (__pyx_t_1) {
+
+    /* "dearcygui/layout.pyx":1100
+ *         """
+ *         if self.last_widgets_child is None:
+ *             return             # <<<<<<<<<<<<<<
+ * 
+ *         # Walk backwards to the first sibling
+*/
+    goto __pyx_L0;
+
+    /* "dearcygui/layout.pyx":1099
+ *         Requires the GIL because set_value() may call Python code.
+ *         """
+ *         if self.last_widgets_child is None:             # <<<<<<<<<<<<<<
+ *             return
+ * 
+*/
+  }
+
+  /* "dearcygui/layout.pyx":1103
+ * 
+ *         # Walk backwards to the first sibling
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child             # <<<<<<<<<<<<<<
+ *         while (<uiItem>child).prev_sibling is not None:
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
+*/
+  __pyx_v_child = ((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child);
+
+  /* "dearcygui/layout.pyx":1104
+ *         # Walk backwards to the first sibling
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child
+ *         while (<uiItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
+ * 
+*/
+  while (1) {
+    __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling) != Py_None);
+    if (!__pyx_t_1) break;
+
+    /* "dearcygui/layout.pyx":1105
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child
+ *         while (<uiItem>child).prev_sibling is not None:
+ *             child = <PyObject*>(<uiItem>child).prev_sibling             # <<<<<<<<<<<<<<
+ * 
+ *         # Clear every positioning override
+*/
+    __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling);
+  }
+
+  /* "dearcygui/layout.pyx":1108
+ * 
+ *         # Clear every positioning override
+ *         while (<uiItem>child) is not None:             # <<<<<<<<<<<<<<
+ *             (<uiItem>child).no_newline = False
+ *             (<uiItem>child).requested_x.set_value(0.)
+*/
+  while (1) {
+    __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
+    if (!__pyx_t_1) break;
+
+    /* "dearcygui/layout.pyx":1109
+ *         # Clear every positioning override
+ *         while (<uiItem>child) is not None:
+ *             (<uiItem>child).no_newline = False             # <<<<<<<<<<<<<<
+ *             (<uiItem>child).requested_x.set_value(0.)
+ *             (<uiItem>child).requested_y.set_value(0.)
+*/
+    ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->no_newline = 0;
+
+    /* "dearcygui/layout.pyx":1110
+ *         while (<uiItem>child) is not None:
+ *             (<uiItem>child).no_newline = False
+ *             (<uiItem>child).requested_x.set_value(0.)             # <<<<<<<<<<<<<<
+ *             (<uiItem>child).requested_y.set_value(0.)
+ *             child = <PyObject*>(<uiItem>child).next_sibling
+*/
+    ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->requested_x.set_value(0.);
+
+    /* "dearcygui/layout.pyx":1111
+ *             (<uiItem>child).no_newline = False
+ *             (<uiItem>child).requested_x.set_value(0.)
+ *             (<uiItem>child).requested_y.set_value(0.)             # <<<<<<<<<<<<<<
+ *             child = <PyObject*>(<uiItem>child).next_sibling
+ * 
+*/
+    ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->requested_y.set_value(0.);
+
+    /* "dearcygui/layout.pyx":1112
+ *             (<uiItem>child).requested_x.set_value(0.)
+ *             (<uiItem>child).requested_y.set_value(0.)
+ *             child = <PyObject*>(<uiItem>child).next_sibling             # <<<<<<<<<<<<<<
+ * 
+ *     cdef bint __draw_item_top_no_wrap(self) noexcept nogil:
+*/
+    __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.next_sibling);
+  }
+
+  /* "dearcygui/layout.pyx":1094
+ *         return True
+ * 
+ *     cdef void __apply_children_neutral(self):             # <<<<<<<<<<<<<<
+ *         """
+ *         Reset all children to neutral positioning state (no overrides).
+*/
+
+  /* function exit code */
+  __pyx_L0:;
+}
+
+/* "dearcygui/layout.pyx":1114
+ *             child = <PyObject*>(<uiItem>child).next_sibling
+ * 
+ *     cdef bint __draw_item_top_no_wrap(self) noexcept nogil:             # <<<<<<<<<<<<<<
+ *         """
+ *         TOP alignment, no wrapping: items stack top-to-bottom sequentially.
+*/
+
+static int __pyx_f_9dearcygui_6layout_14VerticalLayout__VerticalLayout__draw_item_top_no_wrap(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *__pyx_v_self) {
+  PyObject *__pyx_v_child;
+  int __pyx_v_changed;
+  int __pyx_r;
+  int __pyx_t_1;
+  int __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":1121
+ *         """
+ *         # Walk backwards to the first sibling
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child             # <<<<<<<<<<<<<<
+ *         while (<uiItem>child).prev_sibling is not None:
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
+*/
+  __pyx_v_child = ((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child);
+
+  /* "dearcygui/layout.pyx":1122
+ *         # Walk backwards to the first sibling
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child
+ *         while (<uiItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
+ * 
+*/
+  while (1) {
+    __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling) != Py_None);
+    if (!__pyx_t_1) break;
+
+    /* "dearcygui/layout.pyx":1123
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child
+ *         while (<uiItem>child).prev_sibling is not None:
+ *             child = <PyObject*>(<uiItem>child).prev_sibling             # <<<<<<<<<<<<<<
+ * 
+ *         cdef bint changed = False
+*/
+    __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling);
+  }
+
+  /* "dearcygui/layout.pyx":1125
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
+ * 
+ *         cdef bint changed = False             # <<<<<<<<<<<<<<
+ * 
+ *         while (<uiItem>child) is not None:
+*/
+  __pyx_v_changed = 0;
+
+  /* "dearcygui/layout.pyx":1127
+ *         cdef bint changed = False
+ * 
+ *         while (<uiItem>child) is not None:             # <<<<<<<<<<<<<<
+ *             (<uiItem>child).draw()
+ * 
+*/
+  while (1) {
+    __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
+    if (!__pyx_t_1) break;
+
+    /* "dearcygui/layout.pyx":1128
+ * 
+ *         while (<uiItem>child) is not None:
+ *             (<uiItem>child).draw()             # <<<<<<<<<<<<<<
+ * 
+ *             # Track size changes so the parent knows to redraw next frame
+*/
+    ((struct __pyx_vtabstruct_9dearcygui_4core_uiItem *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.__pyx_vtab)->draw(((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child));
+
+    /* "dearcygui/layout.pyx":1131
+ * 
+ *             # Track size changes so the parent knows to redraw next frame
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:
+ *                 changed = True
+*/
+    __pyx_t_2 = (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cur.rect_size.x != ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.prev.rect_size.x);
+    if (!__pyx_t_2) {
+    } else {
+      __pyx_t_1 = __pyx_t_2;
+      goto __pyx_L8_bool_binop_done;
+    }
+
+    /* "dearcygui/layout.pyx":1132
+ *             # Track size changes so the parent knows to redraw next frame
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:             # <<<<<<<<<<<<<<
+ *                 changed = True
+ * 
+*/
+    __pyx_t_2 = (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cur.rect_size.y != ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.prev.rect_size.y);
+    __pyx_t_1 = __pyx_t_2;
+    __pyx_L8_bool_binop_done:;
+
+    /* "dearcygui/layout.pyx":1131
+ * 
+ *             # Track size changes so the parent knows to redraw next frame
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:
+ *                 changed = True
+*/
+    if (__pyx_t_1) {
+
+      /* "dearcygui/layout.pyx":1133
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:
+ *                 changed = True             # <<<<<<<<<<<<<<
+ * 
+ *             child = <PyObject*>(<uiItem>child).next_sibling
+*/
+      __pyx_v_changed = 1;
+
+      /* "dearcygui/layout.pyx":1131
+ * 
+ *             # Track size changes so the parent knows to redraw next frame
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:
+ *                 changed = True
+*/
+    }
+
+    /* "dearcygui/layout.pyx":1135
+ *                 changed = True
+ * 
+ *             child = <PyObject*>(<uiItem>child).next_sibling             # <<<<<<<<<<<<<<
+ *         return changed
+ * 
+*/
+    __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.next_sibling);
+  }
+
+  /* "dearcygui/layout.pyx":1136
+ * 
+ *             child = <PyObject*>(<uiItem>child).next_sibling
+ *         return changed             # <<<<<<<<<<<<<<
+ * 
+ *     cdef bint __draw_item_top_wrap(self) noexcept nogil:
+*/
+  __pyx_r = __pyx_v_changed;
+  goto __pyx_L0;
+
+  /* "dearcygui/layout.pyx":1114
+ *             child = <PyObject*>(<uiItem>child).next_sibling
+ * 
+ *     cdef bint __draw_item_top_no_wrap(self) noexcept nogil:             # <<<<<<<<<<<<<<
+ *         """
+ *         TOP alignment, no wrapping: items stack top-to-bottom sequentially.
+*/
+
+  /* function exit code */
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+/* "dearcygui/layout.pyx":1138
+ *         return changed
+ * 
+ *     cdef bint __draw_item_top_wrap(self) noexcept nogil:             # <<<<<<<<<<<<<<
+ *         """
+ *         TOP alignment, wrapping enabled: draw items top-to-bottom, starting a
+*/
+
+static int __pyx_f_9dearcygui_6layout_14VerticalLayout__VerticalLayout__draw_item_top_wrap(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *__pyx_v_self) {
+  PyObject *__pyx_v_child;
+  float __pyx_v_spacing_x;
+  float __pyx_v_spacing_y;
+  float __pyx_v_parent_start_x;
+  float __pyx_v_parent_start_y;
+  float __pyx_v_end_y;
+  float __pyx_v_wrap_start_y;
+  float __pyx_v_col_x;
+  float __pyx_v_col_max_width;
+  float __pyx_v_cur_end_y;
+  int __pyx_v_changed;
+  int __pyx_v_is_first_col;
+  int __pyx_v_first_item_drawn;
+  int __pyx_v_first_item_on_col_drawn;
+  int __pyx_v_had_item_on_col_before;
+  float __pyx_v_cursor_y_before;
+  int __pyx_v_has_sz;
+  float __pyx_v_new_col_x;
+  float __pyx_v_new_col_y;
+  int __pyx_r;
+  int __pyx_t_1;
+  float __pyx_t_2;
+  int __pyx_t_3;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyGILState_STATE __pyx_gilstate_save;
+
+  /* "dearcygui/layout.pyx":1146
+ *         """
+ *         # Walk backwards to the first sibling
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child             # <<<<<<<<<<<<<<
+ *         while (<uiItem>child).prev_sibling is not None:
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
+*/
+  __pyx_v_child = ((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child);
+
+  /* "dearcygui/layout.pyx":1147
+ *         # Walk backwards to the first sibling
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child
+ *         while (<uiItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
+ * 
+*/
+  while (1) {
+    __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling) != Py_None);
+    if (!__pyx_t_1) break;
+
+    /* "dearcygui/layout.pyx":1148
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child
+ *         while (<uiItem>child).prev_sibling is not None:
+ *             child = <PyObject*>(<uiItem>child).prev_sibling             # <<<<<<<<<<<<<<
+ * 
+ *         # Retrieve item spacing
+*/
+    __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling);
+  }
+
+  /* "dearcygui/layout.pyx":1151
+ * 
+ *         # Retrieve item spacing
+ *         cdef float spacing_x = imgui.GetStyle().ItemSpacing.x             # <<<<<<<<<<<<<<
+ *         cdef float spacing_y = imgui.GetStyle().ItemSpacing.y
+ * 
+*/
+  __pyx_t_2 = ImGui::GetStyle().ItemSpacing.x;
+  __pyx_v_spacing_x = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":1152
+ *         # Retrieve item spacing
+ *         cdef float spacing_x = imgui.GetStyle().ItemSpacing.x
+ *         cdef float spacing_y = imgui.GetStyle().ItemSpacing.y             # <<<<<<<<<<<<<<
+ * 
+ *         # Retrieve min/max y bounds
+*/
+  __pyx_t_2 = ImGui::GetStyle().ItemSpacing.y;
+  __pyx_v_spacing_y = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":1155
+ * 
+ *         # Retrieve min/max y bounds
+ *         cdef float parent_start_x = self.context.viewport.parent_pos.x             # <<<<<<<<<<<<<<
+ *         cdef float parent_start_y = self.context.viewport.parent_pos.y
+ *         cdef float end_y = parent_start_y + self.state.cur.content_region_size.y
+*/
+  __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->parent_pos.x;
+  __pyx_v_parent_start_x = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":1156
+ *         # Retrieve min/max y bounds
+ *         cdef float parent_start_x = self.context.viewport.parent_pos.x
+ *         cdef float parent_start_y = self.context.viewport.parent_pos.y             # <<<<<<<<<<<<<<
+ *         cdef float end_y = parent_start_y + self.state.cur.content_region_size.y
+ * 
+*/
+  __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->parent_pos.y;
+  __pyx_v_parent_start_y = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":1157
+ *         cdef float parent_start_x = self.context.viewport.parent_pos.x
+ *         cdef float parent_start_y = self.context.viewport.parent_pos.y
+ *         cdef float end_y = parent_start_y + self.state.cur.content_region_size.y             # <<<<<<<<<<<<<<
+ * 
+ *         # Deduce wrapping start region.
+*/
+  __pyx_v_end_y = (__pyx_v_parent_start_y + __pyx_v_self->__pyx_base.__pyx_base.state.cur.content_region_size.y);
+
+  /* "dearcygui/layout.pyx":1161
+ *         # Deduce wrapping start region.
+ *         # First column starts at parent_start_y; wrapped columns start at wrap_start_y.
+ *         cdef float wrap_start_y = parent_start_y + fmax(-self.state.cur.pos_to_window.y, self._wrap_y)             # <<<<<<<<<<<<<<
+ *         wrap_start_y = fmax(parent_start_y, wrap_start_y)
+ * 
+*/
+  try {
+    __pyx_t_2 = std::fmax((-__pyx_v_self->__pyx_base.__pyx_base.state.cur.pos_to_window.y), __pyx_v_self->_wrap_y);
+  } catch(...) {
+    PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+    __Pyx_CppExn2PyErr();
+    __Pyx_PyGILState_Release(__pyx_gilstate_save);
+    __PYX_ERR(0, 1161, __pyx_L1_error)
+  }
+  __pyx_v_wrap_start_y = (__pyx_v_parent_start_y + __pyx_t_2);
+
+  /* "dearcygui/layout.pyx":1162
+ *         # First column starts at parent_start_y; wrapped columns start at wrap_start_y.
+ *         cdef float wrap_start_y = parent_start_y + fmax(-self.state.cur.pos_to_window.y, self._wrap_y)
+ *         wrap_start_y = fmax(parent_start_y, wrap_start_y)             # <<<<<<<<<<<<<<
+ * 
+ *         cdef float col_x = parent_start_x       # screen-x of the current column's left edge
+*/
+  try {
+    __pyx_t_2 = std::fmax(__pyx_v_parent_start_y, __pyx_v_wrap_start_y);
+  } catch(...) {
+    PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+    __Pyx_CppExn2PyErr();
+    __Pyx_PyGILState_Release(__pyx_gilstate_save);
+    __PYX_ERR(0, 1162, __pyx_L1_error)
+  }
+  __pyx_v_wrap_start_y = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":1164
+ *         wrap_start_y = fmax(parent_start_y, wrap_start_y)
+ * 
+ *         cdef float col_x = parent_start_x       # screen-x of the current column's left edge             # <<<<<<<<<<<<<<
+ *         cdef float col_max_width = 0.            # widest item seen so far in this column
+ *         cdef float cur_end_y = parent_start_y    # screen-y of the bottom edge of the last drawn item
+*/
+  __pyx_v_col_x = __pyx_v_parent_start_x;
+
+  /* "dearcygui/layout.pyx":1165
+ * 
+ *         cdef float col_x = parent_start_x       # screen-x of the current column's left edge
+ *         cdef float col_max_width = 0.            # widest item seen so far in this column             # <<<<<<<<<<<<<<
+ *         cdef float cur_end_y = parent_start_y    # screen-y of the bottom edge of the last drawn item
+ *         cdef bint changed = False
+*/
+  __pyx_v_col_max_width = 0.;
+
+  /* "dearcygui/layout.pyx":1166
+ *         cdef float col_x = parent_start_x       # screen-x of the current column's left edge
+ *         cdef float col_max_width = 0.            # widest item seen so far in this column
+ *         cdef float cur_end_y = parent_start_y    # screen-y of the bottom edge of the last drawn item             # <<<<<<<<<<<<<<
+ *         cdef bint changed = False
+ *         cdef bint is_first_col = True            # False once we have wrapped to a second column
+*/
+  __pyx_v_cur_end_y = __pyx_v_parent_start_y;
+
+  /* "dearcygui/layout.pyx":1167
+ *         cdef float col_max_width = 0.            # widest item seen so far in this column
+ *         cdef float cur_end_y = parent_start_y    # screen-y of the bottom edge of the last drawn item
+ *         cdef bint changed = False             # <<<<<<<<<<<<<<
+ *         cdef bint is_first_col = True            # False once we have wrapped to a second column
+ *         cdef bint first_item_drawn = False       # True after any visible item moved the cursor down
+*/
+  __pyx_v_changed = 0;
+
+  /* "dearcygui/layout.pyx":1168
+ *         cdef float cur_end_y = parent_start_y    # screen-y of the bottom edge of the last drawn item
+ *         cdef bint changed = False
+ *         cdef bint is_first_col = True            # False once we have wrapped to a second column             # <<<<<<<<<<<<<<
+ *         cdef bint first_item_drawn = False       # True after any visible item moved the cursor down
+ *         cdef bint first_item_on_col_drawn = False  # True after a visible item moved the cursor down in this column
+*/
+  __pyx_v_is_first_col = 1;
+
+  /* "dearcygui/layout.pyx":1169
+ *         cdef bint changed = False
+ *         cdef bint is_first_col = True            # False once we have wrapped to a second column
+ *         cdef bint first_item_drawn = False       # True after any visible item moved the cursor down             # <<<<<<<<<<<<<<
+ *         cdef bint first_item_on_col_drawn = False  # True after a visible item moved the cursor down in this column
+ *         cdef bint had_item_on_col_before = False   # snapshot before drawing this child
+*/
+  __pyx_v_first_item_drawn = 0;
+
+  /* "dearcygui/layout.pyx":1170
+ *         cdef bint is_first_col = True            # False once we have wrapped to a second column
+ *         cdef bint first_item_drawn = False       # True after any visible item moved the cursor down
+ *         cdef bint first_item_on_col_drawn = False  # True after a visible item moved the cursor down in this column             # <<<<<<<<<<<<<<
+ *         cdef bint had_item_on_col_before = False   # snapshot before drawing this child
+ *         cdef float cursor_y_before               # cursor y sampled before draw to detect advancement
+*/
+  __pyx_v_first_item_on_col_drawn = 0;
+
+  /* "dearcygui/layout.pyx":1171
+ *         cdef bint first_item_drawn = False       # True after any visible item moved the cursor down
+ *         cdef bint first_item_on_col_drawn = False  # True after a visible item moved the cursor down in this column
+ *         cdef bint had_item_on_col_before = False   # snapshot before drawing this child             # <<<<<<<<<<<<<<
+ *         cdef float cursor_y_before               # cursor y sampled before draw to detect advancement
+ *         cdef bint has_sz                         # whether the current child has a rect size
+*/
+  __pyx_v_had_item_on_col_before = 0;
+
+  /* "dearcygui/layout.pyx":1176
+ *         cdef float new_col_x, new_col_y          # position for the start of a new column
+ * 
+ *         while (<uiItem>child) is not None:             # <<<<<<<<<<<<<<
+ *             had_item_on_col_before = first_item_on_col_drawn
+ * 
+*/
+  while (1) {
+    __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
+    if (!__pyx_t_1) break;
+
+    /* "dearcygui/layout.pyx":1177
+ * 
+ *         while (<uiItem>child) is not None:
+ *             had_item_on_col_before = first_item_on_col_drawn             # <<<<<<<<<<<<<<
+ * 
+ *             # Tooltips have no size.
+*/
+    __pyx_v_had_item_on_col_before = __pyx_v_first_item_on_col_drawn;
+
+    /* "dearcygui/layout.pyx":1180
+ * 
+ *             # Tooltips have no size.
+ *             has_sz = (<uiItem>child).state.cap.has_rect_size             # <<<<<<<<<<<<<<
+ * 
+ *             # If the current column already contains a visible item, decide
+*/
+    __pyx_t_1 = ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cap.has_rect_size;
+    __pyx_v_has_sz = __pyx_t_1;
+
+    /* "dearcygui/layout.pyx":1184
+ *             # If the current column already contains a visible item, decide
+ *             # whether the next visible item still fits or must wrap.
+ *             if first_item_on_col_drawn and has_sz:             # <<<<<<<<<<<<<<
+ *                 if (<uiItem>child).state.cur.traversed and \
+ *                    cur_end_y + spacing_y + (<uiItem>child).state.cur.rect_size.y > end_y:
+*/
+    if (__pyx_v_first_item_on_col_drawn) {
+    } else {
+      __pyx_t_1 = __pyx_v_first_item_on_col_drawn;
+      goto __pyx_L8_bool_binop_done;
+    }
+    __pyx_t_1 = __pyx_v_has_sz;
+    __pyx_L8_bool_binop_done:;
+    if (__pyx_t_1) {
+
+      /* "dearcygui/layout.pyx":1185
+ *             # whether the next visible item still fits or must wrap.
+ *             if first_item_on_col_drawn and has_sz:
+ *                 if (<uiItem>child).state.cur.traversed and \             # <<<<<<<<<<<<<<
+ *                    cur_end_y + spacing_y + (<uiItem>child).state.cur.rect_size.y > end_y:
+ *                     # Item doesn't fit: start a new column to the right.
+*/
+      if (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cur.traversed) {
+      } else {
+        __pyx_t_1 = ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cur.traversed;
+        goto __pyx_L11_bool_binop_done;
+      }
+
+      /* "dearcygui/layout.pyx":1186
+ *             if first_item_on_col_drawn and has_sz:
+ *                 if (<uiItem>child).state.cur.traversed and \
+ *                    cur_end_y + spacing_y + (<uiItem>child).state.cur.rect_size.y > end_y:             # <<<<<<<<<<<<<<
+ *                     # Item doesn't fit: start a new column to the right.
+ *                     new_col_x = col_x + col_max_width + spacing_x
+*/
+      __pyx_t_3 = (((__pyx_v_cur_end_y + __pyx_v_spacing_y) + ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cur.rect_size.y) > __pyx_v_end_y);
+      __pyx_t_1 = __pyx_t_3;
+      __pyx_L11_bool_binop_done:;
+
+      /* "dearcygui/layout.pyx":1185
+ *             # whether the next visible item still fits or must wrap.
+ *             if first_item_on_col_drawn and has_sz:
+ *                 if (<uiItem>child).state.cur.traversed and \             # <<<<<<<<<<<<<<
+ *                    cur_end_y + spacing_y + (<uiItem>child).state.cur.rect_size.y > end_y:
+ *                     # Item doesn't fit: start a new column to the right.
+*/
+      if (__pyx_t_1) {
+
+        /* "dearcygui/layout.pyx":1188
+ *                    cur_end_y + spacing_y + (<uiItem>child).state.cur.rect_size.y > end_y:
+ *                     # Item doesn't fit: start a new column to the right.
+ *                     new_col_x = col_x + col_max_width + spacing_x             # <<<<<<<<<<<<<<
+ *                     new_col_y = parent_start_y if is_first_col else wrap_start_y
+ *                     imgui.SetCursorScreenPos(imgui.ImVec2(new_col_x, new_col_y))
+*/
+        __pyx_v_new_col_x = ((__pyx_v_col_x + __pyx_v_col_max_width) + __pyx_v_spacing_x);
+
+        /* "dearcygui/layout.pyx":1189
+ *                     # Item doesn't fit: start a new column to the right.
+ *                     new_col_x = col_x + col_max_width + spacing_x
+ *                     new_col_y = parent_start_y if is_first_col else wrap_start_y             # <<<<<<<<<<<<<<
+ *                     imgui.SetCursorScreenPos(imgui.ImVec2(new_col_x, new_col_y))
+ *                     col_x = new_col_x
+*/
+        if (__pyx_v_is_first_col) {
+          __pyx_t_2 = __pyx_v_parent_start_y;
+        } else {
+          __pyx_t_2 = __pyx_v_wrap_start_y;
+        }
+        __pyx_v_new_col_y = __pyx_t_2;
+
+        /* "dearcygui/layout.pyx":1190
+ *                     new_col_x = col_x + col_max_width + spacing_x
+ *                     new_col_y = parent_start_y if is_first_col else wrap_start_y
+ *                     imgui.SetCursorScreenPos(imgui.ImVec2(new_col_x, new_col_y))             # <<<<<<<<<<<<<<
+ *                     col_x = new_col_x
+ *                     col_max_width = 0.
+*/
+        ImGui::SetCursorScreenPos(ImVec2(__pyx_v_new_col_x, __pyx_v_new_col_y));
+
+        /* "dearcygui/layout.pyx":1191
+ *                     new_col_y = parent_start_y if is_first_col else wrap_start_y
+ *                     imgui.SetCursorScreenPos(imgui.ImVec2(new_col_x, new_col_y))
+ *                     col_x = new_col_x             # <<<<<<<<<<<<<<
+ *                     col_max_width = 0.
+ *                     cur_end_y = new_col_y
+*/
+        __pyx_v_col_x = __pyx_v_new_col_x;
+
+        /* "dearcygui/layout.pyx":1192
+ *                     imgui.SetCursorScreenPos(imgui.ImVec2(new_col_x, new_col_y))
+ *                     col_x = new_col_x
+ *                     col_max_width = 0.             # <<<<<<<<<<<<<<
+ *                     cur_end_y = new_col_y
+ *                     is_first_col = False
+*/
+        __pyx_v_col_max_width = 0.;
+
+        /* "dearcygui/layout.pyx":1193
+ *                     col_x = new_col_x
+ *                     col_max_width = 0.
+ *                     cur_end_y = new_col_y             # <<<<<<<<<<<<<<
+ *                     is_first_col = False
+ *                     first_item_on_col_drawn = False
+*/
+        __pyx_v_cur_end_y = __pyx_v_new_col_y;
+
+        /* "dearcygui/layout.pyx":1194
+ *                     col_max_width = 0.
+ *                     cur_end_y = new_col_y
+ *                     is_first_col = False             # <<<<<<<<<<<<<<
+ *                     first_item_on_col_drawn = False
+ *                     had_item_on_col_before = False
+*/
+        __pyx_v_is_first_col = 0;
+
+        /* "dearcygui/layout.pyx":1195
+ *                     cur_end_y = new_col_y
+ *                     is_first_col = False
+ *                     first_item_on_col_drawn = False             # <<<<<<<<<<<<<<
+ *                     had_item_on_col_before = False
+ *                 # else: item fits; natural cursor advancement places it correctly
+*/
+        __pyx_v_first_item_on_col_drawn = 0;
+
+        /* "dearcygui/layout.pyx":1196
+ *                     is_first_col = False
+ *                     first_item_on_col_drawn = False
+ *                     had_item_on_col_before = False             # <<<<<<<<<<<<<<
+ *                 # else: item fits; natural cursor advancement places it correctly
+ * 
+*/
+        __pyx_v_had_item_on_col_before = 0;
+
+        /* "dearcygui/layout.pyx":1185
+ *             # whether the next visible item still fits or must wrap.
+ *             if first_item_on_col_drawn and has_sz:
+ *                 if (<uiItem>child).state.cur.traversed and \             # <<<<<<<<<<<<<<
+ *                    cur_end_y + spacing_y + (<uiItem>child).state.cur.rect_size.y > end_y:
+ *                     # Item doesn't fit: start a new column to the right.
+*/
+      }
+
+      /* "dearcygui/layout.pyx":1184
+ *             # If the current column already contains a visible item, decide
+ *             # whether the next visible item still fits or must wrap.
+ *             if first_item_on_col_drawn and has_sz:             # <<<<<<<<<<<<<<
+ *                 if (<uiItem>child).state.cur.traversed and \
+ *                    cur_end_y + spacing_y + (<uiItem>child).state.cur.rect_size.y > end_y:
+*/
+    }
+
+    /* "dearcygui/layout.pyx":1200
+ * 
+ *             # Retrieve y before the item is drawn
+ *             cursor_y_before = imgui.GetCursorScreenPos().y             # <<<<<<<<<<<<<<
+ * 
+ *             # Draw the item
+*/
+    __pyx_t_2 = ImGui::GetCursorScreenPos().y;
+    __pyx_v_cursor_y_before = __pyx_t_2;
+
+    /* "dearcygui/layout.pyx":1203
+ * 
+ *             # Draw the item
+ *             (<uiItem>child).draw()             # <<<<<<<<<<<<<<
+ * 
+ *             # Track whether the item size changed, in which case we trigger a redraw
+*/
+    ((struct __pyx_vtabstruct_9dearcygui_4core_uiItem *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.__pyx_vtab)->draw(((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child));
+
+    /* "dearcygui/layout.pyx":1206
+ * 
+ *             # Track whether the item size changed, in which case we trigger a redraw
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:
+ *                 changed = True
+*/
+    __pyx_t_3 = (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cur.rect_size.x != ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.prev.rect_size.x);
+    if (!__pyx_t_3) {
+    } else {
+      __pyx_t_1 = __pyx_t_3;
+      goto __pyx_L14_bool_binop_done;
+    }
+
+    /* "dearcygui/layout.pyx":1207
+ *             # Track whether the item size changed, in which case we trigger a redraw
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:             # <<<<<<<<<<<<<<
+ *                 changed = True
+ * 
+*/
+    __pyx_t_3 = (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cur.rect_size.y != ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.prev.rect_size.y);
+    __pyx_t_1 = __pyx_t_3;
+    __pyx_L14_bool_binop_done:;
+
+    /* "dearcygui/layout.pyx":1206
+ * 
+ *             # Track whether the item size changed, in which case we trigger a redraw
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:
+ *                 changed = True
+*/
+    if (__pyx_t_1) {
+
+      /* "dearcygui/layout.pyx":1208
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:
+ *                 changed = True             # <<<<<<<<<<<<<<
+ * 
+ *             # Track whether anything was drawn and moved the cursor down.
+*/
+      __pyx_v_changed = 1;
+
+      /* "dearcygui/layout.pyx":1206
+ * 
+ *             # Track whether the item size changed, in which case we trigger a redraw
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:
+ *                 changed = True
+*/
+    }
+
+    /* "dearcygui/layout.pyx":1213
+ *             # Items with show=False and tooltips do not call ItemSize here,
+ *             # so the cursor does not move.
+ *             if imgui.GetCursorScreenPos().y > cursor_y_before:             # <<<<<<<<<<<<<<
+ *                 cur_end_y = (<uiItem>child).state.cur.pos_to_viewport.y + \
+ *                              (<uiItem>child).state.cur.rect_size.y
+*/
+    __pyx_t_1 = (ImGui::GetCursorScreenPos().y > __pyx_v_cursor_y_before);
+    if (__pyx_t_1) {
+
+      /* "dearcygui/layout.pyx":1214
+ *             # so the cursor does not move.
+ *             if imgui.GetCursorScreenPos().y > cursor_y_before:
+ *                 cur_end_y = (<uiItem>child).state.cur.pos_to_viewport.y + \             # <<<<<<<<<<<<<<
+ *                              (<uiItem>child).state.cur.rect_size.y
+ *                 col_max_width = fmax(col_max_width, (<uiItem>child).state.cur.rect_size.x)
+*/
+      __pyx_v_cur_end_y = (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cur.pos_to_viewport.y + ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cur.rect_size.y);
+
+      /* "dearcygui/layout.pyx":1216
+ *                 cur_end_y = (<uiItem>child).state.cur.pos_to_viewport.y + \
+ *                              (<uiItem>child).state.cur.rect_size.y
+ *                 col_max_width = fmax(col_max_width, (<uiItem>child).state.cur.rect_size.x)             # <<<<<<<<<<<<<<
+ *                 first_item_drawn = True
+ *                 first_item_on_col_drawn = True
+*/
+      try {
+        __pyx_t_2 = std::fmax(__pyx_v_col_max_width, ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cur.rect_size.x);
+      } catch(...) {
+        PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+        __Pyx_CppExn2PyErr();
+        __Pyx_PyGILState_Release(__pyx_gilstate_save);
+        __PYX_ERR(0, 1216, __pyx_L1_error)
+      }
+      __pyx_v_col_max_width = __pyx_t_2;
+
+      /* "dearcygui/layout.pyx":1217
+ *                              (<uiItem>child).state.cur.rect_size.y
+ *                 col_max_width = fmax(col_max_width, (<uiItem>child).state.cur.rect_size.x)
+ *                 first_item_drawn = True             # <<<<<<<<<<<<<<
+ *                 first_item_on_col_drawn = True
+ *             else:
+*/
+      __pyx_v_first_item_drawn = 1;
+
+      /* "dearcygui/layout.pyx":1218
+ *                 col_max_width = fmax(col_max_width, (<uiItem>child).state.cur.rect_size.x)
+ *                 first_item_drawn = True
+ *                 first_item_on_col_drawn = True             # <<<<<<<<<<<<<<
+ *             else:
+ *                 # Preserve the current-column state across hidden / zero-size
+*/
+      __pyx_v_first_item_on_col_drawn = 1;
+
+      /* "dearcygui/layout.pyx":1213
+ *             # Items with show=False and tooltips do not call ItemSize here,
+ *             # so the cursor does not move.
+ *             if imgui.GetCursorScreenPos().y > cursor_y_before:             # <<<<<<<<<<<<<<
+ *                 cur_end_y = (<uiItem>child).state.cur.pos_to_viewport.y + \
+ *                              (<uiItem>child).state.cur.rect_size.y
+*/
+      goto __pyx_L16;
+    }
+
+    /* "dearcygui/layout.pyx":1224
+ *                 # against cur_end_y.  If we just wrapped, had_item_on_col_before
+ *                 # is False and the new column correctly remains empty.
+ *                 if first_item_drawn and had_item_on_col_before:             # <<<<<<<<<<<<<<
+ *                     first_item_on_col_drawn = True
+ * 
+*/
+    /*else*/ {
+      if (__pyx_v_first_item_drawn) {
+      } else {
+        __pyx_t_1 = __pyx_v_first_item_drawn;
+        goto __pyx_L18_bool_binop_done;
+      }
+      __pyx_t_1 = __pyx_v_had_item_on_col_before;
+      __pyx_L18_bool_binop_done:;
+      if (__pyx_t_1) {
+
+        /* "dearcygui/layout.pyx":1225
+ *                 # is False and the new column correctly remains empty.
+ *                 if first_item_drawn and had_item_on_col_before:
+ *                     first_item_on_col_drawn = True             # <<<<<<<<<<<<<<
+ * 
+ *             # Move on to next child
+*/
+        __pyx_v_first_item_on_col_drawn = 1;
+
+        /* "dearcygui/layout.pyx":1224
+ *                 # against cur_end_y.  If we just wrapped, had_item_on_col_before
+ *                 # is False and the new column correctly remains empty.
+ *                 if first_item_drawn and had_item_on_col_before:             # <<<<<<<<<<<<<<
+ *                     first_item_on_col_drawn = True
+ * 
+*/
+      }
+    }
+    __pyx_L16:;
+
+    /* "dearcygui/layout.pyx":1228
+ * 
+ *             # Move on to next child
+ *             child = <PyObject*>(<uiItem>child).next_sibling             # <<<<<<<<<<<<<<
+ *         return changed
+ * 
+*/
+    __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.next_sibling);
+  }
+
+  /* "dearcygui/layout.pyx":1229
+ *             # Move on to next child
+ *             child = <PyObject*>(<uiItem>child).next_sibling
+ *         return changed             # <<<<<<<<<<<<<<
+ * 
+ *     cdef bint __draw_item_manual(self) noexcept nogil:
+*/
+  __pyx_r = __pyx_v_changed;
+  goto __pyx_L0;
+
+  /* "dearcygui/layout.pyx":1138
+ *         return changed
+ * 
+ *     cdef bint __draw_item_top_wrap(self) noexcept nogil:             # <<<<<<<<<<<<<<
+ *         """
+ *         TOP alignment, wrapping enabled: draw items top-to-bottom, starting a
+*/
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+  __Pyx_WriteUnraisable("dearcygui.layout.VerticalLayout._VerticalLayout__draw_item_top_wrap", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __pyx_r = 0;
+  __Pyx_PyGILState_Release(__pyx_gilstate_save);
+  __pyx_L0:;
+  return __pyx_r;
+}
+
+/* "dearcygui/layout.pyx":1231
+ *         return changed
+ * 
+ *     cdef bint __draw_item_manual(self) noexcept nogil:             # <<<<<<<<<<<<<<
+ *         """
+ *         MANUAL mode: draw each child at the absolute y position given by
+*/
+
+static int __pyx_f_9dearcygui_6layout_14VerticalLayout__VerticalLayout__draw_item_manual(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *__pyx_v_self) {
+  PyObject *__pyx_v_child;
+  float __pyx_v_available_height;
+  float __pyx_v_parent_start_x;
+  float __pyx_v_parent_start_y;
+  float __pyx_v_pos_start;
+  int32_t __pyx_v_i;
+  int __pyx_v_changed;
+  int __pyx_r;
+  int __pyx_t_1;
+  float __pyx_t_2;
+  long __pyx_t_3;
+  int32_t __pyx_t_4;
+  long __pyx_t_5;
+  double __pyx_t_6;
+  double __pyx_t_7;
+  int __pyx_t_8;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyGILState_STATE __pyx_gilstate_save;
+
+  /* "dearcygui/layout.pyx":1238
+ *         """
+ *         # Walk backwards to the first sibling
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child             # <<<<<<<<<<<<<<
+ *         while (<uiItem>child).prev_sibling is not None:
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
+*/
+  __pyx_v_child = ((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child);
+
+  /* "dearcygui/layout.pyx":1239
+ *         # Walk backwards to the first sibling
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child
+ *         while (<uiItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
+ * 
+*/
+  while (1) {
+    __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling) != Py_None);
+    if (!__pyx_t_1) break;
+
+    /* "dearcygui/layout.pyx":1240
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child
+ *         while (<uiItem>child).prev_sibling is not None:
+ *             child = <PyObject*>(<uiItem>child).prev_sibling             # <<<<<<<<<<<<<<
+ * 
+ *         cdef float available_height = self.state.cur.content_region_size.y
+*/
+    __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling);
+  }
+
+  /* "dearcygui/layout.pyx":1242
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
+ * 
+ *         cdef float available_height = self.state.cur.content_region_size.y             # <<<<<<<<<<<<<<
+ *         cdef float parent_start_x = self.context.viewport.parent_pos.x
+ *         cdef float parent_start_y = self.context.viewport.parent_pos.y
+*/
+  __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.state.cur.content_region_size.y;
+  __pyx_v_available_height = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":1243
+ * 
+ *         cdef float available_height = self.state.cur.content_region_size.y
+ *         cdef float parent_start_x = self.context.viewport.parent_pos.x             # <<<<<<<<<<<<<<
+ *         cdef float parent_start_y = self.context.viewport.parent_pos.y
+ *         cdef float pos_start = 0.  # resolved y offset for the current child
+*/
+  __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->parent_pos.x;
+  __pyx_v_parent_start_x = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":1244
+ *         cdef float available_height = self.state.cur.content_region_size.y
+ *         cdef float parent_start_x = self.context.viewport.parent_pos.x
+ *         cdef float parent_start_y = self.context.viewport.parent_pos.y             # <<<<<<<<<<<<<<
+ *         cdef float pos_start = 0.  # resolved y offset for the current child
+ *         cdef int32_t i = 0
+*/
+  __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->parent_pos.y;
+  __pyx_v_parent_start_y = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":1245
+ *         cdef float parent_start_x = self.context.viewport.parent_pos.x
+ *         cdef float parent_start_y = self.context.viewport.parent_pos.y
+ *         cdef float pos_start = 0.  # resolved y offset for the current child             # <<<<<<<<<<<<<<
+ *         cdef int32_t i = 0
+ *         cdef bint changed = False
+*/
+  __pyx_v_pos_start = 0.;
+
+  /* "dearcygui/layout.pyx":1246
+ *         cdef float parent_start_y = self.context.viewport.parent_pos.y
+ *         cdef float pos_start = 0.  # resolved y offset for the current child
+ *         cdef int32_t i = 0             # <<<<<<<<<<<<<<
+ *         cdef bint changed = False
+ * 
+*/
+  __pyx_v_i = 0;
+
+  /* "dearcygui/layout.pyx":1247
+ *         cdef float pos_start = 0.  # resolved y offset for the current child
+ *         cdef int32_t i = 0
+ *         cdef bint changed = False             # <<<<<<<<<<<<<<
+ * 
+ *         while (<uiItem>child) is not None:
+*/
+  __pyx_v_changed = 0;
+
+  /* "dearcygui/layout.pyx":1249
+ *         cdef bint changed = False
+ * 
+ *         while (<uiItem>child) is not None:             # <<<<<<<<<<<<<<
+ *             # Read the configured position (last entry repeated for extra children)
  *             if not(self._positions.empty()):
 */
   while (1) {
-    __pyx_t_2 = (((PyObject *)__pyx_v_child) != Py_None);
-    if (!__pyx_t_2) break;
+    __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
+    if (!__pyx_t_1) break;
 
-    /* "dearcygui/layout.pyx":703
+    /* "dearcygui/layout.pyx":1251
  *         while (<uiItem>child) is not None:
- *             # Get position from positions list or default to 0
+ *             # Read the configured position (last entry repeated for extra children)
  *             if not(self._positions.empty()):             # <<<<<<<<<<<<<<
  *                 pos_start = self._positions[min(i, <int>self._positions.size()-1)]
  * 
 */
-    __pyx_t_2 = (!__pyx_v_self->_positions.empty());
-    if (__pyx_t_2) {
+    __pyx_t_1 = (!__pyx_v_self->_positions.empty());
+    if (__pyx_t_1) {
 
-      /* "dearcygui/layout.pyx":704
- *             # Get position from positions list or default to 0
+      /* "dearcygui/layout.pyx":1252
+ *             # Read the configured position (last entry repeated for extra children)
  *             if not(self._positions.empty()):
  *                 pos_start = self._positions[min(i, <int>self._positions.size()-1)]             # <<<<<<<<<<<<<<
  * 
- *             # Convert relative (0-1) or negative positions
+ *             # Normalise: fraction (0-1)  pixels; negative  offset from bottom edge
 */
       __pyx_t_3 = (((int)__pyx_v_self->_positions.size()) - 1);
       __pyx_t_4 = __pyx_v_i;
-      __pyx_t_2 = (__pyx_t_3 < __pyx_t_4);
-      if (__pyx_t_2) {
+      __pyx_t_1 = (__pyx_t_3 < __pyx_t_4);
+      if (__pyx_t_1) {
         __pyx_t_5 = __pyx_t_3;
       } else {
         __pyx_t_5 = __pyx_t_4;
       }
       __pyx_v_pos_start = (__pyx_v_self->_positions[__pyx_t_5]);
 
-      /* "dearcygui/layout.pyx":703
+      /* "dearcygui/layout.pyx":1251
  *         while (<uiItem>child) is not None:
- *             # Get position from positions list or default to 0
+ *             # Read the configured position (last entry repeated for extra children)
  *             if not(self._positions.empty()):             # <<<<<<<<<<<<<<
  *                 pos_start = self._positions[min(i, <int>self._positions.size()-1)]
  * 
 */
     }
 
-    /* "dearcygui/layout.pyx":707
+    /* "dearcygui/layout.pyx":1255
  * 
- *             # Convert relative (0-1) or negative positions
+ *             # Normalise: fraction (0-1)  pixels; negative  offset from bottom edge
  *             if pos_start > 0.:             # <<<<<<<<<<<<<<
  *                 if pos_start < 1.:
- *                     pos_start *= available_height
+ *                     pos_start = floor(pos_start * available_height)
 */
-    __pyx_t_2 = (__pyx_v_pos_start > 0.);
-    if (__pyx_t_2) {
+    __pyx_t_1 = (__pyx_v_pos_start > 0.);
+    if (__pyx_t_1) {
 
-      /* "dearcygui/layout.pyx":708
- *             # Convert relative (0-1) or negative positions
+      /* "dearcygui/layout.pyx":1256
+ *             # Normalise: fraction (0-1)  pixels; negative  offset from bottom edge
  *             if pos_start > 0.:
  *                 if pos_start < 1.:             # <<<<<<<<<<<<<<
- *                     pos_start *= available_height
- *                     pos_start = floor(pos_start)
-*/
-      __pyx_t_2 = (__pyx_v_pos_start < 1.);
-      if (__pyx_t_2) {
-
-        /* "dearcygui/layout.pyx":709
- *             if pos_start > 0.:
- *                 if pos_start < 1.:
- *                     pos_start *= available_height             # <<<<<<<<<<<<<<
- *                     pos_start = floor(pos_start)
+ *                     pos_start = floor(pos_start * available_height)
  *             elif pos_start < 0:
 */
-        __pyx_v_pos_start = (__pyx_v_pos_start * __pyx_v_available_height);
+      __pyx_t_1 = (__pyx_v_pos_start < 1.);
+      if (__pyx_t_1) {
 
-        /* "dearcygui/layout.pyx":710
+        /* "dearcygui/layout.pyx":1257
+ *             if pos_start > 0.:
  *                 if pos_start < 1.:
- *                     pos_start *= available_height
- *                     pos_start = floor(pos_start)             # <<<<<<<<<<<<<<
+ *                     pos_start = floor(pos_start * available_height)             # <<<<<<<<<<<<<<
  *             elif pos_start < 0:
  *                 if pos_start > -1.:
 */
         try {
-          __pyx_t_1 = std::floor(__pyx_v_pos_start);
+          __pyx_t_2 = std::floor((__pyx_v_pos_start * __pyx_v_available_height));
         } catch(...) {
+          PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
           __Pyx_CppExn2PyErr();
-          __PYX_ERR(0, 710, __pyx_L1_error)
+          __Pyx_PyGILState_Release(__pyx_gilstate_save);
+          __PYX_ERR(0, 1257, __pyx_L1_error)
         }
-        __pyx_v_pos_start = __pyx_t_1;
+        __pyx_v_pos_start = __pyx_t_2;
 
-        /* "dearcygui/layout.pyx":708
- *             # Convert relative (0-1) or negative positions
+        /* "dearcygui/layout.pyx":1256
+ *             # Normalise: fraction (0-1)  pixels; negative  offset from bottom edge
  *             if pos_start > 0.:
  *                 if pos_start < 1.:             # <<<<<<<<<<<<<<
- *                     pos_start *= available_height
- *                     pos_start = floor(pos_start)
+ *                     pos_start = floor(pos_start * available_height)
+ *             elif pos_start < 0:
 */
       }
 
-      /* "dearcygui/layout.pyx":707
+      /* "dearcygui/layout.pyx":1255
  * 
- *             # Convert relative (0-1) or negative positions
+ *             # Normalise: fraction (0-1)  pixels; negative  offset from bottom edge
  *             if pos_start > 0.:             # <<<<<<<<<<<<<<
  *                 if pos_start < 1.:
- *                     pos_start *= available_height
+ *                     pos_start = floor(pos_start * available_height)
 */
       goto __pyx_L8;
     }
 
-    /* "dearcygui/layout.pyx":711
- *                     pos_start *= available_height
- *                     pos_start = floor(pos_start)
+    /* "dearcygui/layout.pyx":1258
+ *                 if pos_start < 1.:
+ *                     pos_start = floor(pos_start * available_height)
  *             elif pos_start < 0:             # <<<<<<<<<<<<<<
  *                 if pos_start > -1.:
- *                     pos_start *= available_height
+ *                     pos_start = floor(pos_start * available_height + available_height)
 */
-    __pyx_t_2 = (__pyx_v_pos_start < 0.0);
-    if (__pyx_t_2) {
+    __pyx_t_1 = (__pyx_v_pos_start < 0.0);
+    if (__pyx_t_1) {
 
-      /* "dearcygui/layout.pyx":712
- *                     pos_start = floor(pos_start)
+      /* "dearcygui/layout.pyx":1259
+ *                     pos_start = floor(pos_start * available_height)
  *             elif pos_start < 0:
  *                 if pos_start > -1.:             # <<<<<<<<<<<<<<
- *                     pos_start *= available_height
- *                     pos_start += available_height
+ *                     pos_start = floor(pos_start * available_height + available_height)
+ *                 else:
 */
-      __pyx_t_2 = (__pyx_v_pos_start > -1.);
-      if (__pyx_t_2) {
+      __pyx_t_1 = (__pyx_v_pos_start > -1.);
+      if (__pyx_t_1) {
 
-        /* "dearcygui/layout.pyx":713
+        /* "dearcygui/layout.pyx":1260
  *             elif pos_start < 0:
  *                 if pos_start > -1.:
- *                     pos_start *= available_height             # <<<<<<<<<<<<<<
- *                     pos_start += available_height
- *                     pos_start = floor(pos_start)
-*/
-        __pyx_v_pos_start = (__pyx_v_pos_start * __pyx_v_available_height);
-
-        /* "dearcygui/layout.pyx":714
- *                 if pos_start > -1.:
- *                     pos_start *= available_height
- *                     pos_start += available_height             # <<<<<<<<<<<<<<
- *                     pos_start = floor(pos_start)
+ *                     pos_start = floor(pos_start * available_height + available_height)             # <<<<<<<<<<<<<<
  *                 else:
-*/
-        __pyx_v_pos_start = (__pyx_v_pos_start + __pyx_v_available_height);
-
-        /* "dearcygui/layout.pyx":715
- *                     pos_start *= available_height
- *                     pos_start += available_height
- *                     pos_start = floor(pos_start)             # <<<<<<<<<<<<<<
- *                 else:
- *                     pos_start += available_height
+ *                     pos_start = pos_start + available_height
 */
         try {
-          __pyx_t_1 = std::floor(__pyx_v_pos_start);
+          __pyx_t_2 = std::floor(((__pyx_v_pos_start * __pyx_v_available_height) + __pyx_v_available_height));
         } catch(...) {
+          PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
           __Pyx_CppExn2PyErr();
-          __PYX_ERR(0, 715, __pyx_L1_error)
+          __Pyx_PyGILState_Release(__pyx_gilstate_save);
+          __PYX_ERR(0, 1260, __pyx_L1_error)
         }
-        __pyx_v_pos_start = __pyx_t_1;
+        __pyx_v_pos_start = __pyx_t_2;
 
-        /* "dearcygui/layout.pyx":712
- *                     pos_start = floor(pos_start)
+        /* "dearcygui/layout.pyx":1259
+ *                     pos_start = floor(pos_start * available_height)
  *             elif pos_start < 0:
  *                 if pos_start > -1.:             # <<<<<<<<<<<<<<
- *                     pos_start *= available_height
- *                     pos_start += available_height
+ *                     pos_start = floor(pos_start * available_height + available_height)
+ *                 else:
 */
         goto __pyx_L10;
       }
 
-      /* "dearcygui/layout.pyx":717
- *                     pos_start = floor(pos_start)
+      /* "dearcygui/layout.pyx":1262
+ *                     pos_start = floor(pos_start * available_height + available_height)
  *                 else:
- *                     pos_start += available_height             # <<<<<<<<<<<<<<
+ *                     pos_start = pos_start + available_height             # <<<<<<<<<<<<<<
+ *             pos_start = max(0., pos_start)
  * 
- *             # Set item position and ensure it stays within bounds
 */
       /*else*/ {
         __pyx_v_pos_start = (__pyx_v_pos_start + __pyx_v_available_height);
       }
       __pyx_L10:;
 
-      /* "dearcygui/layout.pyx":711
- *                     pos_start *= available_height
- *                     pos_start = floor(pos_start)
+      /* "dearcygui/layout.pyx":1258
+ *                 if pos_start < 1.:
+ *                     pos_start = floor(pos_start * available_height)
  *             elif pos_start < 0:             # <<<<<<<<<<<<<<
  *                 if pos_start > -1.:
- *                     pos_start *= available_height
+ *                     pos_start = floor(pos_start * available_height + available_height)
 */
     }
     __pyx_L8:;
 
-    /* "dearcygui/layout.pyx":720
+    /* "dearcygui/layout.pyx":1263
+ *                 else:
+ *                     pos_start = pos_start + available_height
+ *             pos_start = max(0., pos_start)             # <<<<<<<<<<<<<<
  * 
- *             # Set item position and ensure it stays within bounds
- *             pos_start = max(0, pos_start)             # <<<<<<<<<<<<<<
- *             pos_change |= pos_start != (<uiItem>child).state.cur.pos_to_parent.y
- *             (<uiItem>child).requested_x.set_value(0)
+ *             imgui.SetCursorScreenPos(imgui.ImVec2(parent_start_x, parent_start_y + pos_start))
 */
-    __pyx_t_1 = __pyx_v_pos_start;
-    __pyx_t_5 = 0;
-    __pyx_t_2 = (__pyx_t_1 > __pyx_t_5);
-    if (__pyx_t_2) {
-      __pyx_t_6 = __pyx_t_1;
+    __pyx_t_2 = __pyx_v_pos_start;
+    __pyx_t_6 = 0.;
+    __pyx_t_1 = (__pyx_t_2 > __pyx_t_6);
+    if (__pyx_t_1) {
+      __pyx_t_7 = __pyx_t_2;
     } else {
-      __pyx_t_6 = __pyx_t_5;
+      __pyx_t_7 = __pyx_t_6;
     }
-    __pyx_v_pos_start = __pyx_t_6;
+    __pyx_v_pos_start = __pyx_t_7;
 
-    /* "dearcygui/layout.pyx":721
- *             # Set item position and ensure it stays within bounds
- *             pos_start = max(0, pos_start)
- *             pos_change |= pos_start != (<uiItem>child).state.cur.pos_to_parent.y             # <<<<<<<<<<<<<<
- *             (<uiItem>child).requested_x.set_value(0)
- *             (<uiItem>child).requested_y.set_item_o(_Size.ADD(_Size.PARENT_Y1(), _Size.FIXED(pos_start)))
-*/
-    __pyx_v_pos_change = (__pyx_v_pos_change | (__pyx_v_pos_start != ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cur.pos_to_parent.y));
-
-    /* "dearcygui/layout.pyx":722
- *             pos_start = max(0, pos_start)
- *             pos_change |= pos_start != (<uiItem>child).state.cur.pos_to_parent.y
- *             (<uiItem>child).requested_x.set_value(0)             # <<<<<<<<<<<<<<
- *             (<uiItem>child).requested_y.set_item_o(_Size.ADD(_Size.PARENT_Y1(), _Size.FIXED(pos_start)))
- *             (<uiItem>child).no_newline = False
-*/
-    ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->requested_x.set_value(0.0);
-
-    /* "dearcygui/layout.pyx":723
- *             pos_change |= pos_start != (<uiItem>child).state.cur.pos_to_parent.y
- *             (<uiItem>child).requested_x.set_value(0)
- *             (<uiItem>child).requested_y.set_item_o(_Size.ADD(_Size.PARENT_Y1(), _Size.FIXED(pos_start)))             # <<<<<<<<<<<<<<
- *             (<uiItem>child).no_newline = False
+    /* "dearcygui/layout.pyx":1265
+ *             pos_start = max(0., pos_start)
+ * 
+ *             imgui.SetCursorScreenPos(imgui.ImVec2(parent_start_x, parent_start_y + pos_start))             # <<<<<<<<<<<<<<
+ *             (<uiItem>child).draw()
  * 
 */
-    __pyx_t_8 = NULL;
-    __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_mstate_global->__pyx_n_u_Size); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 723, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_9);
-    __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_mstate_global->__pyx_n_u_ADD); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 723, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_10);
-    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-    __pyx_t_11 = NULL;
-    __Pyx_GetModuleGlobalName(__pyx_t_12, __pyx_mstate_global->__pyx_n_u_Size); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 723, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_12);
-    __pyx_t_13 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_mstate_global->__pyx_n_u_PARENT_Y1); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 723, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_13);
-    __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-    __pyx_t_14 = 1;
-    #if CYTHON_UNPACK_METHODS
-    if (unlikely(PyMethod_Check(__pyx_t_13))) {
-      __pyx_t_11 = PyMethod_GET_SELF(__pyx_t_13);
-      assert(__pyx_t_11);
-      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_13);
-      __Pyx_INCREF(__pyx_t_11);
-      __Pyx_INCREF(__pyx__function);
-      __Pyx_DECREF_SET(__pyx_t_13, __pyx__function);
-      __pyx_t_14 = 0;
-    }
-    #endif
-    {
-      PyObject *__pyx_callargs[2] = {__pyx_t_11, NULL};
-      __pyx_t_9 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_13, __pyx_callargs+__pyx_t_14, (1-__pyx_t_14) | (__pyx_t_14*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-      __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
-      __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
-      if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 723, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_9);
-    }
-    __pyx_t_11 = NULL;
-    __Pyx_GetModuleGlobalName(__pyx_t_12, __pyx_mstate_global->__pyx_n_u_Size); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 723, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_12);
-    __pyx_t_15 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_mstate_global->__pyx_n_u_FIXED); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 723, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_15);
-    __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-    __pyx_t_12 = PyFloat_FromDouble(__pyx_v_pos_start); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 723, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_12);
-    __pyx_t_14 = 1;
-    #if CYTHON_UNPACK_METHODS
-    if (unlikely(PyMethod_Check(__pyx_t_15))) {
-      __pyx_t_11 = PyMethod_GET_SELF(__pyx_t_15);
-      assert(__pyx_t_11);
-      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_15);
-      __Pyx_INCREF(__pyx_t_11);
-      __Pyx_INCREF(__pyx__function);
-      __Pyx_DECREF_SET(__pyx_t_15, __pyx__function);
-      __pyx_t_14 = 0;
-    }
-    #endif
-    {
-      PyObject *__pyx_callargs[2] = {__pyx_t_11, __pyx_t_12};
-      __pyx_t_13 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_15, __pyx_callargs+__pyx_t_14, (2-__pyx_t_14) | (__pyx_t_14*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-      __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
-      __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-      __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-      if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 723, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_13);
-    }
-    __pyx_t_14 = 1;
-    #if CYTHON_UNPACK_METHODS
-    if (unlikely(PyMethod_Check(__pyx_t_10))) {
-      __pyx_t_8 = PyMethod_GET_SELF(__pyx_t_10);
-      assert(__pyx_t_8);
-      PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_10);
-      __Pyx_INCREF(__pyx_t_8);
-      __Pyx_INCREF(__pyx__function);
-      __Pyx_DECREF_SET(__pyx_t_10, __pyx__function);
-      __pyx_t_14 = 0;
-    }
-    #endif
-    {
-      PyObject *__pyx_callargs[3] = {__pyx_t_8, __pyx_t_9, __pyx_t_13};
-      __pyx_t_7 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_10, __pyx_callargs+__pyx_t_14, (3-__pyx_t_14) | (__pyx_t_14*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-      __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-      __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
-      __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-      if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 723, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-    }
-    ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->requested_y.set_item_o(__pyx_t_7);
-    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    ImGui::SetCursorScreenPos(ImVec2(__pyx_v_parent_start_x, (__pyx_v_parent_start_y + __pyx_v_pos_start)));
 
-    /* "dearcygui/layout.pyx":724
- *             (<uiItem>child).requested_x.set_value(0)
- *             (<uiItem>child).requested_y.set_item_o(_Size.ADD(_Size.PARENT_Y1(), _Size.FIXED(pos_start)))
- *             (<uiItem>child).no_newline = False             # <<<<<<<<<<<<<<
+    /* "dearcygui/layout.pyx":1266
+ * 
+ *             imgui.SetCursorScreenPos(imgui.ImVec2(parent_start_x, parent_start_y + pos_start))
+ *             (<uiItem>child).draw()             # <<<<<<<<<<<<<<
+ * 
+ *             # Track size changes so the parent knows to redraw next frame
+*/
+    ((struct __pyx_vtabstruct_9dearcygui_4core_uiItem *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.__pyx_vtab)->draw(((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child));
+
+    /* "dearcygui/layout.pyx":1269
+ * 
+ *             # Track size changes so the parent knows to redraw next frame
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:
+ *                 changed = True
+*/
+    __pyx_t_8 = (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cur.rect_size.x != ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.prev.rect_size.x);
+    if (!__pyx_t_8) {
+    } else {
+      __pyx_t_1 = __pyx_t_8;
+      goto __pyx_L12_bool_binop_done;
+    }
+
+    /* "dearcygui/layout.pyx":1270
+ *             # Track size changes so the parent knows to redraw next frame
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:             # <<<<<<<<<<<<<<
+ *                 changed = True
+ * 
+*/
+    __pyx_t_8 = (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cur.rect_size.y != ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.prev.rect_size.y);
+    __pyx_t_1 = __pyx_t_8;
+    __pyx_L12_bool_binop_done:;
+
+    /* "dearcygui/layout.pyx":1269
+ * 
+ *             # Track size changes so the parent knows to redraw next frame
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:
+ *                 changed = True
+*/
+    if (__pyx_t_1) {
+
+      /* "dearcygui/layout.pyx":1271
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:
+ *                 changed = True             # <<<<<<<<<<<<<<
  * 
  *             child = <PyObject*>(<uiItem>child).next_sibling
 */
-    ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->no_newline = 0;
+      __pyx_v_changed = 1;
 
-    /* "dearcygui/layout.pyx":726
- *             (<uiItem>child).no_newline = False
+      /* "dearcygui/layout.pyx":1269
+ * 
+ *             # Track size changes so the parent knows to redraw next frame
+ *             if (<uiItem>child).state.cur.rect_size.x != (<uiItem>child).state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
+ *                (<uiItem>child).state.cur.rect_size.y != (<uiItem>child).state.prev.rect_size.y:
+ *                 changed = True
+*/
+    }
+
+    /* "dearcygui/layout.pyx":1273
+ *                 changed = True
  * 
  *             child = <PyObject*>(<uiItem>child).next_sibling             # <<<<<<<<<<<<<<
  *             i += 1
- * 
+ *         return changed
 */
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.next_sibling);
 
-    /* "dearcygui/layout.pyx":727
+    /* "dearcygui/layout.pyx":1274
  * 
  *             child = <PyObject*>(<uiItem>child).next_sibling
  *             i += 1             # <<<<<<<<<<<<<<
+ *         return changed
  * 
- *         # Force update if positions changed
 */
     __pyx_v_i = (__pyx_v_i + 1);
   }
 
-  /* "dearcygui/layout.pyx":730
+  /* "dearcygui/layout.pyx":1275
+ *             child = <PyObject*>(<uiItem>child).next_sibling
+ *             i += 1
+ *         return changed             # <<<<<<<<<<<<<<
  * 
- *         # Force update if positions changed
- *         if pos_change:             # <<<<<<<<<<<<<<
- *             self._force_update = True
- *             self.context.viewport.redraw_needed = True
+ *     cdef bint __draw_item_aligned(self) noexcept nogil:
 */
-  if (__pyx_v_pos_change) {
+  __pyx_r = __pyx_v_changed;
+  goto __pyx_L0;
 
-    /* "dearcygui/layout.pyx":731
- *         # Force update if positions changed
- *         if pos_change:
- *             self._force_update = True             # <<<<<<<<<<<<<<
- *             self.context.viewport.redraw_needed = True
+  /* "dearcygui/layout.pyx":1231
+ *         return changed
  * 
-*/
-    __pyx_v_self->__pyx_base._force_update = 1;
-
-    /* "dearcygui/layout.pyx":732
- *         if pos_change:
- *             self._force_update = True
- *             self.context.viewport.redraw_needed = True             # <<<<<<<<<<<<<<
- * 
- *     cdef void __update_layout(self):
-*/
-    __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->redraw_needed = 1;
-
-    /* "dearcygui/layout.pyx":730
- * 
- *         # Force update if positions changed
- *         if pos_change:             # <<<<<<<<<<<<<<
- *             self._force_update = True
- *             self.context.viewport.redraw_needed = True
-*/
-  }
-
-  /* "dearcygui/layout.pyx":687
- *         self._force_update = True
- * 
- *     cdef void __update_layout_manual(self):             # <<<<<<<<<<<<<<
- *         """Position items at manually specified y positions"""
- *         # assumes children are locked and > 0
+ *     cdef bint __draw_item_manual(self) noexcept nogil:             # <<<<<<<<<<<<<<
+ *         """
+ *         MANUAL mode: draw each child at the absolute y position given by
 */
 
   /* function exit code */
-  goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_7);
-  __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_XDECREF(__pyx_t_9);
-  __Pyx_XDECREF(__pyx_t_10);
-  __Pyx_XDECREF(__pyx_t_11);
-  __Pyx_XDECREF(__pyx_t_12);
-  __Pyx_XDECREF(__pyx_t_13);
-  __Pyx_XDECREF(__pyx_t_15);
-  __Pyx_AddTraceback("dearcygui.layout.VerticalLayout._VerticalLayout__update_layout_manual", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+  __Pyx_WriteUnraisable("dearcygui.layout.VerticalLayout._VerticalLayout__draw_item_manual", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __pyx_r = 0;
+  __Pyx_PyGILState_Release(__pyx_gilstate_save);
   __pyx_L0:;
-  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":734
- *             self.context.viewport.redraw_needed = True
+/* "dearcygui/layout.pyx":1277
+ *         return changed
  * 
- *     cdef void __update_layout(self):             # <<<<<<<<<<<<<<
- *         if self._alignment_mode == Alignment.MANUAL:
- *             self.__update_layout_manual()
+ *     cdef bint __draw_item_aligned(self) noexcept nogil:             # <<<<<<<<<<<<<<
+ *         """
+ *         BOTTOM / CENTER / JUSTIFIED alignment.
 */
 
-static void __pyx_f_9dearcygui_6layout_14VerticalLayout__VerticalLayout__update_layout(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *__pyx_v_self) {
+static int __pyx_f_9dearcygui_6layout_14VerticalLayout__VerticalLayout__draw_item_aligned(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *__pyx_v_self) {
   PyObject *__pyx_v_child;
-  float __pyx_v_end_y;
-  float __pyx_v_available_height;
   float __pyx_v_spacing_x;
   float __pyx_v_spacing_y;
-  PyObject *__pyx_v_sibling;
-  int32_t __pyx_v_i;
-  int32_t __pyx_v_n_items_this_col;
-  int32_t __pyx_v_col;
-  float __pyx_v_target_y;
-  float __pyx_v_expected_y;
+  float __pyx_v_parent_start_x;
+  float __pyx_v_parent_start_y;
+  float __pyx_v_end_y;
+  float __pyx_v_available_height;
+  float __pyx_v_wrap_start_y;
+  float __pyx_v_col_x;
+  float __pyx_v_col_max_width;
+  int __pyx_v_changed;
+  int __pyx_v_is_first_col;
+  float __pyx_v_col_avail;
+  float __pyx_v_col_sy;
   float __pyx_v_expected_size;
-  float __pyx_v_expected_size_next;
-  float __pyx_v_x;
-  float __pyx_v_next_x;
-  float __pyx_v_wrap_y;
-  int __pyx_v_pos_change;
-  float __pyx_v_global_scale_inv;
-  __Pyx_RefNannyDeclarations
+  float __pyx_v_sz;
+  float __pyx_v_next_sz;
+  int32_t __pyx_v_n_with_size;
+  PyObject *__pyx_v_last_with_size;
+  PyObject *__pyx_v_s;
+  PyObject *__pyx_v_col_end;
+  float __pyx_v_target_y;
+  float __pyx_v_col_spacing_y;
+  float __pyx_v_cur_y;
+  int __pyx_v_has_sz;
+  PyObject *__pyx_v_col_start;
+  int __pyx_r;
   int __pyx_t_1;
   float __pyx_t_2;
   float __pyx_t_3;
   float __pyx_t_4;
   double __pyx_t_5;
   int __pyx_t_6;
-  long __pyx_t_7;
-  PyObject *__pyx_t_8 = NULL;
-  PyObject *__pyx_t_9 = NULL;
-  PyObject *__pyx_t_10 = NULL;
-  PyObject *__pyx_t_11 = NULL;
-  PyObject *__pyx_t_12 = NULL;
-  PyObject *__pyx_t_13 = NULL;
-  PyObject *__pyx_t_14 = NULL;
-  size_t __pyx_t_15;
-  PyObject *__pyx_t_16 = NULL;
+  double __pyx_t_7;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("_VerticalLayout__update_layout", 0);
+  PyGILState_STATE __pyx_gilstate_save;
 
-  /* "dearcygui/layout.pyx":735
- * 
- *     cdef void __update_layout(self):
- *         if self._alignment_mode == Alignment.MANUAL:             # <<<<<<<<<<<<<<
- *             self.__update_layout_manual()
- *             return
-*/
-  __pyx_t_1 = (__pyx_v_self->_alignment_mode == __pyx_t_9dearcygui_5types_Alignment::MANUAL);
-  if (__pyx_t_1) {
-
-    /* "dearcygui/layout.pyx":736
- *     cdef void __update_layout(self):
- *         if self._alignment_mode == Alignment.MANUAL:
- *             self.__update_layout_manual()             # <<<<<<<<<<<<<<
- *             return
- *         # Assumes all children are locked
-*/
-    ((struct __pyx_vtabstruct_9dearcygui_6layout_VerticalLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.__pyx_vtab)->_VerticalLayout__update_layout_manual(__pyx_v_self); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 736, __pyx_L1_error)
-
-    /* "dearcygui/layout.pyx":737
- *         if self._alignment_mode == Alignment.MANUAL:
- *             self.__update_layout_manual()
- *             return             # <<<<<<<<<<<<<<
- *         # Assumes all children are locked
- *         cdef PyObject *child = <PyObject*>self.last_widgets_child
-*/
-    goto __pyx_L0;
-
-    /* "dearcygui/layout.pyx":735
- * 
- *     cdef void __update_layout(self):
- *         if self._alignment_mode == Alignment.MANUAL:             # <<<<<<<<<<<<<<
- *             self.__update_layout_manual()
- *             return
-*/
-  }
-
-  /* "dearcygui/layout.pyx":739
- *             return
- *         # Assumes all children are locked
+  /* "dearcygui/layout.pyx":1304
+ *         """
+ *         # Walk backwards to the first sibling
  *         cdef PyObject *child = <PyObject*>self.last_widgets_child             # <<<<<<<<<<<<<<
- *         cdef float end_y = self.state.cur.content_region_size.y
- *         cdef float available_height = end_y
+ *         while (<uiItem>child).prev_sibling is not None:
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
 */
   __pyx_v_child = ((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child);
 
-  /* "dearcygui/layout.pyx":740
- *         # Assumes all children are locked
+  /* "dearcygui/layout.pyx":1305
+ *         # Walk backwards to the first sibling
  *         cdef PyObject *child = <PyObject*>self.last_widgets_child
- *         cdef float end_y = self.state.cur.content_region_size.y             # <<<<<<<<<<<<<<
- *         cdef float available_height = end_y
- *         #cdef float available_width = self.state.cur.content_region_size.x
-*/
-  __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.state.cur.content_region_size.y;
-  __pyx_v_end_y = __pyx_t_2;
-
-  /* "dearcygui/layout.pyx":741
- *         cdef PyObject *child = <PyObject*>self.last_widgets_child
- *         cdef float end_y = self.state.cur.content_region_size.y
- *         cdef float available_height = end_y             # <<<<<<<<<<<<<<
- *         #cdef float available_width = self.state.cur.content_region_size.x
- *         cdef float spacing_x = self._spacing.x
-*/
-  __pyx_v_available_height = __pyx_v_end_y;
-
-  /* "dearcygui/layout.pyx":743
- *         cdef float available_height = end_y
- *         #cdef float available_width = self.state.cur.content_region_size.x
- *         cdef float spacing_x = self._spacing.x             # <<<<<<<<<<<<<<
- *         cdef float spacing_y = self._spacing.y
- *         # Get back to the first child
-*/
-  __pyx_t_2 = __pyx_v_self->__pyx_base._spacing.x;
-  __pyx_v_spacing_x = __pyx_t_2;
-
-  /* "dearcygui/layout.pyx":744
- *         #cdef float available_width = self.state.cur.content_region_size.x
- *         cdef float spacing_x = self._spacing.x
- *         cdef float spacing_y = self._spacing.y             # <<<<<<<<<<<<<<
- *         # Get back to the first child
- *         while ((<uiItem>child).prev_sibling) is not None:
-*/
-  __pyx_t_2 = __pyx_v_self->__pyx_base._spacing.y;
-  __pyx_v_spacing_y = __pyx_t_2;
-
-  /* "dearcygui/layout.pyx":746
- *         cdef float spacing_y = self._spacing.y
- *         # Get back to the first child
- *         while ((<uiItem>child).prev_sibling) is not None:             # <<<<<<<<<<<<<<
- *             child = <PyObject*>((<uiItem>child).prev_sibling)
- *         cdef PyObject *sibling
+ *         while (<uiItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
+ * 
 */
   while (1) {
     __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "dearcygui/layout.pyx":747
- *         # Get back to the first child
- *         while ((<uiItem>child).prev_sibling) is not None:
- *             child = <PyObject*>((<uiItem>child).prev_sibling)             # <<<<<<<<<<<<<<
- *         cdef PyObject *sibling
- *         cdef int32_t i, n_items_this_col, col
+    /* "dearcygui/layout.pyx":1306
+ *         cdef PyObject *child = <PyObject*>self.last_widgets_child
+ *         while (<uiItem>child).prev_sibling is not None:
+ *             child = <PyObject*>(<uiItem>child).prev_sibling             # <<<<<<<<<<<<<<
+ * 
+ *         cdef float spacing_x = imgui.GetStyle().ItemSpacing.x
 */
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling);
   }
 
-  /* "dearcygui/layout.pyx":751
- *         cdef int32_t i, n_items_this_col, col
- *         cdef float target_y, expected_y, expected_size, expected_size_next
- *         cdef float x, next_x = 0             # <<<<<<<<<<<<<<
- *         cdef float wrap_y = max(-self.state.cur.pos_to_window.y, self._wrap_y)
- *         cdef bint pos_change = False
+  /* "dearcygui/layout.pyx":1308
+ *             child = <PyObject*>(<uiItem>child).prev_sibling
+ * 
+ *         cdef float spacing_x = imgui.GetStyle().ItemSpacing.x             # <<<<<<<<<<<<<<
+ *         cdef float spacing_y = imgui.GetStyle().ItemSpacing.y
+ *         cdef float parent_start_x = self.context.viewport.parent_pos.x
 */
-  __pyx_v_next_x = 0.0;
+  __pyx_t_2 = ImGui::GetStyle().ItemSpacing.x;
+  __pyx_v_spacing_x = __pyx_t_2;
 
-  /* "dearcygui/layout.pyx":752
- *         cdef float target_y, expected_y, expected_size, expected_size_next
- *         cdef float x, next_x = 0
- *         cdef float wrap_y = max(-self.state.cur.pos_to_window.y, self._wrap_y)             # <<<<<<<<<<<<<<
- *         cdef bint pos_change = False
- *         cdef float global_scale_inv = 1./fmax(self.context.viewport.global_scale, 0.00001)
+  /* "dearcygui/layout.pyx":1309
+ * 
+ *         cdef float spacing_x = imgui.GetStyle().ItemSpacing.x
+ *         cdef float spacing_y = imgui.GetStyle().ItemSpacing.y             # <<<<<<<<<<<<<<
+ *         cdef float parent_start_x = self.context.viewport.parent_pos.x
+ *         cdef float parent_start_y = self.context.viewport.parent_pos.y
+*/
+  __pyx_t_2 = ImGui::GetStyle().ItemSpacing.y;
+  __pyx_v_spacing_y = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":1310
+ *         cdef float spacing_x = imgui.GetStyle().ItemSpacing.x
+ *         cdef float spacing_y = imgui.GetStyle().ItemSpacing.y
+ *         cdef float parent_start_x = self.context.viewport.parent_pos.x             # <<<<<<<<<<<<<<
+ *         cdef float parent_start_y = self.context.viewport.parent_pos.y
+ *         cdef float end_y = parent_start_y + self.state.cur.content_region_size.y  # bottom edge (screen coords)
+*/
+  __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->parent_pos.x;
+  __pyx_v_parent_start_x = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":1311
+ *         cdef float spacing_y = imgui.GetStyle().ItemSpacing.y
+ *         cdef float parent_start_x = self.context.viewport.parent_pos.x
+ *         cdef float parent_start_y = self.context.viewport.parent_pos.y             # <<<<<<<<<<<<<<
+ *         cdef float end_y = parent_start_y + self.state.cur.content_region_size.y  # bottom edge (screen coords)
+ *         cdef float available_height = self.state.cur.content_region_size.y
+*/
+  __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->parent_pos.y;
+  __pyx_v_parent_start_y = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":1312
+ *         cdef float parent_start_x = self.context.viewport.parent_pos.x
+ *         cdef float parent_start_y = self.context.viewport.parent_pos.y
+ *         cdef float end_y = parent_start_y + self.state.cur.content_region_size.y  # bottom edge (screen coords)             # <<<<<<<<<<<<<<
+ *         cdef float available_height = self.state.cur.content_region_size.y
+ *         # Columns after the first start at wrap_start_y (mirrors the old wrap_y calc).
+*/
+  __pyx_v_end_y = (__pyx_v_parent_start_y + __pyx_v_self->__pyx_base.__pyx_base.state.cur.content_region_size.y);
+
+  /* "dearcygui/layout.pyx":1313
+ *         cdef float parent_start_y = self.context.viewport.parent_pos.y
+ *         cdef float end_y = parent_start_y + self.state.cur.content_region_size.y  # bottom edge (screen coords)
+ *         cdef float available_height = self.state.cur.content_region_size.y             # <<<<<<<<<<<<<<
+ *         # Columns after the first start at wrap_start_y (mirrors the old wrap_y calc).
+ *         cdef float wrap_start_y = parent_start_y + max(-self.state.cur.pos_to_window.y, self._wrap_y)
+*/
+  __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.state.cur.content_region_size.y;
+  __pyx_v_available_height = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":1315
+ *         cdef float available_height = self.state.cur.content_region_size.y
+ *         # Columns after the first start at wrap_start_y (mirrors the old wrap_y calc).
+ *         cdef float wrap_start_y = parent_start_y + max(-self.state.cur.pos_to_window.y, self._wrap_y)             # <<<<<<<<<<<<<<
+ *         wrap_start_y = max(parent_start_y, wrap_start_y)
+ * 
 */
   __pyx_t_2 = __pyx_v_self->_wrap_y;
   __pyx_t_3 = (-__pyx_v_self->__pyx_base.__pyx_base.state.cur.pos_to_window.y);
@@ -35778,1337 +37948,807 @@ static void __pyx_f_9dearcygui_6layout_14VerticalLayout__VerticalLayout__update_
   } else {
     __pyx_t_4 = __pyx_t_3;
   }
-  __pyx_v_wrap_y = __pyx_t_4;
+  __pyx_v_wrap_start_y = (__pyx_v_parent_start_y + __pyx_t_4);
 
-  /* "dearcygui/layout.pyx":753
- *         cdef float x, next_x = 0
- *         cdef float wrap_y = max(-self.state.cur.pos_to_window.y, self._wrap_y)
- *         cdef bint pos_change = False             # <<<<<<<<<<<<<<
- *         cdef float global_scale_inv = 1./fmax(self.context.viewport.global_scale, 0.00001)
- *         col = 0
+  /* "dearcygui/layout.pyx":1316
+ *         # Columns after the first start at wrap_start_y (mirrors the old wrap_y calc).
+ *         cdef float wrap_start_y = parent_start_y + max(-self.state.cur.pos_to_window.y, self._wrap_y)
+ *         wrap_start_y = max(parent_start_y, wrap_start_y)             # <<<<<<<<<<<<<<
+ * 
+ *         cdef float col_x = parent_start_x  # screen-x of the current column
 */
-  __pyx_v_pos_change = 0;
-
-  /* "dearcygui/layout.pyx":754
- *         cdef float wrap_y = max(-self.state.cur.pos_to_window.y, self._wrap_y)
- *         cdef bint pos_change = False
- *         cdef float global_scale_inv = 1./fmax(self.context.viewport.global_scale, 0.00001)             # <<<<<<<<<<<<<<
- *         col = 0
- *         while (<uiItem>child) is not None:
-*/
-  try {
-    __pyx_t_5 = std::fmax(__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->global_scale, 0.00001);
-  } catch(...) {
-    __Pyx_CppExn2PyErr();
-    __PYX_ERR(0, 754, __pyx_L1_error)
+  __pyx_t_4 = __pyx_v_wrap_start_y;
+  __pyx_t_2 = __pyx_v_parent_start_y;
+  __pyx_t_1 = (__pyx_t_4 > __pyx_t_2);
+  if (__pyx_t_1) {
+    __pyx_t_3 = __pyx_t_4;
+  } else {
+    __pyx_t_3 = __pyx_t_2;
   }
-  __pyx_v_global_scale_inv = (1. / __pyx_t_5);
+  __pyx_v_wrap_start_y = __pyx_t_3;
 
-  /* "dearcygui/layout.pyx":755
- *         cdef bint pos_change = False
- *         cdef float global_scale_inv = 1./fmax(self.context.viewport.global_scale, 0.00001)
- *         col = 0             # <<<<<<<<<<<<<<
- *         while (<uiItem>child) is not None:
- *             # Compute the number of items in this column
+  /* "dearcygui/layout.pyx":1318
+ *         wrap_start_y = max(parent_start_y, wrap_start_y)
+ * 
+ *         cdef float col_x = parent_start_x  # screen-x of the current column             # <<<<<<<<<<<<<<
+ *         cdef float col_max_width = 0.  # widest item drawn in the current column
+ *         cdef bint changed = False
 */
-  __pyx_v_col = 0;
+  __pyx_v_col_x = __pyx_v_parent_start_x;
 
-  /* "dearcygui/layout.pyx":756
- *         cdef float global_scale_inv = 1./fmax(self.context.viewport.global_scale, 0.00001)
- *         col = 0
- *         while (<uiItem>child) is not None:             # <<<<<<<<<<<<<<
- *             # Compute the number of items in this column
- *             if col == 1:
+  /* "dearcygui/layout.pyx":1319
+ * 
+ *         cdef float col_x = parent_start_x  # screen-x of the current column
+ *         cdef float col_max_width = 0.  # widest item drawn in the current column             # <<<<<<<<<<<<<<
+ *         cdef bint changed = False
+ *         cdef bint is_first_col = True  # False once we have wrapped to a second column
+*/
+  __pyx_v_col_max_width = 0.;
+
+  /* "dearcygui/layout.pyx":1320
+ *         cdef float col_x = parent_start_x  # screen-x of the current column
+ *         cdef float col_max_width = 0.  # widest item drawn in the current column
+ *         cdef bint changed = False             # <<<<<<<<<<<<<<
+ *         cdef bint is_first_col = True  # False once we have wrapped to a second column
+ * 
+*/
+  __pyx_v_changed = 0;
+
+  /* "dearcygui/layout.pyx":1321
+ *         cdef float col_max_width = 0.  # widest item drawn in the current column
+ *         cdef bint changed = False
+ *         cdef bint is_first_col = True  # False once we have wrapped to a second column             # <<<<<<<<<<<<<<
+ * 
+ *         # Loop variables: declared here because Cython forbids cdef inside loops.
+*/
+  __pyx_v_is_first_col = 1;
+
+  /* "dearcygui/layout.pyx":1338
+ *         cdef bint has_sz          # current item's has_rect_size flag
+ * 
+ *         cdef PyObject *col_start = child             # <<<<<<<<<<<<<<
+ *         while (<uiItem>col_start) is not None:
+ *             # Height budget: first column uses full content height; subsequent
+*/
+  __pyx_v_col_start = __pyx_v_child;
+
+  /* "dearcygui/layout.pyx":1339
+ * 
+ *         cdef PyObject *col_start = child
+ *         while (<uiItem>col_start) is not None:             # <<<<<<<<<<<<<<
+ *             # Height budget: first column uses full content height; subsequent
+ *             # columns use the narrower region from wrap_start_y to end_y.
 */
   while (1) {
-    __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
+    __pyx_t_1 = (((PyObject *)__pyx_v_col_start) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "dearcygui/layout.pyx":758
- *         while (<uiItem>child) is not None:
- *             # Compute the number of items in this column
- *             if col == 1:             # <<<<<<<<<<<<<<
- *                 # starting from the second column, begin to wrap at the target
- *                 available_height -= wrap_y
+    /* "dearcygui/layout.pyx":1342
+ *             # Height budget: first column uses full content height; subsequent
+ *             # columns use the narrower region from wrap_start_y to end_y.
+ *             col_avail = available_height if is_first_col else (end_y - wrap_start_y)             # <<<<<<<<<<<<<<
+ *             col_sy = parent_start_y if is_first_col else wrap_start_y
+ * 
 */
-    __pyx_t_1 = (__pyx_v_col == 1);
-    if (__pyx_t_1) {
-
-      /* "dearcygui/layout.pyx":760
- *             if col == 1:
- *                 # starting from the second column, begin to wrap at the target
- *                 available_height -= wrap_y             # <<<<<<<<<<<<<<
- *             x = next_x
- *             n_items_this_col = 1
-*/
-      __pyx_v_available_height = (__pyx_v_available_height - __pyx_v_wrap_y);
-
-      /* "dearcygui/layout.pyx":758
- *         while (<uiItem>child) is not None:
- *             # Compute the number of items in this column
- *             if col == 1:             # <<<<<<<<<<<<<<
- *                 # starting from the second column, begin to wrap at the target
- *                 available_height -= wrap_y
-*/
+    if (__pyx_v_is_first_col) {
+      __pyx_t_3 = __pyx_v_available_height;
+    } else {
+      __pyx_t_3 = (__pyx_v_end_y - __pyx_v_wrap_start_y);
     }
+    __pyx_v_col_avail = __pyx_t_3;
 
-    /* "dearcygui/layout.pyx":761
- *                 # starting from the second column, begin to wrap at the target
- *                 available_height -= wrap_y
- *             x = next_x             # <<<<<<<<<<<<<<
- *             n_items_this_col = 1
- *             expected_size = (<uiItem>child).state.cur.rect_size.y
+    /* "dearcygui/layout.pyx":1343
+ *             # columns use the narrower region from wrap_start_y to end_y.
+ *             col_avail = available_height if is_first_col else (end_y - wrap_start_y)
+ *             col_sy = parent_start_y if is_first_col else wrap_start_y             # <<<<<<<<<<<<<<
+ * 
+ *             # Pre-pass: walk siblings to determine which items belong to this
 */
-    __pyx_v_x = __pyx_v_next_x;
+    if (__pyx_v_is_first_col) {
+      __pyx_t_3 = __pyx_v_parent_start_y;
+    } else {
+      __pyx_t_3 = __pyx_v_wrap_start_y;
+    }
+    __pyx_v_col_sy = __pyx_t_3;
 
-    /* "dearcygui/layout.pyx":762
- *                 available_height -= wrap_y
- *             x = next_x
- *             n_items_this_col = 1             # <<<<<<<<<<<<<<
- *             expected_size = (<uiItem>child).state.cur.rect_size.y
- *             next_x = (<uiItem>child).state.cur.rect_size.x
+    /* "dearcygui/layout.pyx":1357
+ *             # for visibility.  Stop when adding the next item would overflow
+ *             # the budget (only when wrapping is enabled).
+ *             expected_size = 0.             # <<<<<<<<<<<<<<
+ *             n_with_size = 0
+ *             last_with_size = NULL
 */
-    __pyx_v_n_items_this_col = 1;
+    __pyx_v_expected_size = 0.;
 
-    /* "dearcygui/layout.pyx":763
- *             x = next_x
- *             n_items_this_col = 1
- *             expected_size = (<uiItem>child).state.cur.rect_size.y             # <<<<<<<<<<<<<<
- *             next_x = (<uiItem>child).state.cur.rect_size.x
- *             sibling = child
+    /* "dearcygui/layout.pyx":1358
+ *             # the budget (only when wrapping is enabled).
+ *             expected_size = 0.
+ *             n_with_size = 0             # <<<<<<<<<<<<<<
+ *             last_with_size = NULL
+ *             s = col_start
 */
-    __pyx_t_4 = ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cur.rect_size.y;
-    __pyx_v_expected_size = __pyx_t_4;
+    __pyx_v_n_with_size = 0;
 
-    /* "dearcygui/layout.pyx":764
- *             n_items_this_col = 1
- *             expected_size = (<uiItem>child).state.cur.rect_size.y
- *             next_x = (<uiItem>child).state.cur.rect_size.x             # <<<<<<<<<<<<<<
- *             sibling = child
- *             while (<uiItem>sibling).next_sibling is not None:
+    /* "dearcygui/layout.pyx":1359
+ *             expected_size = 0.
+ *             n_with_size = 0
+ *             last_with_size = NULL             # <<<<<<<<<<<<<<
+ *             s = col_start
+ *             while (<uiItem>s) is not None:
 */
-    __pyx_t_4 = ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cur.rect_size.x;
-    __pyx_v_next_x = __pyx_t_4;
+    __pyx_v_last_with_size = NULL;
 
-    /* "dearcygui/layout.pyx":765
- *             expected_size = (<uiItem>child).state.cur.rect_size.y
- *             next_x = (<uiItem>child).state.cur.rect_size.x
- *             sibling = child             # <<<<<<<<<<<<<<
- *             while (<uiItem>sibling).next_sibling is not None:
- *                 # Does the next item fit?
+    /* "dearcygui/layout.pyx":1360
+ *             n_with_size = 0
+ *             last_with_size = NULL
+ *             s = col_start             # <<<<<<<<<<<<<<
+ *             while (<uiItem>s) is not None:
+ *                 if (<uiItem>s).state.cap.has_rect_size and (<uiItem>s).state.cur.traversed:
 */
-    __pyx_v_sibling = __pyx_v_child;
+    __pyx_v_s = __pyx_v_col_start;
 
-    /* "dearcygui/layout.pyx":766
- *             next_x = (<uiItem>child).state.cur.rect_size.x
- *             sibling = child
- *             while (<uiItem>sibling).next_sibling is not None:             # <<<<<<<<<<<<<<
- *                 # Does the next item fit?
- *                 expected_size_next = expected_size + self._spacing.y + \
+    /* "dearcygui/layout.pyx":1361
+ *             last_with_size = NULL
+ *             s = col_start
+ *             while (<uiItem>s) is not None:             # <<<<<<<<<<<<<<
+ *                 if (<uiItem>s).state.cap.has_rect_size and (<uiItem>s).state.cur.traversed:
+ *                     sz = (<uiItem>s).state.cur.rect_size.y
 */
     while (1) {
-      __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->__pyx_base.next_sibling) != Py_None);
+      __pyx_t_1 = (((PyObject *)__pyx_v_s) != Py_None);
       if (!__pyx_t_1) break;
 
-      /* "dearcygui/layout.pyx":768
- *             while (<uiItem>sibling).next_sibling is not None:
- *                 # Does the next item fit?
- *                 expected_size_next = expected_size + self._spacing.y + \             # <<<<<<<<<<<<<<
- *                     (<uiItem>(<uiItem>sibling).next_sibling).state.cur.rect_size.y
- *                 # No: stop there
+      /* "dearcygui/layout.pyx":1362
+ *             s = col_start
+ *             while (<uiItem>s) is not None:
+ *                 if (<uiItem>s).state.cap.has_rect_size and (<uiItem>s).state.cur.traversed:             # <<<<<<<<<<<<<<
+ *                     sz = (<uiItem>s).state.cur.rect_size.y
+ *                     next_sz = expected_size + (spacing_y if n_with_size > 0 else 0.) + sz
 */
-      __pyx_v_expected_size_next = ((__pyx_v_expected_size + __pyx_v_self->__pyx_base._spacing.y) + ((struct __pyx_obj_9dearcygui_4core_uiItem *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->__pyx_base.next_sibling)->state.cur.rect_size.y);
-
-      /* "dearcygui/layout.pyx":771
- *                     (<uiItem>(<uiItem>sibling).next_sibling).state.cur.rect_size.y
- *                 # No: stop there
- *                 if expected_size_next > available_height and not(self._no_wrap):             # <<<<<<<<<<<<<<
- *                     break
- *                 expected_size = expected_size_next
-*/
-      __pyx_t_6 = (__pyx_v_expected_size_next > __pyx_v_available_height);
-      if (__pyx_t_6) {
+      if (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.cap.has_rect_size) {
       } else {
+        __pyx_t_1 = ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.cap.has_rect_size;
+        goto __pyx_L10_bool_binop_done;
+      }
+      __pyx_t_1 = ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.cur.traversed;
+      __pyx_L10_bool_binop_done:;
+      if (__pyx_t_1) {
+
+        /* "dearcygui/layout.pyx":1363
+ *             while (<uiItem>s) is not None:
+ *                 if (<uiItem>s).state.cap.has_rect_size and (<uiItem>s).state.cur.traversed:
+ *                     sz = (<uiItem>s).state.cur.rect_size.y             # <<<<<<<<<<<<<<
+ *                     next_sz = expected_size + (spacing_y if n_with_size > 0 else 0.) + sz
+ *                     # Overflow: stop here (only when wrapping is allowed)
+*/
+        __pyx_t_3 = ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.cur.rect_size.y;
+        __pyx_v_sz = __pyx_t_3;
+
+        /* "dearcygui/layout.pyx":1364
+ *                 if (<uiItem>s).state.cap.has_rect_size and (<uiItem>s).state.cur.traversed:
+ *                     sz = (<uiItem>s).state.cur.rect_size.y
+ *                     next_sz = expected_size + (spacing_y if n_with_size > 0 else 0.) + sz             # <<<<<<<<<<<<<<
+ *                     # Overflow: stop here (only when wrapping is allowed)
+ *                     if not(self._no_wrap) and next_sz > col_avail and n_with_size > 0:
+*/
+        __pyx_t_1 = (__pyx_v_n_with_size > 0);
+        if (__pyx_t_1) {
+          __pyx_t_5 = __pyx_v_spacing_y;
+        } else {
+          __pyx_t_5 = 0.;
+        }
+        __pyx_v_next_sz = ((__pyx_v_expected_size + __pyx_t_5) + __pyx_v_sz);
+
+        /* "dearcygui/layout.pyx":1366
+ *                     next_sz = expected_size + (spacing_y if n_with_size > 0 else 0.) + sz
+ *                     # Overflow: stop here (only when wrapping is allowed)
+ *                     if not(self._no_wrap) and next_sz > col_avail and n_with_size > 0:             # <<<<<<<<<<<<<<
+ *                         break
+ *                     expected_size = next_sz
+*/
+        __pyx_t_6 = (!__pyx_v_self->_no_wrap);
+        if (__pyx_t_6) {
+        } else {
+          __pyx_t_1 = __pyx_t_6;
+          goto __pyx_L13_bool_binop_done;
+        }
+        __pyx_t_6 = (__pyx_v_next_sz > __pyx_v_col_avail);
+        if (__pyx_t_6) {
+        } else {
+          __pyx_t_1 = __pyx_t_6;
+          goto __pyx_L13_bool_binop_done;
+        }
+        __pyx_t_6 = (__pyx_v_n_with_size > 0);
         __pyx_t_1 = __pyx_t_6;
-        goto __pyx_L12_bool_binop_done;
-      }
-      __pyx_t_6 = (!__pyx_v_self->_no_wrap);
-      __pyx_t_1 = __pyx_t_6;
-      __pyx_L12_bool_binop_done:;
-      if (__pyx_t_1) {
+        __pyx_L13_bool_binop_done:;
+        if (__pyx_t_1) {
 
-        /* "dearcygui/layout.pyx":772
- *                 # No: stop there
- *                 if expected_size_next > available_height and not(self._no_wrap):
- *                     break             # <<<<<<<<<<<<<<
- *                 expected_size = expected_size_next
- *                 if not((<uiItem>sibling).state.cap.has_rect_size):
+          /* "dearcygui/layout.pyx":1367
+ *                     # Overflow: stop here (only when wrapping is allowed)
+ *                     if not(self._no_wrap) and next_sz > col_avail and n_with_size > 0:
+ *                         break             # <<<<<<<<<<<<<<
+ *                     expected_size = next_sz
+ *                     n_with_size += 1
 */
-        goto __pyx_L10_break;
+          goto __pyx_L8_break;
 
-        /* "dearcygui/layout.pyx":771
- *                     (<uiItem>(<uiItem>sibling).next_sibling).state.cur.rect_size.y
- *                 # No: stop there
- *                 if expected_size_next > available_height and not(self._no_wrap):             # <<<<<<<<<<<<<<
- *                     break
- *                 expected_size = expected_size_next
+          /* "dearcygui/layout.pyx":1366
+ *                     next_sz = expected_size + (spacing_y if n_with_size > 0 else 0.) + sz
+ *                     # Overflow: stop here (only when wrapping is allowed)
+ *                     if not(self._no_wrap) and next_sz > col_avail and n_with_size > 0:             # <<<<<<<<<<<<<<
+ *                         break
+ *                     expected_size = next_sz
 */
-      }
+        }
 
-      /* "dearcygui/layout.pyx":773
- *                 if expected_size_next > available_height and not(self._no_wrap):
- *                     break
- *                 expected_size = expected_size_next             # <<<<<<<<<<<<<<
- *                 if not((<uiItem>sibling).state.cap.has_rect_size):
- *                     # Items without rect size (tooltips for instance) do not count in the layout
+        /* "dearcygui/layout.pyx":1368
+ *                     if not(self._no_wrap) and next_sz > col_avail and n_with_size > 0:
+ *                         break
+ *                     expected_size = next_sz             # <<<<<<<<<<<<<<
+ *                     n_with_size += 1
+ *                     last_with_size = s
 */
-      __pyx_v_expected_size = __pyx_v_expected_size_next;
+        __pyx_v_expected_size = __pyx_v_next_sz;
 
-      /* "dearcygui/layout.pyx":774
- *                     break
- *                 expected_size = expected_size_next
- *                 if not((<uiItem>sibling).state.cap.has_rect_size):             # <<<<<<<<<<<<<<
- *                     # Items without rect size (tooltips for instance) do not count in the layout
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling
+        /* "dearcygui/layout.pyx":1369
+ *                         break
+ *                     expected_size = next_sz
+ *                     n_with_size += 1             # <<<<<<<<<<<<<<
+ *                     last_with_size = s
+ *                 s = <PyObject*>(<uiItem>s).next_sibling
 */
-      __pyx_t_1 = (!((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->state.cap.has_rect_size);
-      if (__pyx_t_1) {
+        __pyx_v_n_with_size = (__pyx_v_n_with_size + 1);
 
-        /* "dearcygui/layout.pyx":776
- *                 if not((<uiItem>sibling).state.cap.has_rect_size):
- *                     # Items without rect size (tooltips for instance) do not count in the layout
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling             # <<<<<<<<<<<<<<
- *                     continue
- *                 next_x = max(next_x, x + (<uiItem>sibling).state.cur.rect_size.x)
+        /* "dearcygui/layout.pyx":1370
+ *                     expected_size = next_sz
+ *                     n_with_size += 1
+ *                     last_with_size = s             # <<<<<<<<<<<<<<
+ *                 s = <PyObject*>(<uiItem>s).next_sibling
+ *             # s is None (end of list) or the first item that starts the next column
 */
-        __pyx_v_sibling = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->__pyx_base.next_sibling);
+        __pyx_v_last_with_size = __pyx_v_s;
 
-        /* "dearcygui/layout.pyx":777
- *                     # Items without rect size (tooltips for instance) do not count in the layout
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling
- *                     continue             # <<<<<<<<<<<<<<
- *                 next_x = max(next_x, x + (<uiItem>sibling).state.cur.rect_size.x)
- *                 sibling = <PyObject*>(<uiItem>sibling).next_sibling
-*/
-        goto __pyx_L9_continue;
-
-        /* "dearcygui/layout.pyx":774
- *                     break
- *                 expected_size = expected_size_next
- *                 if not((<uiItem>sibling).state.cap.has_rect_size):             # <<<<<<<<<<<<<<
- *                     # Items without rect size (tooltips for instance) do not count in the layout
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling
+        /* "dearcygui/layout.pyx":1362
+ *             s = col_start
+ *             while (<uiItem>s) is not None:
+ *                 if (<uiItem>s).state.cap.has_rect_size and (<uiItem>s).state.cur.traversed:             # <<<<<<<<<<<<<<
+ *                     sz = (<uiItem>s).state.cur.rect_size.y
+ *                     next_sz = expected_size + (spacing_y if n_with_size > 0 else 0.) + sz
 */
       }
 
-      /* "dearcygui/layout.pyx":778
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling
- *                     continue
- *                 next_x = max(next_x, x + (<uiItem>sibling).state.cur.rect_size.x)             # <<<<<<<<<<<<<<
- *                 sibling = <PyObject*>(<uiItem>sibling).next_sibling
- *                 n_items_this_col += 1
+      /* "dearcygui/layout.pyx":1371
+ *                     n_with_size += 1
+ *                     last_with_size = s
+ *                 s = <PyObject*>(<uiItem>s).next_sibling             # <<<<<<<<<<<<<<
+ *             # s is None (end of list) or the first item that starts the next column
+ *             col_end = s
 */
-      __pyx_t_4 = (__pyx_v_x + ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->state.cur.rect_size.x);
-      __pyx_t_2 = __pyx_v_next_x;
-      __pyx_t_1 = (__pyx_t_4 > __pyx_t_2);
-      if (__pyx_t_1) {
-        __pyx_t_3 = __pyx_t_4;
-      } else {
-        __pyx_t_3 = __pyx_t_2;
-      }
-      __pyx_v_next_x = __pyx_t_3;
-
-      /* "dearcygui/layout.pyx":779
- *                     continue
- *                 next_x = max(next_x, x + (<uiItem>sibling).state.cur.rect_size.x)
- *                 sibling = <PyObject*>(<uiItem>sibling).next_sibling             # <<<<<<<<<<<<<<
- *                 n_items_this_col += 1
- *             next_x = next_x + spacing_x
-*/
-      __pyx_v_sibling = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->__pyx_base.next_sibling);
-
-      /* "dearcygui/layout.pyx":780
- *                 next_x = max(next_x, x + (<uiItem>sibling).state.cur.rect_size.x)
- *                 sibling = <PyObject*>(<uiItem>sibling).next_sibling
- *                 n_items_this_col += 1             # <<<<<<<<<<<<<<
- *             next_x = next_x + spacing_x
- * 
-*/
-      __pyx_v_n_items_this_col = (__pyx_v_n_items_this_col + 1);
-      __pyx_L9_continue:;
+      __pyx_v_s = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->__pyx_base.next_sibling);
     }
-    __pyx_L10_break:;
+    __pyx_L8_break:;
 
-    /* "dearcygui/layout.pyx":781
- *                 sibling = <PyObject*>(<uiItem>sibling).next_sibling
- *                 n_items_this_col += 1
- *             next_x = next_x + spacing_x             # <<<<<<<<<<<<<<
+    /* "dearcygui/layout.pyx":1373
+ *                 s = <PyObject*>(<uiItem>s).next_sibling
+ *             # s is None (end of list) or the first item that starts the next column
+ *             col_end = s             # <<<<<<<<<<<<<<
  * 
- *             # Determine the element positions
+ *             # Compute the column's start y and per-gap spacing
 */
-    __pyx_v_next_x = (__pyx_v_next_x + __pyx_v_spacing_x);
+    __pyx_v_col_end = __pyx_v_s;
 
-    /* "dearcygui/layout.pyx":784
+    /* "dearcygui/layout.pyx":1376
  * 
- *             # Determine the element positions
- *             sibling = child             # <<<<<<<<<<<<<<
- *             if self._alignment_mode == Alignment.TOP:
- *                 target_y = 0 if col == 0 else wrap_y
+ *             # Compute the column's start y and per-gap spacing
+ *             col_spacing_y = spacing_y             # <<<<<<<<<<<<<<
+ *             if self._alignment_mode == Alignment.BOTTOM:
+ *                 target_y = max(col_sy, end_y - expected_size)
 */
-    __pyx_v_sibling = __pyx_v_child;
+    __pyx_v_col_spacing_y = __pyx_v_spacing_y;
 
-    /* "dearcygui/layout.pyx":785
- *             # Determine the element positions
- *             sibling = child
- *             if self._alignment_mode == Alignment.TOP:             # <<<<<<<<<<<<<<
- *                 target_y = 0 if col == 0 else wrap_y
- *             elif self._alignment_mode == Alignment.BOTTOM:
-*/
-    __pyx_t_1 = (__pyx_v_self->_alignment_mode == __pyx_t_9dearcygui_5types_Alignment::TOP);
-    if (__pyx_t_1) {
-
-      /* "dearcygui/layout.pyx":786
- *             sibling = child
- *             if self._alignment_mode == Alignment.TOP:
- *                 target_y = 0 if col == 0 else wrap_y             # <<<<<<<<<<<<<<
- *             elif self._alignment_mode == Alignment.BOTTOM:
- *                 target_y = end_y - expected_size
-*/
-      __pyx_t_1 = (__pyx_v_col == 0);
-      if (__pyx_t_1) {
-        __pyx_t_3 = 0.0;
-      } else {
-        __pyx_t_3 = __pyx_v_wrap_y;
-      }
-      __pyx_v_target_y = __pyx_t_3;
-
-      /* "dearcygui/layout.pyx":785
- *             # Determine the element positions
- *             sibling = child
- *             if self._alignment_mode == Alignment.TOP:             # <<<<<<<<<<<<<<
- *                 target_y = 0 if col == 0 else wrap_y
- *             elif self._alignment_mode == Alignment.BOTTOM:
-*/
-      goto __pyx_L15;
-    }
-
-    /* "dearcygui/layout.pyx":787
- *             if self._alignment_mode == Alignment.TOP:
- *                 target_y = 0 if col == 0 else wrap_y
- *             elif self._alignment_mode == Alignment.BOTTOM:             # <<<<<<<<<<<<<<
- *                 target_y = end_y - expected_size
+    /* "dearcygui/layout.pyx":1377
+ *             # Compute the column's start y and per-gap spacing
+ *             col_spacing_y = spacing_y
+ *             if self._alignment_mode == Alignment.BOTTOM:             # <<<<<<<<<<<<<<
+ *                 target_y = max(col_sy, end_y - expected_size)
  *             elif self._alignment_mode == Alignment.CENTER:
 */
     __pyx_t_1 = (__pyx_v_self->_alignment_mode == __pyx_t_9dearcygui_5types_Alignment::BOTTOM);
     if (__pyx_t_1) {
 
-      /* "dearcygui/layout.pyx":788
- *                 target_y = 0 if col == 0 else wrap_y
- *             elif self._alignment_mode == Alignment.BOTTOM:
- *                 target_y = end_y - expected_size             # <<<<<<<<<<<<<<
+      /* "dearcygui/layout.pyx":1378
+ *             col_spacing_y = spacing_y
+ *             if self._alignment_mode == Alignment.BOTTOM:
+ *                 target_y = max(col_sy, end_y - expected_size)             # <<<<<<<<<<<<<<
  *             elif self._alignment_mode == Alignment.CENTER:
- *                 # Center right away (not waiting the second column) with wrap_y
+ *                 target_y = col_sy + floor((col_avail - expected_size) / 2.)
 */
-      __pyx_v_target_y = (__pyx_v_end_y - __pyx_v_expected_size);
+      __pyx_t_3 = (__pyx_v_end_y - __pyx_v_expected_size);
+      __pyx_t_4 = __pyx_v_col_sy;
+      __pyx_t_1 = (__pyx_t_3 > __pyx_t_4);
+      if (__pyx_t_1) {
+        __pyx_t_2 = __pyx_t_3;
+      } else {
+        __pyx_t_2 = __pyx_t_4;
+      }
+      __pyx_v_target_y = __pyx_t_2;
 
-      /* "dearcygui/layout.pyx":787
- *             if self._alignment_mode == Alignment.TOP:
- *                 target_y = 0 if col == 0 else wrap_y
- *             elif self._alignment_mode == Alignment.BOTTOM:             # <<<<<<<<<<<<<<
- *                 target_y = end_y - expected_size
+      /* "dearcygui/layout.pyx":1377
+ *             # Compute the column's start y and per-gap spacing
+ *             col_spacing_y = spacing_y
+ *             if self._alignment_mode == Alignment.BOTTOM:             # <<<<<<<<<<<<<<
+ *                 target_y = max(col_sy, end_y - expected_size)
  *             elif self._alignment_mode == Alignment.CENTER:
 */
-      goto __pyx_L15;
+      goto __pyx_L16;
     }
 
-    /* "dearcygui/layout.pyx":789
- *             elif self._alignment_mode == Alignment.BOTTOM:
- *                 target_y = end_y - expected_size
+    /* "dearcygui/layout.pyx":1379
+ *             if self._alignment_mode == Alignment.BOTTOM:
+ *                 target_y = max(col_sy, end_y - expected_size)
  *             elif self._alignment_mode == Alignment.CENTER:             # <<<<<<<<<<<<<<
- *                 # Center right away (not waiting the second column) with wrap_y
- *                 target_y = (end_y + wrap_y) // 2 - \
+ *                 target_y = col_sy + floor((col_avail - expected_size) / 2.)
+ *                 target_y = max(col_sy, target_y)
 */
     __pyx_t_1 = (__pyx_v_self->_alignment_mode == __pyx_t_9dearcygui_5types_Alignment::CENTER);
     if (__pyx_t_1) {
 
-      /* "dearcygui/layout.pyx":791
+      /* "dearcygui/layout.pyx":1380
+ *                 target_y = max(col_sy, end_y - expected_size)
  *             elif self._alignment_mode == Alignment.CENTER:
- *                 # Center right away (not waiting the second column) with wrap_y
- *                 target_y = (end_y + wrap_y) // 2 - \             # <<<<<<<<<<<<<<
- *                     expected_size // 2 # integer rounding to avoid blurring
- *             else: #self._alignment_mode == Alignment.JUSTIFIED:
-*/
-      __pyx_v_target_y = (floor((__pyx_v_end_y + __pyx_v_wrap_y) / 2.0) - floor(__pyx_v_expected_size / 2.0));
-
-      /* "dearcygui/layout.pyx":789
- *             elif self._alignment_mode == Alignment.BOTTOM:
- *                 target_y = end_y - expected_size
- *             elif self._alignment_mode == Alignment.CENTER:             # <<<<<<<<<<<<<<
- *                 # Center right away (not waiting the second column) with wrap_y
- *                 target_y = (end_y + wrap_y) // 2 - \
-*/
-      goto __pyx_L15;
-    }
-
-    /* "dearcygui/layout.pyx":794
- *                     expected_size // 2 # integer rounding to avoid blurring
- *             else: #self._alignment_mode == Alignment.JUSTIFIED:
- *                 target_y = 0 if col == 0 else wrap_y             # <<<<<<<<<<<<<<
- *                 # Increase spacing to fit target space
- *                 spacing_y = self._spacing.y + \
-*/
-    /*else*/ {
-      __pyx_t_1 = (__pyx_v_col == 0);
-      if (__pyx_t_1) {
-        __pyx_t_3 = 0.0;
-      } else {
-        __pyx_t_3 = __pyx_v_wrap_y;
-      }
-      __pyx_v_target_y = __pyx_t_3;
-
-      /* "dearcygui/layout.pyx":798
- *                 spacing_y = self._spacing.y + \
- *                     max(0, \
- *                         floor((available_height - expected_size) /             # <<<<<<<<<<<<<<
- *                                (n_items_this_col-1)))
- * 
+ *                 target_y = col_sy + floor((col_avail - expected_size) / 2.)             # <<<<<<<<<<<<<<
+ *                 target_y = max(col_sy, target_y)
+ *             else:  # JUSTIFIED
 */
       try {
-        __pyx_t_3 = std::floor(((__pyx_v_available_height - __pyx_v_expected_size) / ((float)(__pyx_v_n_items_this_col - 1))));
+        __pyx_t_5 = std::floor((((double)(__pyx_v_col_avail - __pyx_v_expected_size)) / 2.));
       } catch(...) {
+        PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
         __Pyx_CppExn2PyErr();
-        __PYX_ERR(0, 798, __pyx_L1_error)
+        __Pyx_PyGILState_Release(__pyx_gilstate_save);
+        __PYX_ERR(0, 1380, __pyx_L1_error)
       }
-      __pyx_t_7 = 0;
-      __pyx_t_1 = (__pyx_t_3 > __pyx_t_7);
+      __pyx_v_target_y = (__pyx_v_col_sy + __pyx_t_5);
+
+      /* "dearcygui/layout.pyx":1381
+ *             elif self._alignment_mode == Alignment.CENTER:
+ *                 target_y = col_sy + floor((col_avail - expected_size) / 2.)
+ *                 target_y = max(col_sy, target_y)             # <<<<<<<<<<<<<<
+ *             else:  # JUSTIFIED
+ *                 target_y = col_sy
+*/
+      __pyx_t_2 = __pyx_v_target_y;
+      __pyx_t_3 = __pyx_v_col_sy;
+      __pyx_t_1 = (__pyx_t_2 > __pyx_t_3);
       if (__pyx_t_1) {
+        __pyx_t_4 = __pyx_t_2;
+      } else {
         __pyx_t_4 = __pyx_t_3;
-      } else {
-        __pyx_t_4 = __pyx_t_7;
       }
+      __pyx_v_target_y = __pyx_t_4;
 
-      /* "dearcygui/layout.pyx":796
- *                 target_y = 0 if col == 0 else wrap_y
- *                 # Increase spacing to fit target space
- *                 spacing_y = self._spacing.y + \             # <<<<<<<<<<<<<<
- *                     max(0, \
- *                         floor((available_height - expected_size) /
+      /* "dearcygui/layout.pyx":1379
+ *             if self._alignment_mode == Alignment.BOTTOM:
+ *                 target_y = max(col_sy, end_y - expected_size)
+ *             elif self._alignment_mode == Alignment.CENTER:             # <<<<<<<<<<<<<<
+ *                 target_y = col_sy + floor((col_avail - expected_size) / 2.)
+ *                 target_y = max(col_sy, target_y)
 */
-      __pyx_v_spacing_y = (__pyx_v_self->__pyx_base._spacing.y + __pyx_t_4);
-    }
-    __pyx_L15:;
-
-    /* "dearcygui/layout.pyx":802
- * 
- *             # Important for auto fit windows
- *             target_y = max(0 if col == 0 else wrap_y, target_y)             # <<<<<<<<<<<<<<
- * 
- *             expected_y = 0
-*/
-    __pyx_t_4 = __pyx_v_target_y;
-    __pyx_t_1 = (__pyx_v_col == 0);
-    if (__pyx_t_1) {
-      __pyx_t_3 = 0;
-    } else {
-      __pyx_t_3 = __pyx_v_wrap_y;
-    }
-    __pyx_t_1 = (__pyx_t_4 > __pyx_t_3);
-    if (__pyx_t_1) {
-      __pyx_t_2 = __pyx_t_4;
-    } else {
-      __pyx_t_2 = __pyx_t_3;
-    }
-    __pyx_v_target_y = __pyx_t_2;
-
-    /* "dearcygui/layout.pyx":804
- *             target_y = max(0 if col == 0 else wrap_y, target_y)
- * 
- *             expected_y = 0             # <<<<<<<<<<<<<<
- *             i = 0
- *             while i < n_items_this_col-1:
-*/
-    __pyx_v_expected_y = 0.0;
-
-    /* "dearcygui/layout.pyx":805
- * 
- *             expected_y = 0
- *             i = 0             # <<<<<<<<<<<<<<
- *             while i < n_items_this_col-1:
- *                 if not((<uiItem>sibling).state.cap.has_rect_size):
-*/
-    __pyx_v_i = 0;
-
-    /* "dearcygui/layout.pyx":806
- *             expected_y = 0
- *             i = 0
- *             while i < n_items_this_col-1:             # <<<<<<<<<<<<<<
- *                 if not((<uiItem>sibling).state.cap.has_rect_size):
- *                     # Items without rect size do not count in the layout
-*/
-    while (1) {
-      __pyx_t_1 = (__pyx_v_i < (__pyx_v_n_items_this_col - 1));
-      if (!__pyx_t_1) break;
-
-      /* "dearcygui/layout.pyx":807
- *             i = 0
- *             while i < n_items_this_col-1:
- *                 if not((<uiItem>sibling).state.cap.has_rect_size):             # <<<<<<<<<<<<<<
- *                     # Items without rect size do not count in the layout
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling
-*/
-      __pyx_t_1 = (!((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->state.cap.has_rect_size);
-      if (__pyx_t_1) {
-
-        /* "dearcygui/layout.pyx":809
- *                 if not((<uiItem>sibling).state.cap.has_rect_size):
- *                     # Items without rect size do not count in the layout
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling             # <<<<<<<<<<<<<<
- *                     continue
- *                 if col == 0:
-*/
-        __pyx_v_sibling = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->__pyx_base.next_sibling);
-
-        /* "dearcygui/layout.pyx":810
- *                     # Items without rect size do not count in the layout
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling
- *                     continue             # <<<<<<<<<<<<<<
- *                 if col == 0:
- *                     # Use the default cursor
-*/
-        goto __pyx_L16_continue;
-
-        /* "dearcygui/layout.pyx":807
- *             i = 0
- *             while i < n_items_this_col-1:
- *                 if not((<uiItem>sibling).state.cap.has_rect_size):             # <<<<<<<<<<<<<<
- *                     # Items without rect size do not count in the layout
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling
-*/
-      }
-
-      /* "dearcygui/layout.pyx":811
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling
- *                     continue
- *                 if col == 0:             # <<<<<<<<<<<<<<
- *                     # Use the default cursor
- *                     pos_change |= (<uiItem>sibling).requested_y.is_item() or\
-*/
-      __pyx_t_1 = (__pyx_v_col == 0);
-      if (__pyx_t_1) {
-
-        /* "dearcygui/layout.pyx":813
- *                 if col == 0:
- *                     # Use the default cursor
- *                     pos_change |= (<uiItem>sibling).requested_y.is_item() or\             # <<<<<<<<<<<<<<
- *                         (target_y - expected_y) * global_scale_inv != (<uiItem>sibling).requested_y.get_value()
- *                     (<uiItem>sibling).requested_x.set_value(0.) # default position
-*/
-        __pyx_t_6 = ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->requested_y.is_item();
-        if (!__pyx_t_6) {
-        } else {
-          __pyx_t_1 = __pyx_t_6;
-          goto __pyx_L20_bool_binop_done;
-        }
-
-        /* "dearcygui/layout.pyx":814
- *                     # Use the default cursor
- *                     pos_change |= (<uiItem>sibling).requested_y.is_item() or\
- *                         (target_y - expected_y) * global_scale_inv != (<uiItem>sibling).requested_y.get_value()             # <<<<<<<<<<<<<<
- *                     (<uiItem>sibling).requested_x.set_value(0.) # default position
- *                     (<uiItem>sibling).requested_y.set_value((target_y - expected_y)*global_scale_inv) # delta to default position
-*/
-        __pyx_t_6 = (((__pyx_v_target_y - __pyx_v_expected_y) * __pyx_v_global_scale_inv) != ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->requested_y.get_value());
-        __pyx_t_1 = __pyx_t_6;
-        __pyx_L20_bool_binop_done:;
-
-        /* "dearcygui/layout.pyx":813
- *                 if col == 0:
- *                     # Use the default cursor
- *                     pos_change |= (<uiItem>sibling).requested_y.is_item() or\             # <<<<<<<<<<<<<<
- *                         (target_y - expected_y) * global_scale_inv != (<uiItem>sibling).requested_y.get_value()
- *                     (<uiItem>sibling).requested_x.set_value(0.) # default position
-*/
-        __pyx_v_pos_change = (__pyx_v_pos_change | __pyx_t_1);
-
-        /* "dearcygui/layout.pyx":815
- *                     pos_change |= (<uiItem>sibling).requested_y.is_item() or\
- *                         (target_y - expected_y) * global_scale_inv != (<uiItem>sibling).requested_y.get_value()
- *                     (<uiItem>sibling).requested_x.set_value(0.) # default position             # <<<<<<<<<<<<<<
- *                     (<uiItem>sibling).requested_y.set_value((target_y - expected_y)*global_scale_inv) # delta to default position
- *                 else:
-*/
-        ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->requested_x.set_value(0.);
-
-        /* "dearcygui/layout.pyx":816
- *                         (target_y - expected_y) * global_scale_inv != (<uiItem>sibling).requested_y.get_value()
- *                     (<uiItem>sibling).requested_x.set_value(0.) # default position
- *                     (<uiItem>sibling).requested_y.set_value((target_y - expected_y)*global_scale_inv) # delta to default position             # <<<<<<<<<<<<<<
- *                 else:
- *                     # TODO: pos_change
-*/
-        ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->requested_y.set_value(((__pyx_v_target_y - __pyx_v_expected_y) * __pyx_v_global_scale_inv));
-
-        /* "dearcygui/layout.pyx":811
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling
- *                     continue
- *                 if col == 0:             # <<<<<<<<<<<<<<
- *                     # Use the default cursor
- *                     pos_change |= (<uiItem>sibling).requested_y.is_item() or\
-*/
-        goto __pyx_L19;
-      }
-
-      /* "dearcygui/layout.pyx":820
- *                     # TODO: pos_change
- *                     # Use positions relative to the parent
- *                     (<uiItem>sibling).requested_x.set_item_o(_Size.ADD(_Size.PARENT_X1(), _Size.FIXED(x)))             # <<<<<<<<<<<<<<
- *                     (<uiItem>sibling).requested_y.set_item_o(_Size.ADD(_Size.PARENT_Y1(), _Size.FIXED(target_y)))
- *                 (<uiItem>sibling).no_newline = False
-*/
-      /*else*/ {
-        __pyx_t_9 = NULL;
-        __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_mstate_global->__pyx_n_u_Size); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 820, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_10);
-        __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_mstate_global->__pyx_n_u_ADD); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 820, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_11);
-        __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-        __pyx_t_12 = NULL;
-        __Pyx_GetModuleGlobalName(__pyx_t_13, __pyx_mstate_global->__pyx_n_u_Size); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 820, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_13);
-        __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_t_13, __pyx_mstate_global->__pyx_n_u_PARENT_X1); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 820, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_14);
-        __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
-        __pyx_t_15 = 1;
-        #if CYTHON_UNPACK_METHODS
-        if (unlikely(PyMethod_Check(__pyx_t_14))) {
-          __pyx_t_12 = PyMethod_GET_SELF(__pyx_t_14);
-          assert(__pyx_t_12);
-          PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_14);
-          __Pyx_INCREF(__pyx_t_12);
-          __Pyx_INCREF(__pyx__function);
-          __Pyx_DECREF_SET(__pyx_t_14, __pyx__function);
-          __pyx_t_15 = 0;
-        }
-        #endif
-        {
-          PyObject *__pyx_callargs[2] = {__pyx_t_12, NULL};
-          __pyx_t_10 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_14, __pyx_callargs+__pyx_t_15, (1-__pyx_t_15) | (__pyx_t_15*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-          __Pyx_XDECREF(__pyx_t_12); __pyx_t_12 = 0;
-          __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-          if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 820, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_10);
-        }
-        __pyx_t_12 = NULL;
-        __Pyx_GetModuleGlobalName(__pyx_t_13, __pyx_mstate_global->__pyx_n_u_Size); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 820, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_13);
-        __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_13, __pyx_mstate_global->__pyx_n_u_FIXED); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 820, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_16);
-        __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
-        __pyx_t_13 = PyFloat_FromDouble(__pyx_v_x); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 820, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_13);
-        __pyx_t_15 = 1;
-        #if CYTHON_UNPACK_METHODS
-        if (unlikely(PyMethod_Check(__pyx_t_16))) {
-          __pyx_t_12 = PyMethod_GET_SELF(__pyx_t_16);
-          assert(__pyx_t_12);
-          PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_16);
-          __Pyx_INCREF(__pyx_t_12);
-          __Pyx_INCREF(__pyx__function);
-          __Pyx_DECREF_SET(__pyx_t_16, __pyx__function);
-          __pyx_t_15 = 0;
-        }
-        #endif
-        {
-          PyObject *__pyx_callargs[2] = {__pyx_t_12, __pyx_t_13};
-          __pyx_t_14 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_16, __pyx_callargs+__pyx_t_15, (2-__pyx_t_15) | (__pyx_t_15*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-          __Pyx_XDECREF(__pyx_t_12); __pyx_t_12 = 0;
-          __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
-          __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-          if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 820, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_14);
-        }
-        __pyx_t_15 = 1;
-        #if CYTHON_UNPACK_METHODS
-        if (unlikely(PyMethod_Check(__pyx_t_11))) {
-          __pyx_t_9 = PyMethod_GET_SELF(__pyx_t_11);
-          assert(__pyx_t_9);
-          PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_11);
-          __Pyx_INCREF(__pyx_t_9);
-          __Pyx_INCREF(__pyx__function);
-          __Pyx_DECREF_SET(__pyx_t_11, __pyx__function);
-          __pyx_t_15 = 0;
-        }
-        #endif
-        {
-          PyObject *__pyx_callargs[3] = {__pyx_t_9, __pyx_t_10, __pyx_t_14};
-          __pyx_t_8 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_11, __pyx_callargs+__pyx_t_15, (3-__pyx_t_15) | (__pyx_t_15*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-          __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
-          __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-          __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-          __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-          if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 820, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_8);
-        }
-        ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->requested_x.set_item_o(__pyx_t_8);
-        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-
-        /* "dearcygui/layout.pyx":821
- *                     # Use positions relative to the parent
- *                     (<uiItem>sibling).requested_x.set_item_o(_Size.ADD(_Size.PARENT_X1(), _Size.FIXED(x)))
- *                     (<uiItem>sibling).requested_y.set_item_o(_Size.ADD(_Size.PARENT_Y1(), _Size.FIXED(target_y)))             # <<<<<<<<<<<<<<
- *                 (<uiItem>sibling).no_newline = False
- *                 expected_y = target_y + self._spacing.y + (<uiItem>sibling).state.cur.rect_size.y
-*/
-        __pyx_t_11 = NULL;
-        __Pyx_GetModuleGlobalName(__pyx_t_14, __pyx_mstate_global->__pyx_n_u_Size); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 821, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_14);
-        __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_14, __pyx_mstate_global->__pyx_n_u_ADD); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 821, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_10);
-        __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-        __pyx_t_9 = NULL;
-        __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_Size); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 821, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_16);
-        __pyx_t_13 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_PARENT_Y1); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 821, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_13);
-        __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-        __pyx_t_15 = 1;
-        #if CYTHON_UNPACK_METHODS
-        if (unlikely(PyMethod_Check(__pyx_t_13))) {
-          __pyx_t_9 = PyMethod_GET_SELF(__pyx_t_13);
-          assert(__pyx_t_9);
-          PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_13);
-          __Pyx_INCREF(__pyx_t_9);
-          __Pyx_INCREF(__pyx__function);
-          __Pyx_DECREF_SET(__pyx_t_13, __pyx__function);
-          __pyx_t_15 = 0;
-        }
-        #endif
-        {
-          PyObject *__pyx_callargs[2] = {__pyx_t_9, NULL};
-          __pyx_t_14 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_13, __pyx_callargs+__pyx_t_15, (1-__pyx_t_15) | (__pyx_t_15*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-          __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
-          __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
-          if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 821, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_14);
-        }
-        __pyx_t_9 = NULL;
-        __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_Size); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 821, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_16);
-        __pyx_t_12 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_FIXED); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 821, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_12);
-        __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-        __pyx_t_16 = PyFloat_FromDouble(__pyx_v_target_y); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 821, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_16);
-        __pyx_t_15 = 1;
-        #if CYTHON_UNPACK_METHODS
-        if (unlikely(PyMethod_Check(__pyx_t_12))) {
-          __pyx_t_9 = PyMethod_GET_SELF(__pyx_t_12);
-          assert(__pyx_t_9);
-          PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_12);
-          __Pyx_INCREF(__pyx_t_9);
-          __Pyx_INCREF(__pyx__function);
-          __Pyx_DECREF_SET(__pyx_t_12, __pyx__function);
-          __pyx_t_15 = 0;
-        }
-        #endif
-        {
-          PyObject *__pyx_callargs[2] = {__pyx_t_9, __pyx_t_16};
-          __pyx_t_13 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_12, __pyx_callargs+__pyx_t_15, (2-__pyx_t_15) | (__pyx_t_15*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-          __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
-          __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-          __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-          if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 821, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_13);
-        }
-        __pyx_t_15 = 1;
-        #if CYTHON_UNPACK_METHODS
-        if (unlikely(PyMethod_Check(__pyx_t_10))) {
-          __pyx_t_11 = PyMethod_GET_SELF(__pyx_t_10);
-          assert(__pyx_t_11);
-          PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_10);
-          __Pyx_INCREF(__pyx_t_11);
-          __Pyx_INCREF(__pyx__function);
-          __Pyx_DECREF_SET(__pyx_t_10, __pyx__function);
-          __pyx_t_15 = 0;
-        }
-        #endif
-        {
-          PyObject *__pyx_callargs[3] = {__pyx_t_11, __pyx_t_14, __pyx_t_13};
-          __pyx_t_8 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_10, __pyx_callargs+__pyx_t_15, (3-__pyx_t_15) | (__pyx_t_15*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-          __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
-          __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-          __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
-          __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-          if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 821, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_8);
-        }
-        ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->requested_y.set_item_o(__pyx_t_8);
-        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-      }
-      __pyx_L19:;
-
-      /* "dearcygui/layout.pyx":822
- *                     (<uiItem>sibling).requested_x.set_item_o(_Size.ADD(_Size.PARENT_X1(), _Size.FIXED(x)))
- *                     (<uiItem>sibling).requested_y.set_item_o(_Size.ADD(_Size.PARENT_Y1(), _Size.FIXED(target_y)))
- *                 (<uiItem>sibling).no_newline = False             # <<<<<<<<<<<<<<
- *                 expected_y = target_y + self._spacing.y + (<uiItem>sibling).state.cur.rect_size.y
- *                 target_y = target_y + spacing_y + (<uiItem>sibling).state.cur.rect_size.y
-*/
-      ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->no_newline = 0;
-
-      /* "dearcygui/layout.pyx":823
- *                     (<uiItem>sibling).requested_y.set_item_o(_Size.ADD(_Size.PARENT_Y1(), _Size.FIXED(target_y)))
- *                 (<uiItem>sibling).no_newline = False
- *                 expected_y = target_y + self._spacing.y + (<uiItem>sibling).state.cur.rect_size.y             # <<<<<<<<<<<<<<
- *                 target_y = target_y + spacing_y + (<uiItem>sibling).state.cur.rect_size.y
- *                 sibling = <PyObject*>(<uiItem>sibling).next_sibling
-*/
-      __pyx_v_expected_y = ((__pyx_v_target_y + __pyx_v_self->__pyx_base._spacing.y) + ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->state.cur.rect_size.y);
-
-      /* "dearcygui/layout.pyx":824
- *                 (<uiItem>sibling).no_newline = False
- *                 expected_y = target_y + self._spacing.y + (<uiItem>sibling).state.cur.rect_size.y
- *                 target_y = target_y + spacing_y + (<uiItem>sibling).state.cur.rect_size.y             # <<<<<<<<<<<<<<
- *                 sibling = <PyObject*>(<uiItem>sibling).next_sibling
- *                 i = i + 1
-*/
-      __pyx_v_target_y = ((__pyx_v_target_y + __pyx_v_spacing_y) + ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->state.cur.rect_size.y);
-
-      /* "dearcygui/layout.pyx":825
- *                 expected_y = target_y + self._spacing.y + (<uiItem>sibling).state.cur.rect_size.y
- *                 target_y = target_y + spacing_y + (<uiItem>sibling).state.cur.rect_size.y
- *                 sibling = <PyObject*>(<uiItem>sibling).next_sibling             # <<<<<<<<<<<<<<
- *                 i = i + 1
- *             if i != 0:
-*/
-      __pyx_v_sibling = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->__pyx_base.next_sibling);
-
-      /* "dearcygui/layout.pyx":826
- *                 target_y = target_y + spacing_y + (<uiItem>sibling).state.cur.rect_size.y
- *                 sibling = <PyObject*>(<uiItem>sibling).next_sibling
- *                 i = i + 1             # <<<<<<<<<<<<<<
- *             if i != 0:
- *                 while (<uiItem>sibling).next_sibling is not None and \
-*/
-      __pyx_v_i = (__pyx_v_i + 1);
-      __pyx_L16_continue:;
+      goto __pyx_L16;
     }
 
-    /* "dearcygui/layout.pyx":827
- *                 sibling = <PyObject*>(<uiItem>sibling).next_sibling
- *                 i = i + 1
- *             if i != 0:             # <<<<<<<<<<<<<<
- *                 while (<uiItem>sibling).next_sibling is not None and \
- *                       not((<uiItem>sibling).state.cap.has_rect_size):
-*/
-    __pyx_t_1 = (__pyx_v_i != 0);
-    if (__pyx_t_1) {
-
-      /* "dearcygui/layout.pyx":828
- *                 i = i + 1
- *             if i != 0:
- *                 while (<uiItem>sibling).next_sibling is not None and \             # <<<<<<<<<<<<<<
- *                       not((<uiItem>sibling).state.cap.has_rect_size):
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling
-*/
-      while (1) {
-        __pyx_t_6 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->__pyx_base.next_sibling) != Py_None);
-        if (__pyx_t_6) {
-        } else {
-          __pyx_t_1 = __pyx_t_6;
-          goto __pyx_L25_bool_binop_done;
-        }
-
-        /* "dearcygui/layout.pyx":829
- *             if i != 0:
- *                 while (<uiItem>sibling).next_sibling is not None and \
- *                       not((<uiItem>sibling).state.cap.has_rect_size):             # <<<<<<<<<<<<<<
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling
- *                     continue
-*/
-        __pyx_t_6 = (!((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->state.cap.has_rect_size);
-        __pyx_t_1 = __pyx_t_6;
-        __pyx_L25_bool_binop_done:;
-        if (!__pyx_t_1) break;
-
-        /* "dearcygui/layout.pyx":830
- *                 while (<uiItem>sibling).next_sibling is not None and \
- *                       not((<uiItem>sibling).state.cap.has_rect_size):
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling             # <<<<<<<<<<<<<<
- *                     continue
- *             # Last item of the column
-*/
-        __pyx_v_sibling = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->__pyx_base.next_sibling);
-
-        /* "dearcygui/layout.pyx":831
- *                       not((<uiItem>sibling).state.cap.has_rect_size):
- *                     sibling = <PyObject*>(<uiItem>sibling).next_sibling
- *                     continue             # <<<<<<<<<<<<<<
- *             # Last item of the column
- *             if (self._alignment_mode == Alignment.BOTTOM or \
-*/
-        goto __pyx_L23_continue;
-        __pyx_L23_continue:;
-      }
-
-      /* "dearcygui/layout.pyx":827
- *                 sibling = <PyObject*>(<uiItem>sibling).next_sibling
- *                 i = i + 1
- *             if i != 0:             # <<<<<<<<<<<<<<
- *                 while (<uiItem>sibling).next_sibling is not None and \
- *                       not((<uiItem>sibling).state.cap.has_rect_size):
-*/
-    }
-
-    /* "dearcygui/layout.pyx":833
- *                     continue
- *             # Last item of the column
- *             if (self._alignment_mode == Alignment.BOTTOM or \             # <<<<<<<<<<<<<<
- *                (self._alignment_mode == Alignment.JUSTIFIED and n_items_this_col != 1)) and \
- *                (<uiItem>child).state.cur.rect_size.y == (<uiItem>child).state.prev.rect_size.y:
-*/
-    __pyx_t_6 = (__pyx_v_self->_alignment_mode == __pyx_t_9dearcygui_5types_Alignment::BOTTOM);
-    if (!__pyx_t_6) {
-    } else {
-      goto __pyx_L29_next_and;
-    }
-
-    /* "dearcygui/layout.pyx":834
- *             # Last item of the column
- *             if (self._alignment_mode == Alignment.BOTTOM or \
- *                (self._alignment_mode == Alignment.JUSTIFIED and n_items_this_col != 1)) and \             # <<<<<<<<<<<<<<
- *                (<uiItem>child).state.cur.rect_size.y == (<uiItem>child).state.prev.rect_size.y:
- *                 # Align bottom item properly even if rounding
-*/
-    __pyx_t_6 = (__pyx_v_self->_alignment_mode == __pyx_t_9dearcygui_5types_Alignment::JUSTIFIED);
-    if (__pyx_t_6) {
-    } else {
-      __pyx_t_1 = __pyx_t_6;
-      goto __pyx_L28_bool_binop_done;
-    }
-    __pyx_t_6 = (__pyx_v_n_items_this_col != 1);
-    if (__pyx_t_6) {
-    } else {
-      __pyx_t_1 = __pyx_t_6;
-      goto __pyx_L28_bool_binop_done;
-    }
-    __pyx_L29_next_and:;
-
-    /* "dearcygui/layout.pyx":835
- *             if (self._alignment_mode == Alignment.BOTTOM or \
- *                (self._alignment_mode == Alignment.JUSTIFIED and n_items_this_col != 1)) and \
- *                (<uiItem>child).state.cur.rect_size.y == (<uiItem>child).state.prev.rect_size.y:             # <<<<<<<<<<<<<<
- *                 # Align bottom item properly even if rounding
- *                 # occurred on spacing.
-*/
-    __pyx_t_6 = (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cur.rect_size.y == ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.prev.rect_size.y);
-    __pyx_t_1 = __pyx_t_6;
-    __pyx_L28_bool_binop_done:;
-
-    /* "dearcygui/layout.pyx":833
- *                     continue
- *             # Last item of the column
- *             if (self._alignment_mode == Alignment.BOTTOM or \             # <<<<<<<<<<<<<<
- *                (self._alignment_mode == Alignment.JUSTIFIED and n_items_this_col != 1)) and \
- *                (<uiItem>child).state.cur.rect_size.y == (<uiItem>child).state.prev.rect_size.y:
-*/
-    if (__pyx_t_1) {
-
-      /* "dearcygui/layout.pyx":841
- *                 # to the available content, it can lead to convergence issues
- *                 # undo previous spacing
- *                 target_y -= spacing_y             # <<<<<<<<<<<<<<
- *                 # ideal spacing
- *                 spacing_y = \
-*/
-      __pyx_v_target_y = (__pyx_v_target_y - __pyx_v_spacing_y);
-
-      /* "dearcygui/layout.pyx":844
- *                 # ideal spacing
- *                 spacing_y = \
- *                     end_y - (target_y + (<uiItem>sibling).state.cur.rect_size.y)             # <<<<<<<<<<<<<<
- *                 # real spacing
- *                 target_y += max(spacing_y, self._spacing.y)
-*/
-      __pyx_v_spacing_y = (__pyx_v_end_y - (__pyx_v_target_y + ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->state.cur.rect_size.y));
-
-      /* "dearcygui/layout.pyx":846
- *                     end_y - (target_y + (<uiItem>sibling).state.cur.rect_size.y)
- *                 # real spacing
- *                 target_y += max(spacing_y, self._spacing.y)             # <<<<<<<<<<<<<<
- * 
- *             pos_change |= (<uiItem>sibling).requested_y.is_item() or\
-*/
-      __pyx_t_2 = __pyx_v_self->__pyx_base._spacing.y;
-      __pyx_t_4 = __pyx_v_spacing_y;
-      __pyx_t_1 = (__pyx_t_2 > __pyx_t_4);
-      if (__pyx_t_1) {
-        __pyx_t_3 = __pyx_t_2;
-      } else {
-        __pyx_t_3 = __pyx_t_4;
-      }
-      __pyx_v_target_y = (__pyx_v_target_y + __pyx_t_3);
-
-      /* "dearcygui/layout.pyx":833
- *                     continue
- *             # Last item of the column
- *             if (self._alignment_mode == Alignment.BOTTOM or \             # <<<<<<<<<<<<<<
- *                (self._alignment_mode == Alignment.JUSTIFIED and n_items_this_col != 1)) and \
- *                (<uiItem>child).state.cur.rect_size.y == (<uiItem>child).state.prev.rect_size.y:
-*/
-    }
-
-    /* "dearcygui/layout.pyx":848
- *                 target_y += max(spacing_y, self._spacing.y)
- * 
- *             pos_change |= (<uiItem>sibling).requested_y.is_item() or\             # <<<<<<<<<<<<<<
- *                 (target_y - expected_y) * global_scale_inv != (<uiItem>sibling).requested_y.get_value()
- *             if col == 0:
-*/
-    __pyx_t_6 = ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->requested_y.is_item();
-    if (!__pyx_t_6) {
-    } else {
-      __pyx_t_1 = __pyx_t_6;
-      goto __pyx_L32_bool_binop_done;
-    }
-
-    /* "dearcygui/layout.pyx":849
- * 
- *             pos_change |= (<uiItem>sibling).requested_y.is_item() or\
- *                 (target_y - expected_y) * global_scale_inv != (<uiItem>sibling).requested_y.get_value()             # <<<<<<<<<<<<<<
- *             if col == 0:
- *                 (<uiItem>sibling).requested_x.set_value(0.) # default position
-*/
-    __pyx_t_6 = (((__pyx_v_target_y - __pyx_v_expected_y) * __pyx_v_global_scale_inv) != ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->requested_y.get_value());
-    __pyx_t_1 = __pyx_t_6;
-    __pyx_L32_bool_binop_done:;
-
-    /* "dearcygui/layout.pyx":848
- *                 target_y += max(spacing_y, self._spacing.y)
- * 
- *             pos_change |= (<uiItem>sibling).requested_y.is_item() or\             # <<<<<<<<<<<<<<
- *                 (target_y - expected_y) * global_scale_inv != (<uiItem>sibling).requested_y.get_value()
- *             if col == 0:
-*/
-    __pyx_v_pos_change = (__pyx_v_pos_change | __pyx_t_1);
-
-    /* "dearcygui/layout.pyx":850
- *             pos_change |= (<uiItem>sibling).requested_y.is_item() or\
- *                 (target_y - expected_y) * global_scale_inv != (<uiItem>sibling).requested_y.get_value()
- *             if col == 0:             # <<<<<<<<<<<<<<
- *                 (<uiItem>sibling).requested_x.set_value(0.) # default position
- *                 (<uiItem>sibling).requested_y.set_value((target_y - expected_y)*global_scale_inv) # delta to default position
-*/
-    __pyx_t_1 = (__pyx_v_col == 0);
-    if (__pyx_t_1) {
-
-      /* "dearcygui/layout.pyx":851
- *                 (target_y - expected_y) * global_scale_inv != (<uiItem>sibling).requested_y.get_value()
- *             if col == 0:
- *                 (<uiItem>sibling).requested_x.set_value(0.) # default position             # <<<<<<<<<<<<<<
- *                 (<uiItem>sibling).requested_y.set_value((target_y - expected_y)*global_scale_inv) # delta to default position
- *             else:
-*/
-      ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->requested_x.set_value(0.);
-
-      /* "dearcygui/layout.pyx":852
- *             if col == 0:
- *                 (<uiItem>sibling).requested_x.set_value(0.) # default position
- *                 (<uiItem>sibling).requested_y.set_value((target_y - expected_y)*global_scale_inv) # delta to default position             # <<<<<<<<<<<<<<
- *             else:
- *                 (<uiItem>sibling).requested_x.set_item_o(_Size.ADD(_Size.PARENT_X1(), _Size.FIXED(x)))
-*/
-      ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->requested_y.set_value(((__pyx_v_target_y - __pyx_v_expected_y) * __pyx_v_global_scale_inv));
-
-      /* "dearcygui/layout.pyx":850
- *             pos_change |= (<uiItem>sibling).requested_y.is_item() or\
- *                 (target_y - expected_y) * global_scale_inv != (<uiItem>sibling).requested_y.get_value()
- *             if col == 0:             # <<<<<<<<<<<<<<
- *                 (<uiItem>sibling).requested_x.set_value(0.) # default position
- *                 (<uiItem>sibling).requested_y.set_value((target_y - expected_y)*global_scale_inv) # delta to default position
-*/
-      goto __pyx_L34;
-    }
-
-    /* "dearcygui/layout.pyx":854
- *                 (<uiItem>sibling).requested_y.set_value((target_y - expected_y)*global_scale_inv) # delta to default position
- *             else:
- *                 (<uiItem>sibling).requested_x.set_item_o(_Size.ADD(_Size.PARENT_X1(), _Size.FIXED(x)))             # <<<<<<<<<<<<<<
- *                 (<uiItem>sibling).requested_y.set_item_o(_Size.ADD(_Size.PARENT_Y1(), _Size.FIXED(target_y)))
- * 
+    /* "dearcygui/layout.pyx":1383
+ *                 target_y = max(col_sy, target_y)
+ *             else:  # JUSTIFIED
+ *                 target_y = col_sy             # <<<<<<<<<<<<<<
+ *                 if n_with_size > 1:
+ *                     # Spread the extra space evenly; floor() avoids overshoot
 */
     /*else*/ {
-      __pyx_t_10 = NULL;
-      __Pyx_GetModuleGlobalName(__pyx_t_13, __pyx_mstate_global->__pyx_n_u_Size); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 854, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_13);
-      __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_t_13, __pyx_mstate_global->__pyx_n_u_ADD); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 854, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_14);
-      __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
-      __pyx_t_11 = NULL;
-      __Pyx_GetModuleGlobalName(__pyx_t_12, __pyx_mstate_global->__pyx_n_u_Size); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 854, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_12);
-      __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_mstate_global->__pyx_n_u_PARENT_X1); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 854, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_16);
-      __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-      __pyx_t_15 = 1;
-      #if CYTHON_UNPACK_METHODS
-      if (unlikely(PyMethod_Check(__pyx_t_16))) {
-        __pyx_t_11 = PyMethod_GET_SELF(__pyx_t_16);
-        assert(__pyx_t_11);
-        PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_16);
-        __Pyx_INCREF(__pyx_t_11);
-        __Pyx_INCREF(__pyx__function);
-        __Pyx_DECREF_SET(__pyx_t_16, __pyx__function);
-        __pyx_t_15 = 0;
-      }
-      #endif
-      {
-        PyObject *__pyx_callargs[2] = {__pyx_t_11, NULL};
-        __pyx_t_13 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_16, __pyx_callargs+__pyx_t_15, (1-__pyx_t_15) | (__pyx_t_15*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-        __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
-        __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-        if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 854, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_13);
-      }
-      __pyx_t_11 = NULL;
-      __Pyx_GetModuleGlobalName(__pyx_t_12, __pyx_mstate_global->__pyx_n_u_Size); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 854, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_12);
-      __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_mstate_global->__pyx_n_u_FIXED); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 854, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_9);
-      __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-      __pyx_t_12 = PyFloat_FromDouble(__pyx_v_x); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 854, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_12);
-      __pyx_t_15 = 1;
-      #if CYTHON_UNPACK_METHODS
-      if (unlikely(PyMethod_Check(__pyx_t_9))) {
-        __pyx_t_11 = PyMethod_GET_SELF(__pyx_t_9);
-        assert(__pyx_t_11);
-        PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_9);
-        __Pyx_INCREF(__pyx_t_11);
-        __Pyx_INCREF(__pyx__function);
-        __Pyx_DECREF_SET(__pyx_t_9, __pyx__function);
-        __pyx_t_15 = 0;
-      }
-      #endif
-      {
-        PyObject *__pyx_callargs[2] = {__pyx_t_11, __pyx_t_12};
-        __pyx_t_16 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_9, __pyx_callargs+__pyx_t_15, (2-__pyx_t_15) | (__pyx_t_15*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-        __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
-        __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-        __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-        if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 854, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_16);
-      }
-      __pyx_t_15 = 1;
-      #if CYTHON_UNPACK_METHODS
-      if (unlikely(PyMethod_Check(__pyx_t_14))) {
-        __pyx_t_10 = PyMethod_GET_SELF(__pyx_t_14);
-        assert(__pyx_t_10);
-        PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_14);
-        __Pyx_INCREF(__pyx_t_10);
-        __Pyx_INCREF(__pyx__function);
-        __Pyx_DECREF_SET(__pyx_t_14, __pyx__function);
-        __pyx_t_15 = 0;
-      }
-      #endif
-      {
-        PyObject *__pyx_callargs[3] = {__pyx_t_10, __pyx_t_13, __pyx_t_16};
-        __pyx_t_8 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_14, __pyx_callargs+__pyx_t_15, (3-__pyx_t_15) | (__pyx_t_15*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-        __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
-        __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
-        __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-        __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-        if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 854, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_8);
-      }
-      ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->requested_x.set_item_o(__pyx_t_8);
-      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __pyx_v_target_y = __pyx_v_col_sy;
 
-      /* "dearcygui/layout.pyx":855
- *             else:
- *                 (<uiItem>sibling).requested_x.set_item_o(_Size.ADD(_Size.PARENT_X1(), _Size.FIXED(x)))
- *                 (<uiItem>sibling).requested_y.set_item_o(_Size.ADD(_Size.PARENT_Y1(), _Size.FIXED(target_y)))             # <<<<<<<<<<<<<<
- * 
- *             (<uiItem>sibling).no_newline = False
+      /* "dearcygui/layout.pyx":1384
+ *             else:  # JUSTIFIED
+ *                 target_y = col_sy
+ *                 if n_with_size > 1:             # <<<<<<<<<<<<<<
+ *                     # Spread the extra space evenly; floor() avoids overshoot
+ *                     col_spacing_y = spacing_y + max(0., floor(
 */
-      __pyx_t_14 = NULL;
-      __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_Size); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 855, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_16);
-      __pyx_t_13 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_mstate_global->__pyx_n_u_ADD); if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 855, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_13);
-      __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-      __pyx_t_10 = NULL;
-      __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_mstate_global->__pyx_n_u_Size); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 855, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_9);
-      __pyx_t_12 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_mstate_global->__pyx_n_u_PARENT_Y1); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 855, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_12);
-      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-      __pyx_t_15 = 1;
-      #if CYTHON_UNPACK_METHODS
-      if (unlikely(PyMethod_Check(__pyx_t_12))) {
-        __pyx_t_10 = PyMethod_GET_SELF(__pyx_t_12);
-        assert(__pyx_t_10);
-        PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_12);
-        __Pyx_INCREF(__pyx_t_10);
-        __Pyx_INCREF(__pyx__function);
-        __Pyx_DECREF_SET(__pyx_t_12, __pyx__function);
-        __pyx_t_15 = 0;
+      __pyx_t_1 = (__pyx_v_n_with_size > 1);
+      if (__pyx_t_1) {
+
+        /* "dearcygui/layout.pyx":1386
+ *                 if n_with_size > 1:
+ *                     # Spread the extra space evenly; floor() avoids overshoot
+ *                     col_spacing_y = spacing_y + max(0., floor(             # <<<<<<<<<<<<<<
+ *                         (col_avail - expected_size) / (n_with_size - 1)))
+ * 
+*/
+        try {
+          __pyx_t_4 = std::floor(((__pyx_v_col_avail - __pyx_v_expected_size) / ((float)(__pyx_v_n_with_size - 1))));
+        } catch(...) {
+          PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+          __Pyx_CppExn2PyErr();
+          __Pyx_PyGILState_Release(__pyx_gilstate_save);
+          __PYX_ERR(0, 1386, __pyx_L1_error)
+        }
+        __pyx_t_5 = 0.;
+        __pyx_t_1 = (__pyx_t_4 > __pyx_t_5);
+        if (__pyx_t_1) {
+          __pyx_t_7 = __pyx_t_4;
+        } else {
+          __pyx_t_7 = __pyx_t_5;
+        }
+        __pyx_v_col_spacing_y = (__pyx_v_spacing_y + __pyx_t_7);
+
+        /* "dearcygui/layout.pyx":1384
+ *             else:  # JUSTIFIED
+ *                 target_y = col_sy
+ *                 if n_with_size > 1:             # <<<<<<<<<<<<<<
+ *                     # Spread the extra space evenly; floor() avoids overshoot
+ *                     col_spacing_y = spacing_y + max(0., floor(
+*/
       }
-      #endif
-      {
-        PyObject *__pyx_callargs[2] = {__pyx_t_10, NULL};
-        __pyx_t_16 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_12, __pyx_callargs+__pyx_t_15, (1-__pyx_t_15) | (__pyx_t_15*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-        __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
-        __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-        if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 855, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_16);
-      }
-      __pyx_t_10 = NULL;
-      __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_mstate_global->__pyx_n_u_Size); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 855, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_9);
-      __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_mstate_global->__pyx_n_u_FIXED); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 855, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_11);
-      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-      __pyx_t_9 = PyFloat_FromDouble(__pyx_v_target_y); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 855, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_9);
-      __pyx_t_15 = 1;
-      #if CYTHON_UNPACK_METHODS
-      if (unlikely(PyMethod_Check(__pyx_t_11))) {
-        __pyx_t_10 = PyMethod_GET_SELF(__pyx_t_11);
-        assert(__pyx_t_10);
-        PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_11);
-        __Pyx_INCREF(__pyx_t_10);
-        __Pyx_INCREF(__pyx__function);
-        __Pyx_DECREF_SET(__pyx_t_11, __pyx__function);
-        __pyx_t_15 = 0;
-      }
-      #endif
-      {
-        PyObject *__pyx_callargs[2] = {__pyx_t_10, __pyx_t_9};
-        __pyx_t_12 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_11, __pyx_callargs+__pyx_t_15, (2-__pyx_t_15) | (__pyx_t_15*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-        __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
-        __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-        __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-        if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 855, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_12);
-      }
-      __pyx_t_15 = 1;
-      #if CYTHON_UNPACK_METHODS
-      if (unlikely(PyMethod_Check(__pyx_t_13))) {
-        __pyx_t_14 = PyMethod_GET_SELF(__pyx_t_13);
-        assert(__pyx_t_14);
-        PyObject* __pyx__function = PyMethod_GET_FUNCTION(__pyx_t_13);
-        __Pyx_INCREF(__pyx_t_14);
-        __Pyx_INCREF(__pyx__function);
-        __Pyx_DECREF_SET(__pyx_t_13, __pyx__function);
-        __pyx_t_15 = 0;
-      }
-      #endif
-      {
-        PyObject *__pyx_callargs[3] = {__pyx_t_14, __pyx_t_16, __pyx_t_12};
-        __pyx_t_8 = __Pyx_PyObject_FastCall((PyObject*)__pyx_t_13, __pyx_callargs+__pyx_t_15, (3-__pyx_t_15) | (__pyx_t_15*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
-        __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
-        __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-        __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-        __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
-        if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 855, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_8);
-      }
-      ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->requested_y.set_item_o(__pyx_t_8);
-      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     }
-    __pyx_L34:;
+    __pyx_L16:;
 
-    /* "dearcygui/layout.pyx":857
- *                 (<uiItem>sibling).requested_y.set_item_o(_Size.ADD(_Size.PARENT_Y1(), _Size.FIXED(target_y)))
+    /* "dearcygui/layout.pyx":1391
+ *             # Draw pass: place each item with an explicit cursor position.
+ *             # The last BOTTOM/JUSTIFIED item is snapped to end_y when stable.
+ *             s = col_start             # <<<<<<<<<<<<<<
+ *             col_max_width = 0.
+ *             cur_y = target_y
+*/
+    __pyx_v_s = __pyx_v_col_start;
+
+    /* "dearcygui/layout.pyx":1392
+ *             # The last BOTTOM/JUSTIFIED item is snapped to end_y when stable.
+ *             s = col_start
+ *             col_max_width = 0.             # <<<<<<<<<<<<<<
+ *             cur_y = target_y
+ *             while s is not col_end:
+*/
+    __pyx_v_col_max_width = 0.;
+
+    /* "dearcygui/layout.pyx":1393
+ *             s = col_start
+ *             col_max_width = 0.
+ *             cur_y = target_y             # <<<<<<<<<<<<<<
+ *             while s is not col_end:
+ *                 has_sz = (<uiItem>s).state.cap.has_rect_size
+*/
+    __pyx_v_cur_y = __pyx_v_target_y;
+
+    /* "dearcygui/layout.pyx":1394
+ *             col_max_width = 0.
+ *             cur_y = target_y
+ *             while s is not col_end:             # <<<<<<<<<<<<<<
+ *                 has_sz = (<uiItem>s).state.cap.has_rect_size
  * 
- *             (<uiItem>sibling).no_newline = False             # <<<<<<<<<<<<<<
- *             child = <PyObject*>(<uiItem>sibling).next_sibling
- *             col += 1
 */
-    ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->no_newline = 0;
+    while (1) {
+      __pyx_t_1 = (__pyx_v_s != __pyx_v_col_end);
+      if (!__pyx_t_1) break;
 
-    /* "dearcygui/layout.pyx":858
+      /* "dearcygui/layout.pyx":1395
+ *             cur_y = target_y
+ *             while s is not col_end:
+ *                 has_sz = (<uiItem>s).state.cap.has_rect_size             # <<<<<<<<<<<<<<
  * 
- *             (<uiItem>sibling).no_newline = False
- *             child = <PyObject*>(<uiItem>sibling).next_sibling             # <<<<<<<<<<<<<<
- *             col += 1
- *         # A change in position change alter the size for some items
+ *                 if has_sz and s == last_with_size and n_with_size > 1 and \
 */
-    __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_sibling)->__pyx_base.next_sibling);
+      __pyx_t_1 = ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.cap.has_rect_size;
+      __pyx_v_has_sz = __pyx_t_1;
 
-    /* "dearcygui/layout.pyx":859
- *             (<uiItem>sibling).no_newline = False
- *             child = <PyObject*>(<uiItem>sibling).next_sibling
- *             col += 1             # <<<<<<<<<<<<<<
- *         # A change in position change alter the size for some items
- *         if pos_change:
+      /* "dearcygui/layout.pyx":1397
+ *                 has_sz = (<uiItem>s).state.cap.has_rect_size
+ * 
+ *                 if has_sz and s == last_with_size and n_with_size > 1 and \             # <<<<<<<<<<<<<<
+ *                    (self._alignment_mode == Alignment.BOTTOM or
+ *                     self._alignment_mode == Alignment.JUSTIFIED) and \
 */
-    __pyx_v_col = (__pyx_v_col + 1);
+      if (__pyx_v_has_sz) {
+      } else {
+        __pyx_t_1 = __pyx_v_has_sz;
+        goto __pyx_L21_bool_binop_done;
+      }
+      __pyx_t_6 = (__pyx_v_s == __pyx_v_last_with_size);
+      if (__pyx_t_6) {
+      } else {
+        __pyx_t_1 = __pyx_t_6;
+        goto __pyx_L21_bool_binop_done;
+      }
+      __pyx_t_6 = (__pyx_v_n_with_size > 1);
+      if (__pyx_t_6) {
+      } else {
+        __pyx_t_1 = __pyx_t_6;
+        goto __pyx_L21_bool_binop_done;
+      }
+
+      /* "dearcygui/layout.pyx":1398
+ * 
+ *                 if has_sz and s == last_with_size and n_with_size > 1 and \
+ *                    (self._alignment_mode == Alignment.BOTTOM or             # <<<<<<<<<<<<<<
+ *                     self._alignment_mode == Alignment.JUSTIFIED) and \
+ *                    (<uiItem>s).state.cur.rect_size.y == (<uiItem>s).state.prev.rect_size.y:
+*/
+      __pyx_t_6 = (__pyx_v_self->_alignment_mode == __pyx_t_9dearcygui_5types_Alignment::BOTTOM);
+      if (!__pyx_t_6) {
+      } else {
+        goto __pyx_L25_next_and;
+      }
+
+      /* "dearcygui/layout.pyx":1399
+ *                 if has_sz and s == last_with_size and n_with_size > 1 and \
+ *                    (self._alignment_mode == Alignment.BOTTOM or
+ *                     self._alignment_mode == Alignment.JUSTIFIED) and \             # <<<<<<<<<<<<<<
+ *                    (<uiItem>s).state.cur.rect_size.y == (<uiItem>s).state.prev.rect_size.y:
+ *                     # Snap last item's bottom to end_y (eliminates floor() rounding error)
+*/
+      __pyx_t_6 = (__pyx_v_self->_alignment_mode == __pyx_t_9dearcygui_5types_Alignment::JUSTIFIED);
+      if (__pyx_t_6) {
+      } else {
+        __pyx_t_1 = __pyx_t_6;
+        goto __pyx_L21_bool_binop_done;
+      }
+      __pyx_L25_next_and:;
+
+      /* "dearcygui/layout.pyx":1400
+ *                    (self._alignment_mode == Alignment.BOTTOM or
+ *                     self._alignment_mode == Alignment.JUSTIFIED) and \
+ *                    (<uiItem>s).state.cur.rect_size.y == (<uiItem>s).state.prev.rect_size.y:             # <<<<<<<<<<<<<<
+ *                     # Snap last item's bottom to end_y (eliminates floor() rounding error)
+ *                     imgui.SetCursorScreenPos(imgui.ImVec2(col_x,
+*/
+      __pyx_t_6 = (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.cur.rect_size.y == ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.prev.rect_size.y);
+      __pyx_t_1 = __pyx_t_6;
+      __pyx_L21_bool_binop_done:;
+
+      /* "dearcygui/layout.pyx":1397
+ *                 has_sz = (<uiItem>s).state.cap.has_rect_size
+ * 
+ *                 if has_sz and s == last_with_size and n_with_size > 1 and \             # <<<<<<<<<<<<<<
+ *                    (self._alignment_mode == Alignment.BOTTOM or
+ *                     self._alignment_mode == Alignment.JUSTIFIED) and \
+*/
+      if (__pyx_t_1) {
+
+        /* "dearcygui/layout.pyx":1402
+ *                    (<uiItem>s).state.cur.rect_size.y == (<uiItem>s).state.prev.rect_size.y:
+ *                     # Snap last item's bottom to end_y (eliminates floor() rounding error)
+ *                     imgui.SetCursorScreenPos(imgui.ImVec2(col_x,             # <<<<<<<<<<<<<<
+ *                         end_y - (<uiItem>s).state.cur.rect_size.y))
+ *                 else:
+*/
+        ImGui::SetCursorScreenPos(ImVec2(__pyx_v_col_x, (__pyx_v_end_y - ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.cur.rect_size.y)));
+
+        /* "dearcygui/layout.pyx":1397
+ *                 has_sz = (<uiItem>s).state.cap.has_rect_size
+ * 
+ *                 if has_sz and s == last_with_size and n_with_size > 1 and \             # <<<<<<<<<<<<<<
+ *                    (self._alignment_mode == Alignment.BOTTOM or
+ *                     self._alignment_mode == Alignment.JUSTIFIED) and \
+*/
+        goto __pyx_L20;
+      }
+
+      /* "dearcygui/layout.pyx":1405
+ *                         end_y - (<uiItem>s).state.cur.rect_size.y))
+ *                 else:
+ *                     imgui.SetCursorScreenPos(imgui.ImVec2(col_x, cur_y))             # <<<<<<<<<<<<<<
+ * 
+ *                 (<uiItem>s).draw()
+*/
+      /*else*/ {
+        ImGui::SetCursorScreenPos(ImVec2(__pyx_v_col_x, __pyx_v_cur_y));
+      }
+      __pyx_L20:;
+
+      /* "dearcygui/layout.pyx":1407
+ *                     imgui.SetCursorScreenPos(imgui.ImVec2(col_x, cur_y))
+ * 
+ *                 (<uiItem>s).draw()             # <<<<<<<<<<<<<<
+ * 
+ *                 # Track size and visibility changes so the parent knows to redraw next frame
+*/
+      ((struct __pyx_vtabstruct_9dearcygui_4core_uiItem *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->__pyx_base.__pyx_vtab)->draw(((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s));
+
+      /* "dearcygui/layout.pyx":1410
+ * 
+ *                 # Track size and visibility changes so the parent knows to redraw next frame
+ *                 if (<uiItem>s).state.cur.rect_size.x != (<uiItem>s).state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
+ *                    (<uiItem>s).state.cur.rect_size.y != (<uiItem>s).state.prev.rect_size.y or \
+ *                    (<uiItem>s).state.cur.rendered != (<uiItem>s).state.prev.rendered:
+*/
+      __pyx_t_6 = (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.cur.rect_size.x != ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.prev.rect_size.x);
+      if (!__pyx_t_6) {
+      } else {
+        __pyx_t_1 = __pyx_t_6;
+        goto __pyx_L28_bool_binop_done;
+      }
+
+      /* "dearcygui/layout.pyx":1411
+ *                 # Track size and visibility changes so the parent knows to redraw next frame
+ *                 if (<uiItem>s).state.cur.rect_size.x != (<uiItem>s).state.prev.rect_size.x or \
+ *                    (<uiItem>s).state.cur.rect_size.y != (<uiItem>s).state.prev.rect_size.y or \             # <<<<<<<<<<<<<<
+ *                    (<uiItem>s).state.cur.rendered != (<uiItem>s).state.prev.rendered:
+ *                     changed = True
+*/
+      __pyx_t_6 = (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.cur.rect_size.y != ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.prev.rect_size.y);
+      if (!__pyx_t_6) {
+      } else {
+        __pyx_t_1 = __pyx_t_6;
+        goto __pyx_L28_bool_binop_done;
+      }
+
+      /* "dearcygui/layout.pyx":1412
+ *                 if (<uiItem>s).state.cur.rect_size.x != (<uiItem>s).state.prev.rect_size.x or \
+ *                    (<uiItem>s).state.cur.rect_size.y != (<uiItem>s).state.prev.rect_size.y or \
+ *                    (<uiItem>s).state.cur.rendered != (<uiItem>s).state.prev.rendered:             # <<<<<<<<<<<<<<
+ *                     changed = True
+ * 
+*/
+      __pyx_t_6 = (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.cur.rendered != ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.prev.rendered);
+      __pyx_t_1 = __pyx_t_6;
+      __pyx_L28_bool_binop_done:;
+
+      /* "dearcygui/layout.pyx":1410
+ * 
+ *                 # Track size and visibility changes so the parent knows to redraw next frame
+ *                 if (<uiItem>s).state.cur.rect_size.x != (<uiItem>s).state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
+ *                    (<uiItem>s).state.cur.rect_size.y != (<uiItem>s).state.prev.rect_size.y or \
+ *                    (<uiItem>s).state.cur.rendered != (<uiItem>s).state.prev.rendered:
+*/
+      if (__pyx_t_1) {
+
+        /* "dearcygui/layout.pyx":1413
+ *                    (<uiItem>s).state.cur.rect_size.y != (<uiItem>s).state.prev.rect_size.y or \
+ *                    (<uiItem>s).state.cur.rendered != (<uiItem>s).state.prev.rendered:
+ *                     changed = True             # <<<<<<<<<<<<<<
+ * 
+ *                 if has_sz:
+*/
+        __pyx_v_changed = 1;
+
+        /* "dearcygui/layout.pyx":1410
+ * 
+ *                 # Track size and visibility changes so the parent knows to redraw next frame
+ *                 if (<uiItem>s).state.cur.rect_size.x != (<uiItem>s).state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
+ *                    (<uiItem>s).state.cur.rect_size.y != (<uiItem>s).state.prev.rect_size.y or \
+ *                    (<uiItem>s).state.cur.rendered != (<uiItem>s).state.prev.rendered:
+*/
+      }
+
+      /* "dearcygui/layout.pyx":1415
+ *                     changed = True
+ * 
+ *                 if has_sz:             # <<<<<<<<<<<<<<
+ *                     col_max_width = max(col_max_width, (<uiItem>s).state.cur.rect_size.x)
+ *                     # Only advance cur_y for items that were actually drawn (traversed).
+*/
+      if (__pyx_v_has_sz) {
+
+        /* "dearcygui/layout.pyx":1416
+ * 
+ *                 if has_sz:
+ *                     col_max_width = max(col_max_width, (<uiItem>s).state.cur.rect_size.x)             # <<<<<<<<<<<<<<
+ *                     # Only advance cur_y for items that were actually drawn (traversed).
+ *                     # Hidden items (show=False) return early from draw() with rect_size.y=0;
+*/
+        __pyx_t_4 = ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.cur.rect_size.x;
+        __pyx_t_2 = __pyx_v_col_max_width;
+        __pyx_t_1 = (__pyx_t_4 > __pyx_t_2);
+        if (__pyx_t_1) {
+          __pyx_t_3 = __pyx_t_4;
+        } else {
+          __pyx_t_3 = __pyx_t_2;
+        }
+        __pyx_v_col_max_width = __pyx_t_3;
+
+        /* "dearcygui/layout.pyx":1421
+ *                     # skipping them here prevents a stray col_spacing_y from shifting
+ *                     # all subsequent items downward.
+ *                     if (<uiItem>s).state.cur.traversed:             # <<<<<<<<<<<<<<
+ *                         cur_y += (<uiItem>s).state.cur.rect_size.y + col_spacing_y
+ *                 # else: no-size items don't advance cur_y
+*/
+        if (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.cur.traversed) {
+
+          /* "dearcygui/layout.pyx":1422
+ *                     # all subsequent items downward.
+ *                     if (<uiItem>s).state.cur.traversed:
+ *                         cur_y += (<uiItem>s).state.cur.rect_size.y + col_spacing_y             # <<<<<<<<<<<<<<
+ *                 # else: no-size items don't advance cur_y
+ * 
+*/
+          __pyx_v_cur_y = (__pyx_v_cur_y + (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->state.cur.rect_size.y + __pyx_v_col_spacing_y));
+
+          /* "dearcygui/layout.pyx":1421
+ *                     # skipping them here prevents a stray col_spacing_y from shifting
+ *                     # all subsequent items downward.
+ *                     if (<uiItem>s).state.cur.traversed:             # <<<<<<<<<<<<<<
+ *                         cur_y += (<uiItem>s).state.cur.rect_size.y + col_spacing_y
+ *                 # else: no-size items don't advance cur_y
+*/
+        }
+
+        /* "dearcygui/layout.pyx":1415
+ *                     changed = True
+ * 
+ *                 if has_sz:             # <<<<<<<<<<<<<<
+ *                     col_max_width = max(col_max_width, (<uiItem>s).state.cur.rect_size.x)
+ *                     # Only advance cur_y for items that were actually drawn (traversed).
+*/
+      }
+
+      /* "dearcygui/layout.pyx":1425
+ *                 # else: no-size items don't advance cur_y
+ * 
+ *                 s = <PyObject*>(<uiItem>s).next_sibling             # <<<<<<<<<<<<<<
+ * 
+ *             col_x += col_max_width + spacing_x
+*/
+      __pyx_v_s = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_s)->__pyx_base.next_sibling);
+    }
+
+    /* "dearcygui/layout.pyx":1427
+ *                 s = <PyObject*>(<uiItem>s).next_sibling
+ * 
+ *             col_x += col_max_width + spacing_x             # <<<<<<<<<<<<<<
+ *             col_start = col_end
+ *             is_first_col = False
+*/
+    __pyx_v_col_x = (__pyx_v_col_x + (__pyx_v_col_max_width + __pyx_v_spacing_x));
+
+    /* "dearcygui/layout.pyx":1428
+ * 
+ *             col_x += col_max_width + spacing_x
+ *             col_start = col_end             # <<<<<<<<<<<<<<
+ *             is_first_col = False
+ *         return changed
+*/
+    __pyx_v_col_start = __pyx_v_col_end;
+
+    /* "dearcygui/layout.pyx":1429
+ *             col_x += col_max_width + spacing_x
+ *             col_start = col_end
+ *             is_first_col = False             # <<<<<<<<<<<<<<
+ *         return changed
+ * 
+*/
+    __pyx_v_is_first_col = 0;
   }
 
-  /* "dearcygui/layout.pyx":861
- *             col += 1
- *         # A change in position change alter the size for some items
- *         if pos_change:             # <<<<<<<<<<<<<<
- *             self._force_update = True
- *             self.context.viewport.redraw_needed = True
-*/
-  if (__pyx_v_pos_change) {
-
-    /* "dearcygui/layout.pyx":862
- *         # A change in position change alter the size for some items
- *         if pos_change:
- *             self._force_update = True             # <<<<<<<<<<<<<<
- *             self.context.viewport.redraw_needed = True
- * 
-*/
-    __pyx_v_self->__pyx_base._force_update = 1;
-
-    /* "dearcygui/layout.pyx":863
- *         if pos_change:
- *             self._force_update = True
- *             self.context.viewport.redraw_needed = True             # <<<<<<<<<<<<<<
+  /* "dearcygui/layout.pyx":1430
+ *             col_start = col_end
+ *             is_first_col = False
+ *         return changed             # <<<<<<<<<<<<<<
  * 
  *     cdef bint draw_item(self) noexcept nogil:
 */
-    __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->redraw_needed = 1;
+  __pyx_r = __pyx_v_changed;
+  goto __pyx_L0;
 
-    /* "dearcygui/layout.pyx":861
- *             col += 1
- *         # A change in position change alter the size for some items
- *         if pos_change:             # <<<<<<<<<<<<<<
- *             self._force_update = True
- *             self.context.viewport.redraw_needed = True
-*/
-  }
-
-  /* "dearcygui/layout.pyx":734
- *             self.context.viewport.redraw_needed = True
+  /* "dearcygui/layout.pyx":1277
+ *         return changed
  * 
- *     cdef void __update_layout(self):             # <<<<<<<<<<<<<<
- *         if self._alignment_mode == Alignment.MANUAL:
- *             self.__update_layout_manual()
+ *     cdef bint __draw_item_aligned(self) noexcept nogil:             # <<<<<<<<<<<<<<
+ *         """
+ *         BOTTOM / CENTER / JUSTIFIED alignment.
 */
 
   /* function exit code */
-  goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_XDECREF(__pyx_t_9);
-  __Pyx_XDECREF(__pyx_t_10);
-  __Pyx_XDECREF(__pyx_t_11);
-  __Pyx_XDECREF(__pyx_t_12);
-  __Pyx_XDECREF(__pyx_t_13);
-  __Pyx_XDECREF(__pyx_t_14);
-  __Pyx_XDECREF(__pyx_t_16);
-  __Pyx_AddTraceback("dearcygui.layout.VerticalLayout._VerticalLayout__update_layout", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
+  __Pyx_WriteUnraisable("dearcygui.layout.VerticalLayout._VerticalLayout__draw_item_aligned", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __pyx_r = 0;
+  __Pyx_PyGILState_Release(__pyx_gilstate_save);
   __pyx_L0:;
-  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":865
- *             self.context.viewport.redraw_needed = True
+/* "dearcygui/layout.pyx":1432
+ *         return changed
  * 
  *     cdef bint draw_item(self) noexcept nogil:             # <<<<<<<<<<<<<<
  *         if self.last_widgets_child is None:
@@ -37116,108 +38756,188 @@ static void __pyx_f_9dearcygui_6layout_14VerticalLayout__VerticalLayout__update_
 */
 
 static int __pyx_f_9dearcygui_6layout_14VerticalLayout_draw_item(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *__pyx_v_self) {
-  int __pyx_v_changed;
-  Vec2 __pyx_v_pos_p;
+  int __pyx_v_forced;
+  int __pyx_v_children_changed;
+  Vec2 __pyx_v_parent_size_backup;
+  Vec2 __pyx_v_parent_pos_backup;
   int __pyx_r;
   int __pyx_t_1;
-  int __pyx_t_2;
+  Vec2 __pyx_t_2;
+  int __pyx_t_3;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   PyGILState_STATE __pyx_gilstate_save;
 
-  /* "dearcygui/layout.pyx":866
+  /* "dearcygui/layout.pyx":1433
  * 
  *     cdef bint draw_item(self) noexcept nogil:
  *         if self.last_widgets_child is None:             # <<<<<<<<<<<<<<
  *             return False
- *         self.update_content_area()
+ * 
 */
   __pyx_t_1 = (((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child) == Py_None);
   if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":867
+    /* "dearcygui/layout.pyx":1434
  *     cdef bint draw_item(self) noexcept nogil:
  *         if self.last_widgets_child is None:
  *             return False             # <<<<<<<<<<<<<<
- *         self.update_content_area()
- *         cdef bint changed = self.check_change()
+ * 
+ *         # Compute available content area from parent context and requested size
 */
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "dearcygui/layout.pyx":866
+    /* "dearcygui/layout.pyx":1433
  * 
  *     cdef bint draw_item(self) noexcept nogil:
  *         if self.last_widgets_child is None:             # <<<<<<<<<<<<<<
  *             return False
- *         self.update_content_area()
+ * 
 */
   }
 
-  /* "dearcygui/layout.pyx":868
- *         if self.last_widgets_child is None:
- *             return False
+  /* "dearcygui/layout.pyx":1437
+ * 
+ *         # Compute available content area from parent context and requested size
  *         self.update_content_area()             # <<<<<<<<<<<<<<
- *         cdef bint changed = self.check_change()
- *         if changed:
+ * 
+ *         # Capture _force_update before clearing it so that update_layout() callers
 */
   (void)(((struct __pyx_vtabstruct_9dearcygui_6layout_VerticalLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.__pyx_vtab)->__pyx_base.update_content_area(((struct __pyx_obj_9dearcygui_6layout_Layout *)__pyx_v_self)));
 
-  /* "dearcygui/layout.pyx":869
- *             return False
- *         self.update_content_area()
- *         cdef bint changed = self.check_change()             # <<<<<<<<<<<<<<
- *         if changed:
- *             self.last_widgets_child.lock_and_previous_siblings()
+  /* "dearcygui/layout.pyx":1441
+ *         # Capture _force_update before clearing it so that update_layout() callers
+ *         # trigger callbacks even when the layout is otherwise stable this frame.
+ *         cdef bint forced = self._force_update             # <<<<<<<<<<<<<<
+ *         self._force_update = False
+ *         cdef bint children_changed = False
 */
-  __pyx_v_changed = ((struct __pyx_vtabstruct_9dearcygui_6layout_VerticalLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.__pyx_vtab)->__pyx_base.check_change(((struct __pyx_obj_9dearcygui_6layout_Layout *)__pyx_v_self));
+  __pyx_t_1 = __pyx_v_self->__pyx_base._force_update;
+  __pyx_v_forced = __pyx_t_1;
 
-  /* "dearcygui/layout.pyx":870
- *         self.update_content_area()
- *         cdef bint changed = self.check_change()
- *         if changed:             # <<<<<<<<<<<<<<
- *             self.last_widgets_child.lock_and_previous_siblings()
- *             with gil:
+  /* "dearcygui/layout.pyx":1442
+ *         # trigger callbacks even when the layout is otherwise stable this frame.
+ *         cdef bint forced = self._force_update
+ *         self._force_update = False             # <<<<<<<<<<<<<<
+ *         cdef bint children_changed = False
+ * 
 */
-  if (__pyx_v_changed) {
+  __pyx_v_self->__pyx_base._force_update = 0;
 
-    /* "dearcygui/layout.pyx":871
- *         cdef bint changed = self.check_change()
- *         if changed:
- *             self.last_widgets_child.lock_and_previous_siblings()             # <<<<<<<<<<<<<<
- *             with gil:
- *                 self.__update_layout()
-*/
-    ((struct __pyx_vtabstruct_9dearcygui_4core_uiItem *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child->__pyx_base.__pyx_vtab)->__pyx_base.lock_and_previous_siblings(((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child));
-
-    /* "dearcygui/layout.pyx":872
- *         if changed:
- *             self.last_widgets_child.lock_and_previous_siblings()
- *             with gil:             # <<<<<<<<<<<<<<
- *                 self.__update_layout()
+  /* "dearcygui/layout.pyx":1443
+ *         cdef bint forced = self._force_update
+ *         self._force_update = False
+ *         cdef bint children_changed = False             # <<<<<<<<<<<<<<
+ * 
  *         imgui.PushID(self.uuid)
+*/
+  __pyx_v_children_changed = 0;
+
+  /* "dearcygui/layout.pyx":1445
+ *         cdef bint children_changed = False
+ * 
+ *         imgui.PushID(self.uuid)             # <<<<<<<<<<<<<<
+ *         imgui.BeginGroup()
+ * 
+*/
+  ImGui::PushID(__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.uuid);
+
+  /* "dearcygui/layout.pyx":1446
+ * 
+ *         imgui.PushID(self.uuid)
+ *         imgui.BeginGroup()             # <<<<<<<<<<<<<<
+ * 
+ *         # Expose this layout's content area as the parent context so that children
+*/
+  ImGui::BeginGroup();
+
+  /* "dearcygui/layout.pyx":1450
+ *         # Expose this layout's content area as the parent context so that children
+ *         # can resolve sizing expressions like "filly", "parent.height", etc.
+ *         cdef Vec2 parent_size_backup = self.context.viewport.parent_size             # <<<<<<<<<<<<<<
+ *         cdef Vec2 parent_pos_backup = self.context.viewport.parent_pos
+ *         self.context.viewport.parent_size = self.state.cur.content_region_size
+*/
+  __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->parent_size;
+  __pyx_v_parent_size_backup = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":1451
+ *         # can resolve sizing expressions like "filly", "parent.height", etc.
+ *         cdef Vec2 parent_size_backup = self.context.viewport.parent_size
+ *         cdef Vec2 parent_pos_backup = self.context.viewport.parent_pos             # <<<<<<<<<<<<<<
+ *         self.context.viewport.parent_size = self.state.cur.content_region_size
+ *         self.context.viewport.parent_pos = ImVec2Vec2(imgui.GetCursorScreenPos())
+*/
+  __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->parent_pos;
+  __pyx_v_parent_pos_backup = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":1452
+ *         cdef Vec2 parent_size_backup = self.context.viewport.parent_size
+ *         cdef Vec2 parent_pos_backup = self.context.viewport.parent_pos
+ *         self.context.viewport.parent_size = self.state.cur.content_region_size             # <<<<<<<<<<<<<<
+ *         self.context.viewport.parent_pos = ImVec2Vec2(imgui.GetCursorScreenPos())
+ * 
+*/
+  __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.state.cur.content_region_size;
+  __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->parent_size = __pyx_t_2;
+
+  /* "dearcygui/layout.pyx":1453
+ *         cdef Vec2 parent_pos_backup = self.context.viewport.parent_pos
+ *         self.context.viewport.parent_size = self.state.cur.content_region_size
+ *         self.context.viewport.parent_pos = ImVec2Vec2(imgui.GetCursorScreenPos())             # <<<<<<<<<<<<<<
+ * 
+ *         # Lock all siblings for the entire draw to prevent concurrent modification
+*/
+  __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->parent_pos = __pyx_f_9dearcygui_11imgui_types_ImVec2Vec2(ImGui::GetCursorScreenPos());
+
+  /* "dearcygui/layout.pyx":1457
+ *         # Lock all siblings for the entire draw to prevent concurrent modification
+ *         # of child positions while ImGui draw calls are being emitted.
+ *         self.last_widgets_child.lock_and_previous_siblings()             # <<<<<<<<<<<<<<
+ * 
+ *         # Clear any stale positioning overrides left by previous code paths
+*/
+  ((struct __pyx_vtabstruct_9dearcygui_4core_uiItem *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child->__pyx_base.__pyx_vtab)->__pyx_base.lock_and_previous_siblings(((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child));
+
+  /* "dearcygui/layout.pyx":1466
+ *         # which should be attached to the previous item but should not induce
+ *         # spacing.
+ *         if not(self.__check_children_neutral()):             # <<<<<<<<<<<<<<
+ *             with gil:
+ *                 self.__apply_children_neutral()
+*/
+  __pyx_t_1 = (!((struct __pyx_vtabstruct_9dearcygui_6layout_VerticalLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.__pyx_vtab)->_VerticalLayout__check_children_neutral(__pyx_v_self));
+  if (__pyx_t_1) {
+
+    /* "dearcygui/layout.pyx":1467
+ *         # spacing.
+ *         if not(self.__check_children_neutral()):
+ *             with gil:             # <<<<<<<<<<<<<<
+ *                 self.__apply_children_neutral()
+ * 
 */
     {
         PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
         /*try:*/ {
 
-          /* "dearcygui/layout.pyx":873
- *             self.last_widgets_child.lock_and_previous_siblings()
+          /* "dearcygui/layout.pyx":1468
+ *         if not(self.__check_children_neutral()):
  *             with gil:
- *                 self.__update_layout()             # <<<<<<<<<<<<<<
- *         imgui.PushID(self.uuid)
- *         imgui.BeginGroup()
+ *                 self.__apply_children_neutral()             # <<<<<<<<<<<<<<
+ * 
+ *         # Dispatch to the appropriate inline drawing strategy
 */
-          ((struct __pyx_vtabstruct_9dearcygui_6layout_VerticalLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.__pyx_vtab)->_VerticalLayout__update_layout(__pyx_v_self); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 873, __pyx_L6_error)
+          ((struct __pyx_vtabstruct_9dearcygui_6layout_VerticalLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.__pyx_vtab)->_VerticalLayout__apply_children_neutral(__pyx_v_self); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 1468, __pyx_L6_error)
         }
 
-        /* "dearcygui/layout.pyx":872
- *         if changed:
- *             self.last_widgets_child.lock_and_previous_siblings()
+        /* "dearcygui/layout.pyx":1467
+ *         # spacing.
+ *         if not(self.__check_children_neutral()):
  *             with gil:             # <<<<<<<<<<<<<<
- *                 self.__update_layout()
- *         imgui.PushID(self.uuid)
+ *                 self.__apply_children_neutral()
+ * 
 */
         /*finally:*/ {
           /*normal exit:*/{
@@ -37232,215 +38952,270 @@ static int __pyx_f_9dearcygui_6layout_14VerticalLayout_draw_item(struct __pyx_ob
         }
     }
 
-    /* "dearcygui/layout.pyx":870
- *         self.update_content_area()
- *         cdef bint changed = self.check_change()
- *         if changed:             # <<<<<<<<<<<<<<
- *             self.last_widgets_child.lock_and_previous_siblings()
+    /* "dearcygui/layout.pyx":1466
+ *         # which should be attached to the previous item but should not induce
+ *         # spacing.
+ *         if not(self.__check_children_neutral()):             # <<<<<<<<<<<<<<
  *             with gil:
+ *                 self.__apply_children_neutral()
 */
   }
 
-  /* "dearcygui/layout.pyx":874
- *             with gil:
- *                 self.__update_layout()
- *         imgui.PushID(self.uuid)             # <<<<<<<<<<<<<<
- *         imgui.BeginGroup()
- *         cdef Vec2 pos_p
+  /* "dearcygui/layout.pyx":1471
+ * 
+ *         # Dispatch to the appropriate inline drawing strategy
+ *         if self._alignment_mode == Alignment.MANUAL:             # <<<<<<<<<<<<<<
+ *             children_changed = self.__draw_item_manual()
+ *         elif self._alignment_mode == Alignment.TOP:
 */
-  ImGui::PushID(__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.uuid);
-
-  /* "dearcygui/layout.pyx":875
- *                 self.__update_layout()
- *         imgui.PushID(self.uuid)
- *         imgui.BeginGroup()             # <<<<<<<<<<<<<<
- *         cdef Vec2 pos_p
- *         if self.last_widgets_child is not None:
-*/
-  ImGui::BeginGroup();
-
-  /* "dearcygui/layout.pyx":877
- *         imgui.BeginGroup()
- *         cdef Vec2 pos_p
- *         if self.last_widgets_child is not None:             # <<<<<<<<<<<<<<
- *             pos_p = ImVec2Vec2(imgui.GetCursorScreenPos())
- *             swap_Vec2(pos_p, self.context.viewport.parent_pos)
-*/
-  __pyx_t_1 = (((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child) != Py_None);
+  __pyx_t_1 = (__pyx_v_self->_alignment_mode == __pyx_t_9dearcygui_5types_Alignment::MANUAL);
   if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":878
- *         cdef Vec2 pos_p
- *         if self.last_widgets_child is not None:
- *             pos_p = ImVec2Vec2(imgui.GetCursorScreenPos())             # <<<<<<<<<<<<<<
- *             swap_Vec2(pos_p, self.context.viewport.parent_pos)
- *             self.draw_children()
+    /* "dearcygui/layout.pyx":1472
+ *         # Dispatch to the appropriate inline drawing strategy
+ *         if self._alignment_mode == Alignment.MANUAL:
+ *             children_changed = self.__draw_item_manual()             # <<<<<<<<<<<<<<
+ *         elif self._alignment_mode == Alignment.TOP:
+ *             if self._no_wrap:
 */
-    __pyx_v_pos_p = __pyx_f_9dearcygui_11imgui_types_ImVec2Vec2(ImGui::GetCursorScreenPos());
+    __pyx_v_children_changed = ((struct __pyx_vtabstruct_9dearcygui_6layout_VerticalLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.__pyx_vtab)->_VerticalLayout__draw_item_manual(__pyx_v_self);
 
-    /* "dearcygui/layout.pyx":879
- *         if self.last_widgets_child is not None:
- *             pos_p = ImVec2Vec2(imgui.GetCursorScreenPos())
- *             swap_Vec2(pos_p, self.context.viewport.parent_pos)             # <<<<<<<<<<<<<<
- *             self.draw_children()
- *             self.context.viewport.parent_pos = pos_p
+    /* "dearcygui/layout.pyx":1471
+ * 
+ *         # Dispatch to the appropriate inline drawing strategy
+ *         if self._alignment_mode == Alignment.MANUAL:             # <<<<<<<<<<<<<<
+ *             children_changed = self.__draw_item_manual()
+ *         elif self._alignment_mode == Alignment.TOP:
 */
-    __pyx_f_9dearcygui_7c_types_swap_Vec2(__pyx_v_pos_p, __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->parent_pos);
-
-    /* "dearcygui/layout.pyx":880
- *             pos_p = ImVec2Vec2(imgui.GetCursorScreenPos())
- *             swap_Vec2(pos_p, self.context.viewport.parent_pos)
- *             self.draw_children()             # <<<<<<<<<<<<<<
- *             self.context.viewport.parent_pos = pos_p
- *         if changed:
-*/
-    ((struct __pyx_vtabstruct_9dearcygui_6layout_VerticalLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.__pyx_vtab)->__pyx_base.draw_children(((struct __pyx_obj_9dearcygui_6layout_Layout *)__pyx_v_self));
-
-    /* "dearcygui/layout.pyx":881
- *             swap_Vec2(pos_p, self.context.viewport.parent_pos)
- *             self.draw_children()
- *             self.context.viewport.parent_pos = pos_p             # <<<<<<<<<<<<<<
- *         if changed:
- *             # We maintain the lock during the rendering
-*/
-    __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->parent_pos = __pyx_v_pos_p;
-
-    /* "dearcygui/layout.pyx":877
- *         imgui.BeginGroup()
- *         cdef Vec2 pos_p
- *         if self.last_widgets_child is not None:             # <<<<<<<<<<<<<<
- *             pos_p = ImVec2Vec2(imgui.GetCursorScreenPos())
- *             swap_Vec2(pos_p, self.context.viewport.parent_pos)
-*/
+    goto __pyx_L8;
   }
 
-  /* "dearcygui/layout.pyx":882
- *             self.draw_children()
- *             self.context.viewport.parent_pos = pos_p
- *         if changed:             # <<<<<<<<<<<<<<
- *             # We maintain the lock during the rendering
- *             # just to be sure the user doesn't change the
+  /* "dearcygui/layout.pyx":1473
+ *         if self._alignment_mode == Alignment.MANUAL:
+ *             children_changed = self.__draw_item_manual()
+ *         elif self._alignment_mode == Alignment.TOP:             # <<<<<<<<<<<<<<
+ *             if self._no_wrap:
+ *                 children_changed = self.__draw_item_top_no_wrap()
 */
-  if (__pyx_v_changed) {
+  __pyx_t_1 = (__pyx_v_self->_alignment_mode == __pyx_t_9dearcygui_5types_Alignment::TOP);
+  if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":886
- *             # just to be sure the user doesn't change the
- *             # Positioning we took care to manage :-)
- *             self.last_widgets_child.unlock_and_previous_siblings()             # <<<<<<<<<<<<<<
+    /* "dearcygui/layout.pyx":1474
+ *             children_changed = self.__draw_item_manual()
+ *         elif self._alignment_mode == Alignment.TOP:
+ *             if self._no_wrap:             # <<<<<<<<<<<<<<
+ *                 children_changed = self.__draw_item_top_no_wrap()
+ *             else:
+*/
+    if (__pyx_v_self->_no_wrap) {
+
+      /* "dearcygui/layout.pyx":1475
+ *         elif self._alignment_mode == Alignment.TOP:
+ *             if self._no_wrap:
+ *                 children_changed = self.__draw_item_top_no_wrap()             # <<<<<<<<<<<<<<
+ *             else:
+ *                 children_changed = self.__draw_item_top_wrap()
+*/
+      __pyx_v_children_changed = ((struct __pyx_vtabstruct_9dearcygui_6layout_VerticalLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.__pyx_vtab)->_VerticalLayout__draw_item_top_no_wrap(__pyx_v_self);
+
+      /* "dearcygui/layout.pyx":1474
+ *             children_changed = self.__draw_item_manual()
+ *         elif self._alignment_mode == Alignment.TOP:
+ *             if self._no_wrap:             # <<<<<<<<<<<<<<
+ *                 children_changed = self.__draw_item_top_no_wrap()
+ *             else:
+*/
+      goto __pyx_L9;
+    }
+
+    /* "dearcygui/layout.pyx":1477
+ *                 children_changed = self.__draw_item_top_no_wrap()
+ *             else:
+ *                 children_changed = self.__draw_item_top_wrap()             # <<<<<<<<<<<<<<
+ *         else:  # BOTTOM, CENTER, JUSTIFIED
+ *             children_changed = self.__draw_item_aligned()
+*/
+    /*else*/ {
+      __pyx_v_children_changed = ((struct __pyx_vtabstruct_9dearcygui_6layout_VerticalLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.__pyx_vtab)->_VerticalLayout__draw_item_top_wrap(__pyx_v_self);
+    }
+    __pyx_L9:;
+
+    /* "dearcygui/layout.pyx":1473
+ *         if self._alignment_mode == Alignment.MANUAL:
+ *             children_changed = self.__draw_item_manual()
+ *         elif self._alignment_mode == Alignment.TOP:             # <<<<<<<<<<<<<<
+ *             if self._no_wrap:
+ *                 children_changed = self.__draw_item_top_no_wrap()
+*/
+    goto __pyx_L8;
+  }
+
+  /* "dearcygui/layout.pyx":1479
+ *                 children_changed = self.__draw_item_top_wrap()
+ *         else:  # BOTTOM, CENTER, JUSTIFIED
+ *             children_changed = self.__draw_item_aligned()             # <<<<<<<<<<<<<<
+ * 
+ *         self.last_widgets_child.unlock_and_previous_siblings()
+*/
+  /*else*/ {
+    __pyx_v_children_changed = ((struct __pyx_vtabstruct_9dearcygui_6layout_VerticalLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.__pyx_vtab)->_VerticalLayout__draw_item_aligned(__pyx_v_self);
+  }
+  __pyx_L8:;
+
+  /* "dearcygui/layout.pyx":1481
+ *             children_changed = self.__draw_item_aligned()
+ * 
+ *         self.last_widgets_child.unlock_and_previous_siblings()             # <<<<<<<<<<<<<<
+ * 
  *         imgui.EndGroup()
- *         imgui.PopID()
 */
-    ((struct __pyx_vtabstruct_9dearcygui_4core_uiItem *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child->__pyx_base.__pyx_vtab)->__pyx_base.unlock_and_previous_siblings(((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child));
+  ((struct __pyx_vtabstruct_9dearcygui_4core_uiItem *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child->__pyx_base.__pyx_vtab)->__pyx_base.unlock_and_previous_siblings(((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.last_widgets_child));
 
-    /* "dearcygui/layout.pyx":882
- *             self.draw_children()
- *             self.context.viewport.parent_pos = pos_p
- *         if changed:             # <<<<<<<<<<<<<<
- *             # We maintain the lock during the rendering
- *             # just to be sure the user doesn't change the
-*/
-  }
-
-  /* "dearcygui/layout.pyx":887
- *             # Positioning we took care to manage :-)
- *             self.last_widgets_child.unlock_and_previous_siblings()
+  /* "dearcygui/layout.pyx":1483
+ *         self.last_widgets_child.unlock_and_previous_siblings()
+ * 
  *         imgui.EndGroup()             # <<<<<<<<<<<<<<
  *         imgui.PopID()
- *         self.update_current_state()
+ * 
 */
   ImGui::EndGroup();
 
-  /* "dearcygui/layout.pyx":888
- *             self.last_widgets_child.unlock_and_previous_siblings()
+  /* "dearcygui/layout.pyx":1484
+ * 
  *         imgui.EndGroup()
  *         imgui.PopID()             # <<<<<<<<<<<<<<
- *         self.update_current_state()
- *         if self.state.cur.rect_size.x != self.state.prev.rect_size.x or \
+ * 
+ *         # Restore parent context so siblings drawn after us see the correct values
 */
   ImGui::PopID();
 
-  /* "dearcygui/layout.pyx":889
- *         imgui.EndGroup()
- *         imgui.PopID()
+  /* "dearcygui/layout.pyx":1487
+ * 
+ *         # Restore parent context so siblings drawn after us see the correct values
+ *         self.context.viewport.parent_size = parent_size_backup             # <<<<<<<<<<<<<<
+ *         self.context.viewport.parent_pos = parent_pos_backup
+ * 
+*/
+  __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->parent_size = __pyx_v_parent_size_backup;
+
+  /* "dearcygui/layout.pyx":1488
+ *         # Restore parent context so siblings drawn after us see the correct values
+ *         self.context.viewport.parent_size = parent_size_backup
+ *         self.context.viewport.parent_pos = parent_pos_backup             # <<<<<<<<<<<<<<
+ * 
+ *         # EndGroup + update_current_state records the actual bounding box
+*/
+  __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->parent_pos = __pyx_v_parent_pos_backup;
+
+  /* "dearcygui/layout.pyx":1491
+ * 
+ *         # EndGroup + update_current_state records the actual bounding box
  *         self.update_current_state()             # <<<<<<<<<<<<<<
- *         if self.state.cur.rect_size.x != self.state.prev.rect_size.x or \
- *            self.state.cur.rect_size.y != self.state.prev.rect_size.y:
+ * 
+ *         # If our bounding box changed, the parent layout must also re-evaluate
 */
   ((struct __pyx_vtabstruct_9dearcygui_6layout_VerticalLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.__pyx_vtab)->__pyx_base.__pyx_base.update_current_state(((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_self));
 
-  /* "dearcygui/layout.pyx":890
- *         imgui.PopID()
- *         self.update_current_state()
+  /* "dearcygui/layout.pyx":1494
+ * 
+ *         # If our bounding box changed, the parent layout must also re-evaluate
  *         if self.state.cur.rect_size.x != self.state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
  *            self.state.cur.rect_size.y != self.state.prev.rect_size.y:
- *             self._force_update = True
+ *             self.context.viewport.ask_immediate_redraw()
 */
-  __pyx_t_2 = (__pyx_v_self->__pyx_base.__pyx_base.state.cur.rect_size.x != __pyx_v_self->__pyx_base.__pyx_base.state.prev.rect_size.x);
-  if (!__pyx_t_2) {
+  __pyx_t_3 = (__pyx_v_self->__pyx_base.__pyx_base.state.cur.rect_size.x != __pyx_v_self->__pyx_base.__pyx_base.state.prev.rect_size.x);
+  if (!__pyx_t_3) {
   } else {
-    __pyx_t_1 = __pyx_t_2;
+    __pyx_t_1 = __pyx_t_3;
     goto __pyx_L11_bool_binop_done;
   }
 
-  /* "dearcygui/layout.pyx":891
- *         self.update_current_state()
+  /* "dearcygui/layout.pyx":1495
+ *         # If our bounding box changed, the parent layout must also re-evaluate
  *         if self.state.cur.rect_size.x != self.state.prev.rect_size.x or \
  *            self.state.cur.rect_size.y != self.state.prev.rect_size.y:             # <<<<<<<<<<<<<<
- *             self._force_update = True
- *             self.context.viewport.redraw_needed = True
+ *             self.context.viewport.ask_immediate_redraw()
+ * 
 */
-  __pyx_t_2 = (__pyx_v_self->__pyx_base.__pyx_base.state.cur.rect_size.y != __pyx_v_self->__pyx_base.__pyx_base.state.prev.rect_size.y);
-  __pyx_t_1 = __pyx_t_2;
+  __pyx_t_3 = (__pyx_v_self->__pyx_base.__pyx_base.state.cur.rect_size.y != __pyx_v_self->__pyx_base.__pyx_base.state.prev.rect_size.y);
+  __pyx_t_1 = __pyx_t_3;
   __pyx_L11_bool_binop_done:;
 
-  /* "dearcygui/layout.pyx":890
- *         imgui.PopID()
- *         self.update_current_state()
+  /* "dearcygui/layout.pyx":1494
+ * 
+ *         # If our bounding box changed, the parent layout must also re-evaluate
  *         if self.state.cur.rect_size.x != self.state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
  *            self.state.cur.rect_size.y != self.state.prev.rect_size.y:
- *             self._force_update = True
+ *             self.context.viewport.ask_immediate_redraw()
 */
   if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":892
+    /* "dearcygui/layout.pyx":1496
  *         if self.state.cur.rect_size.x != self.state.prev.rect_size.x or \
  *            self.state.cur.rect_size.y != self.state.prev.rect_size.y:
- *             self._force_update = True             # <<<<<<<<<<<<<<
- *             self.context.viewport.redraw_needed = True
- *         return changed
-*/
-    __pyx_v_self->__pyx_base._force_update = 1;
-
-    /* "dearcygui/layout.pyx":893
- *            self.state.cur.rect_size.y != self.state.prev.rect_size.y:
- *             self._force_update = True
- *             self.context.viewport.redraw_needed = True             # <<<<<<<<<<<<<<
- *         return changed
+ *             self.context.viewport.ask_immediate_redraw()             # <<<<<<<<<<<<<<
  * 
+ *         # If child bounding boxes actually changed, schedule one more redraw so
 */
-    __pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->redraw_needed = 1;
+    ((struct __pyx_vtabstruct_9dearcygui_4core_Viewport *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->__pyx_base.__pyx_vtab)->ask_immediate_redraw(__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport);
 
-    /* "dearcygui/layout.pyx":890
- *         imgui.PopID()
- *         self.update_current_state()
+    /* "dearcygui/layout.pyx":1494
+ * 
+ *         # If our bounding box changed, the parent layout must also re-evaluate
  *         if self.state.cur.rect_size.x != self.state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
  *            self.state.cur.rect_size.y != self.state.prev.rect_size.y:
- *             self._force_update = True
+ *             self.context.viewport.ask_immediate_redraw()
 */
   }
 
-  /* "dearcygui/layout.pyx":894
+  /* "dearcygui/layout.pyx":1502
+ *         # children genuinely changed this frame  not when we merely consumed a
+ *         # prior _force_update  to prevent an infinite redraw loop.
+ *         if children_changed:             # <<<<<<<<<<<<<<
  *             self._force_update = True
- *             self.context.viewport.redraw_needed = True
- *         return changed             # <<<<<<<<<<<<<<
+ *             self.context.viewport.ask_immediate_redraw()
+*/
+  if (__pyx_v_children_changed) {
+
+    /* "dearcygui/layout.pyx":1503
+ *         # prior _force_update  to prevent an infinite redraw loop.
+ *         if children_changed:
+ *             self._force_update = True             # <<<<<<<<<<<<<<
+ *             self.context.viewport.ask_immediate_redraw()
+ * 
+*/
+    __pyx_v_self->__pyx_base._force_update = 1;
+
+    /* "dearcygui/layout.pyx":1504
+ *         if children_changed:
+ *             self._force_update = True
+ *             self.context.viewport.ask_immediate_redraw()             # <<<<<<<<<<<<<<
+ * 
+ *         return forced | children_changed
+*/
+    ((struct __pyx_vtabstruct_9dearcygui_4core_Viewport *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport->__pyx_base.__pyx_vtab)->ask_immediate_redraw(__pyx_v_self->__pyx_base.__pyx_base.__pyx_base.context->viewport);
+
+    /* "dearcygui/layout.pyx":1502
+ *         # children genuinely changed this frame  not when we merely consumed a
+ *         # prior _force_update  to prevent an infinite redraw loop.
+ *         if children_changed:             # <<<<<<<<<<<<<<
+ *             self._force_update = True
+ *             self.context.viewport.ask_immediate_redraw()
+*/
+  }
+
+  /* "dearcygui/layout.pyx":1506
+ *             self.context.viewport.ask_immediate_redraw()
+ * 
+ *         return forced | children_changed             # <<<<<<<<<<<<<<
  * 
  * 
 */
-  __pyx_r = __pyx_v_changed;
+  __pyx_r = (__pyx_v_forced | __pyx_v_children_changed);
   goto __pyx_L0;
 
-  /* "dearcygui/layout.pyx":865
- *             self.context.viewport.redraw_needed = True
+  /* "dearcygui/layout.pyx":1432
+ *         return changed
  * 
  *     cdef bint draw_item(self) noexcept nogil:             # <<<<<<<<<<<<<<
  *         if self.last_widgets_child is None:
@@ -37457,12 +39232,12 @@ static int __pyx_f_9dearcygui_6layout_14VerticalLayout_draw_item(struct __pyx_ob
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":911
+/* "dearcygui/layout.pyx":1523
  *     to have `content_area_avail` larger than `rect_size`, and `item.y2` > `item.y3`.
  *     """
  *     def __cinit__(self):             # <<<<<<<<<<<<<<
+ *         # Accept Window children (not regular UI widgets)
  *         self.can_have_window_child = True
- *         self.element_child_category = child_type.cat_window
 */
 
 /* Python wrapper */
@@ -37493,66 +39268,66 @@ static int __pyx_pw_9dearcygui_6layout_12WindowLayout_1__cinit__(PyObject *__pyx
 static int __pyx_pf_9dearcygui_6layout_12WindowLayout___cinit__(struct __pyx_obj_9dearcygui_6layout_WindowLayout *__pyx_v_self) {
   int __pyx_r;
 
-  /* "dearcygui/layout.pyx":912
- *     """
+  /* "dearcygui/layout.pyx":1525
  *     def __cinit__(self):
+ *         # Accept Window children (not regular UI widgets)
  *         self.can_have_window_child = True             # <<<<<<<<<<<<<<
  *         self.element_child_category = child_type.cat_window
  *         self.can_be_disabled = False
 */
   __pyx_v_self->__pyx_base.__pyx_base.can_have_window_child = 1;
 
-  /* "dearcygui/layout.pyx":913
- *     def __cinit__(self):
+  /* "dearcygui/layout.pyx":1526
+ *         # Accept Window children (not regular UI widgets)
  *         self.can_have_window_child = True
  *         self.element_child_category = child_type.cat_window             # <<<<<<<<<<<<<<
  *         self.can_be_disabled = False
- *         self._previous_last_child = NULL
+ *         # Sentinel used by check_change to detect child list mutations
 */
   __pyx_v_self->__pyx_base.__pyx_base.element_child_category = __pyx_e_9dearcygui_5types_cat_window;
 
-  /* "dearcygui/layout.pyx":914
+  /* "dearcygui/layout.pyx":1527
  *         self.can_have_window_child = True
  *         self.element_child_category = child_type.cat_window
  *         self.can_be_disabled = False             # <<<<<<<<<<<<<<
+ *         # Sentinel used by check_change to detect child list mutations
  *         self._previous_last_child = NULL
- *         self._clip = False
 */
   __pyx_v_self->__pyx_base.can_be_disabled = 0;
 
-  /* "dearcygui/layout.pyx":915
- *         self.element_child_category = child_type.cat_window
+  /* "dearcygui/layout.pyx":1529
  *         self.can_be_disabled = False
+ *         # Sentinel used by check_change to detect child list mutations
  *         self._previous_last_child = NULL             # <<<<<<<<<<<<<<
  *         self._clip = False
- *         self.state.cap.has_content_region = True
+ *         # Expose content_region_size in state so children can reference it
 */
   __pyx_v_self->_previous_last_child = NULL;
 
-  /* "dearcygui/layout.pyx":916
- *         self.can_be_disabled = False
+  /* "dearcygui/layout.pyx":1530
+ *         # Sentinel used by check_change to detect child list mutations
  *         self._previous_last_child = NULL
  *         self._clip = False             # <<<<<<<<<<<<<<
+ *         # Expose content_region_size in state so children can reference it
  *         self.state.cap.has_content_region = True
- * 
 */
   __pyx_v_self->_clip = 0;
 
-  /* "dearcygui/layout.pyx":917
- *         self._previous_last_child = NULL
+  /* "dearcygui/layout.pyx":1532
  *         self._clip = False
+ *         # Expose content_region_size in state so children can reference it
  *         self.state.cap.has_content_region = True             # <<<<<<<<<<<<<<
  * 
  *     def update_layout(self):
 */
   __pyx_v_self->__pyx_base.state.cap.has_content_region = 1;
 
-  /* "dearcygui/layout.pyx":911
+  /* "dearcygui/layout.pyx":1523
  *     to have `content_area_avail` larger than `rect_size`, and `item.y2` > `item.y3`.
  *     """
  *     def __cinit__(self):             # <<<<<<<<<<<<<<
+ *         # Accept Window children (not regular UI widgets)
  *         self.can_have_window_child = True
- *         self.element_child_category = child_type.cat_window
 */
 
   /* function exit code */
@@ -37560,17 +39335,18 @@ static int __pyx_pf_9dearcygui_6layout_12WindowLayout___cinit__(struct __pyx_obj
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":919
+/* "dearcygui/layout.pyx":1534
  *         self.state.cap.has_content_region = True
  * 
  *     def update_layout(self):             # <<<<<<<<<<<<<<
- *         cdef int32_t i
- *         cdef unique_lock[DCGMutex] m
+ *         """
+ *         Force an update of the layout next time the scene is rendered.
 */
 
 /* Python wrapper */
 static PyObject *__pyx_pw_9dearcygui_6layout_12WindowLayout_3update_layout(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyMethodDef __pyx_mdef_9dearcygui_6layout_12WindowLayout_3update_layout = {"update_layout", (PyCFunction)__pyx_pw_9dearcygui_6layout_12WindowLayout_3update_layout, METH_NOARGS, 0};
+PyDoc_STRVAR(__pyx_doc_9dearcygui_6layout_12WindowLayout_2update_layout, "\n        Force an update of the layout next time the scene is rendered.\n        \n        This method triggers the recalculation of item positions and sizes \n        within the layout. It's useful when the automated update detection \n        is not sufficient to detect layout changes.\n        ");
+static PyMethodDef __pyx_mdef_9dearcygui_6layout_12WindowLayout_3update_layout = {"update_layout", (PyCFunction)__pyx_pw_9dearcygui_6layout_12WindowLayout_3update_layout, METH_NOARGS, __pyx_doc_9dearcygui_6layout_12WindowLayout_2update_layout};
 static PyObject *__pyx_pw_9dearcygui_6layout_12WindowLayout_3update_layout(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
   PyObject *__pyx_r = 0;
@@ -37585,58 +39361,35 @@ static PyObject *__pyx_pw_9dearcygui_6layout_12WindowLayout_3update_layout(PyObj
 }
 
 static PyObject *__pyx_pf_9dearcygui_6layout_12WindowLayout_2update_layout(struct __pyx_obj_9dearcygui_6layout_WindowLayout *__pyx_v_self) {
-  int32_t __pyx_v_i;
   std::unique_lock<DCGMutex>  __pyx_v_m;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  int __pyx_t_1;
-  int __pyx_t_2;
-  int32_t __pyx_t_3;
-  PyObject *__pyx_t_4;
-  PyObject *__pyx_t_5 = NULL;
   __Pyx_RefNannySetupContext("update_layout", 0);
 
-  /* "dearcygui/layout.pyx":922
- *         cdef int32_t i
+  /* "dearcygui/layout.pyx":1543
+ *         """
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)             # <<<<<<<<<<<<<<
- *         for i in range(<int>self._callbacks.size()):
- *             self.context.queue_callback_arg1value(<Callback>self._callbacks[i], self, self, self._value)
+ *         self._force_update = True
+ * 
 */
   __pyx_f_9dearcygui_4core_lock_gil_friendly(__pyx_v_m, __pyx_v_self->__pyx_base.__pyx_base.mutex);
 
-  /* "dearcygui/layout.pyx":923
+  /* "dearcygui/layout.pyx":1544
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)
- *         for i in range(<int>self._callbacks.size()):             # <<<<<<<<<<<<<<
- *             self.context.queue_callback_arg1value(<Callback>self._callbacks[i], self, self, self._value)
- * 
-*/
-  __pyx_t_1 = ((int)__pyx_v_self->__pyx_base._callbacks.size());
-  __pyx_t_2 = __pyx_t_1;
-  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
-    __pyx_v_i = __pyx_t_3;
-
-    /* "dearcygui/layout.pyx":924
- *         lock_gil_friendly(m, self.mutex)
- *         for i in range(<int>self._callbacks.size()):
- *             self.context.queue_callback_arg1value(<Callback>self._callbacks[i], self, self, self._value)             # <<<<<<<<<<<<<<
+ *         self._force_update = True             # <<<<<<<<<<<<<<
  * 
  *     @property
 */
-    __pyx_t_4 = (__pyx_v_self->__pyx_base._callbacks[__pyx_v_i]);
-    __pyx_t_5 = ((PyObject *)__pyx_v_self->__pyx_base._value);
-    __Pyx_INCREF(__pyx_t_5);
-    ((struct __pyx_vtabstruct_9dearcygui_4core_Context *)__pyx_v_self->__pyx_base.__pyx_base.context->__pyx_vtab)->queue_callback_arg1value(__pyx_v_self->__pyx_base.__pyx_base.context, ((struct __pyx_obj_9dearcygui_4core_Callback *)__pyx_t_4), ((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_self), ((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_self), ((struct __pyx_obj_9dearcygui_4core_SharedValue *)__pyx_t_5));
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  }
+  __pyx_v_self->_force_update = 1;
 
-  /* "dearcygui/layout.pyx":919
+  /* "dearcygui/layout.pyx":1534
  *         self.state.cap.has_content_region = True
  * 
  *     def update_layout(self):             # <<<<<<<<<<<<<<
- *         cdef int32_t i
- *         cdef unique_lock[DCGMutex] m
+ *         """
+ *         Force an update of the layout next time the scene is rendered.
 */
 
   /* function exit code */
@@ -37646,8 +39399,8 @@ static PyObject *__pyx_pf_9dearcygui_6layout_12WindowLayout_2update_layout(struc
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":926
- *             self.context.queue_callback_arg1value(<Callback>self._callbacks[i], self, self, self._value)
+/* "dearcygui/layout.pyx":1546
+ *         self._force_update = True
  * 
  *     @property             # <<<<<<<<<<<<<<
  *     def clip(self):
@@ -37679,7 +39432,7 @@ static PyObject *__pyx_pf_9dearcygui_6layout_12WindowLayout_4clip___get__(struct
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__get__", 0);
 
-  /* "dearcygui/layout.pyx":932
+  /* "dearcygui/layout.pyx":1552
  *         """
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)             # <<<<<<<<<<<<<<
@@ -37688,7 +39441,7 @@ static PyObject *__pyx_pf_9dearcygui_6layout_12WindowLayout_4clip___get__(struct
 */
   __pyx_f_9dearcygui_4core_lock_gil_friendly(__pyx_v_m, __pyx_v_self->__pyx_base.__pyx_base.mutex);
 
-  /* "dearcygui/layout.pyx":933
+  /* "dearcygui/layout.pyx":1553
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)
  *         return self._clip             # <<<<<<<<<<<<<<
@@ -37696,14 +39449,14 @@ static PyObject *__pyx_pf_9dearcygui_6layout_12WindowLayout_4clip___get__(struct
  *     @clip.setter
 */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->_clip); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 933, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBool_FromLong(__pyx_v_self->_clip); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1553, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "dearcygui/layout.pyx":926
- *             self.context.queue_callback_arg1value(<Callback>self._callbacks[i], self, self, self._value)
+  /* "dearcygui/layout.pyx":1546
+ *         self._force_update = True
  * 
  *     @property             # <<<<<<<<<<<<<<
  *     def clip(self):
@@ -37721,7 +39474,7 @@ static PyObject *__pyx_pf_9dearcygui_6layout_12WindowLayout_4clip___get__(struct
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":935
+/* "dearcygui/layout.pyx":1555
  *         return self._clip
  * 
  *     @clip.setter             # <<<<<<<<<<<<<<
@@ -37742,7 +39495,7 @@ static int __pyx_pw_9dearcygui_6layout_12WindowLayout_4clip_3__set__(PyObject *_
   __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
   __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
   assert(__pyx_arg_value); {
-    __pyx_v_value = __Pyx_PyObject_IsTrue(__pyx_arg_value); if (unlikely((__pyx_v_value == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 936, __pyx_L3_error)
+    __pyx_v_value = __Pyx_PyObject_IsTrue(__pyx_arg_value); if (unlikely((__pyx_v_value == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1556, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -37761,7 +39514,7 @@ static int __pyx_pf_9dearcygui_6layout_12WindowLayout_4clip_2__set__(struct __py
   std::unique_lock<DCGMutex>  __pyx_v_m;
   int __pyx_r;
 
-  /* "dearcygui/layout.pyx":938
+  /* "dearcygui/layout.pyx":1558
  *     def clip(self, bint value):
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)             # <<<<<<<<<<<<<<
@@ -37770,7 +39523,7 @@ static int __pyx_pf_9dearcygui_6layout_12WindowLayout_4clip_2__set__(struct __py
 */
   __pyx_f_9dearcygui_4core_lock_gil_friendly(__pyx_v_m, __pyx_v_self->__pyx_base.__pyx_base.mutex);
 
-  /* "dearcygui/layout.pyx":939
+  /* "dearcygui/layout.pyx":1559
  *         cdef unique_lock[DCGMutex] m
  *         lock_gil_friendly(m, self.mutex)
  *         self._clip = value             # <<<<<<<<<<<<<<
@@ -37779,7 +39532,7 @@ static int __pyx_pf_9dearcygui_6layout_12WindowLayout_4clip_2__set__(struct __py
 */
   __pyx_v_self->_clip = __pyx_v_value;
 
-  /* "dearcygui/layout.pyx":935
+  /* "dearcygui/layout.pyx":1555
  *         return self._clip
  * 
  *     @clip.setter             # <<<<<<<<<<<<<<
@@ -37792,12 +39545,12 @@ static int __pyx_pf_9dearcygui_6layout_12WindowLayout_4clip_2__set__(struct __py
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":942
+/* "dearcygui/layout.pyx":1562
  * 
  *     # final enables inlining
  *     @cython.final             # <<<<<<<<<<<<<<
  *     cdef Vec2 update_content_area(self) noexcept nogil:
- *         cdef Vec2 full_content_area = self.context.viewport.parent_size
+ *         """
 */
 
 static Vec2 __pyx_f_9dearcygui_6layout_12WindowLayout_update_content_area(struct __pyx_obj_9dearcygui_6layout_WindowLayout *__pyx_v_self) {
@@ -37811,9 +39564,9 @@ static Vec2 __pyx_f_9dearcygui_6layout_12WindowLayout_update_content_area(struct
   long __pyx_t_4;
   float __pyx_t_5;
 
-  /* "dearcygui/layout.pyx":944
- *     @cython.final
- *     cdef Vec2 update_content_area(self) noexcept nogil:
+  /* "dearcygui/layout.pyx":1573
+ *           negative  parent size minus the absolute value (shrink-from-edge)
+ *         """
  *         cdef Vec2 full_content_area = self.context.viewport.parent_size             # <<<<<<<<<<<<<<
  *         cdef Vec2 cur_content_area, requested_size
  * 
@@ -37821,17 +39574,17 @@ static Vec2 __pyx_f_9dearcygui_6layout_12WindowLayout_update_content_area(struct
   __pyx_t_1 = __pyx_v_self->__pyx_base.__pyx_base.context->viewport->parent_size;
   __pyx_v_full_content_area = __pyx_t_1;
 
-  /* "dearcygui/layout.pyx":947
- *         cdef Vec2 cur_content_area, requested_size
+  /* "dearcygui/layout.pyx":1577
  * 
+ *         # Subtract our own offset so we only count the space to the right/below us
  *         full_content_area.x -= self.state.cur.pos_to_parent.x             # <<<<<<<<<<<<<<
  *         full_content_area.y -= self.state.cur.pos_to_parent.y
  * 
 */
   __pyx_v_full_content_area.x = (__pyx_v_full_content_area.x - __pyx_v_self->__pyx_base.state.cur.pos_to_parent.x);
 
-  /* "dearcygui/layout.pyx":948
- * 
+  /* "dearcygui/layout.pyx":1578
+ *         # Subtract our own offset so we only count the space to the right/below us
  *         full_content_area.x -= self.state.cur.pos_to_parent.x
  *         full_content_area.y -= self.state.cur.pos_to_parent.y             # <<<<<<<<<<<<<<
  * 
@@ -37839,18 +39592,18 @@ static Vec2 __pyx_f_9dearcygui_6layout_12WindowLayout_update_content_area(struct
 */
   __pyx_v_full_content_area.y = (__pyx_v_full_content_area.y - __pyx_v_self->__pyx_base.state.cur.pos_to_parent.y);
 
-  /* "dearcygui/layout.pyx":950
+  /* "dearcygui/layout.pyx":1580
  *         full_content_area.y -= self.state.cur.pos_to_parent.y
  * 
  *         requested_size = self.get_requested_size()             # <<<<<<<<<<<<<<
  * 
- *         if requested_size.x == 0:
+ *         # X axis: 0 = fill, negative = relative, positive = absolute
 */
   __pyx_v_requested_size = ((struct __pyx_vtabstruct_9dearcygui_6layout_WindowLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_vtab)->__pyx_base.get_requested_size(((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_self));
 
-  /* "dearcygui/layout.pyx":952
- *         requested_size = self.get_requested_size()
+  /* "dearcygui/layout.pyx":1583
  * 
+ *         # X axis: 0 = fill, negative = relative, positive = absolute
  *         if requested_size.x == 0:             # <<<<<<<<<<<<<<
  *             cur_content_area.x = full_content_area.x
  *         elif requested_size.x < 0:
@@ -37858,8 +39611,8 @@ static Vec2 __pyx_f_9dearcygui_6layout_12WindowLayout_update_content_area(struct
   __pyx_t_2 = (__pyx_v_requested_size.x == 0.0);
   if (__pyx_t_2) {
 
-    /* "dearcygui/layout.pyx":953
- * 
+    /* "dearcygui/layout.pyx":1584
+ *         # X axis: 0 = fill, negative = relative, positive = absolute
  *         if requested_size.x == 0:
  *             cur_content_area.x = full_content_area.x             # <<<<<<<<<<<<<<
  *         elif requested_size.x < 0:
@@ -37868,9 +39621,9 @@ static Vec2 __pyx_f_9dearcygui_6layout_12WindowLayout_update_content_area(struct
     __pyx_t_3 = __pyx_v_full_content_area.x;
     __pyx_v_cur_content_area.x = __pyx_t_3;
 
-    /* "dearcygui/layout.pyx":952
- *         requested_size = self.get_requested_size()
+    /* "dearcygui/layout.pyx":1583
  * 
+ *         # X axis: 0 = fill, negative = relative, positive = absolute
  *         if requested_size.x == 0:             # <<<<<<<<<<<<<<
  *             cur_content_area.x = full_content_area.x
  *         elif requested_size.x < 0:
@@ -37878,7 +39631,7 @@ static Vec2 __pyx_f_9dearcygui_6layout_12WindowLayout_update_content_area(struct
     goto __pyx_L3;
   }
 
-  /* "dearcygui/layout.pyx":954
+  /* "dearcygui/layout.pyx":1585
  *         if requested_size.x == 0:
  *             cur_content_area.x = full_content_area.x
  *         elif requested_size.x < 0:             # <<<<<<<<<<<<<<
@@ -37888,7 +39641,7 @@ static Vec2 __pyx_f_9dearcygui_6layout_12WindowLayout_update_content_area(struct
   __pyx_t_2 = (__pyx_v_requested_size.x < 0.0);
   if (__pyx_t_2) {
 
-    /* "dearcygui/layout.pyx":955
+    /* "dearcygui/layout.pyx":1586
  *             cur_content_area.x = full_content_area.x
  *         elif requested_size.x < 0:
  *             cur_content_area.x = full_content_area.x + requested_size.x             # <<<<<<<<<<<<<<
@@ -37897,7 +39650,7 @@ static Vec2 __pyx_f_9dearcygui_6layout_12WindowLayout_update_content_area(struct
 */
     __pyx_v_cur_content_area.x = (__pyx_v_full_content_area.x + __pyx_v_requested_size.x);
 
-    /* "dearcygui/layout.pyx":954
+    /* "dearcygui/layout.pyx":1585
  *         if requested_size.x == 0:
  *             cur_content_area.x = full_content_area.x
  *         elif requested_size.x < 0:             # <<<<<<<<<<<<<<
@@ -37907,12 +39660,12 @@ static Vec2 __pyx_f_9dearcygui_6layout_12WindowLayout_update_content_area(struct
     goto __pyx_L3;
   }
 
-  /* "dearcygui/layout.pyx":957
+  /* "dearcygui/layout.pyx":1588
  *             cur_content_area.x = full_content_area.x + requested_size.x
  *         else:
  *             cur_content_area.x = requested_size.x             # <<<<<<<<<<<<<<
  * 
- *         if requested_size.y == 0:
+ *         # Y axis: same convention
 */
   /*else*/ {
     __pyx_t_3 = __pyx_v_requested_size.x;
@@ -37920,9 +39673,9 @@ static Vec2 __pyx_f_9dearcygui_6layout_12WindowLayout_update_content_area(struct
   }
   __pyx_L3:;
 
-  /* "dearcygui/layout.pyx":959
- *             cur_content_area.x = requested_size.x
+  /* "dearcygui/layout.pyx":1591
  * 
+ *         # Y axis: same convention
  *         if requested_size.y == 0:             # <<<<<<<<<<<<<<
  *             cur_content_area.y = full_content_area.y
  *         elif requested_size.y < 0:
@@ -37930,8 +39683,8 @@ static Vec2 __pyx_f_9dearcygui_6layout_12WindowLayout_update_content_area(struct
   __pyx_t_2 = (__pyx_v_requested_size.y == 0.0);
   if (__pyx_t_2) {
 
-    /* "dearcygui/layout.pyx":960
- * 
+    /* "dearcygui/layout.pyx":1592
+ *         # Y axis: same convention
  *         if requested_size.y == 0:
  *             cur_content_area.y = full_content_area.y             # <<<<<<<<<<<<<<
  *         elif requested_size.y < 0:
@@ -37940,9 +39693,9 @@ static Vec2 __pyx_f_9dearcygui_6layout_12WindowLayout_update_content_area(struct
     __pyx_t_3 = __pyx_v_full_content_area.y;
     __pyx_v_cur_content_area.y = __pyx_t_3;
 
-    /* "dearcygui/layout.pyx":959
- *             cur_content_area.x = requested_size.x
+    /* "dearcygui/layout.pyx":1591
  * 
+ *         # Y axis: same convention
  *         if requested_size.y == 0:             # <<<<<<<<<<<<<<
  *             cur_content_area.y = full_content_area.y
  *         elif requested_size.y < 0:
@@ -37950,7 +39703,7 @@ static Vec2 __pyx_f_9dearcygui_6layout_12WindowLayout_update_content_area(struct
     goto __pyx_L4;
   }
 
-  /* "dearcygui/layout.pyx":961
+  /* "dearcygui/layout.pyx":1593
  *         if requested_size.y == 0:
  *             cur_content_area.y = full_content_area.y
  *         elif requested_size.y < 0:             # <<<<<<<<<<<<<<
@@ -37960,7 +39713,7 @@ static Vec2 __pyx_f_9dearcygui_6layout_12WindowLayout_update_content_area(struct
   __pyx_t_2 = (__pyx_v_requested_size.y < 0.0);
   if (__pyx_t_2) {
 
-    /* "dearcygui/layout.pyx":962
+    /* "dearcygui/layout.pyx":1594
  *             cur_content_area.y = full_content_area.y
  *         elif requested_size.y < 0:
  *             cur_content_area.y = full_content_area.y + requested_size.y             # <<<<<<<<<<<<<<
@@ -37969,7 +39722,7 @@ static Vec2 __pyx_f_9dearcygui_6layout_12WindowLayout_update_content_area(struct
 */
     __pyx_v_cur_content_area.y = (__pyx_v_full_content_area.y + __pyx_v_requested_size.y);
 
-    /* "dearcygui/layout.pyx":961
+    /* "dearcygui/layout.pyx":1593
  *         if requested_size.y == 0:
  *             cur_content_area.y = full_content_area.y
  *         elif requested_size.y < 0:             # <<<<<<<<<<<<<<
@@ -37979,12 +39732,12 @@ static Vec2 __pyx_f_9dearcygui_6layout_12WindowLayout_update_content_area(struct
     goto __pyx_L4;
   }
 
-  /* "dearcygui/layout.pyx":964
+  /* "dearcygui/layout.pyx":1596
  *             cur_content_area.y = full_content_area.y + requested_size.y
  *         else:
  *             cur_content_area.y = requested_size.y             # <<<<<<<<<<<<<<
  * 
- *         cur_content_area.x = max(0, cur_content_area.x)
+ *         # Never negative  clamp to zero
 */
   /*else*/ {
     __pyx_t_3 = __pyx_v_requested_size.y;
@@ -37992,9 +39745,9 @@ static Vec2 __pyx_f_9dearcygui_6layout_12WindowLayout_update_content_area(struct
   }
   __pyx_L4:;
 
-  /* "dearcygui/layout.pyx":966
- *             cur_content_area.y = requested_size.y
+  /* "dearcygui/layout.pyx":1599
  * 
+ *         # Never negative  clamp to zero
  *         cur_content_area.x = max(0, cur_content_area.x)             # <<<<<<<<<<<<<<
  *         cur_content_area.y = max(0, cur_content_area.y)
  *         self.state.cur.content_region_size = cur_content_area
@@ -38009,8 +39762,8 @@ static Vec2 __pyx_f_9dearcygui_6layout_12WindowLayout_update_content_area(struct
   }
   __pyx_v_cur_content_area.x = __pyx_t_5;
 
-  /* "dearcygui/layout.pyx":967
- * 
+  /* "dearcygui/layout.pyx":1600
+ *         # Never negative  clamp to zero
  *         cur_content_area.x = max(0, cur_content_area.x)
  *         cur_content_area.y = max(0, cur_content_area.y)             # <<<<<<<<<<<<<<
  *         self.state.cur.content_region_size = cur_content_area
@@ -38026,7 +39779,7 @@ static Vec2 __pyx_f_9dearcygui_6layout_12WindowLayout_update_content_area(struct
   }
   __pyx_v_cur_content_area.y = __pyx_t_3;
 
-  /* "dearcygui/layout.pyx":968
+  /* "dearcygui/layout.pyx":1601
  *         cur_content_area.x = max(0, cur_content_area.x)
  *         cur_content_area.y = max(0, cur_content_area.y)
  *         self.state.cur.content_region_size = cur_content_area             # <<<<<<<<<<<<<<
@@ -38035,7 +39788,7 @@ static Vec2 __pyx_f_9dearcygui_6layout_12WindowLayout_update_content_area(struct
 */
   __pyx_v_self->__pyx_base.state.cur.content_region_size = __pyx_v_cur_content_area;
 
-  /* "dearcygui/layout.pyx":969
+  /* "dearcygui/layout.pyx":1602
  *         cur_content_area.y = max(0, cur_content_area.y)
  *         self.state.cur.content_region_size = cur_content_area
  *         return cur_content_area             # <<<<<<<<<<<<<<
@@ -38045,12 +39798,12 @@ static Vec2 __pyx_f_9dearcygui_6layout_12WindowLayout_update_content_area(struct
   __pyx_r = __pyx_v_cur_content_area;
   goto __pyx_L0;
 
-  /* "dearcygui/layout.pyx":942
+  /* "dearcygui/layout.pyx":1562
  * 
  *     # final enables inlining
  *     @cython.final             # <<<<<<<<<<<<<<
  *     cdef Vec2 update_content_area(self) noexcept nogil:
- *         cdef Vec2 full_content_area = self.context.viewport.parent_size
+ *         """
 */
 
   /* function exit code */
@@ -38058,12 +39811,12 @@ static Vec2 __pyx_f_9dearcygui_6layout_12WindowLayout_update_content_area(struct
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":971
+/* "dearcygui/layout.pyx":1604
  *         return cur_content_area
  * 
  *     cdef bint check_change(self) noexcept nogil:             # <<<<<<<<<<<<<<
- *         cdef Vec2 cur_content_area = self.state.cur.content_region_size
- *         cdef Vec2 prev_content_area = self.state.prev.content_region_size
+ *         """
+ *         Return True if the layout needs to lock its children and redraw.
 */
 
 static int __pyx_f_9dearcygui_6layout_12WindowLayout_check_change(struct __pyx_obj_9dearcygui_6layout_WindowLayout *__pyx_v_self) {
@@ -38075,9 +39828,9 @@ static int __pyx_f_9dearcygui_6layout_12WindowLayout_check_change(struct __pyx_o
   int __pyx_t_2;
   int __pyx_t_3;
 
-  /* "dearcygui/layout.pyx":972
- * 
- *     cdef bint check_change(self) noexcept nogil:
+  /* "dearcygui/layout.pyx":1614
+ *           - _force_update was set (e.g. by update_layout() or draw_child())
+ *         """
  *         cdef Vec2 cur_content_area = self.state.cur.content_region_size             # <<<<<<<<<<<<<<
  *         cdef Vec2 prev_content_area = self.state.prev.content_region_size
  *         cdef bint changed = self.requested_height.has_changed()
@@ -38085,8 +39838,8 @@ static int __pyx_f_9dearcygui_6layout_12WindowLayout_check_change(struct __pyx_o
   __pyx_t_1 = __pyx_v_self->__pyx_base.state.cur.content_region_size;
   __pyx_v_cur_content_area = __pyx_t_1;
 
-  /* "dearcygui/layout.pyx":973
- *     cdef bint check_change(self) noexcept nogil:
+  /* "dearcygui/layout.pyx":1615
+ *         """
  *         cdef Vec2 cur_content_area = self.state.cur.content_region_size
  *         cdef Vec2 prev_content_area = self.state.prev.content_region_size             # <<<<<<<<<<<<<<
  *         cdef bint changed = self.requested_height.has_changed()
@@ -38095,7 +39848,7 @@ static int __pyx_f_9dearcygui_6layout_12WindowLayout_check_change(struct __pyx_o
   __pyx_t_1 = __pyx_v_self->__pyx_base.state.prev.content_region_size;
   __pyx_v_prev_content_area = __pyx_t_1;
 
-  /* "dearcygui/layout.pyx":974
+  /* "dearcygui/layout.pyx":1616
  *         cdef Vec2 cur_content_area = self.state.cur.content_region_size
  *         cdef Vec2 prev_content_area = self.state.prev.content_region_size
  *         cdef bint changed = self.requested_height.has_changed()             # <<<<<<<<<<<<<<
@@ -38104,7 +39857,7 @@ static int __pyx_f_9dearcygui_6layout_12WindowLayout_check_change(struct __pyx_o
 */
   __pyx_v_changed = __pyx_v_self->__pyx_base.requested_height.has_changed();
 
-  /* "dearcygui/layout.pyx":975
+  /* "dearcygui/layout.pyx":1617
  *         cdef Vec2 prev_content_area = self.state.prev.content_region_size
  *         cdef bint changed = self.requested_height.has_changed()
  *         if self.requested_width.has_changed():             # <<<<<<<<<<<<<<
@@ -38114,7 +39867,7 @@ static int __pyx_f_9dearcygui_6layout_12WindowLayout_check_change(struct __pyx_o
   __pyx_t_2 = __pyx_v_self->__pyx_base.requested_width.has_changed();
   if (__pyx_t_2) {
 
-    /* "dearcygui/layout.pyx":976
+    /* "dearcygui/layout.pyx":1618
  *         cdef bint changed = self.requested_height.has_changed()
  *         if self.requested_width.has_changed():
  *             changed = True             # <<<<<<<<<<<<<<
@@ -38123,7 +39876,7 @@ static int __pyx_f_9dearcygui_6layout_12WindowLayout_check_change(struct __pyx_o
 */
     __pyx_v_changed = 1;
 
-    /* "dearcygui/layout.pyx":975
+    /* "dearcygui/layout.pyx":1617
  *         cdef Vec2 prev_content_area = self.state.prev.content_region_size
  *         cdef bint changed = self.requested_height.has_changed()
  *         if self.requested_width.has_changed():             # <<<<<<<<<<<<<<
@@ -38132,7 +39885,7 @@ static int __pyx_f_9dearcygui_6layout_12WindowLayout_check_change(struct __pyx_o
 */
   }
 
-  /* "dearcygui/layout.pyx":977
+  /* "dearcygui/layout.pyx":1619
  *         if self.requested_width.has_changed():
  *             changed = True
  *         if cur_content_area.x != prev_content_area.x or \             # <<<<<<<<<<<<<<
@@ -38146,7 +39899,7 @@ static int __pyx_f_9dearcygui_6layout_12WindowLayout_check_change(struct __pyx_o
     goto __pyx_L5_bool_binop_done;
   }
 
-  /* "dearcygui/layout.pyx":978
+  /* "dearcygui/layout.pyx":1620
  *             changed = True
  *         if cur_content_area.x != prev_content_area.x or \
  *            cur_content_area.y != prev_content_area.y or \             # <<<<<<<<<<<<<<
@@ -38160,7 +39913,7 @@ static int __pyx_f_9dearcygui_6layout_12WindowLayout_check_change(struct __pyx_o
     goto __pyx_L5_bool_binop_done;
   }
 
-  /* "dearcygui/layout.pyx":979
+  /* "dearcygui/layout.pyx":1621
  *         if cur_content_area.x != prev_content_area.x or \
  *            cur_content_area.y != prev_content_area.y or \
  *            self._previous_last_child != <PyObject*>self.last_window_child or \             # <<<<<<<<<<<<<<
@@ -38174,12 +39927,12 @@ static int __pyx_f_9dearcygui_6layout_12WindowLayout_check_change(struct __pyx_o
     goto __pyx_L5_bool_binop_done;
   }
 
-  /* "dearcygui/layout.pyx":980
+  /* "dearcygui/layout.pyx":1622
  *            cur_content_area.y != prev_content_area.y or \
  *            self._previous_last_child != <PyObject*>self.last_window_child or \
  *            self._force_update or changed:             # <<<<<<<<<<<<<<
  *             changed = True
- *             self._previous_last_child = <PyObject*>self.last_window_child
+ *             # Update sentinel so we detect the *next* mutation
 */
   if (!__pyx_v_self->_force_update) {
   } else {
@@ -38189,7 +39942,7 @@ static int __pyx_f_9dearcygui_6layout_12WindowLayout_check_change(struct __pyx_o
   __pyx_t_2 = __pyx_v_changed;
   __pyx_L5_bool_binop_done:;
 
-  /* "dearcygui/layout.pyx":977
+  /* "dearcygui/layout.pyx":1619
  *         if self.requested_width.has_changed():
  *             changed = True
  *         if cur_content_area.x != prev_content_area.x or \             # <<<<<<<<<<<<<<
@@ -38198,26 +39951,26 @@ static int __pyx_f_9dearcygui_6layout_12WindowLayout_check_change(struct __pyx_o
 */
   if (__pyx_t_2) {
 
-    /* "dearcygui/layout.pyx":981
+    /* "dearcygui/layout.pyx":1623
  *            self._previous_last_child != <PyObject*>self.last_window_child or \
  *            self._force_update or changed:
  *             changed = True             # <<<<<<<<<<<<<<
+ *             # Update sentinel so we detect the *next* mutation
  *             self._previous_last_child = <PyObject*>self.last_window_child
- *             self._force_update = False
 */
     __pyx_v_changed = 1;
 
-    /* "dearcygui/layout.pyx":982
- *            self._force_update or changed:
+    /* "dearcygui/layout.pyx":1625
  *             changed = True
+ *             # Update sentinel so we detect the *next* mutation
  *             self._previous_last_child = <PyObject*>self.last_window_child             # <<<<<<<<<<<<<<
  *             self._force_update = False
  *         return changed
 */
     __pyx_v_self->_previous_last_child = ((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.last_window_child);
 
-    /* "dearcygui/layout.pyx":983
- *             changed = True
+    /* "dearcygui/layout.pyx":1626
+ *             # Update sentinel so we detect the *next* mutation
  *             self._previous_last_child = <PyObject*>self.last_window_child
  *             self._force_update = False             # <<<<<<<<<<<<<<
  *         return changed
@@ -38225,7 +39978,7 @@ static int __pyx_f_9dearcygui_6layout_12WindowLayout_check_change(struct __pyx_o
 */
     __pyx_v_self->_force_update = 0;
 
-    /* "dearcygui/layout.pyx":977
+    /* "dearcygui/layout.pyx":1619
  *         if self.requested_width.has_changed():
  *             changed = True
  *         if cur_content_area.x != prev_content_area.x or \             # <<<<<<<<<<<<<<
@@ -38234,7 +39987,7 @@ static int __pyx_f_9dearcygui_6layout_12WindowLayout_check_change(struct __pyx_o
 */
   }
 
-  /* "dearcygui/layout.pyx":984
+  /* "dearcygui/layout.pyx":1627
  *             self._previous_last_child = <PyObject*>self.last_window_child
  *             self._force_update = False
  *         return changed             # <<<<<<<<<<<<<<
@@ -38244,12 +39997,12 @@ static int __pyx_f_9dearcygui_6layout_12WindowLayout_check_change(struct __pyx_o
   __pyx_r = __pyx_v_changed;
   goto __pyx_L0;
 
-  /* "dearcygui/layout.pyx":971
+  /* "dearcygui/layout.pyx":1604
  *         return cur_content_area
  * 
  *     cdef bint check_change(self) noexcept nogil:             # <<<<<<<<<<<<<<
- *         cdef Vec2 cur_content_area = self.state.cur.content_region_size
- *         cdef Vec2 prev_content_area = self.state.prev.content_region_size
+ *         """
+ *         Return True if the layout needs to lock its children and redraw.
 */
 
   /* function exit code */
@@ -38257,30 +40010,30 @@ static int __pyx_f_9dearcygui_6layout_12WindowLayout_check_change(struct __pyx_o
   return __pyx_r;
 }
 
-/* "dearcygui/layout.pyx":986
+/* "dearcygui/layout.pyx":1629
  *         return changed
  * 
  *     @cython.final             # <<<<<<<<<<<<<<
  *     cdef void draw_child(self, uiItem child) noexcept nogil:
- *         #if isinstance(child, Window):
+ *         """
 */
 
 static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw_child(struct __pyx_obj_9dearcygui_6layout_WindowLayout *__pyx_v_self, struct __pyx_obj_9dearcygui_4core_uiItem *__pyx_v_child) {
   int __pyx_t_1;
   int __pyx_t_2;
 
-  /* "dearcygui/layout.pyx":990
- *         #if isinstance(child, Window):
- *         #    (<Window>child).pos_update_requested = True -> handled by user setting the position
+  /* "dearcygui/layout.pyx":1640
+ *         the bounding-box aggregation in draw_children() stays accurate.
+ *         """
  *         child.draw()             # <<<<<<<<<<<<<<
- *         if child.state.cur.rect_size.x != child.state.prev.rect_size.x or \
- *            child.state.cur.rect_size.y != child.state.prev.rect_size.y or \
+ *         # If the child moved or resized, propagate the change upward so the
+ *         # viewport redraws and draw_children() re-computes the aggregate bbox.
 */
   ((struct __pyx_vtabstruct_9dearcygui_4core_uiItem *)__pyx_v_child->__pyx_base.__pyx_vtab)->draw(__pyx_v_child);
 
-  /* "dearcygui/layout.pyx":991
- *         #    (<Window>child).pos_update_requested = True -> handled by user setting the position
- *         child.draw()
+  /* "dearcygui/layout.pyx":1643
+ *         # If the child moved or resized, propagate the change upward so the
+ *         # viewport redraws and draw_children() re-computes the aggregate bbox.
  *         if child.state.cur.rect_size.x != child.state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
  *            child.state.cur.rect_size.y != child.state.prev.rect_size.y or \
  *            child.state.cur.pos_to_viewport.x != child.state.prev.pos_to_viewport.x or \
@@ -38292,8 +40045,8 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw_child(struct __pyx_ob
     goto __pyx_L4_bool_binop_done;
   }
 
-  /* "dearcygui/layout.pyx":992
- *         child.draw()
+  /* "dearcygui/layout.pyx":1644
+ *         # viewport redraws and draw_children() re-computes the aggregate bbox.
  *         if child.state.cur.rect_size.x != child.state.prev.rect_size.x or \
  *            child.state.cur.rect_size.y != child.state.prev.rect_size.y or \             # <<<<<<<<<<<<<<
  *            child.state.cur.pos_to_viewport.x != child.state.prev.pos_to_viewport.x or \
@@ -38306,12 +40059,12 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw_child(struct __pyx_ob
     goto __pyx_L4_bool_binop_done;
   }
 
-  /* "dearcygui/layout.pyx":993
+  /* "dearcygui/layout.pyx":1645
  *         if child.state.cur.rect_size.x != child.state.prev.rect_size.x or \
  *            child.state.cur.rect_size.y != child.state.prev.rect_size.y or \
  *            child.state.cur.pos_to_viewport.x != child.state.prev.pos_to_viewport.x or \             # <<<<<<<<<<<<<<
  *            child.state.cur.pos_to_viewport.y != child.state.prev.pos_to_viewport.y:
- *             child.context.viewport.redraw_needed = True
+ *             child.context.viewport.ask_immediate_redraw()
 */
   __pyx_t_2 = (__pyx_v_child->state.cur.pos_to_viewport.x != __pyx_v_child->state.prev.pos_to_viewport.x);
   if (!__pyx_t_2) {
@@ -38320,65 +40073,65 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw_child(struct __pyx_ob
     goto __pyx_L4_bool_binop_done;
   }
 
-  /* "dearcygui/layout.pyx":994
+  /* "dearcygui/layout.pyx":1646
  *            child.state.cur.rect_size.y != child.state.prev.rect_size.y or \
  *            child.state.cur.pos_to_viewport.x != child.state.prev.pos_to_viewport.x or \
  *            child.state.cur.pos_to_viewport.y != child.state.prev.pos_to_viewport.y:             # <<<<<<<<<<<<<<
- *             child.context.viewport.redraw_needed = True
+ *             child.context.viewport.ask_immediate_redraw()
  *             self._force_update = True
 */
   __pyx_t_2 = (__pyx_v_child->state.cur.pos_to_viewport.y != __pyx_v_child->state.prev.pos_to_viewport.y);
   __pyx_t_1 = __pyx_t_2;
   __pyx_L4_bool_binop_done:;
 
-  /* "dearcygui/layout.pyx":991
- *         #    (<Window>child).pos_update_requested = True -> handled by user setting the position
- *         child.draw()
+  /* "dearcygui/layout.pyx":1643
+ *         # If the child moved or resized, propagate the change upward so the
+ *         # viewport redraws and draw_children() re-computes the aggregate bbox.
  *         if child.state.cur.rect_size.x != child.state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
  *            child.state.cur.rect_size.y != child.state.prev.rect_size.y or \
  *            child.state.cur.pos_to_viewport.x != child.state.prev.pos_to_viewport.x or \
 */
   if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":995
+    /* "dearcygui/layout.pyx":1647
  *            child.state.cur.pos_to_viewport.x != child.state.prev.pos_to_viewport.x or \
  *            child.state.cur.pos_to_viewport.y != child.state.prev.pos_to_viewport.y:
- *             child.context.viewport.redraw_needed = True             # <<<<<<<<<<<<<<
+ *             child.context.viewport.ask_immediate_redraw()             # <<<<<<<<<<<<<<
  *             self._force_update = True
  * 
 */
-    __pyx_v_child->__pyx_base.context->viewport->redraw_needed = 1;
+    ((struct __pyx_vtabstruct_9dearcygui_4core_Viewport *)__pyx_v_child->__pyx_base.context->viewport->__pyx_base.__pyx_vtab)->ask_immediate_redraw(__pyx_v_child->__pyx_base.context->viewport);
 
-    /* "dearcygui/layout.pyx":996
+    /* "dearcygui/layout.pyx":1648
  *            child.state.cur.pos_to_viewport.y != child.state.prev.pos_to_viewport.y:
- *             child.context.viewport.redraw_needed = True
+ *             child.context.viewport.ask_immediate_redraw()
  *             self._force_update = True             # <<<<<<<<<<<<<<
  * 
  *     @cython.final
 */
     __pyx_v_self->_force_update = 1;
 
-    /* "dearcygui/layout.pyx":991
- *         #    (<Window>child).pos_update_requested = True -> handled by user setting the position
- *         child.draw()
+    /* "dearcygui/layout.pyx":1643
+ *         # If the child moved or resized, propagate the change upward so the
+ *         # viewport redraws and draw_children() re-computes the aggregate bbox.
  *         if child.state.cur.rect_size.x != child.state.prev.rect_size.x or \             # <<<<<<<<<<<<<<
  *            child.state.cur.rect_size.y != child.state.prev.rect_size.y or \
  *            child.state.cur.pos_to_viewport.x != child.state.prev.pos_to_viewport.x or \
 */
   }
 
-  /* "dearcygui/layout.pyx":986
+  /* "dearcygui/layout.pyx":1629
  *         return changed
  * 
  *     @cython.final             # <<<<<<<<<<<<<<
  *     cdef void draw_child(self, uiItem child) noexcept nogil:
- *         #if isinstance(child, Window):
+ *         """
 */
 
   /* function exit code */
 }
 
-/* "dearcygui/layout.pyx":998
+/* "dearcygui/layout.pyx":1650
  *             self._force_update = True
  * 
  *     @cython.final             # <<<<<<<<<<<<<<
@@ -38397,8 +40150,8 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw_children(struct __pyx
   int __pyx_clineno = 0;
   PyGILState_STATE __pyx_gilstate_save;
 
-  /* "dearcygui/layout.pyx":1004
- *         any change relative to expected sizes
+  /* "dearcygui/layout.pyx":1660
+ *         contains all positioned children, anchored at pos_to_viewport.
  *         """
  *         if self.last_window_child is None:             # <<<<<<<<<<<<<<
  *             return
@@ -38407,17 +40160,17 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw_children(struct __pyx
   __pyx_t_1 = (((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.last_window_child) == Py_None);
   if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":1005
+    /* "dearcygui/layout.pyx":1661
  *         """
  *         if self.last_window_child is None:
  *             return             # <<<<<<<<<<<<<<
  * 
- *         cdef Vec2 bot_right = self.state.cur.pos_to_viewport
+ *         # Start the bounding box at the layout's own top-left corner;
 */
     goto __pyx_L0;
 
-    /* "dearcygui/layout.pyx":1004
- *         any change relative to expected sizes
+    /* "dearcygui/layout.pyx":1660
+ *         contains all positioned children, anchored at pos_to_viewport.
  *         """
  *         if self.last_window_child is None:             # <<<<<<<<<<<<<<
  *             return
@@ -38425,27 +40178,27 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw_children(struct __pyx
 */
   }
 
-  /* "dearcygui/layout.pyx":1007
- *             return
- * 
+  /* "dearcygui/layout.pyx":1665
+ *         # Start the bounding box at the layout's own top-left corner;
+ *         # it will expand rightward and downward as children are drawn.
  *         cdef Vec2 bot_right = self.state.cur.pos_to_viewport             # <<<<<<<<<<<<<<
  * 
- *         cdef PyObject *child = <PyObject*> self.last_window_child
+ *         # Walk forward from the first (oldest) child
 */
   __pyx_t_2 = __pyx_v_self->__pyx_base.state.cur.pos_to_viewport;
   __pyx_v_bot_right = __pyx_t_2;
 
-  /* "dearcygui/layout.pyx":1009
- *         cdef Vec2 bot_right = self.state.cur.pos_to_viewport
+  /* "dearcygui/layout.pyx":1668
  * 
+ *         # Walk forward from the first (oldest) child
  *         cdef PyObject *child = <PyObject*> self.last_window_child             # <<<<<<<<<<<<<<
  *         while (<uiItem>child).prev_sibling is not None:
  *             child = <PyObject *>(<uiItem>child).prev_sibling
 */
   __pyx_v_child = ((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.last_window_child);
 
-  /* "dearcygui/layout.pyx":1010
- * 
+  /* "dearcygui/layout.pyx":1669
+ *         # Walk forward from the first (oldest) child
  *         cdef PyObject *child = <PyObject*> self.last_window_child
  *         while (<uiItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
  *             child = <PyObject *>(<uiItem>child).prev_sibling
@@ -38455,7 +40208,7 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw_children(struct __pyx
     __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "dearcygui/layout.pyx":1011
+    /* "dearcygui/layout.pyx":1670
  *         cdef PyObject *child = <PyObject*> self.last_window_child
  *         while (<uiItem>child).prev_sibling is not None:
  *             child = <PyObject *>(<uiItem>child).prev_sibling             # <<<<<<<<<<<<<<
@@ -38465,31 +40218,31 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw_children(struct __pyx
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.prev_sibling);
   }
 
-  /* "dearcygui/layout.pyx":1012
+  /* "dearcygui/layout.pyx":1671
  *         while (<uiItem>child).prev_sibling is not None:
  *             child = <PyObject *>(<uiItem>child).prev_sibling
  *         while (<uiItem>child) is not None:             # <<<<<<<<<<<<<<
  *             self.draw_child(<uiItem>child)
- *             if (<uiItem>child).state.cap.has_rect_size and (<uiItem>child).state.cap.has_position:
+ *             # Only items with both a size and a known position contribute to the bbox
 */
   while (1) {
     __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "dearcygui/layout.pyx":1013
+    /* "dearcygui/layout.pyx":1672
  *             child = <PyObject *>(<uiItem>child).prev_sibling
  *         while (<uiItem>child) is not None:
  *             self.draw_child(<uiItem>child)             # <<<<<<<<<<<<<<
+ *             # Only items with both a size and a known position contribute to the bbox
  *             if (<uiItem>child).state.cap.has_rect_size and (<uiItem>child).state.cap.has_position:
- *                 # Update the bottom right corner
 */
     __pyx_f_9dearcygui_6layout_12WindowLayout_draw_child(__pyx_v_self, ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child));
 
-    /* "dearcygui/layout.pyx":1014
- *         while (<uiItem>child) is not None:
+    /* "dearcygui/layout.pyx":1674
  *             self.draw_child(<uiItem>child)
+ *             # Only items with both a size and a known position contribute to the bbox
  *             if (<uiItem>child).state.cap.has_rect_size and (<uiItem>child).state.cap.has_position:             # <<<<<<<<<<<<<<
- *                 # Update the bottom right corner
+ *                 # Expand the bounding box to include this child's bottom-right corner
  *                 bot_right.y = fmax(bot_right.y, (<uiItem>child).state.cur.pos_to_viewport.y + (<uiItem>child).state.cur.rect_size.y)
 */
     if (((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->state.cap.has_rect_size) {
@@ -38501,9 +40254,9 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw_children(struct __pyx
     __pyx_L9_bool_binop_done:;
     if (__pyx_t_1) {
 
-      /* "dearcygui/layout.pyx":1016
+      /* "dearcygui/layout.pyx":1676
  *             if (<uiItem>child).state.cap.has_rect_size and (<uiItem>child).state.cap.has_position:
- *                 # Update the bottom right corner
+ *                 # Expand the bounding box to include this child's bottom-right corner
  *                 bot_right.y = fmax(bot_right.y, (<uiItem>child).state.cur.pos_to_viewport.y + (<uiItem>child).state.cur.rect_size.y)             # <<<<<<<<<<<<<<
  *                 bot_right.x = fmax(bot_right.x, (<uiItem>child).state.cur.pos_to_viewport.x + (<uiItem>child).state.cur.rect_size.x)
  *             child = <PyObject *>(<uiItem>child).next_sibling
@@ -38514,12 +40267,12 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw_children(struct __pyx
         PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
         __Pyx_CppExn2PyErr();
         __Pyx_PyGILState_Release(__pyx_gilstate_save);
-        __PYX_ERR(0, 1016, __pyx_L1_error)
+        __PYX_ERR(0, 1676, __pyx_L1_error)
       }
       __pyx_v_bot_right.y = __pyx_t_3;
 
-      /* "dearcygui/layout.pyx":1017
- *                 # Update the bottom right corner
+      /* "dearcygui/layout.pyx":1677
+ *                 # Expand the bounding box to include this child's bottom-right corner
  *                 bot_right.y = fmax(bot_right.y, (<uiItem>child).state.cur.pos_to_viewport.y + (<uiItem>child).state.cur.rect_size.y)
  *                 bot_right.x = fmax(bot_right.x, (<uiItem>child).state.cur.pos_to_viewport.x + (<uiItem>child).state.cur.rect_size.x)             # <<<<<<<<<<<<<<
  *             child = <PyObject *>(<uiItem>child).next_sibling
@@ -38531,39 +40284,39 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw_children(struct __pyx
         PyGILState_STATE __pyx_gilstate_save = __Pyx_PyGILState_Ensure();
         __Pyx_CppExn2PyErr();
         __Pyx_PyGILState_Release(__pyx_gilstate_save);
-        __PYX_ERR(0, 1017, __pyx_L1_error)
+        __PYX_ERR(0, 1677, __pyx_L1_error)
       }
       __pyx_v_bot_right.x = __pyx_t_3;
 
-      /* "dearcygui/layout.pyx":1014
- *         while (<uiItem>child) is not None:
+      /* "dearcygui/layout.pyx":1674
  *             self.draw_child(<uiItem>child)
+ *             # Only items with both a size and a known position contribute to the bbox
  *             if (<uiItem>child).state.cap.has_rect_size and (<uiItem>child).state.cap.has_position:             # <<<<<<<<<<<<<<
- *                 # Update the bottom right corner
+ *                 # Expand the bounding box to include this child's bottom-right corner
  *                 bot_right.y = fmax(bot_right.y, (<uiItem>child).state.cur.pos_to_viewport.y + (<uiItem>child).state.cur.rect_size.y)
 */
     }
 
-    /* "dearcygui/layout.pyx":1018
+    /* "dearcygui/layout.pyx":1678
  *                 bot_right.y = fmax(bot_right.y, (<uiItem>child).state.cur.pos_to_viewport.y + (<uiItem>child).state.cur.rect_size.y)
  *                 bot_right.x = fmax(bot_right.x, (<uiItem>child).state.cur.pos_to_viewport.x + (<uiItem>child).state.cur.rect_size.x)
  *             child = <PyObject *>(<uiItem>child).next_sibling             # <<<<<<<<<<<<<<
  * 
- *         self.state.cur.rect_size = make_Vec2(bot_right.x - self.state.cur.pos_to_viewport.x,
+ *         # Convert the absolute bottom-right corner back to a size relative to us
 */
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.next_sibling);
   }
 
-  /* "dearcygui/layout.pyx":1020
- *             child = <PyObject *>(<uiItem>child).next_sibling
+  /* "dearcygui/layout.pyx":1681
  * 
+ *         # Convert the absolute bottom-right corner back to a size relative to us
  *         self.state.cur.rect_size = make_Vec2(bot_right.x - self.state.cur.pos_to_viewport.x,             # <<<<<<<<<<<<<<
  *                                              bot_right.y - self.state.cur.pos_to_viewport.y)
  * 
 */
   __pyx_v_self->__pyx_base.state.cur.rect_size = __pyx_f_9dearcygui_7c_types_make_Vec2((__pyx_v_bot_right.x - __pyx_v_self->__pyx_base.state.cur.pos_to_viewport.x), (__pyx_v_bot_right.y - __pyx_v_self->__pyx_base.state.cur.pos_to_viewport.y));
 
-  /* "dearcygui/layout.pyx":998
+  /* "dearcygui/layout.pyx":1650
  *             self._force_update = True
  * 
  *     @cython.final             # <<<<<<<<<<<<<<
@@ -38580,12 +40333,12 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw_children(struct __pyx
   __pyx_L0:;
 }
 
-/* "dearcygui/layout.pyx":1023
+/* "dearcygui/layout.pyx":1684
  *                                              bot_right.y - self.state.cur.pos_to_viewport.y)
  * 
  *     cdef void draw(self) noexcept nogil:             # <<<<<<<<<<<<<<
+ *         # Nothing to do without children
  *         if self.last_window_child is None:
- *             return
 */
 
 static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dearcygui_6layout_WindowLayout *__pyx_v_self) {
@@ -38611,9 +40364,9 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
   int __pyx_t_8;
   PyObject *__pyx_t_9;
 
-  /* "dearcygui/layout.pyx":1024
- * 
+  /* "dearcygui/layout.pyx":1686
  *     cdef void draw(self) noexcept nogil:
+ *         # Nothing to do without children
  *         if self.last_window_child is None:             # <<<<<<<<<<<<<<
  *             return
  * 
@@ -38621,27 +40374,27 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
   __pyx_t_1 = (((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.last_window_child) == Py_None);
   if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":1025
- *     cdef void draw(self) noexcept nogil:
+    /* "dearcygui/layout.pyx":1687
+ *         # Nothing to do without children
  *         if self.last_window_child is None:
  *             return             # <<<<<<<<<<<<<<
  * 
- *         if not(self._show):
+ *         # Hidden: propagate the hide event to children when the visibility
 */
     goto __pyx_L0;
 
-    /* "dearcygui/layout.pyx":1024
- * 
+    /* "dearcygui/layout.pyx":1686
  *     cdef void draw(self) noexcept nogil:
+ *         # Nothing to do without children
  *         if self.last_window_child is None:             # <<<<<<<<<<<<<<
  *             return
  * 
 */
   }
 
-  /* "dearcygui/layout.pyx":1027
- *             return
- * 
+  /* "dearcygui/layout.pyx":1691
+ *         # Hidden: propagate the hide event to children when the visibility
+ *         # state just changed, then bail out without drawing anything.
  *         if not(self._show):             # <<<<<<<<<<<<<<
  *             if self._show_update_requested:
  *                 self.set_previous_states()
@@ -38649,8 +40402,8 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
   __pyx_t_1 = (!(__pyx_v_self->__pyx_base._show != 0));
   if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":1028
- * 
+    /* "dearcygui/layout.pyx":1692
+ *         # state just changed, then bail out without drawing anything.
  *         if not(self._show):
  *             if self._show_update_requested:             # <<<<<<<<<<<<<<
  *                 self.set_previous_states()
@@ -38658,7 +40411,7 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
     if (__pyx_v_self->__pyx_base._show_update_requested) {
 
-      /* "dearcygui/layout.pyx":1029
+      /* "dearcygui/layout.pyx":1693
  *         if not(self._show):
  *             if self._show_update_requested:
  *                 self.set_previous_states()             # <<<<<<<<<<<<<<
@@ -38667,7 +40420,7 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
       ((struct __pyx_vtabstruct_9dearcygui_6layout_WindowLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_vtab)->__pyx_base.__pyx_base.set_previous_states(((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_self));
 
-      /* "dearcygui/layout.pyx":1030
+      /* "dearcygui/layout.pyx":1694
  *             if self._show_update_requested:
  *                 self.set_previous_states()
  *                 self._set_hidden_and_propagate_to_children_with_handlers()             # <<<<<<<<<<<<<<
@@ -38676,7 +40429,7 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
       ((struct __pyx_vtabstruct_9dearcygui_6layout_WindowLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_vtab)->__pyx_base.__pyx_base._set_hidden_and_propagate_to_children_with_handlers(((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_self));
 
-      /* "dearcygui/layout.pyx":1031
+      /* "dearcygui/layout.pyx":1695
  *                 self.set_previous_states()
  *                 self._set_hidden_and_propagate_to_children_with_handlers()
  *                 self._show_update_requested = False             # <<<<<<<<<<<<<<
@@ -38685,8 +40438,8 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
       __pyx_v_self->__pyx_base._show_update_requested = 0;
 
-      /* "dearcygui/layout.pyx":1028
- * 
+      /* "dearcygui/layout.pyx":1692
+ *         # state just changed, then bail out without drawing anything.
  *         if not(self._show):
  *             if self._show_update_requested:             # <<<<<<<<<<<<<<
  *                 self.set_previous_states()
@@ -38694,27 +40447,27 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
     }
 
-    /* "dearcygui/layout.pyx":1032
+    /* "dearcygui/layout.pyx":1696
  *                 self._set_hidden_and_propagate_to_children_with_handlers()
  *                 self._show_update_requested = False
  *             return             # <<<<<<<<<<<<<<
  * 
- *         cdef float original_scale = self.context.viewport.global_scale
+ *         # Apply per-item DPI scaling for the duration of this subtree
 */
     goto __pyx_L0;
 
-    /* "dearcygui/layout.pyx":1027
- *             return
- * 
+    /* "dearcygui/layout.pyx":1691
+ *         # Hidden: propagate the hide event to children when the visibility
+ *         # state just changed, then bail out without drawing anything.
  *         if not(self._show):             # <<<<<<<<<<<<<<
  *             if self._show_update_requested:
  *                 self.set_previous_states()
 */
   }
 
-  /* "dearcygui/layout.pyx":1034
- *             return
+  /* "dearcygui/layout.pyx":1699
  * 
+ *         # Apply per-item DPI scaling for the duration of this subtree
  *         cdef float original_scale = self.context.viewport.global_scale             # <<<<<<<<<<<<<<
  *         self.context.viewport.global_scale = original_scale * self._scaling_factor
  * 
@@ -38722,27 +40475,27 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
   __pyx_t_2 = __pyx_v_self->__pyx_base.__pyx_base.context->viewport->global_scale;
   __pyx_v_original_scale = __pyx_t_2;
 
-  /* "dearcygui/layout.pyx":1035
- * 
+  /* "dearcygui/layout.pyx":1700
+ *         # Apply per-item DPI scaling for the duration of this subtree
  *         cdef float original_scale = self.context.viewport.global_scale
  *         self.context.viewport.global_scale = original_scale * self._scaling_factor             # <<<<<<<<<<<<<<
  * 
- *         self.set_previous_states()
+ *         # Snapshot previous state so handlers can compare cur vs prev
 */
   __pyx_v_self->__pyx_base.__pyx_base.context->viewport->global_scale = (__pyx_v_original_scale * __pyx_v_self->__pyx_base._scaling_factor);
 
-  /* "dearcygui/layout.pyx":1037
- *         self.context.viewport.global_scale = original_scale * self._scaling_factor
+  /* "dearcygui/layout.pyx":1703
  * 
+ *         # Snapshot previous state so handlers can compare cur vs prev
  *         self.set_previous_states()             # <<<<<<<<<<<<<<
  * 
- *         cdef Vec2 pos_to_viewport = self.context.viewport.parent_pos
+ *         # Resolve our position relative to the parent and the viewport
 */
   ((struct __pyx_vtabstruct_9dearcygui_6layout_WindowLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_vtab)->__pyx_base.__pyx_base.set_previous_states(((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_self));
 
-  /* "dearcygui/layout.pyx":1039
- *         self.set_previous_states()
+  /* "dearcygui/layout.pyx":1706
  * 
+ *         # Resolve our position relative to the parent and the viewport
  *         cdef Vec2 pos_to_viewport = self.context.viewport.parent_pos             # <<<<<<<<<<<<<<
  *         cdef Vec2 pos_to_parent
  *         pos_to_parent.x = resolve_size(self.requested_x, self)
@@ -38750,7 +40503,7 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
   __pyx_t_3 = __pyx_v_self->__pyx_base.__pyx_base.context->viewport->parent_pos;
   __pyx_v_pos_to_viewport = __pyx_t_3;
 
-  /* "dearcygui/layout.pyx":1041
+  /* "dearcygui/layout.pyx":1708
  *         cdef Vec2 pos_to_viewport = self.context.viewport.parent_pos
  *         cdef Vec2 pos_to_parent
  *         pos_to_parent.x = resolve_size(self.requested_x, self)             # <<<<<<<<<<<<<<
@@ -38759,7 +40512,7 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
   __pyx_v_pos_to_parent.x = __pyx_f_9dearcygui_6sizing_resolve_size(__pyx_v_self->__pyx_base.requested_x, ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_self));
 
-  /* "dearcygui/layout.pyx":1042
+  /* "dearcygui/layout.pyx":1709
  *         cdef Vec2 pos_to_parent
  *         pos_to_parent.x = resolve_size(self.requested_x, self)
  *         pos_to_parent.y = resolve_size(self.requested_y, self)             # <<<<<<<<<<<<<<
@@ -38768,7 +40521,7 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
   __pyx_v_pos_to_parent.y = __pyx_f_9dearcygui_6sizing_resolve_size(__pyx_v_self->__pyx_base.requested_y, ((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_self));
 
-  /* "dearcygui/layout.pyx":1043
+  /* "dearcygui/layout.pyx":1710
  *         pos_to_parent.x = resolve_size(self.requested_x, self)
  *         pos_to_parent.y = resolve_size(self.requested_y, self)
  *         pos_to_viewport.x = pos_to_viewport.x + pos_to_parent.x             # <<<<<<<<<<<<<<
@@ -38777,7 +40530,7 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
   __pyx_v_pos_to_viewport.x = (__pyx_v_pos_to_viewport.x + __pyx_v_pos_to_parent.x);
 
-  /* "dearcygui/layout.pyx":1044
+  /* "dearcygui/layout.pyx":1711
  *         pos_to_parent.y = resolve_size(self.requested_y, self)
  *         pos_to_viewport.x = pos_to_viewport.x + pos_to_parent.x
  *         pos_to_viewport.y = pos_to_viewport.y + pos_to_parent.y             # <<<<<<<<<<<<<<
@@ -38786,7 +40539,7 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
   __pyx_v_pos_to_viewport.y = (__pyx_v_pos_to_viewport.y + __pyx_v_pos_to_parent.y);
 
-  /* "dearcygui/layout.pyx":1046
+  /* "dearcygui/layout.pyx":1713
  *         pos_to_viewport.y = pos_to_viewport.y + pos_to_parent.y
  * 
  *         self.state.cur.pos_to_window = pos_to_parent             # <<<<<<<<<<<<<<
@@ -38795,36 +40548,45 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
   __pyx_v_self->__pyx_base.state.cur.pos_to_window = __pyx_v_pos_to_parent;
 
-  /* "dearcygui/layout.pyx":1047
+  /* "dearcygui/layout.pyx":1714
  * 
  *         self.state.cur.pos_to_window = pos_to_parent
  *         self.state.cur.pos_to_parent = pos_to_parent             # <<<<<<<<<<<<<<
  *         self.state.cur.pos_to_viewport = pos_to_viewport
- * 
+ *         self.state.cur.content_pos = pos_to_viewport
 */
   __pyx_v_self->__pyx_base.state.cur.pos_to_parent = __pyx_v_pos_to_parent;
 
-  /* "dearcygui/layout.pyx":1048
+  /* "dearcygui/layout.pyx":1715
  *         self.state.cur.pos_to_window = pos_to_parent
  *         self.state.cur.pos_to_parent = pos_to_parent
  *         self.state.cur.pos_to_viewport = pos_to_viewport             # <<<<<<<<<<<<<<
+ *         self.state.cur.content_pos = pos_to_viewport
  * 
- *         # After setting position
 */
   __pyx_v_self->__pyx_base.state.cur.pos_to_viewport = __pyx_v_pos_to_viewport;
 
-  /* "dearcygui/layout.pyx":1051
+  /* "dearcygui/layout.pyx":1716
+ *         self.state.cur.pos_to_parent = pos_to_parent
+ *         self.state.cur.pos_to_viewport = pos_to_viewport
+ *         self.state.cur.content_pos = pos_to_viewport             # <<<<<<<<<<<<<<
  * 
- *         # After setting position
+ *         # Position must be set before calling update_content_area so that
+*/
+  __pyx_v_self->__pyx_base.state.cur.content_pos = __pyx_v_pos_to_viewport;
+
+  /* "dearcygui/layout.pyx":1720
+ *         # Position must be set before calling update_content_area so that
+ *         # pos_to_parent is available for the fill-remaining-space calculation.
  *         self.update_content_area()             # <<<<<<<<<<<<<<
  * 
- *         # handle fonts
+ *         # Push font and theme overrides for this subtree
 */
   (void)(__pyx_f_9dearcygui_6layout_12WindowLayout_update_content_area(__pyx_v_self));
 
-  /* "dearcygui/layout.pyx":1054
+  /* "dearcygui/layout.pyx":1723
  * 
- *         # handle fonts
+ *         # Push font and theme overrides for this subtree
  *         if self._font is not None:             # <<<<<<<<<<<<<<
  *             self._font.push()
  * 
@@ -38832,27 +40594,27 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
   __pyx_t_1 = (((PyObject *)__pyx_v_self->__pyx_base._font) != Py_None);
   if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":1055
- *         # handle fonts
+    /* "dearcygui/layout.pyx":1724
+ *         # Push font and theme overrides for this subtree
  *         if self._font is not None:
  *             self._font.push()             # <<<<<<<<<<<<<<
  * 
- *         # themes
+ *         if self._theme is not None:
 */
     ((struct __pyx_vtabstruct_9dearcygui_4core_baseFont *)__pyx_v_self->__pyx_base._font->__pyx_base.__pyx_vtab)->push(__pyx_v_self->__pyx_base._font);
 
-    /* "dearcygui/layout.pyx":1054
+    /* "dearcygui/layout.pyx":1723
  * 
- *         # handle fonts
+ *         # Push font and theme overrides for this subtree
  *         if self._font is not None:             # <<<<<<<<<<<<<<
  *             self._font.push()
  * 
 */
   }
 
-  /* "dearcygui/layout.pyx":1058
+  /* "dearcygui/layout.pyx":1726
+ *             self._font.push()
  * 
- *         # themes
  *         if self._theme is not None:             # <<<<<<<<<<<<<<
  *             self._theme.push()
  * 
@@ -38860,35 +40622,35 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
   __pyx_t_1 = (((PyObject *)__pyx_v_self->__pyx_base._theme) != Py_None);
   if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":1059
- *         # themes
+    /* "dearcygui/layout.pyx":1727
+ * 
  *         if self._theme is not None:
  *             self._theme.push()             # <<<<<<<<<<<<<<
  * 
- *         cdef bint changed = self.check_change()
+ *         # check_change decides whether children need to be locked (and thus
 */
     ((struct __pyx_vtabstruct_9dearcygui_4core_baseTheme *)__pyx_v_self->__pyx_base._theme->__pyx_base.__pyx_vtab)->push(__pyx_v_self->__pyx_base._theme);
 
-    /* "dearcygui/layout.pyx":1058
+    /* "dearcygui/layout.pyx":1726
+ *             self._font.push()
  * 
- *         # themes
  *         if self._theme is not None:             # <<<<<<<<<<<<<<
  *             self._theme.push()
  * 
 */
   }
 
-  /* "dearcygui/layout.pyx":1061
- *             self._theme.push()
- * 
+  /* "dearcygui/layout.pyx":1731
+ *         # check_change decides whether children need to be locked (and thus
+ *         # whether their positions/sizes may be re-evaluated this frame).
  *         cdef bint changed = self.check_change()             # <<<<<<<<<<<<<<
  *         if changed:
  *             self.last_window_child.lock_and_previous_siblings()
 */
   __pyx_v_changed = ((struct __pyx_vtabstruct_9dearcygui_6layout_WindowLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_vtab)->check_change(__pyx_v_self);
 
-  /* "dearcygui/layout.pyx":1062
- * 
+  /* "dearcygui/layout.pyx":1732
+ *         # whether their positions/sizes may be re-evaluated this frame).
  *         cdef bint changed = self.check_change()
  *         if changed:             # <<<<<<<<<<<<<<
  *             self.last_window_child.lock_and_previous_siblings()
@@ -38896,17 +40658,17 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
   if (__pyx_v_changed) {
 
-    /* "dearcygui/layout.pyx":1063
+    /* "dearcygui/layout.pyx":1733
  *         cdef bint changed = self.check_change()
  *         if changed:
  *             self.last_window_child.lock_and_previous_siblings()             # <<<<<<<<<<<<<<
  * 
- *         cdef Vec2 parent_pos_backup = self.context.viewport.parent_pos
+ *         # Expose our content area as the parent context so that children can
 */
     ((struct __pyx_vtabstruct_9dearcygui_4core_Window *)__pyx_v_self->__pyx_base.__pyx_base.last_window_child->__pyx_base.__pyx_base.__pyx_vtab)->__pyx_base.__pyx_base.lock_and_previous_siblings(((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_self->__pyx_base.__pyx_base.last_window_child));
 
-    /* "dearcygui/layout.pyx":1062
- * 
+    /* "dearcygui/layout.pyx":1732
+ *         # whether their positions/sizes may be re-evaluated this frame).
  *         cdef bint changed = self.check_change()
  *         if changed:             # <<<<<<<<<<<<<<
  *             self.last_window_child.lock_and_previous_siblings()
@@ -38914,9 +40676,9 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
   }
 
-  /* "dearcygui/layout.pyx":1065
- *             self.last_window_child.lock_and_previous_siblings()
- * 
+  /* "dearcygui/layout.pyx":1737
+ *         # Expose our content area as the parent context so that children can
+ *         # resolve sizing expressions like "fillx", "parent.height", etc.
  *         cdef Vec2 parent_pos_backup = self.context.viewport.parent_pos             # <<<<<<<<<<<<<<
  *         cdef Vec2 parent_size_backup = self.context.viewport.parent_size
  *         cdef bint clip = self._clip
@@ -38924,27 +40686,27 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
   __pyx_t_3 = __pyx_v_self->__pyx_base.__pyx_base.context->viewport->parent_pos;
   __pyx_v_parent_pos_backup = __pyx_t_3;
 
-  /* "dearcygui/layout.pyx":1066
- * 
+  /* "dearcygui/layout.pyx":1738
+ *         # resolve sizing expressions like "fillx", "parent.height", etc.
  *         cdef Vec2 parent_pos_backup = self.context.viewport.parent_pos
  *         cdef Vec2 parent_size_backup = self.context.viewport.parent_size             # <<<<<<<<<<<<<<
  *         cdef bint clip = self._clip
- *         cdef imgui.ImVec2 Pos_backup, Size_backup
+ *         # Saved viewport geometry, needed only when clipping is enabled
 */
   __pyx_t_3 = __pyx_v_self->__pyx_base.__pyx_base.context->viewport->parent_size;
   __pyx_v_parent_size_backup = __pyx_t_3;
 
-  /* "dearcygui/layout.pyx":1067
+  /* "dearcygui/layout.pyx":1739
  *         cdef Vec2 parent_pos_backup = self.context.viewport.parent_pos
  *         cdef Vec2 parent_size_backup = self.context.viewport.parent_size
  *         cdef bint clip = self._clip             # <<<<<<<<<<<<<<
+ *         # Saved viewport geometry, needed only when clipping is enabled
  *         cdef imgui.ImVec2 Pos_backup, Size_backup
- *         cdef imgui.ImVec2 WorkPos_backup, WorkSize_backup
 */
   __pyx_t_1 = __pyx_v_self->_clip;
   __pyx_v_clip = __pyx_t_1;
 
-  /* "dearcygui/layout.pyx":1071
+  /* "dearcygui/layout.pyx":1744
  *         cdef imgui.ImVec2 WorkPos_backup, WorkSize_backup
  * 
  *         if self.last_window_child is not None:             # <<<<<<<<<<<<<<
@@ -38954,7 +40716,7 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
   __pyx_t_1 = (((PyObject *)__pyx_v_self->__pyx_base.__pyx_base.last_window_child) != Py_None);
   if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":1072
+    /* "dearcygui/layout.pyx":1745
  * 
  *         if self.last_window_child is not None:
  *             self.context.viewport.parent_pos = pos_to_viewport             # <<<<<<<<<<<<<<
@@ -38963,7 +40725,7 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
     __pyx_v_self->__pyx_base.__pyx_base.context->viewport->parent_pos = __pyx_v_pos_to_viewport;
 
-    /* "dearcygui/layout.pyx":1073
+    /* "dearcygui/layout.pyx":1746
  *         if self.last_window_child is not None:
  *             self.context.viewport.parent_pos = pos_to_viewport
  *             self.context.viewport.window_pos = pos_to_viewport             # <<<<<<<<<<<<<<
@@ -38972,28 +40734,28 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
     __pyx_v_self->__pyx_base.__pyx_base.context->viewport->window_pos = __pyx_v_pos_to_viewport;
 
-    /* "dearcygui/layout.pyx":1074
+    /* "dearcygui/layout.pyx":1747
  *             self.context.viewport.parent_pos = pos_to_viewport
  *             self.context.viewport.window_pos = pos_to_viewport
  *             self.context.viewport.parent_size = self.state.cur.content_region_size             # <<<<<<<<<<<<<<
  *             if clip:
- *                 Pos_backup = imgui.GetMainViewport().Pos
+ *                 # Clipping is implemented by shrinking ImGui's main-viewport
 */
     __pyx_t_3 = __pyx_v_self->__pyx_base.state.cur.content_region_size;
     __pyx_v_self->__pyx_base.__pyx_base.context->viewport->parent_size = __pyx_t_3;
 
-    /* "dearcygui/layout.pyx":1075
+    /* "dearcygui/layout.pyx":1748
  *             self.context.viewport.window_pos = pos_to_viewport
  *             self.context.viewport.parent_size = self.state.cur.content_region_size
  *             if clip:             # <<<<<<<<<<<<<<
- *                 Pos_backup = imgui.GetMainViewport().Pos
- *                 Size_backup = imgui.GetMainViewport().Size
+ *                 # Clipping is implemented by shrinking ImGui's main-viewport
+ *                 # geometry to our content area.  Window children that call
 */
     if (__pyx_v_clip) {
 
-      /* "dearcygui/layout.pyx":1076
- *             self.context.viewport.parent_size = self.state.cur.content_region_size
- *             if clip:
+      /* "dearcygui/layout.pyx":1754
+ *                 # We save and restore all four fields so nested layouts are
+ *                 # unaffected after we return.
  *                 Pos_backup = imgui.GetMainViewport().Pos             # <<<<<<<<<<<<<<
  *                 Size_backup = imgui.GetMainViewport().Size
  *                 WorkPos_backup = imgui.GetMainViewport().WorkPos
@@ -39001,8 +40763,8 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
       __pyx_t_4 = ImGui::GetMainViewport()->Pos;
       __pyx_v_Pos_backup = __PYX_STD_MOVE_IF_SUPPORTED(__pyx_t_4);
 
-      /* "dearcygui/layout.pyx":1077
- *             if clip:
+      /* "dearcygui/layout.pyx":1755
+ *                 # unaffected after we return.
  *                 Pos_backup = imgui.GetMainViewport().Pos
  *                 Size_backup = imgui.GetMainViewport().Size             # <<<<<<<<<<<<<<
  *                 WorkPos_backup = imgui.GetMainViewport().WorkPos
@@ -39011,7 +40773,7 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
       __pyx_t_4 = ImGui::GetMainViewport()->Size;
       __pyx_v_Size_backup = __PYX_STD_MOVE_IF_SUPPORTED(__pyx_t_4);
 
-      /* "dearcygui/layout.pyx":1078
+      /* "dearcygui/layout.pyx":1756
  *                 Pos_backup = imgui.GetMainViewport().Pos
  *                 Size_backup = imgui.GetMainViewport().Size
  *                 WorkPos_backup = imgui.GetMainViewport().WorkPos             # <<<<<<<<<<<<<<
@@ -39021,7 +40783,7 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
       __pyx_t_4 = ImGui::GetMainViewport()->WorkPos;
       __pyx_v_WorkPos_backup = __PYX_STD_MOVE_IF_SUPPORTED(__pyx_t_4);
 
-      /* "dearcygui/layout.pyx":1079
+      /* "dearcygui/layout.pyx":1757
  *                 Size_backup = imgui.GetMainViewport().Size
  *                 WorkPos_backup = imgui.GetMainViewport().WorkPos
  *                 WorkSize_backup = imgui.GetMainViewport().WorkSize             # <<<<<<<<<<<<<<
@@ -39031,7 +40793,7 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
       __pyx_t_4 = ImGui::GetMainViewport()->WorkSize;
       __pyx_v_WorkSize_backup = __PYX_STD_MOVE_IF_SUPPORTED(__pyx_t_4);
 
-      /* "dearcygui/layout.pyx":1080
+      /* "dearcygui/layout.pyx":1758
  *                 WorkPos_backup = imgui.GetMainViewport().WorkPos
  *                 WorkSize_backup = imgui.GetMainViewport().WorkSize
  *                 imgui.GetMainViewport().Pos = Vec2ImVec2(pos_to_viewport)             # <<<<<<<<<<<<<<
@@ -39040,7 +40802,7 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
       ImGui::GetMainViewport()->Pos = __pyx_f_9dearcygui_11imgui_types_Vec2ImVec2(__pyx_v_pos_to_viewport);
 
-      /* "dearcygui/layout.pyx":1081
+      /* "dearcygui/layout.pyx":1759
  *                 WorkSize_backup = imgui.GetMainViewport().WorkSize
  *                 imgui.GetMainViewport().Pos = Vec2ImVec2(pos_to_viewport)
  *                 imgui.GetMainViewport().WorkPos = Vec2ImVec2(pos_to_viewport)             # <<<<<<<<<<<<<<
@@ -39049,7 +40811,7 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
       ImGui::GetMainViewport()->WorkPos = __pyx_f_9dearcygui_11imgui_types_Vec2ImVec2(__pyx_v_pos_to_viewport);
 
-      /* "dearcygui/layout.pyx":1082
+      /* "dearcygui/layout.pyx":1760
  *                 imgui.GetMainViewport().Pos = Vec2ImVec2(pos_to_viewport)
  *                 imgui.GetMainViewport().WorkPos = Vec2ImVec2(pos_to_viewport)
  *                 imgui.GetMainViewport().Size = Vec2ImVec2(self.state.cur.content_region_size)             # <<<<<<<<<<<<<<
@@ -39058,7 +40820,7 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
       ImGui::GetMainViewport()->Size = __pyx_f_9dearcygui_11imgui_types_Vec2ImVec2(__pyx_v_self->__pyx_base.state.cur.content_region_size);
 
-      /* "dearcygui/layout.pyx":1083
+      /* "dearcygui/layout.pyx":1761
  *                 imgui.GetMainViewport().WorkPos = Vec2ImVec2(pos_to_viewport)
  *                 imgui.GetMainViewport().Size = Vec2ImVec2(self.state.cur.content_region_size)
  *                 imgui.GetMainViewport().WorkSize = Vec2ImVec2(self.state.cur.content_region_size)             # <<<<<<<<<<<<<<
@@ -39067,44 +40829,44 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
       ImGui::GetMainViewport()->WorkSize = __pyx_f_9dearcygui_11imgui_types_Vec2ImVec2(__pyx_v_self->__pyx_base.state.cur.content_region_size);
 
-      /* "dearcygui/layout.pyx":1075
+      /* "dearcygui/layout.pyx":1748
  *             self.context.viewport.window_pos = pos_to_viewport
  *             self.context.viewport.parent_size = self.state.cur.content_region_size
  *             if clip:             # <<<<<<<<<<<<<<
- *                 Pos_backup = imgui.GetMainViewport().Pos
- *                 Size_backup = imgui.GetMainViewport().Size
+ *                 # Clipping is implemented by shrinking ImGui's main-viewport
+ *                 # geometry to our content area.  Window children that call
 */
     }
 
-    /* "dearcygui/layout.pyx":1084
+    /* "dearcygui/layout.pyx":1762
  *                 imgui.GetMainViewport().Size = Vec2ImVec2(self.state.cur.content_region_size)
  *                 imgui.GetMainViewport().WorkSize = Vec2ImVec2(self.state.cur.content_region_size)
  *             self.draw_children()             # <<<<<<<<<<<<<<
  *             if clip:
- *                 imgui.GetMainViewport().Pos = Pos_backup
+ *                 # Restore the viewport geometry so sibling items drawn after us
 */
     __pyx_f_9dearcygui_6layout_12WindowLayout_draw_children(__pyx_v_self);
 
-    /* "dearcygui/layout.pyx":1085
+    /* "dearcygui/layout.pyx":1763
  *                 imgui.GetMainViewport().WorkSize = Vec2ImVec2(self.state.cur.content_region_size)
  *             self.draw_children()
  *             if clip:             # <<<<<<<<<<<<<<
- *                 imgui.GetMainViewport().Pos = Pos_backup
- *                 imgui.GetMainViewport().Size = Size_backup
+ *                 # Restore the viewport geometry so sibling items drawn after us
+ *                 # see the original unconstrained viewport
 */
     if (__pyx_v_clip) {
 
-      /* "dearcygui/layout.pyx":1086
- *             self.draw_children()
- *             if clip:
+      /* "dearcygui/layout.pyx":1766
+ *                 # Restore the viewport geometry so sibling items drawn after us
+ *                 # see the original unconstrained viewport
  *                 imgui.GetMainViewport().Pos = Pos_backup             # <<<<<<<<<<<<<<
  *                 imgui.GetMainViewport().Size = Size_backup
  *                 imgui.GetMainViewport().WorkPos = WorkPos_backup
 */
       ImGui::GetMainViewport()->Pos = __pyx_v_Pos_backup;
 
-      /* "dearcygui/layout.pyx":1087
- *             if clip:
+      /* "dearcygui/layout.pyx":1767
+ *                 # see the original unconstrained viewport
  *                 imgui.GetMainViewport().Pos = Pos_backup
  *                 imgui.GetMainViewport().Size = Size_backup             # <<<<<<<<<<<<<<
  *                 imgui.GetMainViewport().WorkPos = WorkPos_backup
@@ -39112,7 +40874,7 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
       ImGui::GetMainViewport()->Size = __pyx_v_Size_backup;
 
-      /* "dearcygui/layout.pyx":1088
+      /* "dearcygui/layout.pyx":1768
  *                 imgui.GetMainViewport().Pos = Pos_backup
  *                 imgui.GetMainViewport().Size = Size_backup
  *                 imgui.GetMainViewport().WorkPos = WorkPos_backup             # <<<<<<<<<<<<<<
@@ -39121,7 +40883,7 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
       ImGui::GetMainViewport()->WorkPos = __pyx_v_WorkPos_backup;
 
-      /* "dearcygui/layout.pyx":1089
+      /* "dearcygui/layout.pyx":1769
  *                 imgui.GetMainViewport().Size = Size_backup
  *                 imgui.GetMainViewport().WorkPos = WorkPos_backup
  *                 imgui.GetMainViewport().WorkSize = WorkSize_backup             # <<<<<<<<<<<<<<
@@ -39130,16 +40892,16 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
       ImGui::GetMainViewport()->WorkSize = __pyx_v_WorkSize_backup;
 
-      /* "dearcygui/layout.pyx":1085
+      /* "dearcygui/layout.pyx":1763
  *                 imgui.GetMainViewport().WorkSize = Vec2ImVec2(self.state.cur.content_region_size)
  *             self.draw_children()
  *             if clip:             # <<<<<<<<<<<<<<
- *                 imgui.GetMainViewport().Pos = Pos_backup
- *                 imgui.GetMainViewport().Size = Size_backup
+ *                 # Restore the viewport geometry so sibling items drawn after us
+ *                 # see the original unconstrained viewport
 */
     }
 
-    /* "dearcygui/layout.pyx":1090
+    /* "dearcygui/layout.pyx":1770
  *                 imgui.GetMainViewport().WorkPos = WorkPos_backup
  *                 imgui.GetMainViewport().WorkSize = WorkSize_backup
  *             self.context.viewport.parent_size = parent_size_backup             # <<<<<<<<<<<<<<
@@ -39148,7 +40910,7 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
     __pyx_v_self->__pyx_base.__pyx_base.context->viewport->parent_size = __pyx_v_parent_size_backup;
 
-    /* "dearcygui/layout.pyx":1091
+    /* "dearcygui/layout.pyx":1771
  *                 imgui.GetMainViewport().WorkSize = WorkSize_backup
  *             self.context.viewport.parent_size = parent_size_backup
  *             self.context.viewport.parent_pos = parent_pos_backup             # <<<<<<<<<<<<<<
@@ -39157,16 +40919,16 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
     __pyx_v_self->__pyx_base.__pyx_base.context->viewport->parent_pos = __pyx_v_parent_pos_backup;
 
-    /* "dearcygui/layout.pyx":1092
+    /* "dearcygui/layout.pyx":1772
  *             self.context.viewport.parent_size = parent_size_backup
  *             self.context.viewport.parent_pos = parent_pos_backup
  *             self.context.viewport.window_pos = parent_pos_backup             # <<<<<<<<<<<<<<
  *         else:
- *             self.state.cur.rect_size = make_Vec2(0., 0.)
+ *             # No children: zero the bounding box so the layout is invisible
 */
     __pyx_v_self->__pyx_base.__pyx_base.context->viewport->window_pos = __pyx_v_parent_pos_backup;
 
-    /* "dearcygui/layout.pyx":1071
+    /* "dearcygui/layout.pyx":1744
  *         cdef imgui.ImVec2 WorkPos_backup, WorkSize_backup
  * 
  *         if self.last_window_child is not None:             # <<<<<<<<<<<<<<
@@ -39176,9 +40938,9 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
     goto __pyx_L9;
   }
 
-  /* "dearcygui/layout.pyx":1094
- *             self.context.viewport.window_pos = parent_pos_backup
+  /* "dearcygui/layout.pyx":1775
  *         else:
+ *             # No children: zero the bounding box so the layout is invisible
  *             self.state.cur.rect_size = make_Vec2(0., 0.)             # <<<<<<<<<<<<<<
  * 
  *         if changed:
@@ -39188,7 +40950,7 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
   }
   __pyx_L9:;
 
-  /* "dearcygui/layout.pyx":1096
+  /* "dearcygui/layout.pyx":1777
  *             self.state.cur.rect_size = make_Vec2(0., 0.)
  * 
  *         if changed:             # <<<<<<<<<<<<<<
@@ -39197,16 +40959,16 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
   if (__pyx_v_changed) {
 
-    /* "dearcygui/layout.pyx":1097
+    /* "dearcygui/layout.pyx":1778
  * 
  *         if changed:
  *             self.last_window_child.unlock_and_previous_siblings()             # <<<<<<<<<<<<<<
  * 
- *         if self._theme is not None:
+ *         # Pop theme and font overrides in reverse order
 */
     ((struct __pyx_vtabstruct_9dearcygui_4core_Window *)__pyx_v_self->__pyx_base.__pyx_base.last_window_child->__pyx_base.__pyx_base.__pyx_vtab)->__pyx_base.__pyx_base.unlock_and_previous_siblings(((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_self->__pyx_base.__pyx_base.last_window_child));
 
-    /* "dearcygui/layout.pyx":1096
+    /* "dearcygui/layout.pyx":1777
  *             self.state.cur.rect_size = make_Vec2(0., 0.)
  * 
  *         if changed:             # <<<<<<<<<<<<<<
@@ -39215,9 +40977,9 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
   }
 
-  /* "dearcygui/layout.pyx":1099
- *             self.last_window_child.unlock_and_previous_siblings()
+  /* "dearcygui/layout.pyx":1781
  * 
+ *         # Pop theme and font overrides in reverse order
  *         if self._theme is not None:             # <<<<<<<<<<<<<<
  *             self._theme.pop()
  * 
@@ -39225,8 +40987,8 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
   __pyx_t_1 = (((PyObject *)__pyx_v_self->__pyx_base._theme) != Py_None);
   if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":1100
- * 
+    /* "dearcygui/layout.pyx":1782
+ *         # Pop theme and font overrides in reverse order
  *         if self._theme is not None:
  *             self._theme.pop()             # <<<<<<<<<<<<<<
  * 
@@ -39234,16 +40996,16 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
     ((struct __pyx_vtabstruct_9dearcygui_4core_baseTheme *)__pyx_v_self->__pyx_base._theme->__pyx_base.__pyx_vtab)->pop(__pyx_v_self->__pyx_base._theme);
 
-    /* "dearcygui/layout.pyx":1099
- *             self.last_window_child.unlock_and_previous_siblings()
+    /* "dearcygui/layout.pyx":1781
  * 
+ *         # Pop theme and font overrides in reverse order
  *         if self._theme is not None:             # <<<<<<<<<<<<<<
  *             self._theme.pop()
  * 
 */
   }
 
-  /* "dearcygui/layout.pyx":1102
+  /* "dearcygui/layout.pyx":1784
  *             self._theme.pop()
  * 
  *         if self._font is not None:             # <<<<<<<<<<<<<<
@@ -39253,7 +41015,7 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
   __pyx_t_1 = (((PyObject *)__pyx_v_self->__pyx_base._font) != Py_None);
   if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":1103
+    /* "dearcygui/layout.pyx":1785
  * 
  *         if self._font is not None:
  *             self._font.pop()             # <<<<<<<<<<<<<<
@@ -39262,7 +41024,7 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
     ((struct __pyx_vtabstruct_9dearcygui_4core_baseFont *)__pyx_v_self->__pyx_base._font->__pyx_base.__pyx_vtab)->pop(__pyx_v_self->__pyx_base._font);
 
-    /* "dearcygui/layout.pyx":1102
+    /* "dearcygui/layout.pyx":1784
  *             self._theme.pop()
  * 
  *         if self._font is not None:             # <<<<<<<<<<<<<<
@@ -39271,17 +41033,17 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
   }
 
-  /* "dearcygui/layout.pyx":1106
+  /* "dearcygui/layout.pyx":1788
  * 
  *         # Restore original scale
  *         self.context.viewport.global_scale = original_scale             # <<<<<<<<<<<<<<
  * 
- *         cdef int i
+ *         # Fire layout-change callbacks when the child configuration changed
 */
   __pyx_v_self->__pyx_base.__pyx_base.context->viewport->global_scale = __pyx_v_original_scale;
 
-  /* "dearcygui/layout.pyx":1109
- * 
+  /* "dearcygui/layout.pyx":1792
+ *         # Fire layout-change callbacks when the child configuration changed
  *         cdef int i
  *         if changed and not(self._callbacks.empty()):             # <<<<<<<<<<<<<<
  *             for i in range(<int>self._callbacks.size()):
@@ -39297,7 +41059,7 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
   __pyx_L16_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "dearcygui/layout.pyx":1110
+    /* "dearcygui/layout.pyx":1793
  *         cdef int i
  *         if changed and not(self._callbacks.empty()):
  *             for i in range(<int>self._callbacks.size()):             # <<<<<<<<<<<<<<
@@ -39309,7 +41071,7 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
     for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
       __pyx_v_i = __pyx_t_8;
 
-      /* "dearcygui/layout.pyx":1111
+      /* "dearcygui/layout.pyx":1794
  *         if changed and not(self._callbacks.empty()):
  *             for i in range(<int>self._callbacks.size()):
  *                 self.context.queue_callback_arg1value(<Callback>self._callbacks[i], self, self, self._value)             # <<<<<<<<<<<<<<
@@ -39320,8 +41082,8 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
       ((struct __pyx_vtabstruct_9dearcygui_4core_Context *)__pyx_v_self->__pyx_base.__pyx_base.context->__pyx_vtab)->queue_callback_arg1value(__pyx_v_self->__pyx_base.__pyx_base.context, ((struct __pyx_obj_9dearcygui_4core_Callback *)__pyx_t_9), ((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_self), ((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_self), __pyx_v_self->__pyx_base._value);
     }
 
-    /* "dearcygui/layout.pyx":1109
- * 
+    /* "dearcygui/layout.pyx":1792
+ *         # Fire layout-change callbacks when the child configuration changed
  *         cdef int i
  *         if changed and not(self._callbacks.empty()):             # <<<<<<<<<<<<<<
  *             for i in range(<int>self._callbacks.size()):
@@ -39329,7 +41091,7 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
   }
 
-  /* "dearcygui/layout.pyx":1113
+  /* "dearcygui/layout.pyx":1796
  *                 self.context.queue_callback_arg1value(<Callback>self._callbacks[i], self, self, self._value)
  * 
  *         self.run_handlers()             # <<<<<<<<<<<<<<
@@ -39337,12 +41099,12 @@ static void __pyx_f_9dearcygui_6layout_12WindowLayout_draw(struct __pyx_obj_9dea
 */
   ((struct __pyx_vtabstruct_9dearcygui_6layout_WindowLayout *)__pyx_v_self->__pyx_base.__pyx_base.__pyx_vtab)->__pyx_base.__pyx_base.run_handlers(((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_self));
 
-  /* "dearcygui/layout.pyx":1023
+  /* "dearcygui/layout.pyx":1684
  *                                              bot_right.y - self.state.cur.pos_to_viewport.y)
  * 
  *     cdef void draw(self) noexcept nogil:             # <<<<<<<<<<<<<<
+ *         # Nothing to do without children
  *         if self.last_window_child is None:
- *             return
 */
 
   /* function exit code */
@@ -39419,7 +41181,7 @@ static PyMethodDef __pyx_methods_9dearcygui_6layout_Layout[] = {
 #if CYTHON_USE_TYPE_SPECS
 static PyType_Slot __pyx_type_9dearcygui_6layout_Layout_slots[] = {
   {Py_tp_dealloc, (void *)__pyx_tp_dealloc_9dearcygui_6layout_Layout},
-  {Py_tp_doc, (void *)PyDoc_STR("\n    A layout is a group of elements organized together.\n    \n    The layout states correspond to the OR of all the item states, and the rect \n    size corresponds to the minimum rect containing all the items. The position \n    of the layout is used to initialize the default position for the first item.\n    An indentation will shift all the items of the Layout.\n\n    Subclassing Layout:\n    For custom layouts, you can use Layout with a callback. The callback is \n    called whenever the layout should be updated.\n\n    If the automated update detection is not sufficient, update_layout() can be \n    called to force a recomputation of the layout.\n\n    Currently the update detection detects a change in the size of the remaining \n    content area available locally within the window, or if the last item has \n    changed.\n\n    The layout item works by changing the x, y and no_newline fields\n    of its children, and thus there is no guarantee that the user set\n    x, y and no_newline fields of the children are preserved.\n\n    If an item is moved out of the layout, the user has to manually\n    set the x, y and no_newline fields of the item to their new desired values.\n\n    Contrary to other items, the `height` and `width` values filled in the \n    attributes will apply to the content area visible inside the layout (\n    for instance when referencing the parent size: \"fillx\", \"fullx\", etc).\n    The final size fitted to the position and size of the children is then\n    stored in the `rect_size` attribute. In other words, it is possible\n    to have `content_area_avail` larger than `rect_size`, and `item.y2` > `item.y3`.\n\n    This specific behaviour of Layouts enables to to have the expected behaviour when\n    nesting layouts. If you intend to force a specific size, use a `ChildWindow`. \n    ")},
+  {Py_tp_doc, (void *)PyDoc_STR("\n    A layout is a group of elements organized together.\n    \n    The layout states correspond to the OR of all the item states, and the rect \n    size corresponds to the minimum rect containing all the items. The position \n    of the layout is used to initialize the default position for the first item.\n    An indentation will shift all the items of the Layout.\n\n    ## Subclassing `Layout`:\n\n    As layout can hold several objects, subclassing `Layout` can be used to \n    implement containers composed of several items. `ChildWindow` can be\n    used as well. Visually `Layout` is comparable to a `ChildWindow` created with\n    without border, scrollbars and padding, but with subtle differences:\n    * ```\n    ChildWindow(\n        context,\n        auto_resize_x=True,\n        auto_resize_y=True,\n        border=False,\n        flattened_navigation=True,\n        no_background=True,\n        no_scroll_with_mouse=True,\n        no_scrollbar=True\n        )\n      ``` behaves similarly to `Layout(context)`. Both visually have no difference\n        to whether the items were directly added to the parent container rather\n        than the `Layout`/`ChildWindow`.\n    * When setting a width/height on a `Layout`, they affect the content area\n       seen as available by child items. For instance 'dcg.Slider(context, width=-1)'\n       will fill available space as defined by the parent Layout. On the other hand,\n       the real height/width advertised by the `Layout` will always correspond\n       to the minimum bounding box containing the items, regardless of the width/height set\n       on the `Layout`. Note for this reason prefer `\"fillx\"`, `\"fullx\"`, etc, which refer\n       to the content area, rather than `\"parent.height\"`, etc when specifying sizes\n       for child items.\n       In other words, in regard to the size of the `Layout` advertised, the behaviour\n       corresponds to `ChildWindow`'s `auto_resize_x` and `auto_resize_y` parameters\n    ""   being always True. However the size available inside the `Layout` corresponds\n       to the requested width/height.\n       Unlike `ChildWindow`, the content will not be clipped and may overflow the\n       requested width/height.\n    * In contrast, when setting a width/height on a `ChildWindow`, this affects both the\n      content area seen by children and the real height/width of the `ChildWindow`. If\n      the content exceeds the size, it will be clipped or scrollbars will appear depending on\n      the scrollbar settings.\n\n    Due to the above difference, `ChildWindow` is more suitable when you want to enforce\n    a specific size or to clip overflowing content. In the other cases, `Layout` offers\n    a lighter-weight alternative.\n\n    ## Layout update\n\n    One interest of `Layout\314\200` is in its subclasses such as `HorizontalLayout` or\n    `VerticalLayout` which automatically organize the position of their children.\n    All three share a similar implementation to detect changes in the layout that\n    justify a recomputation of the position of the children. If using `Layout`\n    directly, the user can implement their own logic by attaching a callback. \n    The callback is triggered when the layout needs to update the position of the children.\n    If this logic is not sufficient, the user can manually trigger an update by calling `update_layout()`.\n    Currently the detection logic consists of checking for a change in the size of the remaining \n    content area available locally within the window, or whether the size of child items changed,\n    or if the last item has changed. It also checks for changes in the spacing style, which can\n    affect the layout. This logic may be improved in the future.\n\n    ## Positioning of children\n\n    Layout items work by changing the x, y and no_newline fields\n    of its children, and thus there is no guarantee that the user set\n    x, y and no_newline fields of the children are preserved.\n    W""hen using `Layout` directly, the user is responsible for\n    setting the x, y and no_newline fields of the children. When using\n    `HorizontalLayout` or `VerticalLayout`, the x, y and no_newline fields\n    of the children are managed by the layout. In this case,\n    the user values for these fields on the children will be overridden\n    by the layout's logic.\n\n    ## Removing items from the layout\n\n    As said above, the contents of an item x, y and no_newline fields are not managed by DearCyGui\n    for `Layout` but are managed for `HorizontalLayout` and `VerticalLayout`. For them,\n    the values are managed and undefined. They may differ from a DearCyGui version to\n    another. Thus if an item is moved out of the layout, the user has to manually\n    set the x, y and no_newline fields of the item to their new desired values.\n\n    ## Size of the layout\n\n    As mentioned above, the size of a layout always corresponds to the minimum\n    bounding box containing the items, regardless of the width/height set on the `Layout`.\n    The content area available for the children is defined by the width/height set on\n    the `Layout` and is independent of the real size of the `Layout`. Be careful\n    of this fact and avoid `parent.width` and `parent.height` when specifying sizes\n    or positions for children, prefer `\"fillx\"`, `\"fullx\"`, etc, which refer to the content area.\n\n    By default, width=0 and height=0, which for `Layout` and subclasses are interpreted as\n    width=\"fillx\" and height=\"filly\". In other words, the full remaining area available\n    in the parent is advertised as available to the children.\n\n    It is possible to have larger content area than real size and vice versa.\n\n    If you intend to force a specific size, use a `ChildWindow`. \n    ")},
   {Py_tp_traverse, (void *)__pyx_tp_traverse_9dearcygui_6layout_Layout},
   {Py_tp_clear, (void *)__pyx_tp_clear_9dearcygui_6layout_Layout},
   {Py_tp_methods, (void *)__pyx_methods_9dearcygui_6layout_Layout},
@@ -39456,7 +41218,7 @@ static PyTypeObject __pyx_type_9dearcygui_6layout_Layout = {
   0, /*tp_setattro*/
   0, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
-  PyDoc_STR("\n    A layout is a group of elements organized together.\n    \n    The layout states correspond to the OR of all the item states, and the rect \n    size corresponds to the minimum rect containing all the items. The position \n    of the layout is used to initialize the default position for the first item.\n    An indentation will shift all the items of the Layout.\n\n    Subclassing Layout:\n    For custom layouts, you can use Layout with a callback. The callback is \n    called whenever the layout should be updated.\n\n    If the automated update detection is not sufficient, update_layout() can be \n    called to force a recomputation of the layout.\n\n    Currently the update detection detects a change in the size of the remaining \n    content area available locally within the window, or if the last item has \n    changed.\n\n    The layout item works by changing the x, y and no_newline fields\n    of its children, and thus there is no guarantee that the user set\n    x, y and no_newline fields of the children are preserved.\n\n    If an item is moved out of the layout, the user has to manually\n    set the x, y and no_newline fields of the item to their new desired values.\n\n    Contrary to other items, the `height` and `width` values filled in the \n    attributes will apply to the content area visible inside the layout (\n    for instance when referencing the parent size: \"fillx\", \"fullx\", etc).\n    The final size fitted to the position and size of the children is then\n    stored in the `rect_size` attribute. In other words, it is possible\n    to have `content_area_avail` larger than `rect_size`, and `item.y2` > `item.y3`.\n\n    This specific behaviour of Layouts enables to to have the expected behaviour when\n    nesting layouts. If you intend to force a specific size, use a `ChildWindow`. \n    "), /*tp_doc*/
+  PyDoc_STR("\n    A layout is a group of elements organized together.\n    \n    The layout states correspond to the OR of all the item states, and the rect \n    size corresponds to the minimum rect containing all the items. The position \n    of the layout is used to initialize the default position for the first item.\n    An indentation will shift all the items of the Layout.\n\n    ## Subclassing `Layout`:\n\n    As layout can hold several objects, subclassing `Layout` can be used to \n    implement containers composed of several items. `ChildWindow` can be\n    used as well. Visually `Layout` is comparable to a `ChildWindow` created with\n    without border, scrollbars and padding, but with subtle differences:\n    * ```\n    ChildWindow(\n        context,\n        auto_resize_x=True,\n        auto_resize_y=True,\n        border=False,\n        flattened_navigation=True,\n        no_background=True,\n        no_scroll_with_mouse=True,\n        no_scrollbar=True\n        )\n      ``` behaves similarly to `Layout(context)`. Both visually have no difference\n        to whether the items were directly added to the parent container rather\n        than the `Layout`/`ChildWindow`.\n    * When setting a width/height on a `Layout`, they affect the content area\n       seen as available by child items. For instance 'dcg.Slider(context, width=-1)'\n       will fill available space as defined by the parent Layout. On the other hand,\n       the real height/width advertised by the `Layout` will always correspond\n       to the minimum bounding box containing the items, regardless of the width/height set\n       on the `Layout`. Note for this reason prefer `\"fillx\"`, `\"fullx\"`, etc, which refer\n       to the content area, rather than `\"parent.height\"`, etc when specifying sizes\n       for child items.\n       In other words, in regard to the size of the `Layout` advertised, the behaviour\n       corresponds to `ChildWindow`'s `auto_resize_x` and `auto_resize_y` parameters\n    ""   being always True. However the size available inside the `Layout` corresponds\n       to the requested width/height.\n       Unlike `ChildWindow`, the content will not be clipped and may overflow the\n       requested width/height.\n    * In contrast, when setting a width/height on a `ChildWindow`, this affects both the\n      content area seen by children and the real height/width of the `ChildWindow`. If\n      the content exceeds the size, it will be clipped or scrollbars will appear depending on\n      the scrollbar settings.\n\n    Due to the above difference, `ChildWindow` is more suitable when you want to enforce\n    a specific size or to clip overflowing content. In the other cases, `Layout` offers\n    a lighter-weight alternative.\n\n    ## Layout update\n\n    One interest of `Layout\314\200` is in its subclasses such as `HorizontalLayout` or\n    `VerticalLayout` which automatically organize the position of their children.\n    All three share a similar implementation to detect changes in the layout that\n    justify a recomputation of the position of the children. If using `Layout`\n    directly, the user can implement their own logic by attaching a callback. \n    The callback is triggered when the layout needs to update the position of the children.\n    If this logic is not sufficient, the user can manually trigger an update by calling `update_layout()`.\n    Currently the detection logic consists of checking for a change in the size of the remaining \n    content area available locally within the window, or whether the size of child items changed,\n    or if the last item has changed. It also checks for changes in the spacing style, which can\n    affect the layout. This logic may be improved in the future.\n\n    ## Positioning of children\n\n    Layout items work by changing the x, y and no_newline fields\n    of its children, and thus there is no guarantee that the user set\n    x, y and no_newline fields of the children are preserved.\n    W""hen using `Layout` directly, the user is responsible for\n    setting the x, y and no_newline fields of the children. When using\n    `HorizontalLayout` or `VerticalLayout`, the x, y and no_newline fields\n    of the children are managed by the layout. In this case,\n    the user values for these fields on the children will be overridden\n    by the layout's logic.\n\n    ## Removing items from the layout\n\n    As said above, the contents of an item x, y and no_newline fields are not managed by DearCyGui\n    for `Layout` but are managed for `HorizontalLayout` and `VerticalLayout`. For them,\n    the values are managed and undefined. They may differ from a DearCyGui version to\n    another. Thus if an item is moved out of the layout, the user has to manually\n    set the x, y and no_newline fields of the item to their new desired values.\n\n    ## Size of the layout\n\n    As mentioned above, the size of a layout always corresponds to the minimum\n    bounding box containing the items, regardless of the width/height set on the `Layout`.\n    The content area available for the children is defined by the width/height set on\n    the `Layout` and is independent of the real size of the `Layout`. Be careful\n    of this fact and avoid `parent.width` and `parent.height` when specifying sizes\n    or positions for children, prefer `\"fillx\"`, `\"fullx\"`, etc, which refer to the content area.\n\n    By default, width=0 and height=0, which for `Layout` and subclasses are interpreted as\n    width=\"fillx\" and height=\"filly\". In other words, the full remaining area available\n    in the parent is advertised as available to the children.\n\n    It is possible to have larger content area than real size and vice versa.\n\n    If you intend to force a specific size, use a `ChildWindow`. \n    "), /*tp_doc*/
   __pyx_tp_traverse_9dearcygui_6layout_Layout, /*tp_traverse*/
   __pyx_tp_clear_9dearcygui_6layout_Layout, /*tp_clear*/
   0, /*tp_richcompare*/
@@ -39595,21 +41357,20 @@ static int __pyx_setprop_9dearcygui_6layout_16HorizontalLayout_positions(PyObjec
 }
 
 static PyMethodDef __pyx_methods_9dearcygui_6layout_HorizontalLayout[] = {
-  {"update_layout", (PyCFunction)__pyx_pw_9dearcygui_6layout_16HorizontalLayout_3update_layout, METH_NOARGS, __pyx_doc_9dearcygui_6layout_16HorizontalLayout_2update_layout},
   {0, 0, 0, 0}
 };
 
 static struct PyGetSetDef __pyx_getsets_9dearcygui_6layout_HorizontalLayout[] = {
   {"alignment_mode", __pyx_getprop_9dearcygui_6layout_16HorizontalLayout_alignment_mode, __pyx_setprop_9dearcygui_6layout_16HorizontalLayout_alignment_mode, PyDoc_STR("\n        Horizontal alignment mode of the items.\n        \n        LEFT: items are appended from the left\n        RIGHT: items are appended from the right\n        CENTER: items are centered\n        JUSTIFIED: spacing is organized such that items start at the left \n            and end at the right\n        MANUAL: items are positioned at the requested positions\n        \n        For LEFT/RIGHT/CENTER, ItemSpacing's style can be used to control \n        spacing between the items. Default is LEFT.\n        "), 0},
   {"no_wrap", __pyx_getprop_9dearcygui_6layout_16HorizontalLayout_no_wrap, __pyx_setprop_9dearcygui_6layout_16HorizontalLayout_no_wrap, PyDoc_STR("\n        Controls whether items wrap to the next row when exceeding available width.\n        \n        When set to True, items will continue on the same row even if they exceed\n        the layout's width. When False (default), items that don't fit will\n        continue on the next row.\n        "), 0},
-  {"wrap_x", __pyx_getprop_9dearcygui_6layout_16HorizontalLayout_wrap_x, __pyx_setprop_9dearcygui_6layout_16HorizontalLayout_wrap_x, PyDoc_STR("\n        *DEPRECIATION WARNING* X position from which items start on wrapped rows.\n        \n        When items wrap to a second or later row, this value determines the\n        horizontal offset from the starting position. The value is in pixels\n        and must be scaled if needed. The position is clamped to ensure items\n        always start at a position >= 0 relative to the window content area.\n        "), 0},
-  {"positions", __pyx_getprop_9dearcygui_6layout_16HorizontalLayout_positions, __pyx_setprop_9dearcygui_6layout_16HorizontalLayout_positions, PyDoc_STR("\n        X positions for items when using MANUAL alignment mode.\n        \n        When in MANUAL mode, these are the x positions from the top left of this\n        layout at which to place the children items.\n        \n        Values between 0 and 1 are interpreted as percentages relative to the\n        layout width. Negative values are interpreted as relative to the right\n        edge rather than the left. Items are still left-aligned to the target\n        position.\n        \n        Setting this property automatically sets alignment_mode to MANUAL.\n        "), 0},
+  {"wrap_x", __pyx_getprop_9dearcygui_6layout_16HorizontalLayout_wrap_x, __pyx_setprop_9dearcygui_6layout_16HorizontalLayout_wrap_x, PyDoc_STR("\n        *DEPRECATION WARNING* X position from which items start on wrapped rows.\n        \n        When items wrap to a second or later row, this value determines the\n        horizontal offset from the starting position. The value is in pixels\n        and must be scaled if needed. The position is clamped to ensure items\n        always start at a position >= 0 relative to the window content area.\n        "), 0},
+  {"positions", __pyx_getprop_9dearcygui_6layout_16HorizontalLayout_positions, __pyx_setprop_9dearcygui_6layout_16HorizontalLayout_positions, PyDoc_STR("\n        *DEPRECATED* X positions for items when using MANUAL alignment mode.\n\n        Use string-based positioning on each child instead:\n        - value > 1  : absolute pixel offset from the left edge\n                       e.g. ``item.x = '42'``\n        - 0 < value <= 1 : fraction of the layout width\n                           e.g. ``item.x = '0.5*fullx'``\n        - value < 0  : offset from the right edge\n                       e.g. ``item.x = 'fullx - 42'``\n\n        When in MANUAL mode, these are the x positions from the top left of this\n        layout at which to place the children items.\n        \n        Values between 0 and 1 are interpreted as percentages relative to the\n        layout width. Negative values are interpreted as relative to the right\n        edge rather than the left. Items are still left-aligned to the target\n        position.\n        \n        Setting this property automatically sets alignment_mode to MANUAL.\n        "), 0},
   {0, 0, 0, 0, 0}
 };
 #if CYTHON_USE_TYPE_SPECS
 static PyType_Slot __pyx_type_9dearcygui_6layout_HorizontalLayout_slots[] = {
   {Py_tp_dealloc, (void *)__pyx_tp_dealloc_9dearcygui_6layout_HorizontalLayout},
-  {Py_tp_doc, (void *)PyDoc_STR("\n    A layout that organizes items horizontally from left to right.\n    \n    HorizontalLayout arranges child elements in a row, with customizable \n    alignment modes, spacing, and wrapping options. It can align items to \n    the left or right edge, center them, distribute them evenly using the\n    justified mode, or position them manually.\n    \n    The layout automatically tracks content width changes and repositions \n    children when needed. Wrapping behavior can be customized to control \n    how items overflow when they exceed available width.\n\n    The `height` attribute is ignored for HorizontalLayout. If you intend\n    to clip the content, use a `ChildWindow` instead.\n    ")},
+  {Py_tp_doc, (void *)PyDoc_STR("\n    A layout that organizes items horizontally from left to right.\n    \n    HorizontalLayout arranges child elements in a row, with customizable \n    alignment modes, spacing, and wrapping options. It can align items to \n    the left or right edge, center them, distribute them evenly using the\n    justified mode, or position them manually.\n    \n    The layout automatically tracks content width changes and repositions \n    children when needed. Wrapping behavior can be customized to control \n    how items overflow when they exceed available width.\n\n    The `height` attribute attribute does not affect the horizontal layout\n    algorithm, but does set the content area height available for\n    children's sizing expressions.\n    ")},
   {Py_tp_traverse, (void *)__pyx_tp_traverse_9dearcygui_6layout_Layout},
   {Py_tp_clear, (void *)__pyx_tp_clear_9dearcygui_6layout_Layout},
   {Py_tp_methods, (void *)__pyx_methods_9dearcygui_6layout_HorizontalLayout},
@@ -39647,7 +41408,7 @@ static PyTypeObject __pyx_type_9dearcygui_6layout_HorizontalLayout = {
   0, /*tp_setattro*/
   0, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
-  PyDoc_STR("\n    A layout that organizes items horizontally from left to right.\n    \n    HorizontalLayout arranges child elements in a row, with customizable \n    alignment modes, spacing, and wrapping options. It can align items to \n    the left or right edge, center them, distribute them evenly using the\n    justified mode, or position them manually.\n    \n    The layout automatically tracks content width changes and repositions \n    children when needed. Wrapping behavior can be customized to control \n    how items overflow when they exceed available width.\n\n    The `height` attribute is ignored for HorizontalLayout. If you intend\n    to clip the content, use a `ChildWindow` instead.\n    "), /*tp_doc*/
+  PyDoc_STR("\n    A layout that organizes items horizontally from left to right.\n    \n    HorizontalLayout arranges child elements in a row, with customizable \n    alignment modes, spacing, and wrapping options. It can align items to \n    the left or right edge, center them, distribute them evenly using the\n    justified mode, or position them manually.\n    \n    The layout automatically tracks content width changes and repositions \n    children when needed. Wrapping behavior can be customized to control \n    how items overflow when they exceed available width.\n\n    The `height` attribute attribute does not affect the horizontal layout\n    algorithm, but does set the content area height available for\n    children's sizing expressions.\n    "), /*tp_doc*/
   __pyx_tp_traverse_9dearcygui_6layout_Layout, /*tp_traverse*/
   __pyx_tp_clear_9dearcygui_6layout_Layout, /*tp_clear*/
   0, /*tp_richcompare*/
@@ -39786,7 +41547,6 @@ static int __pyx_setprop_9dearcygui_6layout_14VerticalLayout_positions(PyObject 
 }
 
 static PyMethodDef __pyx_methods_9dearcygui_6layout_VerticalLayout[] = {
-  {"update_layout", (PyCFunction)__pyx_pw_9dearcygui_6layout_14VerticalLayout_3update_layout, METH_NOARGS, __pyx_doc_9dearcygui_6layout_14VerticalLayout_2update_layout},
   {0, 0, 0, 0}
 };
 
@@ -39794,13 +41554,13 @@ static struct PyGetSetDef __pyx_getsets_9dearcygui_6layout_VerticalLayout[] = {
   {"alignment_mode", __pyx_getprop_9dearcygui_6layout_14VerticalLayout_alignment_mode, __pyx_setprop_9dearcygui_6layout_14VerticalLayout_alignment_mode, PyDoc_STR("\n        Vertical alignment mode of the items.\n        \n        TOP: items are appended from the top\n        BOTTOM: items are appended from the bottom\n        CENTER: items are centered\n        JUSTIFIED: spacing is organized such that items start at the top \n            and end at the bottom\n        MANUAL: items are positioned at the requested positions\n        \n        For TOP/BOTTOM/CENTER, ItemSpacing's style can be used to control \n        spacing between the items. Default is TOP.\n        "), 0},
   {"wrap", __pyx_getprop_9dearcygui_6layout_14VerticalLayout_wrap, __pyx_setprop_9dearcygui_6layout_14VerticalLayout_wrap, PyDoc_STR("\n        Controls whether items wrap to the next column when exceeding available height.\n        \n        When set to False (default), items will continue in the same column even if they exceed\n        the layout's height. When True, items that don't fit will\n        continue in the next column.\n        "), 0},
   {"wrap_y", __pyx_getprop_9dearcygui_6layout_14VerticalLayout_wrap_y, __pyx_setprop_9dearcygui_6layout_14VerticalLayout_wrap_y, PyDoc_STR("\n        Y position from which items start on wrapped columns.\n        \n        When items wrap to a second or later column, this value determines the\n        vertical offset from the starting position. The value is in pixels\n        and must be scaled if needed. The position is clamped to ensure items\n        always start at a position >= 0 relative to the window content area.\n        "), 0},
-  {"positions", __pyx_getprop_9dearcygui_6layout_14VerticalLayout_positions, __pyx_setprop_9dearcygui_6layout_14VerticalLayout_positions, PyDoc_STR("\n        Y positions for items when using MANUAL alignment mode.\n        \n        When in MANUAL mode, these are the y positions from the top left of this\n        layout at which to place the children items.\n        \n        Values between 0 and 1 are interpreted as percentages relative to the\n        layout height. Negative values are interpreted as relative to the bottom\n        edge rather than the top. Items are still top-aligned to the target\n        position.\n        \n        Setting this property automatically sets alignment_mode to MANUAL.\n        "), 0},
+  {"positions", __pyx_getprop_9dearcygui_6layout_14VerticalLayout_positions, __pyx_setprop_9dearcygui_6layout_14VerticalLayout_positions, PyDoc_STR("\n        *DEPRECATED* Y positions for items when using MANUAL alignment mode.\n\n        Use string-based positioning on each child instead:\n        - value > 1  : absolute pixel offset from the top edge\n                       e.g. ``item.y = '42'``\n        - 0 < value <= 1 : fraction of the layout height\n                           e.g. ``item.y = '0.5*fully'``\n        - value < 0  : offset from the bottom edge\n                       e.g. ``item.y = 'fully - 42'``\n\n        When in MANUAL mode, these are the y positions from the top left of this\n        layout at which to place the children items.\n        \n        Values between 0 and 1 are interpreted as percentages relative to the\n        layout height. Negative values are interpreted as relative to the bottom\n        edge rather than the top. Items are still top-aligned to the target\n        position.\n        \n        Setting this property automatically sets alignment_mode to MANUAL.\n        "), 0},
   {0, 0, 0, 0, 0}
 };
 #if CYTHON_USE_TYPE_SPECS
 static PyType_Slot __pyx_type_9dearcygui_6layout_VerticalLayout_slots[] = {
   {Py_tp_dealloc, (void *)__pyx_tp_dealloc_9dearcygui_6layout_VerticalLayout},
-  {Py_tp_doc, (void *)PyDoc_STR("\n    A layout that organizes items vertically from top to bottom.\n    \n    VerticalLayout arranges child elements in a column, with customizable \n    alignment modes, spacing, and wrapping options. It can align items to \n    the top or bottom edge, center them, distribute them evenly using the\n    justified mode, or position them manually.\n    \n    The layout automatically tracks content height changes and repositions \n    children when needed. Wrapping behavior can be customized to control \n    how items overflow when they exceed available height.\n\n    The `width` attribute is ignored for VerticalLayout. If you intend\n    to clip the content, use a `ChildWindow` instead.\n    ")},
+  {Py_tp_doc, (void *)PyDoc_STR("\n    A layout that organizes items vertically from top to bottom.\n    \n    VerticalLayout arranges child elements in a column, with customizable \n    alignment modes, spacing, and wrapping options. It can align items to \n    the top or bottom edge, center them, distribute them evenly using the\n    justified mode, or position them manually.\n    \n    The layout automatically tracks content height changes and repositions \n    children when needed. Wrapping behavior can be customized to control \n    how items overflow when they exceed available height.\n\n    The `width` attribute does not affect the vertical layout algorithm,\n    but does set the content area width available for children's\n    sizing expressions.\n    ")},
   {Py_tp_traverse, (void *)__pyx_tp_traverse_9dearcygui_6layout_Layout},
   {Py_tp_clear, (void *)__pyx_tp_clear_9dearcygui_6layout_Layout},
   {Py_tp_methods, (void *)__pyx_methods_9dearcygui_6layout_VerticalLayout},
@@ -39838,7 +41598,7 @@ static PyTypeObject __pyx_type_9dearcygui_6layout_VerticalLayout = {
   0, /*tp_setattro*/
   0, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
-  PyDoc_STR("\n    A layout that organizes items vertically from top to bottom.\n    \n    VerticalLayout arranges child elements in a column, with customizable \n    alignment modes, spacing, and wrapping options. It can align items to \n    the top or bottom edge, center them, distribute them evenly using the\n    justified mode, or position them manually.\n    \n    The layout automatically tracks content height changes and repositions \n    children when needed. Wrapping behavior can be customized to control \n    how items overflow when they exceed available height.\n\n    The `width` attribute is ignored for VerticalLayout. If you intend\n    to clip the content, use a `ChildWindow` instead.\n    "), /*tp_doc*/
+  PyDoc_STR("\n    A layout that organizes items vertically from top to bottom.\n    \n    VerticalLayout arranges child elements in a column, with customizable \n    alignment modes, spacing, and wrapping options. It can align items to \n    the top or bottom edge, center them, distribute them evenly using the\n    justified mode, or position them manually.\n    \n    The layout automatically tracks content height changes and repositions \n    children when needed. Wrapping behavior can be customized to control \n    how items overflow when they exceed available height.\n\n    The `width` attribute does not affect the vertical layout algorithm,\n    but does set the content area width available for children's\n    sizing expressions.\n    "), /*tp_doc*/
   __pyx_tp_traverse_9dearcygui_6layout_Layout, /*tp_traverse*/
   __pyx_tp_clear_9dearcygui_6layout_Layout, /*tp_clear*/
   0, /*tp_richcompare*/
@@ -39964,7 +41724,7 @@ static int __pyx_setprop_9dearcygui_6layout_12WindowLayout_clip(PyObject *o, PyO
 }
 
 static PyMethodDef __pyx_methods_9dearcygui_6layout_WindowLayout[] = {
-  {"update_layout", (PyCFunction)__pyx_pw_9dearcygui_6layout_12WindowLayout_3update_layout, METH_NOARGS, 0},
+  {"update_layout", (PyCFunction)__pyx_pw_9dearcygui_6layout_12WindowLayout_3update_layout, METH_NOARGS, __pyx_doc_9dearcygui_6layout_12WindowLayout_2update_layout},
   {0, 0, 0, 0}
 };
 
@@ -40996,12 +42756,12 @@ static int __Pyx_modinit_type_init_code(__pyx_mstatetype *__pyx_mstate) {
   __pyx_vtable_9dearcygui_6layout_Layout.draw_children = (void (*)(struct __pyx_obj_9dearcygui_6layout_Layout *))__pyx_f_9dearcygui_6layout_6Layout_draw_children;
   __pyx_vtable_9dearcygui_6layout_Layout.check_change = (int (*)(struct __pyx_obj_9dearcygui_6layout_Layout *))__pyx_f_9dearcygui_6layout_6Layout_check_change;
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_t_2 = PyTuple_Pack(1, (PyObject *)__pyx_mstate_global->__pyx_ptype_9dearcygui_4core_uiItem); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_Pack(1, (PyObject *)__pyx_mstate_global->__pyx_ptype_9dearcygui_4core_uiItem); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_mstate->__pyx_ptype_9dearcygui_6layout_Layout = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_9dearcygui_6layout_Layout_spec, __pyx_t_2);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_mstate->__pyx_ptype_9dearcygui_6layout_Layout)) __PYX_ERR(0, 34, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_9dearcygui_6layout_Layout_spec, __pyx_mstate->__pyx_ptype_9dearcygui_6layout_Layout) < (0)) __PYX_ERR(0, 34, __pyx_L1_error)
+  if (unlikely(!__pyx_mstate->__pyx_ptype_9dearcygui_6layout_Layout)) __PYX_ERR(0, 33, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_9dearcygui_6layout_Layout_spec, __pyx_mstate->__pyx_ptype_9dearcygui_6layout_Layout) < (0)) __PYX_ERR(0, 33, __pyx_L1_error)
   #else
   __pyx_mstate->__pyx_ptype_9dearcygui_6layout_Layout = &__pyx_type_9dearcygui_6layout_Layout;
   #endif
@@ -41009,7 +42769,7 @@ static int __Pyx_modinit_type_init_code(__pyx_mstatetype *__pyx_mstate) {
   __pyx_mstate_global->__pyx_ptype_9dearcygui_6layout_Layout->tp_base = __pyx_mstate_global->__pyx_ptype_9dearcygui_4core_uiItem;
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_9dearcygui_6layout_Layout) < (0)) __PYX_ERR(0, 34, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_9dearcygui_6layout_Layout) < (0)) __PYX_ERR(0, 33, __pyx_L1_error)
   #endif
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount((PyObject*)__pyx_mstate->__pyx_ptype_9dearcygui_6layout_Layout);
@@ -41019,24 +42779,28 @@ static int __Pyx_modinit_type_init_code(__pyx_mstatetype *__pyx_mstate) {
     __pyx_mstate->__pyx_ptype_9dearcygui_6layout_Layout->tp_getattro = PyObject_GenericGetAttr;
   }
   #endif
-  if (__Pyx_SetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_6layout_Layout, __pyx_vtabptr_9dearcygui_6layout_Layout) < (0)) __PYX_ERR(0, 34, __pyx_L1_error)
-  if (__Pyx_MergeVtables(__pyx_mstate->__pyx_ptype_9dearcygui_6layout_Layout) < (0)) __PYX_ERR(0, 34, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_mstate_global->__pyx_n_u_Layout, (PyObject *) __pyx_mstate->__pyx_ptype_9dearcygui_6layout_Layout) < (0)) __PYX_ERR(0, 34, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_6layout_Layout, __pyx_vtabptr_9dearcygui_6layout_Layout) < (0)) __PYX_ERR(0, 33, __pyx_L1_error)
+  if (__Pyx_MergeVtables(__pyx_mstate->__pyx_ptype_9dearcygui_6layout_Layout) < (0)) __PYX_ERR(0, 33, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_mstate_global->__pyx_n_u_Layout, (PyObject *) __pyx_mstate->__pyx_ptype_9dearcygui_6layout_Layout) < (0)) __PYX_ERR(0, 33, __pyx_L1_error)
   #if CYTHON_USE_TYPE_SLOTS
   if (__pyx_mstate->__pyx_ptype_9dearcygui_6layout_Layout->tp_weaklistoffset == 0) __pyx_mstate->__pyx_ptype_9dearcygui_6layout_Layout->tp_weaklistoffset = offsetof(struct __pyx_obj_9dearcygui_6layout_Layout, __pyx_base.__pyx_base.__weakref__);
   #endif
   __pyx_vtabptr_9dearcygui_6layout_HorizontalLayout = &__pyx_vtable_9dearcygui_6layout_HorizontalLayout;
   __pyx_vtable_9dearcygui_6layout_HorizontalLayout.__pyx_base = *__pyx_vtabptr_9dearcygui_6layout_Layout;
   __pyx_vtable_9dearcygui_6layout_HorizontalLayout.__pyx_base.__pyx_base.draw_item = (int (*)(struct __pyx_obj_9dearcygui_4core_uiItem *))__pyx_f_9dearcygui_6layout_16HorizontalLayout_draw_item;
-  __pyx_vtable_9dearcygui_6layout_HorizontalLayout._HorizontalLayout__update_layout_manual = (void (*)(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *))__pyx_f_9dearcygui_6layout_16HorizontalLayout__HorizontalLayout__update_layout_manual;
-  __pyx_vtable_9dearcygui_6layout_HorizontalLayout._HorizontalLayout__update_layout = (void (*)(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *))__pyx_f_9dearcygui_6layout_16HorizontalLayout__HorizontalLayout__update_layout;
+  __pyx_vtable_9dearcygui_6layout_HorizontalLayout._HorizontalLayout__check_children_neutral = (int (*)(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *))__pyx_f_9dearcygui_6layout_16HorizontalLayout__HorizontalLayout__check_children_neutral;
+  __pyx_vtable_9dearcygui_6layout_HorizontalLayout._HorizontalLayout__apply_children_neutral = (void (*)(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *))__pyx_f_9dearcygui_6layout_16HorizontalLayout__HorizontalLayout__apply_children_neutral;
+  __pyx_vtable_9dearcygui_6layout_HorizontalLayout._HorizontalLayout__draw_item_left_no_wrap = (int (*)(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *))__pyx_f_9dearcygui_6layout_16HorizontalLayout__HorizontalLayout__draw_item_left_no_wrap;
+  __pyx_vtable_9dearcygui_6layout_HorizontalLayout._HorizontalLayout__draw_item_left_wrap = (int (*)(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *))__pyx_f_9dearcygui_6layout_16HorizontalLayout__HorizontalLayout__draw_item_left_wrap;
+  __pyx_vtable_9dearcygui_6layout_HorizontalLayout._HorizontalLayout__draw_item_manual = (int (*)(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *))__pyx_f_9dearcygui_6layout_16HorizontalLayout__HorizontalLayout__draw_item_manual;
+  __pyx_vtable_9dearcygui_6layout_HorizontalLayout._HorizontalLayout__draw_item_aligned = (int (*)(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout *))__pyx_f_9dearcygui_6layout_16HorizontalLayout__HorizontalLayout__draw_item_aligned;
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_t_2 = PyTuple_Pack(1, (PyObject *)__pyx_mstate_global->__pyx_ptype_9dearcygui_6layout_Layout); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 195, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_Pack(1, (PyObject *)__pyx_mstate_global->__pyx_ptype_9dearcygui_6layout_Layout); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 288, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_mstate->__pyx_ptype_9dearcygui_6layout_HorizontalLayout = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_9dearcygui_6layout_HorizontalLayout_spec, __pyx_t_2);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_mstate->__pyx_ptype_9dearcygui_6layout_HorizontalLayout)) __PYX_ERR(0, 195, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_9dearcygui_6layout_HorizontalLayout_spec, __pyx_mstate->__pyx_ptype_9dearcygui_6layout_HorizontalLayout) < (0)) __PYX_ERR(0, 195, __pyx_L1_error)
+  if (unlikely(!__pyx_mstate->__pyx_ptype_9dearcygui_6layout_HorizontalLayout)) __PYX_ERR(0, 288, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_9dearcygui_6layout_HorizontalLayout_spec, __pyx_mstate->__pyx_ptype_9dearcygui_6layout_HorizontalLayout) < (0)) __PYX_ERR(0, 288, __pyx_L1_error)
   #else
   __pyx_mstate->__pyx_ptype_9dearcygui_6layout_HorizontalLayout = &__pyx_type_9dearcygui_6layout_HorizontalLayout;
   #endif
@@ -41044,7 +42808,7 @@ static int __Pyx_modinit_type_init_code(__pyx_mstatetype *__pyx_mstate) {
   __pyx_mstate_global->__pyx_ptype_9dearcygui_6layout_HorizontalLayout->tp_base = __pyx_mstate_global->__pyx_ptype_9dearcygui_6layout_Layout;
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_9dearcygui_6layout_HorizontalLayout) < (0)) __PYX_ERR(0, 195, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_9dearcygui_6layout_HorizontalLayout) < (0)) __PYX_ERR(0, 288, __pyx_L1_error)
   #endif
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount((PyObject*)__pyx_mstate->__pyx_ptype_9dearcygui_6layout_HorizontalLayout);
@@ -41054,24 +42818,28 @@ static int __Pyx_modinit_type_init_code(__pyx_mstatetype *__pyx_mstate) {
     __pyx_mstate->__pyx_ptype_9dearcygui_6layout_HorizontalLayout->tp_getattro = PyObject_GenericGetAttr;
   }
   #endif
-  if (__Pyx_SetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_6layout_HorizontalLayout, __pyx_vtabptr_9dearcygui_6layout_HorizontalLayout) < (0)) __PYX_ERR(0, 195, __pyx_L1_error)
-  if (__Pyx_MergeVtables(__pyx_mstate->__pyx_ptype_9dearcygui_6layout_HorizontalLayout) < (0)) __PYX_ERR(0, 195, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_mstate_global->__pyx_n_u_HorizontalLayout, (PyObject *) __pyx_mstate->__pyx_ptype_9dearcygui_6layout_HorizontalLayout) < (0)) __PYX_ERR(0, 195, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_6layout_HorizontalLayout, __pyx_vtabptr_9dearcygui_6layout_HorizontalLayout) < (0)) __PYX_ERR(0, 288, __pyx_L1_error)
+  if (__Pyx_MergeVtables(__pyx_mstate->__pyx_ptype_9dearcygui_6layout_HorizontalLayout) < (0)) __PYX_ERR(0, 288, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_mstate_global->__pyx_n_u_HorizontalLayout, (PyObject *) __pyx_mstate->__pyx_ptype_9dearcygui_6layout_HorizontalLayout) < (0)) __PYX_ERR(0, 288, __pyx_L1_error)
   #if CYTHON_USE_TYPE_SLOTS
   if (__pyx_mstate->__pyx_ptype_9dearcygui_6layout_HorizontalLayout->tp_weaklistoffset == 0) __pyx_mstate->__pyx_ptype_9dearcygui_6layout_HorizontalLayout->tp_weaklistoffset = offsetof(struct __pyx_obj_9dearcygui_6layout_HorizontalLayout, __pyx_base.__pyx_base.__pyx_base.__weakref__);
   #endif
   __pyx_vtabptr_9dearcygui_6layout_VerticalLayout = &__pyx_vtable_9dearcygui_6layout_VerticalLayout;
   __pyx_vtable_9dearcygui_6layout_VerticalLayout.__pyx_base = *__pyx_vtabptr_9dearcygui_6layout_Layout;
   __pyx_vtable_9dearcygui_6layout_VerticalLayout.__pyx_base.__pyx_base.draw_item = (int (*)(struct __pyx_obj_9dearcygui_4core_uiItem *))__pyx_f_9dearcygui_6layout_14VerticalLayout_draw_item;
-  __pyx_vtable_9dearcygui_6layout_VerticalLayout._VerticalLayout__update_layout_manual = (void (*)(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *))__pyx_f_9dearcygui_6layout_14VerticalLayout__VerticalLayout__update_layout_manual;
-  __pyx_vtable_9dearcygui_6layout_VerticalLayout._VerticalLayout__update_layout = (void (*)(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *))__pyx_f_9dearcygui_6layout_14VerticalLayout__VerticalLayout__update_layout;
+  __pyx_vtable_9dearcygui_6layout_VerticalLayout._VerticalLayout__check_children_neutral = (int (*)(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *))__pyx_f_9dearcygui_6layout_14VerticalLayout__VerticalLayout__check_children_neutral;
+  __pyx_vtable_9dearcygui_6layout_VerticalLayout._VerticalLayout__apply_children_neutral = (void (*)(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *))__pyx_f_9dearcygui_6layout_14VerticalLayout__VerticalLayout__apply_children_neutral;
+  __pyx_vtable_9dearcygui_6layout_VerticalLayout._VerticalLayout__draw_item_top_no_wrap = (int (*)(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *))__pyx_f_9dearcygui_6layout_14VerticalLayout__VerticalLayout__draw_item_top_no_wrap;
+  __pyx_vtable_9dearcygui_6layout_VerticalLayout._VerticalLayout__draw_item_top_wrap = (int (*)(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *))__pyx_f_9dearcygui_6layout_14VerticalLayout__VerticalLayout__draw_item_top_wrap;
+  __pyx_vtable_9dearcygui_6layout_VerticalLayout._VerticalLayout__draw_item_manual = (int (*)(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *))__pyx_f_9dearcygui_6layout_14VerticalLayout__VerticalLayout__draw_item_manual;
+  __pyx_vtable_9dearcygui_6layout_VerticalLayout._VerticalLayout__draw_item_aligned = (int (*)(struct __pyx_obj_9dearcygui_6layout_VerticalLayout *))__pyx_f_9dearcygui_6layout_14VerticalLayout__VerticalLayout__draw_item_aligned;
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_t_2 = PyTuple_Pack(1, (PyObject *)__pyx_mstate_global->__pyx_ptype_9dearcygui_6layout_Layout); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 544, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_Pack(1, (PyObject *)__pyx_mstate_global->__pyx_ptype_9dearcygui_6layout_Layout); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 920, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_mstate->__pyx_ptype_9dearcygui_6layout_VerticalLayout = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_9dearcygui_6layout_VerticalLayout_spec, __pyx_t_2);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_mstate->__pyx_ptype_9dearcygui_6layout_VerticalLayout)) __PYX_ERR(0, 544, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_9dearcygui_6layout_VerticalLayout_spec, __pyx_mstate->__pyx_ptype_9dearcygui_6layout_VerticalLayout) < (0)) __PYX_ERR(0, 544, __pyx_L1_error)
+  if (unlikely(!__pyx_mstate->__pyx_ptype_9dearcygui_6layout_VerticalLayout)) __PYX_ERR(0, 920, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_9dearcygui_6layout_VerticalLayout_spec, __pyx_mstate->__pyx_ptype_9dearcygui_6layout_VerticalLayout) < (0)) __PYX_ERR(0, 920, __pyx_L1_error)
   #else
   __pyx_mstate->__pyx_ptype_9dearcygui_6layout_VerticalLayout = &__pyx_type_9dearcygui_6layout_VerticalLayout;
   #endif
@@ -41079,7 +42847,7 @@ static int __Pyx_modinit_type_init_code(__pyx_mstatetype *__pyx_mstate) {
   __pyx_mstate_global->__pyx_ptype_9dearcygui_6layout_VerticalLayout->tp_base = __pyx_mstate_global->__pyx_ptype_9dearcygui_6layout_Layout;
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_9dearcygui_6layout_VerticalLayout) < (0)) __PYX_ERR(0, 544, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_9dearcygui_6layout_VerticalLayout) < (0)) __PYX_ERR(0, 920, __pyx_L1_error)
   #endif
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount((PyObject*)__pyx_mstate->__pyx_ptype_9dearcygui_6layout_VerticalLayout);
@@ -41089,9 +42857,9 @@ static int __Pyx_modinit_type_init_code(__pyx_mstatetype *__pyx_mstate) {
     __pyx_mstate->__pyx_ptype_9dearcygui_6layout_VerticalLayout->tp_getattro = PyObject_GenericGetAttr;
   }
   #endif
-  if (__Pyx_SetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_6layout_VerticalLayout, __pyx_vtabptr_9dearcygui_6layout_VerticalLayout) < (0)) __PYX_ERR(0, 544, __pyx_L1_error)
-  if (__Pyx_MergeVtables(__pyx_mstate->__pyx_ptype_9dearcygui_6layout_VerticalLayout) < (0)) __PYX_ERR(0, 544, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_mstate_global->__pyx_n_u_VerticalLayout, (PyObject *) __pyx_mstate->__pyx_ptype_9dearcygui_6layout_VerticalLayout) < (0)) __PYX_ERR(0, 544, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_6layout_VerticalLayout, __pyx_vtabptr_9dearcygui_6layout_VerticalLayout) < (0)) __PYX_ERR(0, 920, __pyx_L1_error)
+  if (__Pyx_MergeVtables(__pyx_mstate->__pyx_ptype_9dearcygui_6layout_VerticalLayout) < (0)) __PYX_ERR(0, 920, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_mstate_global->__pyx_n_u_VerticalLayout, (PyObject *) __pyx_mstate->__pyx_ptype_9dearcygui_6layout_VerticalLayout) < (0)) __PYX_ERR(0, 920, __pyx_L1_error)
   #if CYTHON_USE_TYPE_SLOTS
   if (__pyx_mstate->__pyx_ptype_9dearcygui_6layout_VerticalLayout->tp_weaklistoffset == 0) __pyx_mstate->__pyx_ptype_9dearcygui_6layout_VerticalLayout->tp_weaklistoffset = offsetof(struct __pyx_obj_9dearcygui_6layout_VerticalLayout, __pyx_base.__pyx_base.__pyx_base.__weakref__);
   #endif
@@ -41103,12 +42871,12 @@ static int __Pyx_modinit_type_init_code(__pyx_mstatetype *__pyx_mstate) {
   __pyx_vtable_9dearcygui_6layout_WindowLayout.draw_children = (void (*)(struct __pyx_obj_9dearcygui_6layout_WindowLayout *))__pyx_f_9dearcygui_6layout_12WindowLayout_draw_children;
   __pyx_vtable_9dearcygui_6layout_WindowLayout.check_change = (int (*)(struct __pyx_obj_9dearcygui_6layout_WindowLayout *))__pyx_f_9dearcygui_6layout_12WindowLayout_check_change;
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_t_2 = PyTuple_Pack(1, (PyObject *)__pyx_mstate_global->__pyx_ptype_9dearcygui_4core_uiItem); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 897, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_Pack(1, (PyObject *)__pyx_mstate_global->__pyx_ptype_9dearcygui_4core_uiItem); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1509, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_mstate->__pyx_ptype_9dearcygui_6layout_WindowLayout = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_9dearcygui_6layout_WindowLayout_spec, __pyx_t_2);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_mstate->__pyx_ptype_9dearcygui_6layout_WindowLayout)) __PYX_ERR(0, 897, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_9dearcygui_6layout_WindowLayout_spec, __pyx_mstate->__pyx_ptype_9dearcygui_6layout_WindowLayout) < (0)) __PYX_ERR(0, 897, __pyx_L1_error)
+  if (unlikely(!__pyx_mstate->__pyx_ptype_9dearcygui_6layout_WindowLayout)) __PYX_ERR(0, 1509, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_9dearcygui_6layout_WindowLayout_spec, __pyx_mstate->__pyx_ptype_9dearcygui_6layout_WindowLayout) < (0)) __PYX_ERR(0, 1509, __pyx_L1_error)
   #else
   __pyx_mstate->__pyx_ptype_9dearcygui_6layout_WindowLayout = &__pyx_type_9dearcygui_6layout_WindowLayout;
   #endif
@@ -41116,7 +42884,7 @@ static int __Pyx_modinit_type_init_code(__pyx_mstatetype *__pyx_mstate) {
   __pyx_mstate_global->__pyx_ptype_9dearcygui_6layout_WindowLayout->tp_base = __pyx_mstate_global->__pyx_ptype_9dearcygui_4core_uiItem;
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_9dearcygui_6layout_WindowLayout) < (0)) __PYX_ERR(0, 897, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_mstate->__pyx_ptype_9dearcygui_6layout_WindowLayout) < (0)) __PYX_ERR(0, 1509, __pyx_L1_error)
   #endif
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount((PyObject*)__pyx_mstate->__pyx_ptype_9dearcygui_6layout_WindowLayout);
@@ -41126,9 +42894,9 @@ static int __Pyx_modinit_type_init_code(__pyx_mstatetype *__pyx_mstate) {
     __pyx_mstate->__pyx_ptype_9dearcygui_6layout_WindowLayout->tp_getattro = PyObject_GenericGetAttr;
   }
   #endif
-  if (__Pyx_SetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_6layout_WindowLayout, __pyx_vtabptr_9dearcygui_6layout_WindowLayout) < (0)) __PYX_ERR(0, 897, __pyx_L1_error)
-  if (__Pyx_MergeVtables(__pyx_mstate->__pyx_ptype_9dearcygui_6layout_WindowLayout) < (0)) __PYX_ERR(0, 897, __pyx_L1_error)
-  if (PyObject_SetAttr(__pyx_m, __pyx_mstate_global->__pyx_n_u_WindowLayout, (PyObject *) __pyx_mstate->__pyx_ptype_9dearcygui_6layout_WindowLayout) < (0)) __PYX_ERR(0, 897, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_6layout_WindowLayout, __pyx_vtabptr_9dearcygui_6layout_WindowLayout) < (0)) __PYX_ERR(0, 1509, __pyx_L1_error)
+  if (__Pyx_MergeVtables(__pyx_mstate->__pyx_ptype_9dearcygui_6layout_WindowLayout) < (0)) __PYX_ERR(0, 1509, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_mstate_global->__pyx_n_u_WindowLayout, (PyObject *) __pyx_mstate->__pyx_ptype_9dearcygui_6layout_WindowLayout) < (0)) __PYX_ERR(0, 1509, __pyx_L1_error)
   #if CYTHON_USE_TYPE_SLOTS
   if (__pyx_mstate->__pyx_ptype_9dearcygui_6layout_WindowLayout->tp_weaklistoffset == 0) __pyx_mstate->__pyx_ptype_9dearcygui_6layout_WindowLayout->tp_weaklistoffset = offsetof(struct __pyx_obj_9dearcygui_6layout_WindowLayout, __pyx_base.__pyx_base.__weakref__);
   #endif
@@ -41376,8 +43144,8 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_ItemStateView), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_ItemStateView),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_ItemStateView) __PYX_ERR(5, 280, __pyx_L1_error)
-  __pyx_vtabptr_9dearcygui_4core_ItemStateView = (struct __pyx_vtabstruct_9dearcygui_4core_ItemStateView*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_ItemStateView); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_ItemStateView)) __PYX_ERR(5, 280, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_ItemStateView) __PYX_ERR(5, 282, __pyx_L1_error)
+  __pyx_vtabptr_9dearcygui_4core_ItemStateView = (struct __pyx_vtabstruct_9dearcygui_4core_ItemStateView*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_ItemStateView); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_ItemStateView)) __PYX_ERR(5, 282, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_9dearcygui_4core_ItemStateCopy = __Pyx_ImportType_3_2_4(__pyx_t_1, "dearcygui.core", "ItemStateCopy",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_9dearcygui_4core_ItemStateCopy), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_ItemStateCopy),
@@ -41386,8 +43154,8 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_ItemStateCopy), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_ItemStateCopy),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_ItemStateCopy) __PYX_ERR(5, 290, __pyx_L1_error)
-  __pyx_vtabptr_9dearcygui_4core_ItemStateCopy = (struct __pyx_vtabstruct_9dearcygui_4core_ItemStateCopy*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_ItemStateCopy); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_ItemStateCopy)) __PYX_ERR(5, 290, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_ItemStateCopy) __PYX_ERR(5, 292, __pyx_L1_error)
+  __pyx_vtabptr_9dearcygui_4core_ItemStateCopy = (struct __pyx_vtabstruct_9dearcygui_4core_ItemStateCopy*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_ItemStateCopy); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_ItemStateCopy)) __PYX_ERR(5, 292, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_9dearcygui_4core_Gamepad = __Pyx_ImportType_3_2_4(__pyx_t_1, "dearcygui.core", "Gamepad",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_9dearcygui_4core_Gamepad), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_Gamepad),
@@ -41396,7 +43164,7 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_Gamepad), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_Gamepad),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_Gamepad) __PYX_ERR(5, 341, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_Gamepad) __PYX_ERR(5, 343, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_9dearcygui_4core_Viewport = __Pyx_ImportType_3_2_4(__pyx_t_1, "dearcygui.core", "Viewport",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_9dearcygui_4core_Viewport), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_Viewport),
@@ -41405,8 +43173,8 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_Viewport), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_Viewport),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_Viewport) __PYX_ERR(5, 345, __pyx_L1_error)
-  __pyx_vtabptr_9dearcygui_4core_Viewport = (struct __pyx_vtabstruct_9dearcygui_4core_Viewport*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_Viewport); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_Viewport)) __PYX_ERR(5, 345, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_Viewport) __PYX_ERR(5, 347, __pyx_L1_error)
+  __pyx_vtabptr_9dearcygui_4core_Viewport = (struct __pyx_vtabstruct_9dearcygui_4core_Viewport*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_Viewport); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_Viewport)) __PYX_ERR(5, 347, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_9dearcygui_4core_Callback = __Pyx_ImportType_3_2_4(__pyx_t_1, "dearcygui.core", "Callback",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_9dearcygui_4core_Callback), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_Callback),
@@ -41415,7 +43183,7 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_Callback), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_Callback),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_Callback) __PYX_ERR(5, 432, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_Callback) __PYX_ERR(5, 434, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_9dearcygui_4core_drawingItem = __Pyx_ImportType_3_2_4(__pyx_t_1, "dearcygui.core", "drawingItem",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_9dearcygui_4core_drawingItem), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_drawingItem),
@@ -41424,8 +43192,8 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_drawingItem), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_drawingItem),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_drawingItem) __PYX_ERR(5, 514, __pyx_L1_error)
-  __pyx_vtabptr_9dearcygui_4core_drawingItem = (struct __pyx_vtabstruct_9dearcygui_4core_drawingItem*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_drawingItem); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_drawingItem)) __PYX_ERR(5, 514, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_drawingItem) __PYX_ERR(5, 516, __pyx_L1_error)
+  __pyx_vtabptr_9dearcygui_4core_drawingItem = (struct __pyx_vtabstruct_9dearcygui_4core_drawingItem*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_drawingItem); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_drawingItem)) __PYX_ERR(5, 516, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_9dearcygui_4core_baseHandler = __Pyx_ImportType_3_2_4(__pyx_t_1, "dearcygui.core", "baseHandler",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_9dearcygui_4core_baseHandler), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_baseHandler),
@@ -41434,8 +43202,8 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_baseHandler), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_baseHandler),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_baseHandler) __PYX_ERR(5, 630, __pyx_L1_error)
-  __pyx_vtabptr_9dearcygui_4core_baseHandler = (struct __pyx_vtabstruct_9dearcygui_4core_baseHandler*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_baseHandler); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_baseHandler)) __PYX_ERR(5, 630, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_baseHandler) __PYX_ERR(5, 632, __pyx_L1_error)
+  __pyx_vtabptr_9dearcygui_4core_baseHandler = (struct __pyx_vtabstruct_9dearcygui_4core_baseHandler*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_baseHandler); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_baseHandler)) __PYX_ERR(5, 632, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_9dearcygui_4core_SharedValue = __Pyx_ImportType_3_2_4(__pyx_t_1, "dearcygui.core", "SharedValue",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_9dearcygui_4core_SharedValue), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_SharedValue),
@@ -41444,8 +43212,8 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_SharedValue), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_SharedValue),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_SharedValue) __PYX_ERR(5, 697, __pyx_L1_error)
-  __pyx_vtabptr_9dearcygui_4core_SharedValue = (struct __pyx_vtabstruct_9dearcygui_4core_SharedValue*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_SharedValue); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_SharedValue)) __PYX_ERR(5, 697, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_SharedValue) __PYX_ERR(5, 698, __pyx_L1_error)
+  __pyx_vtabptr_9dearcygui_4core_SharedValue = (struct __pyx_vtabstruct_9dearcygui_4core_SharedValue*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_SharedValue); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_SharedValue)) __PYX_ERR(5, 698, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_9dearcygui_4core_TimeWatcher = __Pyx_ImportType_3_2_4(__pyx_t_1, "dearcygui.core", "TimeWatcher",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_9dearcygui_4core_TimeWatcher), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_TimeWatcher),
@@ -41454,8 +43222,8 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_TimeWatcher), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_TimeWatcher),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_TimeWatcher) __PYX_ERR(5, 715, __pyx_L1_error)
-  __pyx_vtabptr_9dearcygui_4core_TimeWatcher = (struct __pyx_vtabstruct_9dearcygui_4core_TimeWatcher*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_TimeWatcher); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_TimeWatcher)) __PYX_ERR(5, 715, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_TimeWatcher) __PYX_ERR(5, 716, __pyx_L1_error)
+  __pyx_vtabptr_9dearcygui_4core_TimeWatcher = (struct __pyx_vtabstruct_9dearcygui_4core_TimeWatcher*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_TimeWatcher); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_TimeWatcher)) __PYX_ERR(5, 716, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_9dearcygui_4core_Window = __Pyx_ImportType_3_2_4(__pyx_t_1, "dearcygui.core", "Window",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_9dearcygui_4core_Window), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_Window),
@@ -41464,8 +43232,8 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_Window), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_Window),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_Window) __PYX_ERR(5, 718, __pyx_L1_error)
-  __pyx_vtabptr_9dearcygui_4core_Window = (struct __pyx_vtabstruct_9dearcygui_4core_Window*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_Window); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_Window)) __PYX_ERR(5, 718, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_Window) __PYX_ERR(5, 719, __pyx_L1_error)
+  __pyx_vtabptr_9dearcygui_4core_Window = (struct __pyx_vtabstruct_9dearcygui_4core_Window*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_Window); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_Window)) __PYX_ERR(5, 719, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_9dearcygui_4core_plotElement = __Pyx_ImportType_3_2_4(__pyx_t_1, "dearcygui.core", "plotElement",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_9dearcygui_4core_plotElement), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_plotElement),
@@ -41474,8 +43242,8 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_plotElement), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_plotElement),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_plotElement) __PYX_ERR(5, 763, __pyx_L1_error)
-  __pyx_vtabptr_9dearcygui_4core_plotElement = (struct __pyx_vtabstruct_9dearcygui_4core_plotElement*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_plotElement); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_plotElement)) __PYX_ERR(5, 763, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_plotElement) __PYX_ERR(5, 764, __pyx_L1_error)
+  __pyx_vtabptr_9dearcygui_4core_plotElement = (struct __pyx_vtabstruct_9dearcygui_4core_plotElement*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_plotElement); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_plotElement)) __PYX_ERR(5, 764, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_9dearcygui_4core_AxisTag = __Pyx_ImportType_3_2_4(__pyx_t_1, "dearcygui.core", "AxisTag",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_9dearcygui_4core_AxisTag), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_AxisTag),
@@ -41484,8 +43252,8 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_AxisTag), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_AxisTag),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_AxisTag) __PYX_ERR(5, 776, __pyx_L1_error)
-  __pyx_vtabptr_9dearcygui_4core_AxisTag = (struct __pyx_vtabstruct_9dearcygui_4core_AxisTag*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_AxisTag); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_AxisTag)) __PYX_ERR(5, 776, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_AxisTag) __PYX_ERR(5, 777, __pyx_L1_error)
+  __pyx_vtabptr_9dearcygui_4core_AxisTag = (struct __pyx_vtabstruct_9dearcygui_4core_AxisTag*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_AxisTag); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_AxisTag)) __PYX_ERR(5, 777, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_9dearcygui_4core_baseFont = __Pyx_ImportType_3_2_4(__pyx_t_1, "dearcygui.core", "baseFont",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_9dearcygui_4core_baseFont), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_baseFont),
@@ -41494,8 +43262,8 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_baseFont), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_baseFont),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_baseFont) __PYX_ERR(5, 787, __pyx_L1_error)
-  __pyx_vtabptr_9dearcygui_4core_baseFont = (struct __pyx_vtabstruct_9dearcygui_4core_baseFont*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_baseFont); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_baseFont)) __PYX_ERR(5, 787, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_baseFont) __PYX_ERR(5, 788, __pyx_L1_error)
+  __pyx_vtabptr_9dearcygui_4core_baseFont = (struct __pyx_vtabstruct_9dearcygui_4core_baseFont*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_baseFont); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_baseFont)) __PYX_ERR(5, 788, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_9dearcygui_4core_baseTheme = __Pyx_ImportType_3_2_4(__pyx_t_1, "dearcygui.core", "baseTheme",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_9dearcygui_4core_baseTheme), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_baseTheme),
@@ -41504,8 +43272,8 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_baseTheme), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_baseTheme),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_baseTheme) __PYX_ERR(5, 801, __pyx_L1_error)
-  __pyx_vtabptr_9dearcygui_4core_baseTheme = (struct __pyx_vtabstruct_9dearcygui_4core_baseTheme*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_baseTheme); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_baseTheme)) __PYX_ERR(5, 801, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_baseTheme) __PYX_ERR(5, 802, __pyx_L1_error)
+  __pyx_vtabptr_9dearcygui_4core_baseTheme = (struct __pyx_vtabstruct_9dearcygui_4core_baseTheme*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_baseTheme); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_baseTheme)) __PYX_ERR(5, 802, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_1 = PyImport_ImportModule("dearcygui.sizing"); if (unlikely(!__pyx_t_1)) __PYX_ERR(7, 8, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -42418,36 +44186,7 @@ __Pyx_RefNannySetupContext("PyInit_layout", 0);
   if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_pyx_unpickle_Enum, __pyx_t_4) < (0)) __PYX_ERR(1, 4, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "dearcygui/layout.pyx":28
- * from .imgui_types cimport ImVec2Vec2, Vec2ImVec2
- * from .sizing cimport resolve_size
- * from .sizing import Size as _Size             # <<<<<<<<<<<<<<
- * from .types cimport child_type
- * from .wrapper cimport imgui
-*/
-  {
-    PyObject* const __pyx_imported_names[] = {__pyx_mstate_global->__pyx_n_u_Size_2};
-    __pyx_t_1 = __Pyx_Import(__pyx_mstate_global->__pyx_n_u_sizing, __pyx_imported_names, 1, __pyx_mstate_global->__pyx_kp_u_dearcygui_sizing, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 28, __pyx_L1_error)
-  }
-  __pyx_t_4 = __pyx_t_1;
-  __Pyx_GOTREF(__pyx_t_4);
-  {
-    PyObject* const __pyx_imported_names[] = {__pyx_mstate_global->__pyx_n_u_Size_2};
-    __pyx_t_9 = 0; {
-      __pyx_t_5 = __Pyx_ImportFrom(__pyx_t_4, __pyx_imported_names[__pyx_t_9]); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 28, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
-      switch (__pyx_t_9) {
-        case 0:
-        if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_Size, __pyx_t_5) < (0)) __PYX_ERR(0, 28, __pyx_L1_error)
-        break;
-        default:;
-      }
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    }
-  }
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-
-  /* "dearcygui/layout.pyx":32
+  /* "dearcygui/layout.pyx":31
  * from .wrapper cimport imgui
  * 
  * from warnings import warn as _warn             # <<<<<<<<<<<<<<
@@ -42456,18 +44195,18 @@ __Pyx_RefNannySetupContext("PyInit_layout", 0);
 */
   {
     PyObject* const __pyx_imported_names[] = {__pyx_mstate_global->__pyx_n_u_warn};
-    __pyx_t_1 = __Pyx_Import(__pyx_mstate_global->__pyx_n_u_warnings, __pyx_imported_names, 1, NULL, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 32, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_Import(__pyx_mstate_global->__pyx_n_u_warnings, __pyx_imported_names, 1, NULL, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 31, __pyx_L1_error)
   }
   __pyx_t_4 = __pyx_t_1;
   __Pyx_GOTREF(__pyx_t_4);
   {
     PyObject* const __pyx_imported_names[] = {__pyx_mstate_global->__pyx_n_u_warn};
     __pyx_t_9 = 0; {
-      __pyx_t_5 = __Pyx_ImportFrom(__pyx_t_4, __pyx_imported_names[__pyx_t_9]); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 32, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_ImportFrom(__pyx_t_4, __pyx_imported_names[__pyx_t_9]); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 31, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       switch (__pyx_t_9) {
         case 0:
-        if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_warn_2, __pyx_t_5) < (0)) __PYX_ERR(0, 32, __pyx_L1_error)
+        if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_warn_2, __pyx_t_5) < (0)) __PYX_ERR(0, 31, __pyx_L1_error)
         break;
         default:;
       }
@@ -42476,64 +44215,34 @@ __Pyx_RefNannySetupContext("PyInit_layout", 0);
   }
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "dearcygui/layout.pyx":84
+  /* "dearcygui/layout.pyx":149
  *         self._previous_last_child = NULL
  * 
  *     def update_layout(self):             # <<<<<<<<<<<<<<
  *         """
  *         Force an update of the layout next time the scene is rendered.
 */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_9dearcygui_6layout_6Layout_3update_layout, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Layout_update_layout, NULL, __pyx_mstate_global->__pyx_n_u_dearcygui_layout, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[0])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_9dearcygui_6layout_6Layout_3update_layout, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_Layout_update_layout, NULL, __pyx_mstate_global->__pyx_n_u_dearcygui_layout, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[0])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 149, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_4);
   #endif
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_9dearcygui_6layout_Layout, __pyx_mstate_global->__pyx_n_u_update_layout, __pyx_t_4) < (0)) __PYX_ERR(0, 84, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_9dearcygui_6layout_Layout, __pyx_mstate_global->__pyx_n_u_update_layout, __pyx_t_4) < (0)) __PYX_ERR(0, 149, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "dearcygui/layout.pyx":324
- *         self._force_update = True
- * 
- *     def update_layout(self):             # <<<<<<<<<<<<<<
- *         """
- *         Force an update of the layout next time the scene is rendered.
-*/
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_9dearcygui_6layout_16HorizontalLayout_3update_layout, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_HorizontalLayout_update_layout, NULL, __pyx_mstate_global->__pyx_n_u_dearcygui_layout, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[1])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 324, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
-  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_4);
-  #endif
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_9dearcygui_6layout_HorizontalLayout, __pyx_mstate_global->__pyx_n_u_update_layout, __pyx_t_4) < (0)) __PYX_ERR(0, 324, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-
-  /* "dearcygui/layout.pyx":675
- *         self._force_update = True
- * 
- *     def update_layout(self):             # <<<<<<<<<<<<<<
- *         """
- *         Force an update of the layout next time the scene is rendered.
-*/
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_9dearcygui_6layout_14VerticalLayout_3update_layout, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_VerticalLayout_update_layout, NULL, __pyx_mstate_global->__pyx_n_u_dearcygui_layout, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[2])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 675, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
-  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_4);
-  #endif
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_9dearcygui_6layout_VerticalLayout, __pyx_mstate_global->__pyx_n_u_update_layout, __pyx_t_4) < (0)) __PYX_ERR(0, 675, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-
-  /* "dearcygui/layout.pyx":919
+  /* "dearcygui/layout.pyx":1534
  *         self.state.cap.has_content_region = True
  * 
  *     def update_layout(self):             # <<<<<<<<<<<<<<
- *         cdef int32_t i
- *         cdef unique_lock[DCGMutex] m
+ *         """
+ *         Force an update of the layout next time the scene is rendered.
 */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_9dearcygui_6layout_12WindowLayout_3update_layout, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_WindowLayout_update_layout, NULL, __pyx_mstate_global->__pyx_n_u_dearcygui_layout, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[3])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 919, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_9dearcygui_6layout_12WindowLayout_3update_layout, __Pyx_CYFUNCTION_CCLASS, __pyx_mstate_global->__pyx_n_u_WindowLayout_update_layout, NULL, __pyx_mstate_global->__pyx_n_u_dearcygui_layout, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[1])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1534, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_4);
   #endif
-  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_9dearcygui_6layout_WindowLayout, __pyx_mstate_global->__pyx_n_u_update_layout, __pyx_t_4) < (0)) __PYX_ERR(0, 919, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict(__pyx_mstate_global->__pyx_ptype_9dearcygui_6layout_WindowLayout, __pyx_mstate_global->__pyx_n_u_update_layout, __pyx_t_4) < (0)) __PYX_ERR(0, 1534, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
   /* "dearcygui/layout.pyx":1
@@ -42707,42 +44416,42 @@ static int __Pyx_InitCachedConstants(__pyx_mstatetype *__pyx_mstate) {
 static int __Pyx_InitConstants(__pyx_mstatetype *__pyx_mstate) {
   CYTHON_UNUSED_VAR(__pyx_mstate);
   {
-    const struct { const unsigned int length: 8; } index[] = {{1},{68},{35},{54},{37},{60},{24},{52},{119},{46},{44},{26},{34},{55},{29},{33},{23},{45},{22},{15},{179},{37},{49},{50},{74},{30},{32},{2},{1},{1},{1},{1},{8},{5},{6},{15},{23},{25},{20},{16},{7},{6},{157},{2},{6},{35},{25},{9},{30},{50},{8},{20},{32},{22},{30},{37},{5},{60},{60},{3},{5},{9},{6},{6},{8},{5},{16},{30},{9},{4},{6},{20},{6},{9},{9},{20},{5},{8},{5},{4},{3},{14},{28},{15},{12},{26},{3},{15},{6},{18},{4},{1},{9},{17},{18},{5},{1},{16},{15},{6},{8},{15},{6},{8},{9},{5},{5},{6},{7},{8},{12},{1},{2},{10},{5},{13},{5},{8},{1},{8},{7},{4},{10},{4},{8},{4},{7},{3},{4},{3},{14},{11},{10},{19},{14},{12},{10},{17},{13},{8},{4},{12},{10},{12},{19},{5},{4},{6},{5},{4},{4},{6},{8},{6},{6},{13},{6},{4},{5},{8},{1},{89},{66},{66},{23},{60},{1}};
-    #if (CYTHON_COMPRESS_STRINGS) == 3 && __PYX_LIMITED_VERSION_HEX >= 0x030e0000 /* compression: zstd (1576 bytes) */
-const char* const cstring = "(\265/\375`\200\013\3650\000\372Ml\016? \221\323\001\000\014(`\252\000\003\001\n\004DD\215t@\030\342\262Y\231\224Z\312\264\"MDv\022Y\212>W\004o\203\3355\344g\026R\254/<t\254\252\010\342\3223;5<\224\220F\001\304\000\314\000\332\000T\2479\232\016\315\205\013\025$I\242\260\241\262\371| \345\326\362\347\323w\366\007\251\307\224\247\333\226\306.\355\226\212\317\367\271I\343S\315\352\006\244\233\220n\246\247\325\306\270\217\300F\343\333\315Y\331\375\267\323\315\202BqC+Xxo\365\325\310\274\277M\343s/\344\031\307\226\276\3613\312\260z]\371\026)\365\342\304\016\264\337Q\304\321\226\243\276W\017\265\224+U\361QL\251\267\312\371f\250\337\037S\331\372\273\362 ]\345_\216L+\347O}C$\267\216/\225\345\203#\226\374\232\212\270[4\3624\315\016\355\244\376sm\276\332x\304\315[\031\244/'\245\r\202\206\274\0333\216P\245\277\226\316T7u\016D\n\363\225\240@T\251\351,\273\271\264\224F\025\224~\335\204\236\241\212\305\345\346\275\341\203\201Vr\356\261\021\005\375U\376\347\253\265\345\240\311l\320\014\240G\361\267~\344\026\177\314S^d\227\347\224B~\224\010\365\211\236\361\211\344_o\246\036\373\336\317D2c\353\257Db\351V\204[:\263\374\365oF\237\245\272\\\330\230]\347\253t\362\250$\275\337\365\224,\345:\006\232R\3453F\301\321\003\203\007\207I\307D\375Y\345\37072\250\035\267\020\376G\2422\362\241\336\231L\206e\2641\267GQ\036\322\326\356i\374\361A8=\032\331\243\365T\200S\235\035{\326M\213\357\205\350\346\345\006\216:\222\277\225\257\230\3067);8_\031\356\212\324\352a\336\3611\3515\363Jns\206p\227\3505\357\021\022\353\217\254bR\362a\227FY\314\234g\nF\371|\360\3409\231\370\344GL\262\2365gT\231\254\325Q\242\203\304:\0011\t\001\222B\0022\362\021\351\204\340t<\"\236\017J\n\210\305\277\rN)\204\333\367\347\322\361}\340tHxDdK\330\316uN:\037\222N\310H\311\347S\322\301\343\tA\001\341p@\252)\362{\253\210]W+\2206f\353 G\347Z\244\337\272i\034\341h\301\215\"\014\034\323OI\342_\366\234\333\351\335\276\275\231\333n\351\370\034\376|6]\213\331l\034\327\322ws\3659\005\325\360\241\334d\353z\363\217\270\333\206\262\220\244""\025\267\354\212\353I\333\010J\216q\323\211\033d*\247V\240\027\241r\\\r%,\3549\320\252\\s\3568-\327\241\245\241\211\240\272a\304?G<\204p>X\330s\253}f\310\320^nh\353\327\"\002\306\201\201\230\004\001\366D\314\t\0231&TbTLb81:b\024\200\301y!\301\005\002\027\035\014b\004\274\0340 \003\200\213\013-\n\260\340\300\314\227}Y\360\322Ya@\200\014\004,>0\017`\020\3004\030\240\241`\006\210\212\367y\037\217\337\347DB\026\325\032\032\r\215\007c\025\312\223ByF\313\343\212\244O\311?\343{\t9>\313\265&\3072\362\313\016\215\330\355L\321\342\035\026\326\320'5%\013\343\025\006\327\202\017\302%bj\335M\212b\357\245\326j\335\353%\3639\255\365\223\014\255\233\342\213\221\235\227\354\365\254\333Z\334\036\343\326\336\347c,lA\3146\376\362^\317\241\265\326b,\027$9\201#\250a\235S\310\220\214\210\214$IA\322\0301\010Ba8F\245\365\222\341LUI\303\214\210\210\210\214\202\224\244F\235\345l\375\324\021l\013*\336\020\241p5\0139\360\367@\374\205i\352\033\246l\005\320\272\237\024\330uiO}\223d\303p\215-\364%\t\312\020\2507\373\243\311\351\004\216X\020\330\022\031E0\215[r\224\014p(\234_0\021\236\355\001*\336f\n\221FpL{\347\037\026\032\364m\333\346\327\365\326\353\327w\227\301\352\204\275\004(\331\334o\324Y\000\243\352\2471\346\355\n\3568\014\355F\241\346G\262\213{\206?\214\205\207\032Q\177\326\336\036bV#\014\322:\020]k\346\351\237\223\312\204\370b-Tf\340\257\316\2467q1\202n\\\264\025TMG/\311\266,\204<A\317\330\234z4\2101x\334\272\237\270\343C\330\017\342,\033Y\244g\002\003\346\026W\310U\324\361\237j\231OQ\t&\342 \333\241\003cT\225\352\377\215\237n\362\013\226\013\351\253^\327\262\031\220\261.\321\221L\341\250\302\232\326`\013\035)\034\"\363r\007\276;\010\347\365(\2723\225Gt\263\026\300\214A7\035\363\311\301\232kH \300$\324e\367\006\025NT\202\022\350|\212\204\236\216Ks\032\374^,#\210jn?|\321\213\347_\363\027\330=&\244\317\307\272\271\367\351\226P\315\244\210]\222\034\346k&\331va\242W\273\246\357\036\031\006\240 \220\226\331\216\216c\027f\247Ji\275\034\304hs\302\017C\303hwO\242\302:\035\002+I\200\253\302\200tI ""\366\351&XZ\205E\224)uT\263\241i,\33538x\252\374\017z\315\352w\302\330g\240\265q\260\232\312\325\364\003\335\245>\355\236\010$\271\262\023\251\267\374\031\332.\032\274\004\22297\236r\366\020\367\322|\212\2205w0{I;,\307\037\200| \000#B\031\310n\030\275\336\257\017\036XI\007 \\\244z\331a\313\316\270\013\227\216\2502\334\211j\350\214\010] \371\313\030S\\ \355]@\034\352\223\214%m\253\\r\366\344\007\262\377v\201\252\030\214_\325\037\273\313\3370\276\257\323\200\277\034\"\343t\377<\225\243\302[\243\225\247\307\"\264E\3633c\252\227\260\307uh\303Ne\275-a\016\315\312\202\n\326\177\376\320%\014\025.\3344";
-    PyObject *data = __Pyx_DecompressString(cstring, 1576, 3);
+    const struct { const unsigned int length: 8; } index[] = {{1},{68},{35},{54},{37},{60},{24},{52},{119},{46},{44},{26},{34},{55},{29},{33},{23},{45},{22},{107},{107},{15},{179},{37},{49},{50},{74},{30},{32},{2},{1},{1},{1},{1},{8},{5},{6},{15},{23},{25},{20},{7},{6},{157},{2},{6},{35},{25},{9},{30},{50},{8},{122},{122},{20},{32},{22},{30},{37},{5},{60},{60},{5},{9},{6},{6},{8},{16},{9},{4},{6},{20},{6},{20},{5},{8},{3},{14},{15},{12},{26},{3},{15},{6},{18},{4},{1},{9},{17},{18},{5},{1},{16},{15},{6},{8},{15},{6},{8},{9},{5},{5},{6},{7},{8},{12},{2},{10},{5},{13},{5},{8},{1},{8},{7},{4},{10},{4},{8},{4},{7},{3},{4},{3},{14},{11},{10},{19},{14},{12},{10},{17},{13},{8},{4},{12},{10},{12},{19},{5},{4},{10},{5},{4},{4},{6},{8},{6},{6},{13},{6},{4},{5},{8},{1},{89},{23},{60},{1}};
+    #if (CYTHON_COMPRESS_STRINGS) == 3 && __PYX_LIMITED_VERSION_HEX >= 0x030e0000 /* compression: zstd (1551 bytes) */
+const char* const cstring = "(\265/\375`\\\014-0\000\252M\310\r:P\215\322\0010\263D\021333\21063\317V\273\t!2I\"\231\322\252!}\262\223\224S\214N\033k\253=\305\204.o\252m\037\206G>\366\231\244\010\367\010*\266\002\342?\277\000\312\000\323\000\025\006\225\007\017\032<\317S1\221\220ut(\2271\374\350\371\275\355N\362\225\033\233n\330\232pS\351y\253\267(\237gE\323\002\245E\223\226\310s\322\367\324\005X*\255\314zs\333?\267\264(\244y\023\331\300\3017gk\276]}e\371\274\271\306\257}\014[\337Sr\335\364I\362\314I\311_\264\r\322\347\307\241`\272/\375\2635\014\241>\323si\245lN\030=j\370\333WB\316W\222\207Rs_\367\255\234Z{\266j\300e\374\036\346Bw\235\205\353,9\313\233|\033E\221\002\333\305\r\346{'kM\266\235e\315\271P>\214R\262\004\251if\273\366\271\204\355\014{%f\331Z\306\023\377v\323\276z\304\337\232xK\351\366E\236K\347\374\332\020\270\257\315+-4\027\372f\007\201\273\226\266\177<\013\233r\354\206)J)\371\013\263\241:\266\333\031}\312\010\223\017l\376\306\021.\204\332\026\024a\302_\333a\237\005\004\013\n\220\013H\366\257\251\355\353[\210\233\306\276{h\350\270\230\036\246\373p\037kL\262\262=+\224\n\006\224\224\220\235G\332\347|4\317N\264\3633t\227l\241B\024#\371\260}]\206!c\304#\243#\233)\024\312\242$\333e.I\255I\306\215a\373\317\235\213\230\n\344\216b\032\244\177\272\230\275m\375\246\205=w\215\264<\264\270\316\345i'\371i\345\363(\267\271\370\271NI`N\357\244\013o\004\2537zX\221\214\205\n\230\220hC\276\263\036\352\027ot&\020\245\324\2762\027\237\014\307\005\303\306\005\303\201\311\210\214\\\300\320\364\333M\370\271\005\310\320qk\227\220K\306\343\242\321\361\221\311|P\300`4D2\246\350\3557'g;5'(\331.mn_k\314\311\347\264t\224\323\307\201@\021}|\340\343\255ilf\030\317\315\253)o\370=E{G\226J\355\212l\237R\371-jzW\244\204\213\\\023\206\014rj\363~g\231M\344\322<9\355FI\032G\311:\356ikYF\313\334J\030s\202\374\271\334\247\031\235\303#edJ\261\0272\353L\356ym\0138j\246\365tY3\306\305\202\364i\315W\247\"_s\337[1\246\023*\024\214\214\000y\037%\313\033\244\246\306z\371E\252\261FIT\024dbt\366cG\005\215\215\213\222\345Mq\307""\010\021\330\303\211d\354\233\014'\007\006\204\030\000@\004\001\020\231\023\004'\004N\014\004\220(0\"\343\203g<c\361\352\215CCI,Q\221\250X\254\325 aF$L\007\252~\312\201\035\341~|\376\320\375k\273\371\205JEm\341\333\207\254\351l\323\350a\323\027\265\255d\261\353(EX\262\226d9\245\234;\2478+1\223\264[\224\244mVI)\306\352\341\352\030)\365*=\217\240F[\364\374\275\355U\220\025SL\251e\276\226\261\357\350\253d)\264K\337\253f\365\253QJ\251\005\267\371\371z\234WOPY\257s\252\026\244\034g\315\033\236\305\377V\003\310Gf\003\201%\250a\235S\n\215\214\210\210$IA\322\001!\010Ba$\224R\353\001b\361L\026A\303\220\214\210\210\214\222\222\024T\352,cl\375\272$\337\254r \273\033q@\344\217\230K\304\006p\335\234\306\354\006\232V\273u\340\036p\1777q3Q\031\021;_e\362>\231\301\376\260\256V\335\304\324A0\254\3652\342\016p\023\254\037X\033\322\212\001*o\307\243\246\\\036)\343G\236\205\276\275\314\343B\034\353\273\027\356\246c\210P\207\201\263\343\335\320W\240\030\370\265\335\256`lCm\216\364\225\313q\"\004\224\203\303^\215\301\243\255\250O\324ixV\027\214\322:\312\220$\320\261m\270\305\003*\261\350\001\254\262u<\244\250\3579\212\036\3727\030\004\021\331\244[\016`R\205\0320ph\367\024`cKGfP\230\353\222\361\256\217\370\213\341V\220\330\371\357H\373\327\372(g\302\346\271a\242\004\347\311\344 \237`\271\226N\206h\227+x\232\034\037\343\021QPa\356\245}\213\362\022\216\226\023\345\016}t\03088\037\332*\004*xB\276\265\376\207_\007s\305\304t\000\366\315S\374\253\267\025\320\307\300Fn\371\311\t\300\354\203\226n\003\033\013(\236\002N_g@\357\306\277\\-\325HD\276\313wa\025\237\372\330\276\022p\250s1\254<\216P^;R\344L\325\241/n\2373\300\3254\022k\230\270\237\363^E\330^H6{K\002\220\250<.d\366\255\024\326+\205\026V\256\336M\215\r\317\364\244*\354\214\177\251\017\361\212o\332eP\307\245PB\2007\246\245/\226)SzW\0255=p\323\370\227\312>\241\237\332\244XsN\014\037\"g\021\035l\201j\020\264?4\255\301\302\2735\224\260]9\304T\3724\206\360\217\274\232?\210\255\351\001\264\270\021\245n\304\r\233\263\236|\234k4\336ld\242\020F""\352\3223\nC)\010\341\221L\336i\315\357B\355\2211\334\373\201<X\037\354 p\303\352\365j}\372\200u;\352q\316\3530;\031\254\213g\341n\021\231\301;\361\006H#\300\205K~\300\230y;.@\204\332\223a\tck^r~\362?\262C\352\002\2772\030\273\252CiJ\277=\361\035%\315\375\365\"2{\346G\251\303J\226\325K\371\264\263\013m\206\371\253\230`\2034p\030Tk\003\245\327\026\220\303deI\005\253\177\361\361*\224\264i";
+    PyObject *data = __Pyx_DecompressString(cstring, 1551, 3);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
-    #elif (CYTHON_COMPRESS_STRINGS) == 2 /* compression: bz2 (1770 bytes) */
-const char* const cstring = "BZh91AY&SYO\374\365=\000\000\325\177\376\341|vRK\367\376W\277\367\377\344\377\377\377\360@@@@@@@@@@@@@\000`\006\307e\367\016\270\352A\330\006 \202'\004\250L\231\t3J{T\375)\260\243jx\246d\203\324h\001\243 zC\324\320\332L\324<$\336\250\361\252\020%6\024\3322H\365<\2404\r\006\200\0004\000\000\000\000\320\000\016\030\2154\320h\003@\000\000\003A\220i\240h\000\321\240\014C@$DM\000\202h)\352l\243@\323@\003@\r\000\000\000\000\032\006C\206#M4\032\000\320\000\000\000\320d\032h\032\0004h\003\020\320\t$\002jbh\312'\352bOS)\344\236\223\3244\321\3520\2154\000h\000\000\000\002'\242\227\204Oa*A1<\350\351!G_\372j\030O\032$4\242!\250\210\210iQ\r\357q\344\231&r\327 \314\3530u\225\225<\272\005\267\224w\231\216\010`\362\245\325\337\177\300\256h\332\274\254\\'\341\304ALMs\314\212\261\316M\263|\377\017%\226<'\"CA\334l+\2762<\340\010\235\030\251\364^\004$k\004\250`\205\307\0214K/\334\352\023\237 !\213\370z\253\025\025\212\305T#\004\035u\300\020\271\200\243\244\331T\320J\314=\232\302`*Q\"\230\202Z\262$\205\252\212\360\333R\227tdA9\362n\234\357\336\314\312a\034\332\311\213\214\254\342lS\204\216'xA\024\225%\rF9pHr\2666\224g\270\307Mf\335\225\255\031\360o\272\000\033w\367\343\031\263\301\353\224\274X\2239\030\316\245R\027\207\250U\307+\nVKE\260\306\353\021>\322\323\332+\"\242\221I@\327\227\300&\206\\\336\242s\0101\365e\"Io\342\304+\211\205\253z\313\254e|\020L\230w\003\026\352\334#n\275?\315\303\221\274\351\253\251\020\323ss\3556\341y\352N\361\033\246\301\rL|\305\3707\211\313\206\334\271rh+t*\265M\211\310%\216F\340e\014\313\225y\250\321k\320vpbOof\315\326\321\243ca\005tO#Fm\315\344\263\013-[U\241]j\247\246\246\356\201\334B\025\"\006V\202J\030n]\222}p\251\276\315\021\276Y\336\215\027}\304o\364Z\224`\313\367\324\225\n\332\222\362k8\351\036@o\222:\362\336\224\204\242\2352\227?b\253\262\363\235\323}c\2574\245\0026\373\361#\277N\255/\275\234&\272-$\201\365\342z\320Q\326\022\204Y\232\335\000\252\360\207\020F\207\003\3735\014\001\245\356G\206\325\223x\272Woci\024\310\330v\253\305\315\237#}\260\316""\254\237\217\255P\330\0369\007V\255\014\364\017\017\003\324A\264\2427\356NG\001\2061\305\202;9\335\2418\224c\304<\0249D\031\233T\360\257!\207\234d\357\271\213?)\r\266\333_\351\364\023<xa\273\3377\022Kd\202\0109\032\002s*k\331S>\027T}S\312\221\320\016R\207Y\366\222\232|\232L\326\313\277Q\320\241\313#\2742#\273\231\352`\264\027\270s\016TP\261\215*\230\241c\020v\250\340\2072Z\rM\360\256\350\266(\351\025\255q\275[+W\332\216[+aK\232\241\2125\230h\321i}\n&\231\313I\221\212\351\t\256\035=\316\377>T\352\367\034\016\205J\306\346m\222\324t\275\253Z\227_[>{bL\217\274\213\354\335(N\021\025ou%\027\346^\206]\342\231J\326\247\255+\266\306\303\030zL\345r\346\310\257\n\223\266\"\372\206\310\275\3262ek\3025\245\313\r\307\266\020\240I\360\252*I9\033;\004c\002\024\246\t\320\340p\036\205\363\220b\311\220\010\245\n'\031\303\210\304\326\\IjygZ\031L\305\261fhdX0\231\247R\033\034P\352k\203\006\027ro\3171\306H\300.\260\213-<\326_\001\260C\211r\274\2073[TL\350\345\231\333F\342J\325x2\243p\262X%\267\255\224\006\331\342\206Y\304-\264\200\254730\3158H*\262\333\304t\232h^\301\231=h\263\205\361Ps#\375-\221sK\014z\357l\370k\3022gX\254a\232\262\240\216`\240\243q\t\317)\024\271\321\333;2\037dg\036R\016\007\234\212Mx\030\3110l\304\316\"\3775\206\366\276U\030\243\223\235\332~\333\\\261\274\303Hz\254\306\231\310\205H\347\342\200k\356\024Z\256\343\242'\244\320\340\342XO\212Sf\20781H\025\314\325\240\031\017\210\264\004\234Cdh\225H\232\236\244\207E\205Zp\342\"'\273\230\222\200\346\033\313\023\263q\273%eZx\014\301\003\331U\027L\204\262\340y\274\207\005\320\203*\305Va\2021\275lm\203c0\274\260b+`\240\033\222\222B\222\031\253\315Qfs\201\213[];\246\nW\227\217\027?\0230\331\021\021\315\336:\362\352EG\026\251\364\340\300\371\220\367\207\207d\230X\231KT\317\321\273\006\247\014\034\001\177\256i\225J\247\030\244\343\216 \3143\001\346\374\233\371\002\315\353L\004\256\034;\210\353\3040\354\036}\324\210\253d\223\035&\016O\233\252L)\250\350b\235\025\254\350P\332\353\354\355.D7\223)Hf\031\220\303\r\333\034q\2079\005\302""\225\310\2105\246F\245Q\020\272\324\322V\024\266\321m\206\223P\301S+\215*U*\242\023\031\027BY\234\253\212\033\3360\254Ac\221\335YwQK\035aL6Ac\243\014kq\263j\335\324\2259\225\327Am\343[8\336\025\215R\2624\234\3623|\035s\307\260\231\014\346xa\221\2338\270\231\270\031\313R u\244\"8Wqt\0250q\251}\310\233\313%\016\372\0074B\2339\306/\307\004Z\353x8\226FW\304\332o\253\033H\301\2303\004N^>3\211\027.\r\240j\032D\333Q\240\242\3232\264h^\354\252\n\333j=\342\346j\023\251b\235\324\0106M]\216\314~'\375q \256\241\315\001\267\236\323f\223G#Yc\036\225\333\356\017\203H\355\013\000\220e\2730\266j[\320\357m\204\273\2669\036\002X&Vj\331\004\320:\026]\315\333Pd3f\024\274)\227\317\023\215eZa\266\037WDN\240\374\326\251\316u+\204\020\031\301\323/\313\210'\252\215)\253IY/&\241e\226\014\\h\275\241\306\036rb\231\376\030iF\224n\032\265\243\204\364#Y\220\372\016'\037\030,\2450\263\t\306b D\347\022?\342\356H\247\n\022\t\377\236\247\240";
-    PyObject *data = __Pyx_DecompressString(cstring, 1770, 2);
+    #elif (CYTHON_COMPRESS_STRINGS) == 2 /* compression: bz2 (1739 bytes) */
+const char* const cstring = "BZh91AY&SY\016z'\013\000\000\357\177\362\300t0\022K\347\376W\277\367\377\240\277\377\377\360@\000\000@@\000@@@\000`\006\350}k\330\234$\227@\246\215Sm\2557\r\0244\310\247\352d\023djz&\206\3124\014\2154\320\000\007\251\246\231\250<\220J\022a4\320\010S\312\036\223 2\000\000\000\000\006\232i\240q\223&\215\001\243LFF\206!\2014i\2101\032\014 \000\301(\321\0052h\246\21522i\352\032h\000\032\001\240\000\000\032\001\306L\2324\006\2151\031\032\030\206\004\321\246 \304h0\200\003\004\212\002h\020\t\204\023&\2104i\243\324\001\352\031\000\000\003#o\345\007\t\260B\224X\245TS\251o_\360\315A\211\304;\300z\006\347@\226\0064\034\300{\375\204K\344Wc\353\013.9\016\325\263\331)p5C\376\271\263\320\341\205T2\264b\253\013\375!KGAE\241R\252\251\241\311\306\264JY\251\324\034\027\013\003\001\372\032\301\301\304\362\333\356Ic<\005Ei\020\210IV\025\336\326\255\021z\374\215\321Ya\210\352\345\312\302=\305\234\222I\032\256\034\3342yxQk\"\331R\263L\250GXM\307\034f\263\"\022\324\212\272\331\315\354k\253U\254'\273T\311S\253\002\004l\030\357\327)]\261\230\231\004\357\217\031D\275\265\221Vr\021*\322\341Y\331\005HJ\022\205X\231\350\325\001\222\217\241%s\031\3378\235\372\344-\331\266\005\347\220\000(\357b\255\020\006\333\034\371!\021\353\316*\206\253\302\034d3\255\014\320( ]\265\201\\\032M\340\250\371\326\334\312J\263u\310qCbf\343\006%\272\025?Px\005\247\\<`\241}\214\034\325\344\243.\n\033\232\271\223<^\255\370r\303tO!\346\350,\301_\252C1\010\221\360n\352S\351\366\323q;B&^V\021\200T\025\346\2215\261\315\303<\366j8\247V\214\r;\236\2639\326\266\334\217w\300\344\261\005\324\325\371\002\341\261\261\324\371\260\331\\F(\331\202\323\244\"T\213\031\324\224:q(eFF\236\\\253kL\227Z\203C\361q?\267\214>\262\032n\331\001\002YRgq\026\210;\246\2659\362\004GJ\031\266{\024n\373\346\214\242\364[\3213 \263\371T\017|\374\271\275\334\323\024\311\262\201\017\274\243u\022\364L&,\346\212\240j>d\351\013#8T\032_4;Z\232n\347)\347\345\314\204\253c!\177\024\325\272\233}!\212&\310\372;f\032\003\317@\363j\301\305\"!\335\0250z\002k>J\010""\334i\330\211\354a>\035p\301@\212/\330;(8\250\013\023J\216\331\363\026\363\030;\250\305\217H653\351\317>_ }\0079T\270\324$\203\251\310Pj\332\270\340o\335\013\343z\210\257)\210&\254\354F|\340\366\273M\234\263\275k\277\200\246\346\252\235\301\330\246\3376\032\300\330\232\020\2346\002K\030M\004:\0316\t\037yu\000\360\352\013#1\203\rpT\350\255\350\351\n\327YQ\242\264\227\313\016\024T\272TiH\2623\214\0321X\335\"I\246g(\304g\020aY\004\251\177O\253\303\226\364\347\250\2035\315&\206\245hF\263\224\222\322\303\315\335\257y\255\351m@\266\256\351\337R\275\235\346H\314\225\035\370\263\rl\342\013\202+\302c\014\332hxa\277\256\016\346\t\362\210\276\213\233\002w\206\352\n[!\013P4B\316p\305\223\236\350_-\265J\375gx\324R\3041\245wg\026\312\335sD/\025!\007\357:\206\0027\177\245{\231+\330\341\331X\354\323_#a\254\310\242\325\023|o\333Sc\330\333\236\355\305\343\023v\300\237<\013\036\343\31451w\3268p mF\220\312\304\332\321\343\266r\036\224\020\030v\205\\%\343x\336\202\247_\206\276\330t\024X\254\301\253\2373\0304i\027>\375\262|\273\345\267\204\303f$\205c\241\2667YP\013\327?Pr<\206\213\214\330q3\326\213\367\306jPh\377\214\250p\r\020\256\275\254!=\326F\341\247\013\225\3111\273R\242<Ap\023\304\225k\266\205\330A\023\347\255\266\021\200\255:\306,\207b\233\311\006\252&q\304\324\361?\230\233\213\000\2663\024s#7\003\266Q\223*\2560\274\017*\251|\242U2{\373\344\032\375\322\345\253>{\221\\\364\230\3048)W\205*\334\221\342\006]\"\376\006\254\001\2423\026\000R\004\221\306w%y3TU\020\344\2556\234\020\342\021\020\243j\024\022\017\t\337\034\016\n\232\330\265\232\223\272\346fa\364\321\225b\002\034\240<^\003\201H$\242\030N1X\201d_r\320\333\006\306Z\342\242\274U\262P\001\270\312$\024H37\212\222\304\344\005\355iww\232U33\"/\0228\266=\244\304v\374\007U=\364^@\305U\036=,#Q\204\273\206\023\255\020\255\025!\214O\322\356\230\260\241\244.\363\337\t\223F3D`6\274\033\033\003\313\351\360v\005\274\013D\204d@\207\023\252a\247\254\356\312\351\205\366\242g\220\301\221\321i\221\tbo\251-\371\274;\335ZW1\036ml,\212s\320]\370B""\002\250\332\030\307\346 u\007\254IoK \2305\211\270\326\225\342%\226)\323x2\362\331d.\211@3sW\251cC9\223Jh\202l\205 \226F\013h\215\223\214!\252\221r^\264\207\254\2648\364M\t\334E\216\230j\301\214kc\014S-\307#\255\037}\302c\252\361\024\302\267\265\310\221B\327\027\330QtH\032\024\237\2011A\234\235\372r,\315\0313H3|\310@s\224\021\r\223F\242\220&Y\326\202\365h\271fd\367\226\332H\213<`\257\206f-[tk\203\261\215\324Z/F6\202ah\n\314\262\010\341\335H\336B\213k\300w\032\004\372Q\205\313EI\312\"3\356m\023\004\245,\034\341\016\232\310\215\205i\031\310*]\013>[m\035\231\352\310\240_\250\203\220\373\017;\340'=\246\262\314\354\313\257 \372\364\020\301i\n\033z8\0065T\360\"\036\206#\343\264\021=\t\253\264\361\306j\023:\026\036\2555Ax\314\355+\204\343\355Q\221\215e\257\t\335\303\341\312Q\244\037}\332nrM\272\340\204\031#q\223\344a\200\315\340\036i\363\"\t\"\302\200\022Kp\301@J1\345E\024\352\313;]\177\342\356H\247\n\022\001\317D\341`";
+    PyObject *data = __Pyx_DecompressString(cstring, 1739, 2);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
-    #elif (CYTHON_COMPRESS_STRINGS) != 0 /* compression: zlib (1582 bytes) */
-const char* const cstring = "x\332\245VKo\034\307\021V.\201c\353`\0056\020\004\010\320@`SkP\023Q\241\000C\240i\320\334\245\275\201$\322\344\212\266\001\003\355\336\231\232eG=\335\343\356\036rW\247\034s\324\221G\037s\324\321\307\034}\344\321?\303?\301_u\357\203\244\230\300\260\017\323\323S]U]\217\257\252\246\3301FT\272!\033\264\263A\264\236J\252\264\235\254\210\342\275J4]\210bLB\333\212\246T\te+a]\024\301h\260\177\322\3255yq\252\351LT\216B:\242i\353\002\211\020\275\256(\354*+\23453QzR\221\204\022\343,\024OT\024:\210\322\331\250'\235\353\002.\021\r5\316\317\nH\261*\025\202\236X\021\235\200pu/\351\311\034|\345\234i\256\370\314\353\250\306\206\346\014\331\250\332\273\346\377\311&\267\304\231\216'\"\316Z\022ksz\364\312\206\344\306J$\263AB#T\361R\354v\235q^T*\252\034.\002\037\034\204\343\332\306\277?\020w\375d\254\326\205\3211\302<\202\002e{\353o\272\304\242\274W3\341j\346\005\347\272\230\254\213\361\272P=\201\363\3328u\215j\235o\224\321/\250\312\327\236*\323\021\202\330\264\316\022T\270.\006\304]\214]g\253 \356\336/\212\342\301\303\207\275_\316\275\321\353_F\200\316Y\315^\017\2326\316D8Q\210U\354Z\270SCk9\213'\316\026\311\225\301\264\005\037\343(}\256g6\366>\304u\261\353\234\257\326\005\305\222]6dE\327rz\037\014S\"`\016\323\027\326\250).\177\257\352\r_\217y\006a\327\266\316G\252\206\026\216i\240\323\000.\r;\226\034]\220\033W\301\002J\226\001\303k\345\032\007w\r\246s\236\327\020]([0g\347\000\305t\373\326\223\224\377c\316?,{\352\200\264\204\334\335\3443G\247\"\243\307\344\201A \214Q\217K\022\274\2558\030\034\334\333\374p3U\215\247\177\342\372\000\243\307\245\001\260Q-\354j\247\r\242\225\320\027\n1\254\305\314u\302\022\314DXZ\360]\026\000\256\254\010\024y#\326\022TUD8$\304\021\362\265y\226\364)\261\364\2362\201\212\375+1\205\311\363\372SeIa\021\344\003\307\360[Ax\314\205\232\023\014\331\234\243M\340\006\331\323\026\236\206\233\004.\201\371\006\211\303\224\300\377qC<\203\263\2542\210keq\203\246\243H\255hp\314\030\200\236\027\344\335\n,\317l\352\002\020Bg9%\217\"\217\324\360\267\033s\006\036\211\355\265""\336\307\252\252\244\345drj\004\362y\177Z:c8x@W\241\306\345\326\245\306\304L9\264\333\327\311\213~\260]\221\362\345l\322\351\277\031\205\034\306\242\235M\227\264\"\350\027HP\245\003\033G6\257]#Rf\305\316\022\267\251)5\214\352\344E\352_+-s\224|\005\210(O\350\331n\014\266\231\350B*8Q\266\025\325\")\256\010\252=U\t\311\242h\247\225\250\265\231\203w\331\253O\324)\245\343\231\340\300\263\315\211\255\230\224\342.W\305$\225>\003\206o\240i$\316\021t\256\246\304\242C(\221\013h\351\214\016\331\321\212\023\200\000\220\330\372H\334\177\255cX\007ck\325\231(\244\204\305]IR\212\252K9\264\316\336CI\235jepZj\253#\016s&\267\267\362\214\251\256\344\347u\032{\266L\323\225\363%\265[\202F\031\343\3124\250\022\002\031\260\305\r\247\271K\260\216\371\234+\272X\337\373\360\314\253VNsW\340\211\nV\264;\0351;0n\201UO\255Q\230\234b<C\300,\272\n@O\276\006-\311\316~\235\354N\277\277s\264;\034.c\377\311\376h\264\377dw\360t48\034\030\243\333\240\303\336\360\313A\3773\347\365\013@X\231\307\t\246\327\277\213\256\205\317$3\210\377\361\354h4\334\033\016\372\217\007{\243\314p\023\333\223\235\247\317v\036\037\354\034\342>\371\345\306|\363\325\206\224\007\263)\236>z\242|\n\364\034R}8\374\364\263\321\021}\333\221E\242\217\000\013~F\373\007\307\250U].\354\270\372u\365:\356\306\305\2521\177\2014\272\263\314xy\177U\010%\275\310\236\314-P\265-\206\261\n3[jW\224\316\203K[\nc\025\250\004\330\2704\245\\l&\024\031\307\374\t&\251\321t=\"?V\345\363\022\2755V\2532\315\027^+[\024$\306\220\224\025\307BVL\223:\310\014e\304\002\207iE\235q\001\247\201B\336;_\0335\t5\217\3758\237XR\326\235-\3314\030\025\"{$\265\256\260\244\316\2017OS\326\276t*\227\340\274\016\341D\243\340\200\304\317\r\377\3314\3110\254\235\301\333\252f\265\242\314\261\322\231dC[\370\332\272VJ\264\tY\236P\371<tM\376\232[\301\333\344Y\332u\266\325\345s\350\034\330\005\337i\352kl\372\267\2352\371\222U\325/w\271?\\\"\300\035l'\370\211 \037\310\324Rb\014\316\215\304n\336@\322~n\312\245\375B[*Z\016@\356\3068\364\340\2406D\207\307w\234\030\314\027\254\260\034""\276f\374\\AQ\372\257\010g\312[\311\013?\254i:l\236\361\237\336\2609\246r\263w+\277\371\033\344\336-\335\000\0062\375\202\355\346\241\264\307\177v\233#\207\343\033NA\035\271\314\362\257\235\237\336\271\365\207?\237\3379\377\353\371\350\273;?\276q\373\337\203\227\357\276T/\273\363\376wo\375\347\341\253\337\375x\373\355\227o\\\374i\343\325\235W\037|\337\377\357[?l\374\320\27788\2768\376\372\342\353o.\276Q\320\360\373\337\254\341\217W5\\\334\376\313\371\347\247\016\335\376n\210\325\243G\235\325(h\211\362z\276\325\337\375\364I\027i\272-\304\373\275[L\222\023md\3555\252\315\314\344\230I\373?\003\320A\252\271";
-    PyObject *data = __Pyx_DecompressString(cstring, 1582, 1);
+    #elif (CYTHON_COMPRESS_STRINGS) != 0 /* compression: zlib (1548 bytes) */
+const char* const cstring = "x\332\265V\313\216\034\267\025\3252\t\274q\226\006\002\\ pz\032\350)\313\362\0300\004y\214\361\250e\267!i\306R\217\202\254\010v\221\325C\213E\226IVO\227V\376\014-\375IY\3463\362\t9\227\354\327H\023\3070\234E\263Y\344\345}\236{\310\352\314ZR\246\325.\032\357\"uA\327Z\031\267\334/\322\307\212\332>&Zh2N\351\265V$\235\"\347\023Ek \376u\3374:\320\312\350\033R^\307\274\245\327\235\217\232b\nF\351x.\035yg\007\252\203\226I\223\244E9\224\256e\"\023\251\366.\231e\357\373\010#\324\352\326\207\241\302)V%c4KG\311\023\016\253\343\254\247H\260\311\215\320F\361M0I.\254\336\010\024\247\232\340\333_:\233\303\242\033\223\256)\r\235\246\321f=\005\351b\016c\177\244\210\341\204A\252\322A\356\316\275\365\201\224L\262\244KC\016\001\"p\343\322g\017\350(,\027rB\326\244\004\3674\024H7\236\374\311g\021\031\202\034\3107,\013\311\t-'\264\230\220\034\023\366\033\353\345;\253\316\207VZ\363F\253bv%m\257\221\304\266\363NC\205\357SD\336i\341{\247\"\035\335\257\252\352\301\347\237\217\177\275\364\247\343\307\207\0100\245\252%\352i\333\245\201\342\265D\256R\337!\234\006Z\353!]{W\345P\246\353\016r\214\243\3749)b\034}L\023:\367>\250\t\351Ts\310V;\352;.\357\203Y.\004\334\341\365\2557r\r\343\037\253\361\354\375\234\027\020\366]\347C\322j\346\020\230\001:-\340\322r`9\320\355r\353\025<\320\3313`xT\2178\271#\270\316u\036!\273P\266\025.\301\001\212\331\372\263\263\347WgO\017\024\263.\316\211\322\3341\000\236\252\350j\003w\267<^\310\010\013@\216Ip\223\323p\244\253eE&\351\266Z\323\2274\372\364\376\010\265uT_\033\253\202f\220\304\004\204V\277\253\251\341\027M=z\226Q\375\212Q\215|?\367\350\237\334\217\347\271\222\305\2505\013\035`\025}\303\026\221\272\334\264\216.\247\227\307'_\234d.\010\372\007$5\242\024\213\332\242]\301\001\\\300\336X` \367T\254h\326\320\340{r\032\376\242\330\035\344\016\017\240[\034E\235xB\243\334\200\222C\0228\216\260F\033\354\231\225\346\323O\244\215\272\272\270\205\024\270\274a\025Y\327:n\241s\351\271\251\366\215\271`\372)\260\305\331\202\274\023t\0030i\034\"\215w\0358h\321;N\274\310\260""\374/\026\322\r\202e\225\221\336i\366;4\275L\272\243\026\333\214l\350y\243\203\337\267\300\225\313\334\206C\340\313\225\016)\227\231\277\375\202+\360\220NG\343\257\244R\302q1\2714\204z\336_\327\336ZN\036z\246\222\213\372\321\001\335\262PI\355\351\273\313[\226;UZ\206zX\366\346\023+Q\303Tu\303Z\231\310\316hW\306\276\245\\I:\333!7Sk\313\275\231\275\316,\274\323TmP\361\017@B\006\215\233\307/ 6P\0373mP\335)\335PV\2544T\007\255r?R\325\255\0255\306n\300\272\273q\256\345J\347\355\2018\321\354c\026\253\2265\035qo/3\2011@\330\202^'\3155\201\316\375]\267\3459I\205\006v\301\230X\002U\234\360\010\342\245G_\322\375\367x\317y8\333\310\336&\022\002\036\367\265\026\202T\237k\346\274;F\013\255\214\264\330\255\2153\t\233\245r\247\333\016.\231\277\233\0058O\277?\343\374?-\377\017\002*\257\003u\013\203\357\257q5wP\274\265\277[\355w\215!\255\365u~b\344.\343\246\254\356\330-\374\316:6/\224\252O\315\361\0277Avb}\233n'\010\005\267>\036J\350\307\240;+\361\346\241\305\000\22080'\032[\207\006k\371\354\360\333\316\236\275<\237\315v`\373\372b>\277xv>}>\237\276\230Zk\272h\342\267>\2307hOi\237\346\026\374\356\352\345|\366d6}\374t\372d^\226\312X\365\035\202\326\242tj)\247\020\227\303\032\277\307\340o\361\034\310\177\241\233\027\263o\276\235\277\324?\366\332\325z~q\371\ntb\352\255z\276\024\252\375\375\360wd\332\337\224\255\303\371mc`\226m\202Eab\331ux\351\3108\270\332\370\252\366\001R\306\351\310\240\251\321\003\314\030Bl'K\235\0305\374\t!a\300\375\001\311Y\310\372u\r\212Oj\317\036\305\340;l\002\236\000X\205P\034\246P\274&L\024\245\303\020&6\363\010\2202\257\344{M\207\340Cc\34526\374\246J\233\347\200\020M\357jv\rN\305\304\021\t\243\360\313|\206\177~\251\260\362]L\205\0306\354\200\030Z\t\377\005\036\216\374jl\263_\030{\213\177'\333\375\010\362\301\250o\004\373\331!\324\316wB\200\274D}\255\353\327\261o\313\327\306\t\236\346\300\362\254w\235\251_C\347\324m\345V\231m\331\363\037{i\213\221=\027\355f\205\265\016\026\020\016\246K<\320t\210\3326B\3402\3368\211\331\206\326\362|\343\312\301|\253-\267\025'""\000\313\354\327J[\314\002\244t\027\223\307/\364\\\033\334t\030\341=\244\n\204n\001)\277\333\342\215\014N\360\300?\324,\256g\355\025\277\244g\355+]\237\214\357\225\177\376\306\362\370\236i\201\004\221\237\270\347\345z|\302/\347\223\271\307\366\035\273X\235\373\"\362\323\331\277\377|\357\217\037\275\375\360\355_\337\316\177\376\360_\177\370\340\237\037\374\345\355\367+\217;\340(&\365\360a\357\014ZE\000\335\257\037=>\377\346Y\237\364\372\224\350o\343{\274$\226\306\212&\030\200\335\016b\301K\027\377\001\270\376\353l";
+    PyObject *data = __Pyx_DecompressString(cstring, 1548, 1);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
-    #else /* compression: none (3200 bytes) */
-const char* const bytes = ".All dimensions preceding dimension %d must be indexed and not slicedBuffer view does not expose stridesCan only create a buffer that is contiguous in memory.Cannot assign to read-only memoryviewCannot create writable memory view from read-only memoryviewCannot index with type 'Cannot transpose memoryview with indirect dimensionsColor data must either an int32 (rgba, little endian),\nor an array of int (r, g, b, a) or float (r, g, b, a) normalizedColor value component outside bounds (0...255)Color value component outside bounds (0...1)Dimension %d is not directEmpty shape tuple for cython.arrayExpecting array, tuple, list, Coord, etc of len up to 2Index out of bounds (axis %d)Indirect dimensions not supportedInvalid alignment valueInvalid mode, expected 'c' or 'fortran', got Invalid shape in axis <MemoryView of Note that Cython is deliberately stricter than PEP-484 and rejects subclasses of builtin types. If you need to pass subclasses then set the 'annotation_typing' directive to False.Out of bounds on buffer access (axis Point data must be a tuple of up to 4 coordinatesPoint data must be an array of up to 4 coordinatesRect data must be a tuple of two points or an array of up to 4 coordinatesStep may not be zero (axis %d)Unable to convert item to object: >')?add_note and  at 0xcollections.abc<contiguous and direct><contiguous and indirect>dearcygui/layout.pyxdearcygui.sizingdisableenableenum class Alignment not importable from dearcygui.types. You are probably using a cpdef enum declared in a .pxd file that does not have a .py  or .pyx file.gc (got got differing extents in dimension  is not a valid Alignmentisenableditemsize <= 0 for cython.arrayno default __reduce__ due to non-trivial __cinit__ object><strided and direct><strided and direct or indirect><strided and indirect>unable to allocate array data.unable to allocate shape and strides.utf-8wrap_x is deprecated, it will be replaced by a new interfacewrap_y is deprecated, it will be replaced by a new interfaceA""DDASCIIAlignmentBOTTOMCENTEREllipsisFIXEDHorizontalLayoutHorizontalLayout.update_layoutJUSTIFIEDLEFTLayoutLayout.update_layoutMANUALPARENT_X1PARENT_Y1__Pyx_PyDict_NextRefRIGHTSequence_SizeSizeTOPVerticalLayoutVerticalLayout.update_layoutView.MemoryViewWindowLayoutWindowLayout.update_layoutabcallocate_bufferappendasyncio.coroutinesbasec__class____class_getitem__cline_in_tracebackcountddearcygui.layoutdearcygui.typesdecode__dict__dtype_is_objectencodeencodingenumerateerrorflagsformatfortran__func____getstate__iid__import__index_is_coroutineitemsitemsizem__main__memviewmode__module__name__name__ndim__new__objpackpop__pyx_checksum__pyx_state__pyx_type__pyx_unpickle_Enum__pyx_vtable____qualname____reduce____reduce_cython____reduce_ex__registerself__set_name__setdefault__setstate____setstate_cython__shapesizesizingstartstepstopstruct__test__unpackupdateupdate_layoutvalueswarn_warnwarningsxImU32 (ImVec4)\000ImVec4 (ImU32)\000imgui_ColorConvertFloat4ToU32\000imgui_ColorConvertU32ToFloat4\200A\360\024\000\t\032\230\021\230#\230T\240\021\330\010\014\210E\220\025\220a\220u\230D\240\013\2505\260\001\330\014\020\220\010\320\0301\260\021\260*\270D\300\013\3101\310D\320PV\320V\\\320\\`\320`a\200A\360\006\000\t\032\230\021\230#\230T\240\021\330\010\014\210E\220\025\220a\220u\230D\240\013\2505\260\001\330\014\020\220\010\320\0301\260\021\260*\270D\300\013\3101\310D\320PV\320V\\\320\\`\320`a\200A\360\022\000\t\032\230\021\230#\230T\240\021\330\010\014\320\014\035\230Qvoid (std::unique_lock<DCGMutex>  &)\000lock_gil_friendly_blockO";
+    #else /* compression: none (3420 bytes) */
+const char* const bytes = ".All dimensions preceding dimension %d must be indexed and not slicedBuffer view does not expose stridesCan only create a buffer that is contiguous in memory.Cannot assign to read-only memoryviewCannot create writable memory view from read-only memoryviewCannot index with type 'Cannot transpose memoryview with indirect dimensionsColor data must either an int32 (rgba, little endian),\nor an array of int (r, g, b, a) or float (r, g, b, a) normalizedColor value component outside bounds (0...255)Color value component outside bounds (0...1)Dimension %d is not directEmpty shape tuple for cython.arrayExpecting array, tuple, list, Coord, etc of len up to 2Index out of bounds (axis %d)Indirect dimensions not supportedInvalid alignment valueInvalid mode, expected 'c' or 'fortran', got Invalid shape in axis MANUAL alignment mode is deprecated. Use string-based positioning (e.g. item.x = '10') on children instead.MANUAL alignment mode is deprecated. Use string-based positioning (e.g. item.y = '10') on children instead.<MemoryView of Note that Cython is deliberately stricter than PEP-484 and rejects subclasses of builtin types. If you need to pass subclasses then set the 'annotation_typing' directive to False.Out of bounds on buffer access (axis Point data must be a tuple of up to 4 coordinatesPoint data must be an array of up to 4 coordinatesRect data must be a tuple of two points or an array of up to 4 coordinatesStep may not be zero (axis %d)Unable to convert item to object: >')?add_note and  at 0xcollections.abc<contiguous and direct><contiguous and indirect>dearcygui/layout.pyxdisableenableenum class Alignment not importable from dearcygui.types. You are probably using a cpdef enum declared in a .pxd file that does not have a .py  or .pyx file.gc (got got differing extents in dimension  is not a valid Alignmentisenableditemsize <= 0 for cython.arrayno default __reduce__ due to non-trivial __cinit__ object>positions and MANUAL alignment mode are deprecated. Use string-based ""positioning (e.g. item.x = '10') on children instead.positions and MANUAL alignment mode are deprecated. Use string-based positioning (e.g. item.y = '10') on children instead.<strided and direct><strided and direct or indirect><strided and indirect>unable to allocate array data.unable to allocate shape and strides.utf-8wrap_x is deprecated, it will be replaced by a new interfacewrap_y is deprecated, it will be replaced by a new interfaceASCIIAlignmentBOTTOMCENTEREllipsisHorizontalLayoutJUSTIFIEDLEFTLayoutLayout.update_layoutMANUAL__Pyx_PyDict_NextRefRIGHTSequenceTOPVerticalLayoutView.MemoryViewWindowLayoutWindowLayout.update_layoutabcallocate_bufferappendasyncio.coroutinesbasec__class____class_getitem__cline_in_tracebackcountddearcygui.layoutdearcygui.typesdecode__dict__dtype_is_objectencodeencodingenumerateerrorflagsformatfortran__func____getstate__id__import__index_is_coroutineitemsitemsizem__main__memviewmode__module__name__name__ndim__new__objpackpop__pyx_checksum__pyx_state__pyx_type__pyx_unpickle_Enum__pyx_vtable____qualname____reduce____reduce_cython____reduce_ex__registerself__set_name__setdefault__setstate____setstate_cython__shapesizestacklevelstartstepstopstruct__test__unpackupdateupdate_layoutvalueswarn_warnwarningsxImU32 (ImVec4)\000ImVec4 (ImU32)\000imgui_ColorConvertFloat4ToU32\000imgui_ColorConvertU32ToFloat4\200A\360\022\000\t\032\230\021\230#\230T\240\021\330\010\014\320\014\035\230Qvoid (std::unique_lock<DCGMutex>  &)\000lock_gil_friendly_blockO";
     PyObject *data = NULL;
     CYTHON_UNUSED_VAR(__Pyx_DecompressString);
     #endif
     PyObject **stringtab = __pyx_mstate->__pyx_string_tab;
     Py_ssize_t pos = 0;
-    for (int i = 0; i < 161; i++) {
+    for (int i = 0; i < 155; i++) {
       Py_ssize_t bytes_length = index[i].length;
       PyObject *string = PyUnicode_DecodeUTF8(bytes + pos, bytes_length, NULL);
-      if (likely(string) && i >= 59) PyUnicode_InternInPlace(&string);
+      if (likely(string) && i >= 62) PyUnicode_InternInPlace(&string);
       if (unlikely(!string)) {
         Py_XDECREF(data);
         __PYX_ERR(0, 1, __pyx_L1_error)
@@ -42750,7 +44459,7 @@ const char* const bytes = ".All dimensions preceding dimension %d must be indexe
       stringtab[i] = string;
       pos += bytes_length;
     }
-    for (int i = 161; i < 167; i++) {
+    for (int i = 155; i < 159; i++) {
       Py_ssize_t bytes_length = index[i].length;
       PyObject *string = PyBytes_FromStringAndSize(bytes + pos, bytes_length);
       stringtab[i] = string;
@@ -42761,15 +44470,15 @@ const char* const bytes = ".All dimensions preceding dimension %d must be indexe
       }
     }
     Py_XDECREF(data);
-    for (Py_ssize_t i = 0; i < 167; i++) {
+    for (Py_ssize_t i = 0; i < 159; i++) {
       if (unlikely(PyObject_Hash(stringtab[i]) == -1)) {
         __PYX_ERR(0, 1, __pyx_L1_error)
       }
     }
     #if CYTHON_IMMORTAL_CONSTANTS
     {
-      PyObject **table = stringtab + 161;
-      for (Py_ssize_t i=0; i<6; ++i) {
+      PyObject **table = stringtab + 155;
+      for (Py_ssize_t i=0; i<4; ++i) {
         #if CYTHON_COMPILING_IN_CPYTHON_FREETHREADING
         #if PY_VERSION_HEX < 0x030E0000
         if (_Py_IsOwnedByCurrentThread(table[i]) && Py_REFCNT(table[i]) == 1)
@@ -42788,17 +44497,17 @@ const char* const bytes = ".All dimensions preceding dimension %d must be indexe
   }
   {
     PyObject **numbertab = __pyx_mstate->__pyx_number_tab + 0;
-    int8_t const cint_constants_1[] = {0,-1,1,8};
+    int8_t const cint_constants_1[] = {0,-1,1,2,8};
     int32_t const cint_constants_4[] = {136983863L};
-    for (int i = 0; i < 5; i++) {
-      numbertab[i] = PyLong_FromLong((i < 4 ? cint_constants_1[i - 0] : cint_constants_4[i - 4]));
+    for (int i = 0; i < 6; i++) {
+      numbertab[i] = PyLong_FromLong((i < 5 ? cint_constants_1[i - 0] : cint_constants_4[i - 5]));
       if (unlikely(!numbertab[i])) __PYX_ERR(0, 1, __pyx_L1_error)
     }
   }
   #if CYTHON_IMMORTAL_CONSTANTS
   {
     PyObject **table = __pyx_mstate->__pyx_number_tab;
-    for (Py_ssize_t i=0; i<5; ++i) {
+    for (Py_ssize_t i=0; i<6; ++i) {
       #if CYTHON_COMPILING_IN_CPYTHON_FREETHREADING
       #if PY_VERSION_HEX < 0x030E0000
       if (_Py_IsOwnedByCurrentThread(table[i]) && Py_REFCNT(table[i]) == 1)
@@ -42825,7 +44534,7 @@ typedef struct {
     unsigned int num_kwonly_args : 1;
     unsigned int nlocals : 2;
     unsigned int flags : 10;
-    unsigned int first_line : 10;
+    unsigned int first_line : 11;
 } __Pyx_PyCode_New_function_description;
 /* NewCodeObj.proto */
 static PyObject* __Pyx_PyCode_New(
@@ -42842,24 +44551,14 @@ static int __Pyx_CreateCodeObjects(__pyx_mstatetype *__pyx_mstate) {
   PyObject* tuple_dedup_map = PyDict_New();
   if (unlikely(!tuple_dedup_map)) return -1;
   {
-    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 84};
-    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_i, __pyx_mstate->__pyx_n_u_m};
-    __pyx_mstate_global->__pyx_codeobj_tab[0] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_dearcygui_layout_pyx, __pyx_mstate->__pyx_n_u_update_layout, __pyx_mstate->__pyx_kp_b_iso88591_A_T_E_auD_5_1_D_1DPVV_a, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[0])) goto bad;
+    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 149};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_m};
+    __pyx_mstate_global->__pyx_codeobj_tab[0] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_dearcygui_layout_pyx, __pyx_mstate->__pyx_n_u_update_layout, __pyx_mstate->__pyx_kp_b_iso88591_A_T_Q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[0])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 324};
+    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 1534};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_m};
     __pyx_mstate_global->__pyx_codeobj_tab[1] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_dearcygui_layout_pyx, __pyx_mstate->__pyx_n_u_update_layout, __pyx_mstate->__pyx_kp_b_iso88591_A_T_Q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[1])) goto bad;
-  }
-  {
-    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 675};
-    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_m};
-    __pyx_mstate_global->__pyx_codeobj_tab[2] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_dearcygui_layout_pyx, __pyx_mstate->__pyx_n_u_update_layout, __pyx_mstate->__pyx_kp_b_iso88591_A_T_Q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[2])) goto bad;
-  }
-  {
-    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 919};
-    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_self, __pyx_mstate->__pyx_n_u_i, __pyx_mstate->__pyx_n_u_m};
-    __pyx_mstate_global->__pyx_codeobj_tab[3] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_dearcygui_layout_pyx, __pyx_mstate->__pyx_n_u_update_layout, __pyx_mstate->__pyx_kp_b_iso88591_A_T_E_auD_5_1_D_1DPVV_a_2, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[3])) goto bad;
   }
   Py_DECREF(tuple_dedup_map);
   return 0;
@@ -49065,6 +50764,75 @@ static CYTHON_INLINE PyObject* __Pyx_PyLong_From_int(int value) {
     }
 }
 
+/* CIntToPy */
+static CYTHON_INLINE PyObject* __Pyx_PyLong_From_long(long value) {
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion"
+#endif
+    const long neg_one = (long) -1, const_zero = (long) 0;
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic pop
+#endif
+    const int is_unsigned = neg_one > const_zero;
+    if (is_unsigned) {
+        if (sizeof(long) < sizeof(long)) {
+            return PyLong_FromLong((long) value);
+        } else if (sizeof(long) <= sizeof(unsigned long)) {
+            return PyLong_FromUnsignedLong((unsigned long) value);
+#if !CYTHON_COMPILING_IN_PYPY
+        } else if (sizeof(long) <= sizeof(unsigned PY_LONG_LONG)) {
+            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
+#endif
+        }
+    } else {
+        if (sizeof(long) <= sizeof(long)) {
+            return PyLong_FromLong((long) value);
+        } else if (sizeof(long) <= sizeof(PY_LONG_LONG)) {
+            return PyLong_FromLongLong((PY_LONG_LONG) value);
+        }
+    }
+    {
+        unsigned char *bytes = (unsigned char *)&value;
+#if !CYTHON_COMPILING_IN_LIMITED_API && PY_VERSION_HEX >= 0x030d00A4
+        if (is_unsigned) {
+            return PyLong_FromUnsignedNativeBytes(bytes, sizeof(value), -1);
+        } else {
+            return PyLong_FromNativeBytes(bytes, sizeof(value), -1);
+        }
+#elif !CYTHON_COMPILING_IN_LIMITED_API && PY_VERSION_HEX < 0x030d0000
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        return _PyLong_FromByteArray(bytes, sizeof(long),
+                                     little, !is_unsigned);
+#else
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        PyObject *from_bytes, *result = NULL, *kwds = NULL;
+        PyObject *py_bytes = NULL, *order_str = NULL;
+        from_bytes = PyObject_GetAttrString((PyObject*)&PyLong_Type, "from_bytes");
+        if (!from_bytes) return NULL;
+        py_bytes = PyBytes_FromStringAndSize((char*)bytes, sizeof(long));
+        if (!py_bytes) goto limited_bad;
+        order_str = PyUnicode_FromString(little ? "little" : "big");
+        if (!order_str) goto limited_bad;
+        {
+            PyObject *args[3+(CYTHON_VECTORCALL ? 1 : 0)] = { NULL, py_bytes, order_str };
+            if (!is_unsigned) {
+                kwds = __Pyx_MakeVectorcallBuilderKwds(1);
+                if (!kwds) goto limited_bad;
+                if (__Pyx_VectorcallBuilder_AddArgStr("signed", __Pyx_NewRef(Py_True), kwds, args+3, 0) < 0) goto limited_bad;
+            }
+            result = __Pyx_Object_Vectorcall_CallFromBuilder(from_bytes, args+1, 2 | __Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET, kwds);
+        }
+        limited_bad:
+        Py_XDECREF(kwds);
+        Py_XDECREF(order_str);
+        Py_XDECREF(py_bytes);
+        Py_XDECREF(from_bytes);
+        return result;
+#endif
+    }
+}
+
 /* CIntFromPy */
 static CYTHON_INLINE int32_t __Pyx_PyLong_As_int32_t(PyObject *x) {
 #ifdef __Pyx_HAS_GCC_DIAGNOSTIC
@@ -49313,75 +51081,6 @@ raise_neg_overflow:
     PyErr_SetString(PyExc_OverflowError,
         "can't convert negative value to int32_t");
     return (int32_t) -1;
-}
-
-/* CIntToPy */
-static CYTHON_INLINE PyObject* __Pyx_PyLong_From_long(long value) {
-#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wconversion"
-#endif
-    const long neg_one = (long) -1, const_zero = (long) 0;
-#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
-#pragma GCC diagnostic pop
-#endif
-    const int is_unsigned = neg_one > const_zero;
-    if (is_unsigned) {
-        if (sizeof(long) < sizeof(long)) {
-            return PyLong_FromLong((long) value);
-        } else if (sizeof(long) <= sizeof(unsigned long)) {
-            return PyLong_FromUnsignedLong((unsigned long) value);
-#if !CYTHON_COMPILING_IN_PYPY
-        } else if (sizeof(long) <= sizeof(unsigned PY_LONG_LONG)) {
-            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
-#endif
-        }
-    } else {
-        if (sizeof(long) <= sizeof(long)) {
-            return PyLong_FromLong((long) value);
-        } else if (sizeof(long) <= sizeof(PY_LONG_LONG)) {
-            return PyLong_FromLongLong((PY_LONG_LONG) value);
-        }
-    }
-    {
-        unsigned char *bytes = (unsigned char *)&value;
-#if !CYTHON_COMPILING_IN_LIMITED_API && PY_VERSION_HEX >= 0x030d00A4
-        if (is_unsigned) {
-            return PyLong_FromUnsignedNativeBytes(bytes, sizeof(value), -1);
-        } else {
-            return PyLong_FromNativeBytes(bytes, sizeof(value), -1);
-        }
-#elif !CYTHON_COMPILING_IN_LIMITED_API && PY_VERSION_HEX < 0x030d0000
-        int one = 1; int little = (int)*(unsigned char *)&one;
-        return _PyLong_FromByteArray(bytes, sizeof(long),
-                                     little, !is_unsigned);
-#else
-        int one = 1; int little = (int)*(unsigned char *)&one;
-        PyObject *from_bytes, *result = NULL, *kwds = NULL;
-        PyObject *py_bytes = NULL, *order_str = NULL;
-        from_bytes = PyObject_GetAttrString((PyObject*)&PyLong_Type, "from_bytes");
-        if (!from_bytes) return NULL;
-        py_bytes = PyBytes_FromStringAndSize((char*)bytes, sizeof(long));
-        if (!py_bytes) goto limited_bad;
-        order_str = PyUnicode_FromString(little ? "little" : "big");
-        if (!order_str) goto limited_bad;
-        {
-            PyObject *args[3+(CYTHON_VECTORCALL ? 1 : 0)] = { NULL, py_bytes, order_str };
-            if (!is_unsigned) {
-                kwds = __Pyx_MakeVectorcallBuilderKwds(1);
-                if (!kwds) goto limited_bad;
-                if (__Pyx_VectorcallBuilder_AddArgStr("signed", __Pyx_NewRef(Py_True), kwds, args+3, 0) < 0) goto limited_bad;
-            }
-            result = __Pyx_Object_Vectorcall_CallFromBuilder(from_bytes, args+1, 2 | __Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET, kwds);
-        }
-        limited_bad:
-        Py_XDECREF(kwds);
-        Py_XDECREF(order_str);
-        Py_XDECREF(py_bytes);
-        Py_XDECREF(from_bytes);
-        return result;
-#endif
-    }
 }
 
 /* CIntFromPy */

@@ -782,6 +782,9 @@ SDLViewport* SDLViewport::create(render_fun render,
     // Initialize SDL in the first thread that creates a viewport
     if (!sdlInitialized) {
         if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMEPAD)) {
+            const char* gamepad_init_error = SDL_GetError();
+            std::string gamepad_error = gamepad_init_error ? gamepad_init_error : "unknown error";
+            SDL_ClearError();
             // Fallback: try without gamepad subsystem
             if (!SDL_Init(SDL_INIT_VIDEO)) {
                 std::string error_msg = "Failed to initialize SDL: ";
@@ -789,6 +792,10 @@ SDLViewport* SDLViewport::create(render_fun render,
                 SDL_ClearError();
                 throw std::runtime_error(error_msg);
             }
+            SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION,
+                        "DearCyGui: SDL gamepad subsystem failed to initialize (%s). "
+                        "Continuing with video-only SDL init; controller input will be unavailable.",
+                        gamepad_error.c_str());
         }
         // Prevent SDL from sending SDL_EVENT_QUIT when the last window closes
         SDL_SetHint(SDL_HINT_QUIT_ON_LAST_WINDOW_CLOSE, "0");

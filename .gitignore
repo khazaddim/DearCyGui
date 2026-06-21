@@ -23,6 +23,18 @@ thirdparty/cmake_install.cmake
 #ignore build files
 build_FT/
 build_SDL/
+*.obj
+*.o
+*.pch
+*.pdb
+*.idb
+*.ilk
+*.ipdb
+*.iobj
+*.exp
+*.tlog
+*.lastbuildstate
+*.pyc
 Small_Input_Demo.py
 SOURCES.txt
 

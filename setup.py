@@ -105,7 +105,10 @@ def build_SDL3():
     if get_platform() == "Windows":
         # gamepad input bug https://github.com/libsdl-org/SDL/issues/11487
         cmake_config_args += ["-DSDL_PRESEED=OFF"]
-        cmake_config_args += ["-DSDL_JOYSTICK=OFF -DSDL_HAPTIC=OFF"] # without fails to compile on github windows
+        # Keep joystick/gamepad enabled for local multi-controller validation.
+        # CI can opt out with DCG_DISABLE_SDL_JOYSTICK=1 if needed.
+        if os.environ.get("DCG_DISABLE_SDL_JOYSTICK", "0") == "1":
+            cmake_config_args += ["-DSDL_JOYSTICK=OFF", "-DSDL_HAPTIC=OFF"]
 
     if get_platform() == "Windows" and is_mingw():
         # First, set up the generator

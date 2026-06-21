@@ -1,70 +1,101 @@
-# Learning Notes
+# Runtime Crash Investigation
 
-## Mental Model For This Feature
+After the OpenSpec feature work and the normalized-mode follow-up were merged, `PlotColorBars` reached a surprising state:
 
-You can understand `PlotColorBars` as four layers stacked on top of one another:
+- the extension built successfully
+- `dearcygui` imported successfully
+- `PlotColorBars` existed on the public API
+- the dedicated demo launched briefly, then died with a Windows access violation
 
-1. Python API layer
-   - strings, sequences, keyword arguments
-2. Cython state layer
-   - integers, doubles, vectors, array views
-3. Native draw layer
-   - ImPlot limits, pixel conversion, draw list calls
-4. Demo and validation layer
-   - live interaction used to confirm viewport behavior
+This chapter explains the actual root cause and the debugging process that exposed it.
 
-If you keep those layers separate in your head, the implementation becomes much easier to read.
+## Why This Failure Was Hard To Read
 
-Concrete anchors for those four layers:
+The crash did not look like a normal Python bug.
 
-- Python API layer: `dearcygui/core.pyi:33754`
-- Cython state layer: `dearcygui/plot.pxd:114`
-- Native draw layer: `dearcygui/plot.pyx:3251`
-- Demo and validation layer: `PlotColorBars_Demo.py:125`
+- there was no ordinary Python exception
+- `faulthandler` only showed that the process died inside the viewport loop
+- a lot of surrounding integration work had happened recently, so stale generated C++ and rendering logic were both plausible suspects
 
-## Concrete Cython Takeaways
+The cheap discriminating checks mattered more than broad theory at this point.
 
-- `cdef class` gives you Python-visible objects with C-backed fields.
-- `plot.pxd` is where DearCyGui declares the compiled shape of those objects.
-- `@property` methods in `plot.pyx` are a good place to translate Python-friendly values into compact internal enums.
-- `noexcept nogil` rendering code should avoid Python object work and assume configuration is already valid.
-- Small helper functions make native draw code far easier to maintain.
+## First Narrowing Step: Prove The Runtime Is Healthy Elsewhere
 
-## Concrete DearCyGui Takeaways
+Before touching `PlotColorBars`, the debugging flow first ruled out broader runtime instability:
 
-- Reuse base classes like `plotElementXY` when the feature is conceptually another XY series.
-- Let live ImPlot state drive viewport-relative rendering.
-- Validate aggressively in setters so the renderer can stay lean.
-- Keep demo scripts around for interaction-sensitive features such as anchoring and normalization.
+- a bare DearCyGui window survived
+- a bare plot survived
+- an empty `PlotColorBars` item that entered `BeginItem` and exited cleanly also survived
 
-## Suggested Reading Order In The Source
+That immediately localized the fault to the per-bar body of `PlotColorBars.draw_element()` rather than the whole viewport loop or the surrounding plot/container machinery.
 
-If you want to learn from the real code, read it in this order:
+## The `continue` Probe Technique
 
-1. `dearcygui/plot.pxd`
-2. helper functions near the top of `dearcygui/plot.pyx`
-3. `PlotColorBars.__cinit__`
-4. `PlotColorBars._validate_configuration`
-5. property setters for `anchor`, `value_space`, and colors
-6. `PlotColorBars.draw_element`
-7. `dearcygui/core.pyi`
-8. `PlotColorBars_Demo.py`
+The most useful debugging trick here was moving a temporary `continue` through the render loop.
 
-With source anchors:
+The draw loop was simplified in stages:
 
-1. `dearcygui/plot.pxd:114`
-2. helper functions near `dearcygui/plot.pyx:88`, `dearcygui/plot.pyx:100`, `dearcygui/plot.pyx:110`, and `dearcygui/plot.pyx:121`
-3. `PlotColorBars.__cinit__` at `dearcygui/plot.pyx:3053`
-4. `PlotColorBars._validate_configuration` at `dearcygui/plot.pyx:3063`
-5. property setters around `dearcygui/plot.pyx:3177`, `dearcygui/plot.pyx:3219`, and `dearcygui/plot.pyx:3239`
-6. `PlotColorBars.draw_element` at `dearcygui/plot.pyx:3251`
-7. `dearcygui/core.pyi:33745`
-8. `PlotColorBars_Demo.py:125`
+1. keep `BeginItem` and `EndItem`, but skip the whole bar loop
+2. allow anchor resolution, then `continue`
+3. allow the first `_get_1d_plot_value` call, then `continue`
+4. allow both reads, then `continue`
+5. allow `PlotToPixels`, then `continue`
+6. finally restore the rectangle draw calls
 
-## Final Summary
+This worked because each step produced a crisp falsifiable result. As soon as the crash returned, the fault window collapsed to only a few lines.
 
-The best lesson from these two OpenSpec changes is architectural rather than syntactic.
+In practice, the first `_get_1d_plot_value` call was enough to bring the crash back.
 
-The base change chose the right ownership boundary: native draw-time control in `plot.pyx`. Because of that, the normalized-mode change only needed a small state extension and a tiny draw-time conversion branch.
+## The Real Root Cause
 
-That is exactly the kind of payoff you want from Cython work in DearCyGui: put the timing-critical logic in the native layer once, and later features become incremental instead of awkward.
+The bad helper boundary looked innocent at first:
+
+```cython
+cdef inline double _get_1d_plot_value(DCG1DArrayView values, int32_t index) noexcept nogil
+```
+
+The problem is the first argument. `DCG1DArrayView` is not a trivial POD bag of numbers. It carries ownership and cleanup state for Python-backed buffers. Passing it by value inside a hot draw loop means Cython can materialize temporaries whose destruction releases or corrupts the underlying view bookkeeping.
+
+The fixed signature is:
+
+```cython
+cdef inline double _get_1d_plot_value(DCG1DArrayView& values, int32_t index) noexcept nogil
+```
+
+That keeps the helper working on the existing array view owned by the `PlotColorBars` instance instead of a copied temporary.
+
+## The Second Bug Hidden Nearby: Stride Semantics
+
+While investigating the helper, there was a second correctness issue nearby. `DCG1DArrayView.stride()` is stored in bytes, not in typed-element units. The final helper therefore reads values using byte-address arithmetic before casting to the right numeric pointer type.
+
+That matters because the draw loop needs to handle DearCyGui's array views the same way the underlying C++ helper type stores them.
+
+## Why `PlotToPixels` Was Not The Culprit
+
+`PlotToPixels` was an early suspect because the crash only appeared during the custom native renderer, but the staged probe ruled it out.
+
+- the crash happened before rectangle emission
+- then before `PlotToPixels`
+- then before the second per-bar read
+- finally it was traced to the first helper-based array access
+
+This is a good reminder that the most visible native API call is not always where the corruption starts.
+
+## Final Fixed Mental Model
+
+The repaired draw path now depends on three low-level invariants:
+
+- `PlotColorBars` owns stable `DCG1DArrayView` instances through its base class
+- helper functions must borrow those views by reference, not by value
+- stride-aware reads must use byte addressing that matches `DCG1DArrayView` storage
+
+Once those invariants held, the rest of the renderer worked again without redesign.
+
+## Debugging Lessons To Reuse
+
+- Start with the narrowest runtime that can still fail. The minimal `PlotColorBars` repro was far more useful than the full demo at first.
+- Probe native render loops incrementally. Moving a `continue` through the loop is cheap, reversible, and highly discriminating.
+- When a helper touches Python-backed native storage, check signature semantics before chasing rendering math.
+- If a view type stores strides in bytes, never assume typed-pointer indexing semantics.
+
+The end result is encouraging: the renderer design was sound, and the bug was local. The failure came from a low-level helper boundary, not from the overall `PlotColorBars` architecture.

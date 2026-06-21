@@ -18,8 +18,8 @@ Exact stub anchors:
 - class start: `dearcygui/core.pyi:33745`
 - constructor: `dearcygui/core.pyi:33754`
 - `configure()`: `dearcygui/core.pyi:33789`
-- `value_space`: `dearcygui/core.pyi:33918`
-- `normalized_max_fraction`: `dearcygui/core.pyi:33935`
+- `value_space`: `dearcygui/core.pyi:33914`
+- `normalized_max_fraction`: `dearcygui/core.pyi:33931`
 
 This file does not execute at runtime, but it is still important because it keeps the user-facing contract explicit for editors, completions, and static tooling.
 
@@ -34,7 +34,7 @@ A useful DearCyGui habit is to think of the change in three layers:
 Follow those three layers directly:
 
 - declaration layer: `dearcygui/plot.pxd:114`
-- behavior layer: `dearcygui/plot.pyx:3045`
+- behavior layer: `dearcygui/plot.pyx:3039`
 - stub layer: `dearcygui/core.pyi:33745`
 
 When those drift apart, the feature becomes harder to maintain. The PlotColorBars changes are a good example of keeping them aligned.
@@ -52,10 +52,10 @@ The demo evolved to cover:
 
 Demo anchors:
 
-- vertical plot setup: `PlotColorBars_Demo.py:125`
-- vertical normalization update path: `PlotColorBars_Demo.py:169`
-- horizontal plot setup: `PlotColorBars_Demo.py:186`
-- horizontal update path: `PlotColorBars_Demo.py:217`
+- vertical plot setup: `PlotColorBars_Demo.py:149`
+- vertical normalization update path: `PlotColorBars_Demo.py:171`
+- horizontal plot setup: `PlotColorBars_Demo.py:202`
+- horizontal update path: `PlotColorBars_Demo.py:219`
 
 That matters in DearCyGui because some rendering bugs only show up during viewport interaction. A static constructor test is not enough to validate edge-anchored native drawing.
 
@@ -65,6 +65,8 @@ One of the practical issues encountered during this work was that `PlotColorBars
 
 The demo fixes that by clearing or resizing fields in a safe sequence before restoring the final state.
 
-Look at the resize-sensitive sequence in `PlotColorBars_Demo.py:234` and the immediate validation logic in `dearcygui/plot.pyx:3063`.
+Look at the resize-sensitive sequence in `PlotColorBars_Demo.py:239` and the immediate validation logic in `dearcygui/plot.pyx:3057`.
 
 This is a helpful Cython lesson too: once a class validates eagerly, all multi-step mutations must respect transient invariants, not just final invariants.
+
+The demo is also now important for a second reason: it was the final end-to-end validation target for the runtime crash fix. The minimal repro proved the loop could survive a single `PlotColorBars` item, but the full demo proved the repaired helper boundary held up under the real interaction model and two different orientations.

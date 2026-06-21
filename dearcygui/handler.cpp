@@ -3437,7 +3437,7 @@ struct __pyx_t_9dearcygui_4core_itemStateCapabilities;
 struct __pyx_t_9dearcygui_4core_itemStateValues;
 struct __pyx_t_9dearcygui_4core_itemState;
 
-/* "core.pxd":220
+/* "core.pxd":222
  * # The capabilities are set during item creation
  * # and indicate which itemStateValues are valid
  * cdef struct itemStateCapabilities:             # <<<<<<<<<<<<<<
@@ -3458,7 +3458,7 @@ struct __pyx_t_9dearcygui_4core_itemStateCapabilities {
   int has_content_region;
 };
 
-/* "core.pxd":233
+/* "core.pxd":235
  *     bint has_content_region
  * 
  * cdef struct itemStateValues:             # <<<<<<<<<<<<<<
@@ -3486,7 +3486,7 @@ struct __pyx_t_9dearcygui_4core_itemStateValues {
   Vec2 content_pos;
 };
 
-/* "core.pxd":272
+/* "core.pxd":274
  *     Vec2 content_pos
  * 
  * cdef struct itemState:             # <<<<<<<<<<<<<<
@@ -3627,7 +3627,7 @@ struct __pyx_obj_9dearcygui_4core_baseItem {
 };
 
 
-/* "core.pxd":280
+/* "core.pxd":282
  * 
  * 
  * cdef class ItemStateView:             # <<<<<<<<<<<<<<
@@ -3643,7 +3643,7 @@ struct __pyx_obj_9dearcygui_4core_ItemStateView {
 };
 
 
-/* "core.pxd":290
+/* "core.pxd":292
  * 
  * 
  * cdef class ItemStateCopy:             # <<<<<<<<<<<<<<
@@ -3658,7 +3658,7 @@ struct __pyx_obj_9dearcygui_4core_ItemStateCopy {
 };
 
 
-/* "core.pxd":341
+/* "core.pxd":343
  * """
  * 
  * cdef class Gamepad:             # <<<<<<<<<<<<<<
@@ -3672,7 +3672,7 @@ struct __pyx_obj_9dearcygui_4core_Gamepad {
 };
 
 
-/* "core.pxd":345
+/* "core.pxd":347
  *     cdef Context _context
  * 
  * cdef class Viewport(baseItem):             # <<<<<<<<<<<<<<
@@ -3693,10 +3693,7 @@ struct __pyx_obj_9dearcygui_4core_Viewport {
   int64_t delta_rendering;
   int64_t delta_swapping;
   int64_t delta_frame;
-  int wait_for_input;
-  int always_submit_to_gpu;
   float global_scale;
-  int redraw_needed;
   double scales[2];
   double shifts[2];
   Vec2 window_pos;
@@ -3721,6 +3718,9 @@ struct __pyx_obj_9dearcygui_4core_Viewport {
   void *_platform_window;
   std::atomic<int64_t>  _platform_external_count;
   int _initialized;
+  int _wait_for_input;
+  int _always_submit_to_gpu;
+  int _redraw_needed;
   int _retrieve_framebuffer;
   PyObject *_frame_buffer;
   struct __pyx_obj_9dearcygui_4core_Callback *_resize_callback;
@@ -3739,7 +3739,7 @@ struct __pyx_obj_9dearcygui_4core_Viewport {
 };
 
 
-/* "core.pxd":432
+/* "core.pxd":434
  * 
  * 
  * cdef class Callback:             # <<<<<<<<<<<<<<
@@ -3753,7 +3753,7 @@ struct __pyx_obj_9dearcygui_4core_Callback {
 };
 
 
-/* "core.pxd":514
+/* "core.pxd":516
  * """
  * 
  * cdef class drawingItem(baseItem):             # <<<<<<<<<<<<<<
@@ -3766,7 +3766,7 @@ struct __pyx_obj_9dearcygui_4core_drawingItem {
 };
 
 
-/* "core.pxd":630
+/* "core.pxd":632
  * """
  * 
  * cdef class baseHandler(baseItem):             # <<<<<<<<<<<<<<
@@ -3780,7 +3780,7 @@ struct __pyx_obj_9dearcygui_4core_baseHandler {
 };
 
 
-/* "core.pxd":649
+/* "core.pxd":651
  * cdef void update_current_mouse_states(itemState& state) noexcept nogil
  * 
  * cdef class uiItem(baseItem):             # <<<<<<<<<<<<<<
@@ -3812,7 +3812,7 @@ struct __pyx_obj_9dearcygui_4core_uiItem {
 };
 
 
-/* "core.pxd":697
+/* "core.pxd":698
  * Shared values (sources)
  * """
  * cdef class SharedValue:             # <<<<<<<<<<<<<<
@@ -3830,7 +3830,7 @@ struct __pyx_obj_9dearcygui_4core_SharedValue {
 };
 
 
-/* "core.pxd":715
+/* "core.pxd":716
  * """
  * 
  * cdef class TimeWatcher(uiItem):             # <<<<<<<<<<<<<<
@@ -3842,7 +3842,7 @@ struct __pyx_obj_9dearcygui_4core_TimeWatcher {
 };
 
 
-/* "core.pxd":718
+/* "core.pxd":719
  *     pass
  * 
  * cdef class Window(uiItem):             # <<<<<<<<<<<<<<
@@ -3889,7 +3889,7 @@ struct __pyx_obj_9dearcygui_4core_Window {
 };
 
 
-/* "core.pxd":763
+/* "core.pxd":764
  * drawingItem.
  * """
  * cdef class plotElement(baseItem):             # <<<<<<<<<<<<<<
@@ -3907,7 +3907,7 @@ struct __pyx_obj_9dearcygui_4core_plotElement {
 };
 
 
-/* "core.pxd":776
+/* "core.pxd":777
  * # We don't define draw() for this class as
  * # the parent axis handles it.
  * cdef class AxisTag(baseItem):             # <<<<<<<<<<<<<<
@@ -3923,7 +3923,7 @@ struct __pyx_obj_9dearcygui_4core_AxisTag {
 };
 
 
-/* "core.pxd":787
+/* "core.pxd":788
  * """
  * 
  * cdef class baseFont(baseItem):             # <<<<<<<<<<<<<<
@@ -3935,7 +3935,7 @@ struct __pyx_obj_9dearcygui_4core_baseFont {
 };
 
 
-/* "core.pxd":801
+/* "core.pxd":802
  * """
  * 
  * cdef class baseTheme(baseItem):             # <<<<<<<<<<<<<<
@@ -5442,6 +5442,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_baseItem {
   void (*_set_hidden_and_propagate_to_children_with_handlers)(struct __pyx_obj_9dearcygui_4core_baseItem *);
   void (*_set_hidden_and_propagate_to_children_no_handlers)(struct __pyx_obj_9dearcygui_4core_baseItem *);
   void (*_set_not_rendered_and_propagate_to_children_with_handlers)(struct __pyx_obj_9dearcygui_4core_baseItem *);
+  void (*_clear_additional_references_on_delete)(struct __pyx_obj_9dearcygui_4core_baseItem *);
   void (*_copy_children)(struct __pyx_obj_9dearcygui_4core_baseItem *, struct __pyx_obj_9dearcygui_4core_baseItem *);
   int (*_check_traversed)(struct __pyx_obj_9dearcygui_4core_baseItem *);
   void (*_detach_item_and_lock)(struct __pyx_obj_9dearcygui_4core_baseItem *, std::unique_lock<DCGMutex>  &);
@@ -5450,7 +5451,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_baseItem {
 static struct __pyx_vtabstruct_9dearcygui_4core_baseItem *__pyx_vtabptr_9dearcygui_4core_baseItem;
 
 
-/* "core.pxd":280
+/* "core.pxd":282
  * 
  * 
  * cdef class ItemStateView:             # <<<<<<<<<<<<<<
@@ -5464,7 +5465,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_ItemStateView {
 static struct __pyx_vtabstruct_9dearcygui_4core_ItemStateView *__pyx_vtabptr_9dearcygui_4core_ItemStateView;
 
 
-/* "core.pxd":290
+/* "core.pxd":292
  * 
  * 
  * cdef class ItemStateCopy:             # <<<<<<<<<<<<<<
@@ -5478,7 +5479,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_ItemStateCopy {
 static struct __pyx_vtabstruct_9dearcygui_4core_ItemStateCopy *__pyx_vtabptr_9dearcygui_4core_ItemStateCopy;
 
 
-/* "core.pxd":345
+/* "core.pxd":347
  *     cdef Context _context
  * 
  * cdef class Viewport(baseItem):             # <<<<<<<<<<<<<<
@@ -5492,6 +5493,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_Viewport {
   void (*screen_to_coordinate)(struct __pyx_obj_9dearcygui_4core_Viewport *, double *, float *);
   void (*ask_refresh_after_target)(struct __pyx_obj_9dearcygui_4core_Viewport *, double);
   void (*ask_refresh_after_delta)(struct __pyx_obj_9dearcygui_4core_Viewport *, double);
+  void (*ask_immediate_redraw)(struct __pyx_obj_9dearcygui_4core_Viewport *);
   void (*force_present)(struct __pyx_obj_9dearcygui_4core_Viewport *);
   Vec2 (*get_size)(struct __pyx_obj_9dearcygui_4core_Viewport *);
   void *(*get_platform_window)(struct __pyx_obj_9dearcygui_4core_Viewport *);
@@ -5508,7 +5510,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_Viewport {
 static struct __pyx_vtabstruct_9dearcygui_4core_Viewport *__pyx_vtabptr_9dearcygui_4core_Viewport;
 
 
-/* "core.pxd":514
+/* "core.pxd":516
  * """
  * 
  * cdef class drawingItem(baseItem):             # <<<<<<<<<<<<<<
@@ -5523,7 +5525,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_drawingItem {
 static struct __pyx_vtabstruct_9dearcygui_4core_drawingItem *__pyx_vtabptr_9dearcygui_4core_drawingItem;
 
 
-/* "core.pxd":630
+/* "core.pxd":632
  * """
  * 
  * cdef class baseHandler(baseItem):             # <<<<<<<<<<<<<<
@@ -5541,7 +5543,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_baseHandler {
 static struct __pyx_vtabstruct_9dearcygui_4core_baseHandler *__pyx_vtabptr_9dearcygui_4core_baseHandler;
 
 
-/* "core.pxd":649
+/* "core.pxd":651
  * cdef void update_current_mouse_states(itemState& state) noexcept nogil
  * 
  * cdef class uiItem(baseItem):             # <<<<<<<<<<<<<<
@@ -5560,7 +5562,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_uiItem {
 static struct __pyx_vtabstruct_9dearcygui_4core_uiItem *__pyx_vtabptr_9dearcygui_4core_uiItem;
 
 
-/* "core.pxd":697
+/* "core.pxd":698
  * Shared values (sources)
  * """
  * cdef class SharedValue:             # <<<<<<<<<<<<<<
@@ -5576,7 +5578,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_SharedValue {
 static struct __pyx_vtabstruct_9dearcygui_4core_SharedValue *__pyx_vtabptr_9dearcygui_4core_SharedValue;
 
 
-/* "core.pxd":715
+/* "core.pxd":716
  * """
  * 
  * cdef class TimeWatcher(uiItem):             # <<<<<<<<<<<<<<
@@ -5590,7 +5592,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_TimeWatcher {
 static struct __pyx_vtabstruct_9dearcygui_4core_TimeWatcher *__pyx_vtabptr_9dearcygui_4core_TimeWatcher;
 
 
-/* "core.pxd":718
+/* "core.pxd":719
  *     pass
  * 
  * cdef class Window(uiItem):             # <<<<<<<<<<<<<<
@@ -5604,7 +5606,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_Window {
 static struct __pyx_vtabstruct_9dearcygui_4core_Window *__pyx_vtabptr_9dearcygui_4core_Window;
 
 
-/* "core.pxd":763
+/* "core.pxd":764
  * drawingItem.
  * """
  * cdef class plotElement(baseItem):             # <<<<<<<<<<<<<<
@@ -5620,7 +5622,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_plotElement {
 static struct __pyx_vtabstruct_9dearcygui_4core_plotElement *__pyx_vtabptr_9dearcygui_4core_plotElement;
 
 
-/* "core.pxd":776
+/* "core.pxd":777
  * # We don't define draw() for this class as
  * # the parent axis handles it.
  * cdef class AxisTag(baseItem):             # <<<<<<<<<<<<<<
@@ -5634,7 +5636,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_AxisTag {
 static struct __pyx_vtabstruct_9dearcygui_4core_AxisTag *__pyx_vtabptr_9dearcygui_4core_AxisTag;
 
 
-/* "core.pxd":787
+/* "core.pxd":788
  * """
  * 
  * cdef class baseFont(baseItem):             # <<<<<<<<<<<<<<
@@ -5650,7 +5652,7 @@ struct __pyx_vtabstruct_9dearcygui_4core_baseFont {
 static struct __pyx_vtabstruct_9dearcygui_4core_baseFont *__pyx_vtabptr_9dearcygui_4core_baseFont;
 
 
-/* "core.pxd":801
+/* "core.pxd":802
  * """
  * 
  * cdef class baseTheme(baseItem):             # <<<<<<<<<<<<<<
@@ -32055,7 +32057,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_append_obj_vector(DCGVector<P
   __Pyx_RefNannyFinishContext();
 }
 
-/* "core.pxd":438
+/* "core.pxd":440
  * # Rendering children
  * 
  * cdef inline void draw_drawing_children(baseItem item,             # <<<<<<<<<<<<<<
@@ -32067,7 +32069,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_drawing_children(struct 
   PyObject *__pyx_v_child;
   int __pyx_t_1;
 
-  /* "core.pxd":440
+  /* "core.pxd":442
  * cdef inline void draw_drawing_children(baseItem item,
  *                                        void* drawlist) noexcept nogil:
  *     if item.last_drawings_child is None:             # <<<<<<<<<<<<<<
@@ -32077,7 +32079,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_drawing_children(struct 
   __pyx_t_1 = (((PyObject *)__pyx_v_item->last_drawings_child) == Py_None);
   if (__pyx_t_1) {
 
-    /* "core.pxd":441
+    /* "core.pxd":443
  *                                        void* drawlist) noexcept nogil:
  *     if item.last_drawings_child is None:
  *         return             # <<<<<<<<<<<<<<
@@ -32086,7 +32088,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_drawing_children(struct 
 */
     goto __pyx_L0;
 
-    /* "core.pxd":440
+    /* "core.pxd":442
  * cdef inline void draw_drawing_children(baseItem item,
  *                                        void* drawlist) noexcept nogil:
  *     if item.last_drawings_child is None:             # <<<<<<<<<<<<<<
@@ -32095,7 +32097,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_drawing_children(struct 
 */
   }
 
-  /* "core.pxd":442
+  /* "core.pxd":444
  *     if item.last_drawings_child is None:
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_drawings_child             # <<<<<<<<<<<<<<
@@ -32104,7 +32106,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_drawing_children(struct 
 */
   __pyx_v_child = ((PyObject *)__pyx_v_item->last_drawings_child);
 
-  /* "core.pxd":443
+  /* "core.pxd":445
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_drawings_child
  *     while (<baseItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
@@ -32115,7 +32117,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_drawing_children(struct 
     __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":444
+    /* "core.pxd":446
  *     cdef PyObject *child = <PyObject*> item.last_drawings_child
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling             # <<<<<<<<<<<<<<
@@ -32125,7 +32127,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_drawing_children(struct 
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling);
   }
 
-  /* "core.pxd":445
+  /* "core.pxd":447
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:             # <<<<<<<<<<<<<<
@@ -32136,7 +32138,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_drawing_children(struct 
     __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":446
+    /* "core.pxd":448
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:
  *         (<drawingItem>child).draw(drawlist) # drawlist is imgui.ImDrawList*             # <<<<<<<<<<<<<<
@@ -32145,7 +32147,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_drawing_children(struct 
 */
     ((struct __pyx_vtabstruct_9dearcygui_4core_drawingItem *)((struct __pyx_obj_9dearcygui_4core_drawingItem *)__pyx_v_child)->__pyx_base.__pyx_vtab)->draw(((struct __pyx_obj_9dearcygui_4core_drawingItem *)__pyx_v_child), __pyx_v_drawlist);
 
-    /* "core.pxd":447
+    /* "core.pxd":449
  *     while (<baseItem>child) is not None:
  *         (<drawingItem>child).draw(drawlist) # drawlist is imgui.ImDrawList*
  *         child = <PyObject *>(<baseItem>child).next_sibling             # <<<<<<<<<<<<<<
@@ -32155,7 +32157,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_drawing_children(struct 
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->next_sibling);
   }
 
-  /* "core.pxd":438
+  /* "core.pxd":440
  * # Rendering children
  * 
  * cdef inline void draw_drawing_children(baseItem item,             # <<<<<<<<<<<<<<
@@ -32167,7 +32169,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_drawing_children(struct 
   __pyx_L0:;
 }
 
-/* "core.pxd":449
+/* "core.pxd":451
  *         child = <PyObject *>(<baseItem>child).next_sibling
  * 
  * cdef inline void draw_menubar_children(baseItem item) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -32179,7 +32181,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_menubar_children(struct 
   PyObject *__pyx_v_child;
   int __pyx_t_1;
 
-  /* "core.pxd":450
+  /* "core.pxd":452
  * 
  * cdef inline void draw_menubar_children(baseItem item) noexcept nogil:
  *     if item.last_menubar_child is None:             # <<<<<<<<<<<<<<
@@ -32189,7 +32191,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_menubar_children(struct 
   __pyx_t_1 = (((PyObject *)__pyx_v_item->last_menubar_child) == Py_None);
   if (__pyx_t_1) {
 
-    /* "core.pxd":451
+    /* "core.pxd":453
  * cdef inline void draw_menubar_children(baseItem item) noexcept nogil:
  *     if item.last_menubar_child is None:
  *         return             # <<<<<<<<<<<<<<
@@ -32198,7 +32200,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_menubar_children(struct 
 */
     goto __pyx_L0;
 
-    /* "core.pxd":450
+    /* "core.pxd":452
  * 
  * cdef inline void draw_menubar_children(baseItem item) noexcept nogil:
  *     if item.last_menubar_child is None:             # <<<<<<<<<<<<<<
@@ -32207,7 +32209,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_menubar_children(struct 
 */
   }
 
-  /* "core.pxd":452
+  /* "core.pxd":454
  *     if item.last_menubar_child is None:
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_menubar_child             # <<<<<<<<<<<<<<
@@ -32216,7 +32218,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_menubar_children(struct 
 */
   __pyx_v_child = ((PyObject *)__pyx_v_item->last_menubar_child);
 
-  /* "core.pxd":453
+  /* "core.pxd":455
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_menubar_child
  *     while (<baseItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
@@ -32227,7 +32229,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_menubar_children(struct 
     __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":454
+    /* "core.pxd":456
  *     cdef PyObject *child = <PyObject*> item.last_menubar_child
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling             # <<<<<<<<<<<<<<
@@ -32237,7 +32239,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_menubar_children(struct 
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling);
   }
 
-  /* "core.pxd":455
+  /* "core.pxd":457
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:             # <<<<<<<<<<<<<<
@@ -32248,7 +32250,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_menubar_children(struct 
     __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":456
+    /* "core.pxd":458
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:
  *         (<uiItem>child).draw()             # <<<<<<<<<<<<<<
@@ -32257,7 +32259,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_menubar_children(struct 
 */
     ((struct __pyx_vtabstruct_9dearcygui_4core_uiItem *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.__pyx_vtab)->draw(((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child));
 
-    /* "core.pxd":457
+    /* "core.pxd":459
  *     while (<baseItem>child) is not None:
  *         (<uiItem>child).draw()
  *         child = <PyObject *>(<baseItem>child).next_sibling             # <<<<<<<<<<<<<<
@@ -32267,7 +32269,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_menubar_children(struct 
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->next_sibling);
   }
 
-  /* "core.pxd":449
+  /* "core.pxd":451
  *         child = <PyObject *>(<baseItem>child).next_sibling
  * 
  * cdef inline void draw_menubar_children(baseItem item) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -32279,7 +32281,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_menubar_children(struct 
   __pyx_L0:;
 }
 
-/* "core.pxd":459
+/* "core.pxd":461
  *         child = <PyObject *>(<baseItem>child).next_sibling
  * 
  * cdef inline void draw_plot_element_children(baseItem item) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -32291,7 +32293,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_plot_element_children(st
   PyObject *__pyx_v_child;
   int __pyx_t_1;
 
-  /* "core.pxd":460
+  /* "core.pxd":462
  * 
  * cdef inline void draw_plot_element_children(baseItem item) noexcept nogil:
  *     if item.last_plot_element_child is None:             # <<<<<<<<<<<<<<
@@ -32301,7 +32303,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_plot_element_children(st
   __pyx_t_1 = (((PyObject *)__pyx_v_item->last_plot_element_child) == Py_None);
   if (__pyx_t_1) {
 
-    /* "core.pxd":461
+    /* "core.pxd":463
  * cdef inline void draw_plot_element_children(baseItem item) noexcept nogil:
  *     if item.last_plot_element_child is None:
  *         return             # <<<<<<<<<<<<<<
@@ -32310,7 +32312,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_plot_element_children(st
 */
     goto __pyx_L0;
 
-    /* "core.pxd":460
+    /* "core.pxd":462
  * 
  * cdef inline void draw_plot_element_children(baseItem item) noexcept nogil:
  *     if item.last_plot_element_child is None:             # <<<<<<<<<<<<<<
@@ -32319,7 +32321,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_plot_element_children(st
 */
   }
 
-  /* "core.pxd":462
+  /* "core.pxd":464
  *     if item.last_plot_element_child is None:
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_plot_element_child             # <<<<<<<<<<<<<<
@@ -32328,7 +32330,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_plot_element_children(st
 */
   __pyx_v_child = ((PyObject *)__pyx_v_item->last_plot_element_child);
 
-  /* "core.pxd":463
+  /* "core.pxd":465
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_plot_element_child
  *     while (<baseItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
@@ -32339,7 +32341,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_plot_element_children(st
     __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":464
+    /* "core.pxd":466
  *     cdef PyObject *child = <PyObject*> item.last_plot_element_child
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling             # <<<<<<<<<<<<<<
@@ -32349,7 +32351,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_plot_element_children(st
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling);
   }
 
-  /* "core.pxd":465
+  /* "core.pxd":467
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:             # <<<<<<<<<<<<<<
@@ -32360,7 +32362,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_plot_element_children(st
     __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":466
+    /* "core.pxd":468
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:
  *         (<plotElement>child).draw()             # <<<<<<<<<<<<<<
@@ -32369,7 +32371,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_plot_element_children(st
 */
     ((struct __pyx_vtabstruct_9dearcygui_4core_plotElement *)((struct __pyx_obj_9dearcygui_4core_plotElement *)__pyx_v_child)->__pyx_base.__pyx_vtab)->draw(((struct __pyx_obj_9dearcygui_4core_plotElement *)__pyx_v_child));
 
-    /* "core.pxd":467
+    /* "core.pxd":469
  *     while (<baseItem>child) is not None:
  *         (<plotElement>child).draw()
  *         child = <PyObject *>(<baseItem>child).next_sibling             # <<<<<<<<<<<<<<
@@ -32379,7 +32381,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_plot_element_children(st
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->next_sibling);
   }
 
-  /* "core.pxd":459
+  /* "core.pxd":461
  *         child = <PyObject *>(<baseItem>child).next_sibling
  * 
  * cdef inline void draw_plot_element_children(baseItem item) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -32391,7 +32393,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_plot_element_children(st
   __pyx_L0:;
 }
 
-/* "core.pxd":469
+/* "core.pxd":471
  *         child = <PyObject *>(<baseItem>child).next_sibling
  * 
  * cdef inline void draw_tab_children(baseItem item) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -32403,7 +32405,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_tab_children(struct __py
   PyObject *__pyx_v_child;
   int __pyx_t_1;
 
-  /* "core.pxd":470
+  /* "core.pxd":472
  * 
  * cdef inline void draw_tab_children(baseItem item) noexcept nogil:
  *     if item.last_tab_child is None:             # <<<<<<<<<<<<<<
@@ -32413,7 +32415,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_tab_children(struct __py
   __pyx_t_1 = (((PyObject *)__pyx_v_item->last_tab_child) == Py_None);
   if (__pyx_t_1) {
 
-    /* "core.pxd":471
+    /* "core.pxd":473
  * cdef inline void draw_tab_children(baseItem item) noexcept nogil:
  *     if item.last_tab_child is None:
  *         return             # <<<<<<<<<<<<<<
@@ -32422,7 +32424,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_tab_children(struct __py
 */
     goto __pyx_L0;
 
-    /* "core.pxd":470
+    /* "core.pxd":472
  * 
  * cdef inline void draw_tab_children(baseItem item) noexcept nogil:
  *     if item.last_tab_child is None:             # <<<<<<<<<<<<<<
@@ -32431,7 +32433,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_tab_children(struct __py
 */
   }
 
-  /* "core.pxd":472
+  /* "core.pxd":474
  *     if item.last_tab_child is None:
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_tab_child             # <<<<<<<<<<<<<<
@@ -32440,7 +32442,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_tab_children(struct __py
 */
   __pyx_v_child = ((PyObject *)__pyx_v_item->last_tab_child);
 
-  /* "core.pxd":473
+  /* "core.pxd":475
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_tab_child
  *     while (<baseItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
@@ -32451,7 +32453,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_tab_children(struct __py
     __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":474
+    /* "core.pxd":476
  *     cdef PyObject *child = <PyObject*> item.last_tab_child
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling             # <<<<<<<<<<<<<<
@@ -32461,7 +32463,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_tab_children(struct __py
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling);
   }
 
-  /* "core.pxd":475
+  /* "core.pxd":477
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:             # <<<<<<<<<<<<<<
@@ -32472,7 +32474,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_tab_children(struct __py
     __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":476
+    /* "core.pxd":478
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:
  *         (<uiItem>child).draw()             # <<<<<<<<<<<<<<
@@ -32481,7 +32483,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_tab_children(struct __py
 */
     ((struct __pyx_vtabstruct_9dearcygui_4core_uiItem *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.__pyx_vtab)->draw(((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child));
 
-    /* "core.pxd":477
+    /* "core.pxd":479
  *     while (<baseItem>child) is not None:
  *         (<uiItem>child).draw()
  *         child = <PyObject *>(<baseItem>child).next_sibling             # <<<<<<<<<<<<<<
@@ -32491,7 +32493,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_tab_children(struct __py
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->next_sibling);
   }
 
-  /* "core.pxd":469
+  /* "core.pxd":471
  *         child = <PyObject *>(<baseItem>child).next_sibling
  * 
  * cdef inline void draw_tab_children(baseItem item) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -32503,7 +32505,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_tab_children(struct __py
   __pyx_L0:;
 }
 
-/* "core.pxd":479
+/* "core.pxd":481
  *         child = <PyObject *>(<baseItem>child).next_sibling
  * 
  * cdef inline void draw_viewport_drawlist_children(baseItem item) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -32515,7 +32517,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_viewport_drawlist_childr
   PyObject *__pyx_v_child;
   int __pyx_t_1;
 
-  /* "core.pxd":480
+  /* "core.pxd":482
  * 
  * cdef inline void draw_viewport_drawlist_children(baseItem item) noexcept nogil:
  *     if item.last_viewport_drawlist_child is None:             # <<<<<<<<<<<<<<
@@ -32525,7 +32527,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_viewport_drawlist_childr
   __pyx_t_1 = (((PyObject *)__pyx_v_item->last_viewport_drawlist_child) == Py_None);
   if (__pyx_t_1) {
 
-    /* "core.pxd":481
+    /* "core.pxd":483
  * cdef inline void draw_viewport_drawlist_children(baseItem item) noexcept nogil:
  *     if item.last_viewport_drawlist_child is None:
  *         return             # <<<<<<<<<<<<<<
@@ -32534,7 +32536,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_viewport_drawlist_childr
 */
     goto __pyx_L0;
 
-    /* "core.pxd":480
+    /* "core.pxd":482
  * 
  * cdef inline void draw_viewport_drawlist_children(baseItem item) noexcept nogil:
  *     if item.last_viewport_drawlist_child is None:             # <<<<<<<<<<<<<<
@@ -32543,7 +32545,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_viewport_drawlist_childr
 */
   }
 
-  /* "core.pxd":482
+  /* "core.pxd":484
  *     if item.last_viewport_drawlist_child is None:
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_viewport_drawlist_child             # <<<<<<<<<<<<<<
@@ -32552,7 +32554,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_viewport_drawlist_childr
 */
   __pyx_v_child = ((PyObject *)__pyx_v_item->last_viewport_drawlist_child);
 
-  /* "core.pxd":483
+  /* "core.pxd":485
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_viewport_drawlist_child
  *     while (<baseItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
@@ -32563,7 +32565,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_viewport_drawlist_childr
     __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":484
+    /* "core.pxd":486
  *     cdef PyObject *child = <PyObject*> item.last_viewport_drawlist_child
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling             # <<<<<<<<<<<<<<
@@ -32573,7 +32575,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_viewport_drawlist_childr
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling);
   }
 
-  /* "core.pxd":485
+  /* "core.pxd":487
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:             # <<<<<<<<<<<<<<
@@ -32584,7 +32586,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_viewport_drawlist_childr
     __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":486
+    /* "core.pxd":488
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:
  *         (<drawingItem>child).draw(NULL)             # <<<<<<<<<<<<<<
@@ -32593,7 +32595,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_viewport_drawlist_childr
 */
     ((struct __pyx_vtabstruct_9dearcygui_4core_drawingItem *)((struct __pyx_obj_9dearcygui_4core_drawingItem *)__pyx_v_child)->__pyx_base.__pyx_vtab)->draw(((struct __pyx_obj_9dearcygui_4core_drawingItem *)__pyx_v_child), NULL);
 
-    /* "core.pxd":487
+    /* "core.pxd":489
  *     while (<baseItem>child) is not None:
  *         (<drawingItem>child).draw(NULL)
  *         child = <PyObject *>(<baseItem>child).next_sibling             # <<<<<<<<<<<<<<
@@ -32603,7 +32605,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_viewport_drawlist_childr
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->next_sibling);
   }
 
-  /* "core.pxd":479
+  /* "core.pxd":481
  *         child = <PyObject *>(<baseItem>child).next_sibling
  * 
  * cdef inline void draw_viewport_drawlist_children(baseItem item) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -32615,7 +32617,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_viewport_drawlist_childr
   __pyx_L0:;
 }
 
-/* "core.pxd":489
+/* "core.pxd":491
  *         child = <PyObject *>(<baseItem>child).next_sibling
  * 
  * cdef inline void draw_ui_children(baseItem item) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -32627,7 +32629,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_ui_children(struct __pyx
   PyObject *__pyx_v_child;
   int __pyx_t_1;
 
-  /* "core.pxd":490
+  /* "core.pxd":492
  * 
  * cdef inline void draw_ui_children(baseItem item) noexcept nogil:
  *     if item.last_widgets_child is None:             # <<<<<<<<<<<<<<
@@ -32637,7 +32639,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_ui_children(struct __pyx
   __pyx_t_1 = (((PyObject *)__pyx_v_item->last_widgets_child) == Py_None);
   if (__pyx_t_1) {
 
-    /* "core.pxd":491
+    /* "core.pxd":493
  * cdef inline void draw_ui_children(baseItem item) noexcept nogil:
  *     if item.last_widgets_child is None:
  *         return             # <<<<<<<<<<<<<<
@@ -32646,7 +32648,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_ui_children(struct __pyx
 */
     goto __pyx_L0;
 
-    /* "core.pxd":490
+    /* "core.pxd":492
  * 
  * cdef inline void draw_ui_children(baseItem item) noexcept nogil:
  *     if item.last_widgets_child is None:             # <<<<<<<<<<<<<<
@@ -32655,7 +32657,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_ui_children(struct __pyx
 */
   }
 
-  /* "core.pxd":492
+  /* "core.pxd":494
  *     if item.last_widgets_child is None:
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_widgets_child             # <<<<<<<<<<<<<<
@@ -32664,7 +32666,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_ui_children(struct __pyx
 */
   __pyx_v_child = ((PyObject *)__pyx_v_item->last_widgets_child);
 
-  /* "core.pxd":493
+  /* "core.pxd":495
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_widgets_child
  *     while (<baseItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
@@ -32675,7 +32677,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_ui_children(struct __pyx
     __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":494
+    /* "core.pxd":496
  *     cdef PyObject *child = <PyObject*> item.last_widgets_child
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling             # <<<<<<<<<<<<<<
@@ -32685,7 +32687,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_ui_children(struct __pyx
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling);
   }
 
-  /* "core.pxd":495
+  /* "core.pxd":497
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:             # <<<<<<<<<<<<<<
@@ -32696,7 +32698,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_ui_children(struct __pyx
     __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":496
+    /* "core.pxd":498
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:
  *         (<uiItem>child).draw()             # <<<<<<<<<<<<<<
@@ -32705,7 +32707,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_ui_children(struct __pyx
 */
     ((struct __pyx_vtabstruct_9dearcygui_4core_uiItem *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.__pyx_vtab)->draw(((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child));
 
-    /* "core.pxd":497
+    /* "core.pxd":499
  *     while (<baseItem>child) is not None:
  *         (<uiItem>child).draw()
  *         child = <PyObject *>(<baseItem>child).next_sibling             # <<<<<<<<<<<<<<
@@ -32715,7 +32717,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_ui_children(struct __pyx
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->next_sibling);
   }
 
-  /* "core.pxd":489
+  /* "core.pxd":491
  *         child = <PyObject *>(<baseItem>child).next_sibling
  * 
  * cdef inline void draw_ui_children(baseItem item) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -32727,7 +32729,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_ui_children(struct __pyx
   __pyx_L0:;
 }
 
-/* "core.pxd":499
+/* "core.pxd":501
  *         child = <PyObject *>(<baseItem>child).next_sibling
  * 
  * cdef inline void draw_window_children(baseItem item) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -32739,7 +32741,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_window_children(struct _
   PyObject *__pyx_v_child;
   int __pyx_t_1;
 
-  /* "core.pxd":500
+  /* "core.pxd":502
  * 
  * cdef inline void draw_window_children(baseItem item) noexcept nogil:
  *     if item.last_window_child is None:             # <<<<<<<<<<<<<<
@@ -32749,7 +32751,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_window_children(struct _
   __pyx_t_1 = (((PyObject *)__pyx_v_item->last_window_child) == Py_None);
   if (__pyx_t_1) {
 
-    /* "core.pxd":501
+    /* "core.pxd":503
  * cdef inline void draw_window_children(baseItem item) noexcept nogil:
  *     if item.last_window_child is None:
  *         return             # <<<<<<<<<<<<<<
@@ -32758,7 +32760,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_window_children(struct _
 */
     goto __pyx_L0;
 
-    /* "core.pxd":500
+    /* "core.pxd":502
  * 
  * cdef inline void draw_window_children(baseItem item) noexcept nogil:
  *     if item.last_window_child is None:             # <<<<<<<<<<<<<<
@@ -32767,7 +32769,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_window_children(struct _
 */
   }
 
-  /* "core.pxd":502
+  /* "core.pxd":504
  *     if item.last_window_child is None:
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_window_child             # <<<<<<<<<<<<<<
@@ -32776,7 +32778,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_window_children(struct _
 */
   __pyx_v_child = ((PyObject *)__pyx_v_item->last_window_child);
 
-  /* "core.pxd":503
+  /* "core.pxd":505
  *         return
  *     cdef PyObject *child = <PyObject*> item.last_window_child
  *     while (<baseItem>child).prev_sibling is not None:             # <<<<<<<<<<<<<<
@@ -32787,7 +32789,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_window_children(struct _
     __pyx_t_1 = (((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":504
+    /* "core.pxd":506
  *     cdef PyObject *child = <PyObject*> item.last_window_child
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling             # <<<<<<<<<<<<<<
@@ -32797,7 +32799,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_window_children(struct _
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->prev_sibling);
   }
 
-  /* "core.pxd":505
+  /* "core.pxd":507
  *     while (<baseItem>child).prev_sibling is not None:
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:             # <<<<<<<<<<<<<<
@@ -32808,7 +32810,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_window_children(struct _
     __pyx_t_1 = (((PyObject *)__pyx_v_child) != Py_None);
     if (!__pyx_t_1) break;
 
-    /* "core.pxd":506
+    /* "core.pxd":508
  *         child = <PyObject *>(<baseItem>child).prev_sibling
  *     while (<baseItem>child) is not None:
  *         (<uiItem>child).draw()             # <<<<<<<<<<<<<<
@@ -32817,7 +32819,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_window_children(struct _
 */
     ((struct __pyx_vtabstruct_9dearcygui_4core_uiItem *)((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child)->__pyx_base.__pyx_vtab)->draw(((struct __pyx_obj_9dearcygui_4core_uiItem *)__pyx_v_child));
 
-    /* "core.pxd":507
+    /* "core.pxd":509
  *     while (<baseItem>child) is not None:
  *         (<uiItem>child).draw()
  *         child = <PyObject *>(<baseItem>child).next_sibling             # <<<<<<<<<<<<<<
@@ -32827,7 +32829,7 @@ static CYTHON_INLINE void __pyx_f_9dearcygui_4core_draw_window_children(struct _
     __pyx_v_child = ((PyObject *)((struct __pyx_obj_9dearcygui_4core_baseItem *)__pyx_v_child)->next_sibling);
   }
 
-  /* "core.pxd":499
+  /* "core.pxd":501
  *         child = <PyObject *>(<baseItem>child).next_sibling
  * 
  * cdef inline void draw_window_children(baseItem item) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -75390,8 +75392,8 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_ItemStateView), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_ItemStateView),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_ItemStateView) __PYX_ERR(5, 280, __pyx_L1_error)
-  __pyx_vtabptr_9dearcygui_4core_ItemStateView = (struct __pyx_vtabstruct_9dearcygui_4core_ItemStateView*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_ItemStateView); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_ItemStateView)) __PYX_ERR(5, 280, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_ItemStateView) __PYX_ERR(5, 282, __pyx_L1_error)
+  __pyx_vtabptr_9dearcygui_4core_ItemStateView = (struct __pyx_vtabstruct_9dearcygui_4core_ItemStateView*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_ItemStateView); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_ItemStateView)) __PYX_ERR(5, 282, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_9dearcygui_4core_ItemStateCopy = __Pyx_ImportType_3_2_4(__pyx_t_1, "dearcygui.core", "ItemStateCopy",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_9dearcygui_4core_ItemStateCopy), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_ItemStateCopy),
@@ -75400,8 +75402,8 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_ItemStateCopy), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_ItemStateCopy),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_ItemStateCopy) __PYX_ERR(5, 290, __pyx_L1_error)
-  __pyx_vtabptr_9dearcygui_4core_ItemStateCopy = (struct __pyx_vtabstruct_9dearcygui_4core_ItemStateCopy*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_ItemStateCopy); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_ItemStateCopy)) __PYX_ERR(5, 290, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_ItemStateCopy) __PYX_ERR(5, 292, __pyx_L1_error)
+  __pyx_vtabptr_9dearcygui_4core_ItemStateCopy = (struct __pyx_vtabstruct_9dearcygui_4core_ItemStateCopy*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_ItemStateCopy); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_ItemStateCopy)) __PYX_ERR(5, 292, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_9dearcygui_4core_Gamepad = __Pyx_ImportType_3_2_4(__pyx_t_1, "dearcygui.core", "Gamepad",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_9dearcygui_4core_Gamepad), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_Gamepad),
@@ -75410,7 +75412,7 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_Gamepad), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_Gamepad),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_Gamepad) __PYX_ERR(5, 341, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_Gamepad) __PYX_ERR(5, 343, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_9dearcygui_4core_Viewport = __Pyx_ImportType_3_2_4(__pyx_t_1, "dearcygui.core", "Viewport",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_9dearcygui_4core_Viewport), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_Viewport),
@@ -75419,8 +75421,8 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_Viewport), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_Viewport),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_Viewport) __PYX_ERR(5, 345, __pyx_L1_error)
-  __pyx_vtabptr_9dearcygui_4core_Viewport = (struct __pyx_vtabstruct_9dearcygui_4core_Viewport*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_Viewport); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_Viewport)) __PYX_ERR(5, 345, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_Viewport) __PYX_ERR(5, 347, __pyx_L1_error)
+  __pyx_vtabptr_9dearcygui_4core_Viewport = (struct __pyx_vtabstruct_9dearcygui_4core_Viewport*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_Viewport); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_Viewport)) __PYX_ERR(5, 347, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_9dearcygui_4core_Callback = __Pyx_ImportType_3_2_4(__pyx_t_1, "dearcygui.core", "Callback",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_9dearcygui_4core_Callback), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_Callback),
@@ -75429,7 +75431,7 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_Callback), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_Callback),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_Callback) __PYX_ERR(5, 432, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_Callback) __PYX_ERR(5, 434, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_9dearcygui_4core_drawingItem = __Pyx_ImportType_3_2_4(__pyx_t_1, "dearcygui.core", "drawingItem",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_9dearcygui_4core_drawingItem), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_drawingItem),
@@ -75438,8 +75440,8 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_drawingItem), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_drawingItem),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_drawingItem) __PYX_ERR(5, 514, __pyx_L1_error)
-  __pyx_vtabptr_9dearcygui_4core_drawingItem = (struct __pyx_vtabstruct_9dearcygui_4core_drawingItem*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_drawingItem); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_drawingItem)) __PYX_ERR(5, 514, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_drawingItem) __PYX_ERR(5, 516, __pyx_L1_error)
+  __pyx_vtabptr_9dearcygui_4core_drawingItem = (struct __pyx_vtabstruct_9dearcygui_4core_drawingItem*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_drawingItem); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_drawingItem)) __PYX_ERR(5, 516, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_9dearcygui_4core_uiItem = __Pyx_ImportType_3_2_4(__pyx_t_1, "dearcygui.core", "uiItem",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_9dearcygui_4core_uiItem), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_uiItem),
@@ -75448,8 +75450,8 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_uiItem), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_uiItem),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_uiItem) __PYX_ERR(5, 649, __pyx_L1_error)
-  __pyx_vtabptr_9dearcygui_4core_uiItem = (struct __pyx_vtabstruct_9dearcygui_4core_uiItem*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_uiItem); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_uiItem)) __PYX_ERR(5, 649, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_uiItem) __PYX_ERR(5, 651, __pyx_L1_error)
+  __pyx_vtabptr_9dearcygui_4core_uiItem = (struct __pyx_vtabstruct_9dearcygui_4core_uiItem*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_uiItem); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_uiItem)) __PYX_ERR(5, 651, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_9dearcygui_4core_SharedValue = __Pyx_ImportType_3_2_4(__pyx_t_1, "dearcygui.core", "SharedValue",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_9dearcygui_4core_SharedValue), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_SharedValue),
@@ -75458,8 +75460,8 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_SharedValue), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_SharedValue),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_SharedValue) __PYX_ERR(5, 697, __pyx_L1_error)
-  __pyx_vtabptr_9dearcygui_4core_SharedValue = (struct __pyx_vtabstruct_9dearcygui_4core_SharedValue*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_SharedValue); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_SharedValue)) __PYX_ERR(5, 697, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_SharedValue) __PYX_ERR(5, 698, __pyx_L1_error)
+  __pyx_vtabptr_9dearcygui_4core_SharedValue = (struct __pyx_vtabstruct_9dearcygui_4core_SharedValue*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_SharedValue); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_SharedValue)) __PYX_ERR(5, 698, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_9dearcygui_4core_TimeWatcher = __Pyx_ImportType_3_2_4(__pyx_t_1, "dearcygui.core", "TimeWatcher",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_9dearcygui_4core_TimeWatcher), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_TimeWatcher),
@@ -75468,8 +75470,8 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_TimeWatcher), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_TimeWatcher),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_TimeWatcher) __PYX_ERR(5, 715, __pyx_L1_error)
-  __pyx_vtabptr_9dearcygui_4core_TimeWatcher = (struct __pyx_vtabstruct_9dearcygui_4core_TimeWatcher*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_TimeWatcher); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_TimeWatcher)) __PYX_ERR(5, 715, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_TimeWatcher) __PYX_ERR(5, 716, __pyx_L1_error)
+  __pyx_vtabptr_9dearcygui_4core_TimeWatcher = (struct __pyx_vtabstruct_9dearcygui_4core_TimeWatcher*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_TimeWatcher); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_TimeWatcher)) __PYX_ERR(5, 716, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_9dearcygui_4core_Window = __Pyx_ImportType_3_2_4(__pyx_t_1, "dearcygui.core", "Window",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_9dearcygui_4core_Window), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_Window),
@@ -75478,8 +75480,8 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_Window), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_Window),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_Window) __PYX_ERR(5, 718, __pyx_L1_error)
-  __pyx_vtabptr_9dearcygui_4core_Window = (struct __pyx_vtabstruct_9dearcygui_4core_Window*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_Window); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_Window)) __PYX_ERR(5, 718, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_Window) __PYX_ERR(5, 719, __pyx_L1_error)
+  __pyx_vtabptr_9dearcygui_4core_Window = (struct __pyx_vtabstruct_9dearcygui_4core_Window*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_Window); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_Window)) __PYX_ERR(5, 719, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_9dearcygui_4core_plotElement = __Pyx_ImportType_3_2_4(__pyx_t_1, "dearcygui.core", "plotElement",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_9dearcygui_4core_plotElement), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_plotElement),
@@ -75488,8 +75490,8 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_plotElement), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_plotElement),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_plotElement) __PYX_ERR(5, 763, __pyx_L1_error)
-  __pyx_vtabptr_9dearcygui_4core_plotElement = (struct __pyx_vtabstruct_9dearcygui_4core_plotElement*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_plotElement); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_plotElement)) __PYX_ERR(5, 763, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_plotElement) __PYX_ERR(5, 764, __pyx_L1_error)
+  __pyx_vtabptr_9dearcygui_4core_plotElement = (struct __pyx_vtabstruct_9dearcygui_4core_plotElement*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_plotElement); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_plotElement)) __PYX_ERR(5, 764, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_9dearcygui_4core_AxisTag = __Pyx_ImportType_3_2_4(__pyx_t_1, "dearcygui.core", "AxisTag",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_9dearcygui_4core_AxisTag), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_AxisTag),
@@ -75498,8 +75500,8 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_AxisTag), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_AxisTag),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_AxisTag) __PYX_ERR(5, 776, __pyx_L1_error)
-  __pyx_vtabptr_9dearcygui_4core_AxisTag = (struct __pyx_vtabstruct_9dearcygui_4core_AxisTag*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_AxisTag); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_AxisTag)) __PYX_ERR(5, 776, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_AxisTag) __PYX_ERR(5, 777, __pyx_L1_error)
+  __pyx_vtabptr_9dearcygui_4core_AxisTag = (struct __pyx_vtabstruct_9dearcygui_4core_AxisTag*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_AxisTag); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_AxisTag)) __PYX_ERR(5, 777, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_9dearcygui_4core_baseFont = __Pyx_ImportType_3_2_4(__pyx_t_1, "dearcygui.core", "baseFont",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_9dearcygui_4core_baseFont), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_baseFont),
@@ -75508,8 +75510,8 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_baseFont), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_baseFont),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_baseFont) __PYX_ERR(5, 787, __pyx_L1_error)
-  __pyx_vtabptr_9dearcygui_4core_baseFont = (struct __pyx_vtabstruct_9dearcygui_4core_baseFont*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_baseFont); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_baseFont)) __PYX_ERR(5, 787, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_baseFont) __PYX_ERR(5, 788, __pyx_L1_error)
+  __pyx_vtabptr_9dearcygui_4core_baseFont = (struct __pyx_vtabstruct_9dearcygui_4core_baseFont*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_baseFont); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_baseFont)) __PYX_ERR(5, 788, __pyx_L1_error)
   __pyx_mstate->__pyx_ptype_9dearcygui_4core_baseTheme = __Pyx_ImportType_3_2_4(__pyx_t_1, "dearcygui.core", "baseTheme",
   #if defined(PYPY_VERSION_NUM) && PYPY_VERSION_NUM < 0x050B0000
   sizeof(struct __pyx_obj_9dearcygui_4core_baseTheme), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_baseTheme),
@@ -75518,8 +75520,8 @@ static int __Pyx_modinit_type_import_code(__pyx_mstatetype *__pyx_mstate) {
   #else
   sizeof(struct __pyx_obj_9dearcygui_4core_baseTheme), __PYX_GET_STRUCT_ALIGNMENT_3_2_4(struct __pyx_obj_9dearcygui_4core_baseTheme),
   #endif
-  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_baseTheme) __PYX_ERR(5, 801, __pyx_L1_error)
-  __pyx_vtabptr_9dearcygui_4core_baseTheme = (struct __pyx_vtabstruct_9dearcygui_4core_baseTheme*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_baseTheme); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_baseTheme)) __PYX_ERR(5, 801, __pyx_L1_error)
+  __Pyx_ImportType_CheckSize_Warn_3_2_4); if (!__pyx_mstate->__pyx_ptype_9dearcygui_4core_baseTheme) __PYX_ERR(5, 802, __pyx_L1_error)
+  __pyx_vtabptr_9dearcygui_4core_baseTheme = (struct __pyx_vtabstruct_9dearcygui_4core_baseTheme*)__Pyx_GetVtable(__pyx_mstate->__pyx_ptype_9dearcygui_4core_baseTheme); if (unlikely(!__pyx_vtabptr_9dearcygui_4core_baseTheme)) __PYX_ERR(5, 802, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_1 = PyImport_ImportModule("dearcygui.texture"); if (unlikely(!__pyx_t_1)) __PYX_ERR(6, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);

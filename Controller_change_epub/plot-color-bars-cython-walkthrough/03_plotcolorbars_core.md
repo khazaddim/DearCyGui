@@ -16,7 +16,7 @@ def __cinit__(self):
     self._normalized_max_fraction = 1.
 ```
 
-Exact source anchor: `dearcygui/plot.pyx:3053`
+Exact source anchor: `dearcygui/plot.pyx:3047`
 
 There are two good Cython lessons here.
 
@@ -39,7 +39,7 @@ Second, the defaults already represent a complete configuration:
 - `normalized_max_fraction > 0 and <= 1`
 - color vector sizes are either `0`, `1`, or `count`
 
-Read the function at `dearcygui/plot.pyx:3063`.
+Read the function at `dearcygui/plot.pyx:3057`.
 
 The color-vector backing fields are declared at `dearcygui/plot.pxd:115` and `dearcygui/plot.pxd:116`.
 
@@ -71,14 +71,14 @@ This is a classic Cython pattern:
 
 Useful property anchors:
 
-- `X` property begins near `dearcygui/plot.pyx:3081`
-- `Y` property begins near `dearcygui/plot.pyx:3093`
-- `colors` property begins near `dearcygui/plot.pyx:3105`
-- `line_colors` property begins near `dearcygui/plot.pyx:3136`
-- `horizontal` property begins near `dearcygui/plot.pyx:3155`
-- `weight` property begins near `dearcygui/plot.pyx:3165`
-- `anchor` property begins near `dearcygui/plot.pyx:3177`
-- `anchor_value` property begins near `dearcygui/plot.pyx:3209`
+- `X` property begins near `dearcygui/plot.pyx:3079`
+- `Y` property begins near `dearcygui/plot.pyx:3091`
+- `colors` property begins near `dearcygui/plot.pyx:3103`
+- `line_colors` property begins near `dearcygui/plot.pyx:3130`
+- `horizontal` property begins near `dearcygui/plot.pyx:3149`
+- `weight` property begins near `dearcygui/plot.pyx:3159`
+- `anchor` property begins near `dearcygui/plot.pyx:3171`
+- `anchor_value` property begins near `dearcygui/plot.pyx:3203`
 
 ## Draw Loop Structure
 
@@ -95,15 +95,17 @@ The draw loop is where the first change really pays off. The high-level flow is:
 The most important design decision is that anchor resolution happens inside the loop from live limits:
 
 ```cython
-start_value = resolve_anchor_value(limits,
-                                   self._horizontal,
-                                   self._anchor_mode,
-                                   self._anchor_value)
+start_value = _resolve_anchor_value(limits,
+                                    self._horizontal,
+                                    self._anchor_mode,
+                                    self._anchor_value)
 ```
 
 That is exactly why axis-edge anchoring stays visually locked during pan and zoom. The value is not cached from earlier Python callbacks. It is pulled from ImPlot at render time.
 
-Read the anchor helper at `dearcygui/plot.pyx:110`, then watch it being used inside the draw loop at `dearcygui/plot.pyx:3284`.
+Read the anchor helper at `dearcygui/plot.pyx:2999`, then watch it being used inside the draw loop at `dearcygui/plot.pyx:3286`.
+
+Another important detail in the final code is the array helper boundary. The draw loop now reads per-bar values through `_get_1d_plot_value(DCG1DArrayView& ...)`, which preserves the underlying view object and uses byte-stride addressing. That keeps the low-level helper compatible with `DCG1DArrayView`'s real storage semantics.
 
 ## Horizontal And Vertical Branches
 
@@ -116,6 +118,6 @@ That is implemented as one branch in the draw loop, not two separate classes. Th
 
 Orientation branches to inspect:
 
-- horizontal path starts around `dearcygui/plot.pyx:3288`
-- vertical path starts around `dearcygui/plot.pyx:3298`
+- horizontal path starts around `dearcygui/plot.pyx:3289`
+- vertical path starts around `dearcygui/plot.pyx:3301`
 - pixel conversion happens through `PlotToPixels` in those same two branches

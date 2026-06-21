@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: dearcygui
-Version: 0.1.7
+Version: 0.1.8
 Summary: DearCyGui: A simple and customizable Python GUI Toolkit coded in Cython
 Home-page: https://github.com/axeldavy/DearCyGui
 Author: Axel Davy

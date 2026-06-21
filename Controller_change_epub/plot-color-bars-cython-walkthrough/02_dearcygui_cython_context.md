@@ -47,20 +47,20 @@ The implementation then relies on DearCyGui helper types and wrappers:
 
 Relevant source anchors:
 
-- `PlotColorBars` implementation starts at `dearcygui/plot.pyx:3045`
-- constructor defaults at `dearcygui/plot.pyx:3053`
-- validation function at `dearcygui/plot.pyx:3063`
-- draw loop at `dearcygui/plot.pyx:3251`
+- `PlotColorBars` implementation starts at `dearcygui/plot.pyx:3039`
+- constructor defaults at `dearcygui/plot.pyx:3047`
+- validation function at `dearcygui/plot.pyx:3057`
+- draw loop at `dearcygui/plot.pyx:3245`
 
 ## Important Helper Functions
 
-Near the top of `plot.pyx`, the module defines a few small helpers that make the draw loop simpler:
+Near the `PlotColorBars` block, the module defines a few small helpers that make the draw loop simpler:
 
 ```cython
-cdef inline double get_1d_plot_value(DCG1DArrayView& view, int32_t idx) noexcept nogil
-cdef inline imgui.ImU32 get_vector_color(DCGVector[int32_t]& colors, int32_t idx, imgui.ImU32 fallback) noexcept nogil
-cdef inline double resolve_anchor_value(implot.ImPlotRect& limits, bint horizontal, int32_t anchor_mode, double anchor_value) noexcept nogil
-cdef void reset_color_vector(DCGVector[int32_t]& target, object value)
+cdef inline double _get_1d_plot_value(DCG1DArrayView& view, int32_t idx) noexcept nogil
+cdef inline imgui.ImU32 _get_vector_color(DCGVector[int32_t]& colors, int32_t idx, imgui.ImU32 fallback) noexcept nogil
+cdef inline double _resolve_anchor_value(implot.ImPlotRect limits, bint horizontal, int32_t anchor_mode, double anchor_value) noexcept nogil
+cdef void _reset_color_vector(DCGVector[int32_t]& target, object value)
 ```
 
 These helpers show a common DearCyGui pattern:
@@ -71,10 +71,12 @@ These helpers show a common DearCyGui pattern:
 
 Read the real helpers here:
 
-- `get_1d_plot_value`: `dearcygui/plot.pyx:88`
-- `get_vector_color`: `dearcygui/plot.pyx:100`
-- `resolve_anchor_value`: `dearcygui/plot.pyx:110`
-- `reset_color_vector`: `dearcygui/plot.pyx:121`
+- `_get_1d_plot_value`: `dearcygui/plot.pyx:2985`
+- `_resolve_anchor_value`: `dearcygui/plot.pyx:2999`
+- `_get_vector_color`: `dearcygui/plot.pyx:3010`
+- `_reset_color_vector`: `dearcygui/plot.pyx:3023`
+
+One of those helpers turned out to be central to the runtime fix. `_get_1d_plot_value` must take `DCG1DArrayView` by reference, not by value, because the view carries ownership and cleanup state for Python buffers. Passing it by value in a hot draw loop risks copying and destructing the underlying view bookkeeping.
 
 ## The `nogil` Point
 
@@ -88,6 +90,6 @@ This is one of the key reasons the setters call `_validate_configuration()` aggr
 
 Follow that split in the source:
 
-- validating properties begin in the `PlotColorBars` block around `dearcygui/plot.pyx:3081`
-- `value_space` getter/setter at `dearcygui/plot.pyx:3219` and `dearcygui/plot.pyx:3227`
-- `normalized_max_fraction` getter/setter at `dearcygui/plot.pyx:3239` and `dearcygui/plot.pyx:3245`
+- validating properties begin in the `PlotColorBars` block around `dearcygui/plot.pyx:3079`
+- `value_space` getter/setter at `dearcygui/plot.pyx:3213` and `dearcygui/plot.pyx:3221`
+- `normalized_max_fraction` getter/setter at `dearcygui/plot.pyx:3233` and `dearcygui/plot.pyx:3239`

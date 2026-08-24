@@ -41,3 +41,6 @@ cython_learning/*.cpp
 cython_learning/*.html
 
 Controller_change_epub/
+
+# notes files
+Notes_Wheels_Actions.ipynb

@@ -11,7 +11,8 @@ from glob import glob
 import shutil
 import subprocess
 
-wip_version = "0.1.7"
+# Fork of upstream 0.1.8 with 8-gamepad support and custom plot color bars.
+wip_version = "0.1.8+multicontroller.1"
 
 def version_number():
     return wip_version
@@ -91,6 +92,16 @@ def build_SDL3():
     if get_platform() == "OS X":
         if os.environ.get('CMAKE_OSX_ARCHITECTURES'):
             cmake_config_args.append(f'-DCMAKE_OSX_ARCHITECTURES={os.environ["CMAKE_OSX_ARCHITECTURES"]}')
+
+    if get_platform() == "Linux":
+        # Disable optional X11/Wayland extensions that require extra dev packages
+        cmake_config_args += [
+            '-DSDL_X11_XRANDR=OFF',
+            '-DSDL_X11_XSCRNSAVER=OFF',
+            '-DSDL_X11_XTEST=OFF',
+            '-DSDL_FRIBIDI=OFF',
+            '-DSDL_WAYLAND_LIBDECOR=OFF',
+        ]
 
     if get_platform() == "Windows":
         # gamepad input bug https://github.com/libsdl-org/SDL/issues/11487

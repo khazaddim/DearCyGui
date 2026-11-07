@@ -211,7 +211,24 @@ with targeted verification.
   exceptions. Physical input, visual pan/zoom and non-Windows checks remain
   deferred, so this source entry remains unchecked. Evidence:
   session files/stage-a-01-build.log and tool output.
-- [ ] 02 `80ca823` Viewport test check and async-helper TODO: inspect both changes; run affected viewport/async cases (A, V).
+- [x] 02 `80ca823` Viewport test check and async-helper TODO: inspect both changes; run affected viewport/async cases (A, V).
+  Disposition: adapted
+  Result: `9e505dbd1c39520744918b4725e1584a1f22bfc9`; source
+  `80ca82311e18c18fe9b01fd4633f5bf337a87755`. Applied the viewport sizing
+  check with `rel=0, abs=1` instead of upstream's `rel=1` (100% error), permitting
+  the observed one-pixel DPI rounding without masking incorrect dimensions.
+  Inspected cancellation TODO; its temporary comment is superseded by source 03.
+  Verification: A/V, installed source-01 wheel on Windows cp314. From
+  `C:\Chris`, absolute venv Python with `-m pytest -q --import-mode=importlib`
+  on test_asyncio.py and test_viewport.py::TestMultipleViewports:
+  43 passed, 6 skipped, 2 failed in 7.43s. Both viewport cases passed.
+  Cancellation failure matches baseline. Nested executor ordering also failed
+  intermittently (inner task started before outer caller recorded submission);
+  installed asyncio_helpers.py is byte-identical to baseline, SHA256
+  `18171171926fb941dd06416e193ec9a265ad15111aab043dbade0cc534fff537`.
+  Isolated rerun of the nested case plus both viewport cases: 3 passed in 1.00s.
+  This is additional baseline scheduling sensitivity, not an asyncio code
+  regression. Evidence: session files/stage-a-02-tests.log and tool output.
 - [ ] 03 `19d2e43` Cross-thread AsyncThreadPool cancellation: verify cancellation and shutdown from another thread (A).
 - [ ] 04 `a7ebaa8` Missing-loop detection: account for together with source revert 07; do not retain reverted behavior (A).
 - [ ] 05 `c303fb8` Viewport-test atomic fix: verify test observes thread-safe state (V).

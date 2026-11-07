@@ -129,13 +129,10 @@ async def _async_task(future: Future | asyncio.Future,
             future.set_running_or_notify_cancel()
 
 
-def _cancel_task_if_cancelled(task, future):
+def _cancel_task_if_cancelled(task: asyncio.Task, future):
     """Callback to cancel a task when its future is cancelled."""
-    if future.cancelled() and not task.done():
-        try:
-            asyncio.get_running_loop().call_soon_threadsafe(task.cancel)
-        except RuntimeError:
-            pass
+    if future.cancelled():
+        task.get_loop().call_soon_threadsafe(task.cancel)
 
 
 def _create_task(loop: asyncio.AbstractEventLoop,

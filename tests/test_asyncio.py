@@ -696,3 +696,27 @@ class TestAsyncThreadPoolExecutor:
         
         # Future should be marked as cancelled
         assert future.cancelled()
+
+    def test_cancellation_from_another_thread(self):
+        executor = AsyncThreadPoolExecutor()
+        started = threading.Event()
+        cancelled = threading.Event()
+
+        async def cancellable_task():
+            started.set()
+            try:
+                await asyncio.Event().wait()
+            finally:
+                cancelled.set()
+
+        try:
+            future = executor.submit(cancellable_task)
+            assert started.wait(timeout=2.0)
+            thread = threading.Thread(target=future.cancel)
+            thread.start()
+            thread.join(timeout=2.0)
+            assert not thread.is_alive()
+            assert future.cancelled()
+            assert cancelled.wait(timeout=2.0)
+        finally:
+            executor.shutdown(wait=True, cancel_futures=True)

@@ -96,6 +96,20 @@ def event_loop_factory(request):
 
 class TestAsyncPoolExecutor:
     """Tests for the AsyncPoolExecutor class."""
+
+    def test_configured_loop_before_running(self):
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        try:
+            executor = AsyncPoolExecutor()
+            try:
+                future = executor.submit(lambda: 42)
+                assert loop.run_until_complete(future) == 42
+            finally:
+                executor.shutdown()
+        finally:
+            asyncio.set_event_loop(None)
+            loop.close()
     
     def test_sync_function_execution(self, event_loop):
         """Test execution of synchronous functions."""

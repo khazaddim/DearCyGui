@@ -230,6 +230,29 @@ with targeted verification.
   This is additional baseline scheduling sensitivity, not an asyncio code
   regression. Evidence: session files/stage-a-02-tests.log and tool output.
 - [ ] 03 `19d2e43` Cross-thread AsyncThreadPool cancellation: verify cancellation and shutdown from another thread (A).
+  Disposition: adapted
+  Result: `7721380153e50b1fe9b35d29a902412a3cb4b544`; source
+  `19d2e43934788719ade8705524131c56a1600e4d`. Cancellation now schedules
+  `task.cancel` using `task.get_loop()` instead of attempting to find a running
+  loop in the cancelling thread and silently ignoring failure. Preserved fork
+  `_dcg_tasks` strong references; skipped unrelated signature reformatting.
+  Added deterministic alternate-thread cancellation and cleanup regression.
+  Verification: A, Windows cp314 installed package. Canonical rebuild returned 0;
+  installed wheel SHA256
+  `2f9488f749ffccd7aeb9436167935ff07a56cd719633d7c486dd270f29ff4172`.
+  Absolute venv Python from `C:\Chris`, `-m pytest -q --import-mode=importlib`
+  on test_asyncio.py, test_fork_regressions.py, and
+  test_viewport.py::TestAsyncioIntegration: 72 passed, 6 skipped in 7.86s.
+  Baseline graceful cancellation failure is resolved; cross-thread shutdown
+  and the new alternate-thread cancellation case passed. Evidence:
+  session files/stage-a-03-build.log and files/stage-a-03-tests.log.
+
+  Atomic group 04/07: Handle missing-loop detection and its exact revert as
+  one no-change unit. Applying transient `get_running_loop()` would break
+  configured-but-not-yet-running loops. Both full patches were read;
+  `git diff --quiet a7ebaa8^ 914dd01 -- dearcygui/utils/asyncio_helpers.py`
+  returned 0. Keep the existing final `get_event_loop()` semantics. Record both
+  entries; no unrelated source is reordered by this no-change accounting.
 - [ ] 04 `a7ebaa8` Missing-loop detection: account for together with source revert 07; do not retain reverted behavior (A).
 - [ ] 05 `c303fb8` Viewport-test atomic fix: verify test observes thread-safe state (V).
 - [ ] 06 `4a4a621` SDL 3.4.4 pin: retain controller-capable configuration, rebuild and verify input (S, C, W).

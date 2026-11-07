@@ -194,6 +194,23 @@ Suggested model: GPT-5.3-Codex — focused version, async, and native-build chan
 with targeted verification.
 
 - [ ] 01 `bc00743` Bump version number: preserve fork-qualified version and account for its ImPlot pin change (S, P, W).
+  Disposition: adapted
+  Result: `1c2e4079bf15de9b3326b73188816084bcc42c84`; source
+  `bc00743005e8621c69c76fe6f936d0eea7f1f082`. Retained fork-qualified version
+  in both setup.py and __init__.py; imported ImPlot
+  `920c8e27e0f098946f2ff5ddf8ad75e9df34b3e6`. Its net diff from the prior pin
+  changes one zero-tick formatting condition; no custom source was replaced.
+  Verification: S/P/W automated portion, Windows cp314. Canonical pip rebuild
+  returned 0; installed wheel SHA256
+  `3e131e83cc28f8449383095c5d99978b7902cd58a73589b8c76f3d5e60f21ab1`.
+  From `C:\Chris`, absolute venv Python and
+  `-m pytest -q --import-mode=importlib` on test_fork_regressions.py:
+  25 passed in 2.24s. Installed path/version confirmed. A bounded native plot
+  smoke rendered three hidden frames with four orientation/value-space
+  combinations, colored fills, borders, edge anchoring and ignore_fit, without
+  exceptions. Physical input, visual pan/zoom and non-Windows checks remain
+  deferred, so this source entry remains unchecked. Evidence:
+  session files/stage-a-01-build.log and tool output.
 - [ ] 02 `80ca823` Viewport test check and async-helper TODO: inspect both changes; run affected viewport/async cases (A, V).
 - [ ] 03 `19d2e43` Cross-thread AsyncThreadPool cancellation: verify cancellation and shutdown from another thread (A).
 - [ ] 04 `a7ebaa8` Missing-loop detection: account for together with source revert 07; do not retain reverted behavior (A).

@@ -17,8 +17,9 @@ explicit resolutions for custom-code overlaps, and test gates before proceeding.
   `01d2ce70f00658f4119a86c34a915e53d3775b88` through frozen target
   `3d13328f3434db2ed9498831ce6fd2c5018ce430`, oldest first.
 - Work only on `integrate/game-controller-upstream-2026-11-03`, initially
-  `9db7a6b5537fc194229fcc9f20e389959ee5ff30`; preserve the original branch and
-  `backup/game-controller-build-pre-upstream-2026-11-03` at that starting point.
+  `9db7a6b5537fc194229fcc9f20e389959ee5ff30`, with approved implementation start
+  `5213cc71d80b890ee1115cd0b47974724c6e91cd`; preserve the original branch and
+  `backup/game-controller-build-pre-upstream-2026-11-03` at the original baseline.
 - Permit cherry-picks, adapted ports, and evidence-backed no-ops, recording
   provenance and verification for every source commit.
 - Preserve the fork's controller APIs, event ordering, tuple callback payloads,
@@ -30,6 +31,24 @@ explicit resolutions for custom-code overlaps, and test gates before proceeding.
   layouts, rendering, typed callbacks, drawing, and custom fork functionality.
 - Require explicit approval and a clean baseline before implementation. This
   proposal does not apply upstream patches or certify runtime compatibility.
+
+## Execution Approval
+
+On 2026-11-06 the user approved recording
+`5213cc71d80b890ee1115cd0b47974724c6e91cd` as the implementation starting point
+and continuing the tasks. Its only differences from the original baseline are
+the four OpenSpec change documents; implementation and submodule pins are
+unchanged. The original and backup branches remain at
+`9db7a6b5537fc194229fcc9f20e389959ee5ff30`. Verification gates still apply.
+The user subsequently authorized scoped local integration commits, cherry-picks,
+adapted ports, submodule revision updates, and checkpoint branches, with no push,
+promotion, reset, publication, external consumer runs, or archive.
+
+The recorded pre-existing baseline failures are accepted for comparison.
+Unavailable hardware, visual, and external checks may be deferred while
+automated integration proceeds. Their checklist items remain unchecked; this
+does not certify those gates or excuse new regressions. Final acceptance still
+requires disclosure and approval of remaining limitations.
 
 ## Impact
 

@@ -18,6 +18,21 @@ Freeze the full hashes in the proposal rather than silently expanding scope if
 upstream moves. Reconfirm this reconstruction in the baseline stage, especially
 the restored backend content.
 
+On 2026-11-06 the user approved the clean implementation starting point
+`5213cc71d80b890ee1115cd0b47974724c6e91cd` on the designated integration branch.
+Only the four OpenSpec change documents differ from the original baseline.
+Implementation and dependency content is unchanged; the original and backup
+branches remain at `9db7a6b5537fc194229fcc9f20e389959ee5ff30`.
+
+Execution approval permits local integration commits, cherry-picks/adapted
+ports, submodule revision updates, and checkpoint branches. Recorded baseline
+failures are accepted for comparison, and unavailable hardware/visual/external
+checks may be deferred during automated integration. Deferred verification
+remains unchecked and must be disclosed at handoff; no new regression is waived.
+This exception permits advancement on automated gate evidence without claiming
+that unavailable manual gates passed. Push, promotion, reset, publication,
+external runs, and archive are not authorized.
+
 ## Goals / Non-Goals
 
 - Integrate the frozen range without losing working custom behavior.

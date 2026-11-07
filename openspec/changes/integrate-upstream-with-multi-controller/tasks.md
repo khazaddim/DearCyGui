@@ -4,8 +4,13 @@ All implementation is pending approval. Each source entry requires the
 disposition/result/verification record defined in [design.md](design.md).
 Gate letters refer to its verification matrix. Preserve original source order;
 atomic groups must record every member and why they are coupled.
+Suggested models below are implementation aids, not approval to execute tasks
+or to claim runtime and hardware verification.
 
 ## 0. Approval and baseline (before any source commit)
+
+Suggested model: Claude Opus 5.5 — reconstruct provenance and review the cross-cutting
+baseline; approval and environment-dependent observations remain human-owned.
 
 - [ ] 0.1 Review and approve proposal, scope, protected APIs, test gates, and permitted Git operations.
 - [ ] 0.2 Verify integration and backup start at `9db7a6b5537fc194229fcc9f20e389959ee5ff30`; record clean status and frozen upstream `3d13328f3434db2ed9498831ce6fd2c5018ce430` (B).
@@ -15,6 +20,9 @@ atomic groups must record every member and why they are coupled.
 - [ ] 0.6 Inventory hardware/virtual devices, external consumer availability, display requirements, CI/free-threaded environments, and approval for optional external runs. Add focused regression cases for protected behavior where missing (C, V, T).
 
 ## 1. Stage A: Initial upstream updates and dependencies
+
+Suggested model: GPT-5.3-Codex — focused version, async, and native-build changes
+with targeted verification.
 
 - [ ] 01 `bc00743` Bump version number: preserve fork-qualified version and account for its ImPlot pin change (S, P, W).
 - [ ] 02 `80ca823` Viewport test check and async-helper TODO: inspect both changes; run affected viewport/async cases (A, V).
@@ -27,6 +35,9 @@ atomic groups must record every member and why they are coupled.
 - [ ] A.gate Complete cumulative A/S/C/P/W checks relevant to this stage, record evidence, and establish approved checkpoint.
 
 ## 2. Stage B: Lifecycle, visibility, layouts, and widgets
+
+Suggested model: Claude Opus 5.5 — reason across lifecycle, layout, and widget
+dependencies while adapting upstream changes to the older fork implementation.
 
 - [ ] 09 `3ba4828` Plot-border DPI fix: check scaling and custom bar rendering (V, P).
 - [ ] 10 `6a64692` Iterative delete_item: verify deep-tree deletion, table cleanup, GC and shutdown; no controller/context lifetime regression (C plus focused GC/shutdown tests).
@@ -49,6 +60,9 @@ atomic groups must record every member and why they are coupled.
 
 ## 3. Stage C: Frame scheduling and drawing-state prerequisites
 
+Suggested model: Claude Opus 5.5 — trace frame/event ordering across backend,
+viewport, and drawing state, then drive the focused regression gates.
+
 - [ ] 26 `8777919` Viewport variable refactor: update all internal references consistently; preserve gamepad objects, begin-frame hook, public properties and custom plots (V, C, P).
 - [ ] 27 `79a37dd` Presentation skip logic: reconcile backend/header/declaration changes with gamepad events and edge ordering; check idle/wake and two manual viewports (V, C).
 - [ ] 28 `c9241e0` Layout redraw loop: test bounded settling and no redraw loop during input/resize (L, V).
@@ -58,6 +72,9 @@ atomic groups must record every member and why they are coupled.
 - [ ] C.gate Pass C/V/L/P and relevant D cases; record edge/callback counts, idle/wake behavior and checkpoint before October changes.
 
 ## 4. Stage D: Drawing, safety, and deliberate API removals
+
+Suggested model: Claude Opus 5.5 — coordinate rendering semantics, Cython/API
+removals, caller migrations, and declarations without losing fork behavior.
 
 - [ ] 32 `ef1ac27` Pattern handling: verify affected solid/patterned primitives and record changed rendering/API semantics (D).
 - [ ] 33 `f3ffcd1` DrawImage rotation: check asymmetric rotated images and explicit quad/UV paths used by 3D rendering (D).
@@ -75,6 +92,9 @@ atomic groups must record every member and why they are coupled.
 
 ## 5. Stage E: Typed callback migration and follow-ups
 
+Suggested model: Claude Opus 5.5 — reconcile callback types, dispatch behavior,
+exceptions, exports, and generated stubs across the package.
+
 - [ ] 44 `5f50063` Typed callback values: integrate core/handler/declaration changes without altering existing gamepad tuple payloads or argument ordering; inspect removed helpers before adapting calls (T, C, A).
 - [ ] 45 `89dea7f` Typing/export/build registration: include callback module in packaging, regenerate/merge stubs retaining custom exports, and verify plots (T, W, P).
 - [ ] 46 `53668da` Exception handling: check ordinary errors remain visible and termination/cancellation exceptions propagate as intended (T, A).
@@ -85,6 +105,9 @@ atomic groups must record every member and why they are coupled.
 
 ## 6. Stage F: Font, sizing, wake, and release cleanup
 
+Suggested model: GPT-5.3-Codex — implement the bounded fixes and tests; use
+measured frame and geometry evidence rather than source inspection alone.
+
 - [ ] 50 `8a798fc` Reloaded font spacing: verify changed space advances/layout and markdown invalidation (D, L).
 - [ ] 51 `6fcc659` Bold examples: inspect markdown implementation hunk as well as documentation; test behavior if executable changes are present (D).
 - [ ] 52 `7546241` Negative widget/zero child sizing: assert layout geometry and distinguish negative DrawText screen-space sizing (L, D).
@@ -94,6 +117,10 @@ atomic groups must record every member and why they are coupled.
 - [ ] F.gate Pass stage-specific and cumulative C/V/P tests, record final cleanup disposition and checkpoint.
 
 ## 7. Final validation and handoff
+
+Suggested model: Claude Opus 5.5 — audit the source-to-result records and
+verification evidence; do not substitute model review for required builds,
+hardware checks, or user approval.
 
 - [ ] 7.1 Audit all 55 entries for disposition, source/result mapping and required evidence; justify already-present/superseded entries and obtain approval for any deferral.
 - [ ] 7.2 Compare final tree with frozen upstream and starting fork, explaining retained fork deltas and checking no custom APIs or restored backend files were lost.

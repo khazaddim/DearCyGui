@@ -310,6 +310,7 @@ def setup_package():
             extra_compile_args=compile_args,
             libraries=libraries,
             extra_link_args=linking_args,
+            depends=[sdl3_lib, FT_lib],
             extra_objects=[sdl3_lib, FT_lib]
         )
     ]

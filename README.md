@@ -154,6 +154,17 @@ cd DearCyGui
 pip install .
 ```
 
+After updating native dependencies, rebuild and reinstall the package before
+testing. The extension tracks the SDL and FreeType static libraries as build
+dependencies so changed libraries trigger relinking. On this Windows workspace:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install --no-build-isolation . --force-reinstall --no-cache-dir
+```
+
+Run installed-package checks outside the repository root to avoid importing the
+uncompiled source package.
+
 ## System Requirements
 
 - **Platforms**: Windows, macOS, Linux

@@ -13,6 +13,59 @@ def test_basic_gc():
     gc.collect()
     assert button_ref() is None
 
+def test_delete_large_sibling_tree():
+    C = dcg.Context()
+    root = dcg.Window(C, attach=False)
+    refs = [
+        weakref.ref(dcg.Button(C, parent=root))
+        for _ in range(5000)
+    ]
+
+    root.delete_item()
+    assert root.children == []
+    gc.collect()
+    assert all(ref() is None for ref in refs)
+
+def test_delete_deep_tree_preserves_controller_slots():
+    C = dcg.Context()
+    pads = C.viewport.gamepads
+    root = dcg.Window(C, attach=False)
+    nodes = [root]
+    for _ in range(512):
+        nodes.append(dcg.ChildWindow(C, parent=nodes[-1]))
+    nodes[-1].handlers = [dcg.GamepadButtonHandler(C)]
+
+    root.delete_item()
+    assert all(node.parent is None for node in nodes)
+    assert all(node.children == [] for node in nodes)
+    assert all(node.handlers == [] for node in nodes)
+    assert all(before is after for before, after in zip(pads, C.viewport.gamepads))
+
+def test_delete_table_clears_ui_references():
+    C = dcg.Context()
+    root = dcg.Window(C, attach=False)
+    table = dcg.Table(C, parent=root)
+    table.handlers = [dcg.GamepadButtonHandler(C)]
+    table.theme = dcg.ThemeList(C, attach=False)
+    cell = dcg.Text(C, value="shared")
+    table[0, 0] = cell
+    table[1, 0] = cell
+    cell_ref = weakref.ref(cell)
+    handler_ref = weakref.ref(table.handlers[0])
+    theme_ref = weakref.ref(table.theme)
+    del cell
+
+    root.delete_item()
+    assert table.parent is None
+    assert table.children == []
+    assert table.handlers == []
+    assert table.theme is None
+    assert table[0, 0] is None
+    gc.collect()
+    assert cell_ref() is None
+    assert handler_ref() is None
+    assert theme_ref() is None
+
 def test_nested_gc():
     """Test that nested items are garbage collected properly"""
     C = dcg.Context()

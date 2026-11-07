@@ -2160,48 +2160,61 @@ cdef class baseItem:
         # destroy anything else: the item might
         # still be referenced for instance in handlers,
         # and thus should be valid.
+        if self._clear_additional_references_on_delete != baseItem._clear_additional_references_on_delete:
+            self._clear_additional_references_on_delete()
 
-    cdef void _delete_and_siblings(self):
-        # Must only be called from delete_item or itself.
-        # Assumes the parent mutex is already held
+    cdef void _clear_additional_references_on_delete(self) noexcept:
+        """Release subclass-owned references while the item mutex is held."""
+        return
+
+    @cython.final
+    cdef void _delete_and_siblings(self) noexcept:
+        """Delete a category's children with the parent mutex held."""
         cdef unique_lock[DCGMutex] m
-        lock_gil_friendly(m, self.mutex)
-        # delete all its children recursively
-        if self.last_drawings_child is not None:
-            (<baseItem>self.last_drawings_child)._delete_and_siblings()
-        if self.last_handler_child is not None:
-            (<baseItem>self.last_handler_child)._delete_and_siblings()
-        if self.last_plot_element_child is not None:
-            (<baseItem>self.last_plot_element_child)._delete_and_siblings()
-        if self.last_tab_child is not None:
-            (<baseItem>self.last_tab_child)._delete_and_siblings()
-        if self.last_tag_child is not None:
-            (<baseItem>self.last_tag_child)._delete_and_siblings()
-        if self.last_theme_child is not None:
-            (<baseItem>self.last_theme_child)._delete_and_siblings()
-        if self.last_viewport_drawlist_child is not None:
-            (<baseItem>self.last_viewport_drawlist_child)._delete_and_siblings()
-        if self.last_widgets_child is not None:
-            (<baseItem>self.last_widgets_child)._delete_and_siblings()
-        if self.last_window_child is not None:
-            (<baseItem>self.last_window_child)._delete_and_siblings()
-        # delete previous sibling
-        if self.prev_sibling is not None:
-            (<baseItem>self.prev_sibling)._delete_and_siblings()
-        # Free references
-        self.parent = None
-        self.prev_sibling = None
-        self.next_sibling = None
-        self.last_drawings_child = None
-        self.last_handler_child = None
-        self.last_menubar_child = None
-        self.last_plot_element_child = None
-        self.last_tab_child = None
-        self.last_tag_child = None
-        self.last_theme_child = None
-        self.last_viewport_drawlist_child = None
-        self.last_widgets_child = None
-        self.last_window_child = None
+        cdef baseItem current = self
+        cdef baseItem prev
+
+        while current is not None:
+            lock_gil_friendly(m, current.mutex)
+            prev = current.prev_sibling
+            if current.last_drawings_child is not None:
+                (<baseItem>current.last_drawings_child)._delete_and_siblings()
+            if current.last_handler_child is not None:
+                (<baseItem>current.last_handler_child)._delete_and_siblings()
+            if current.last_menubar_child is not None:
+                (<baseItem>current.last_menubar_child)._delete_and_siblings()
+            if current.last_plot_element_child is not None:
+                (<baseItem>current.last_plot_element_child)._delete_and_siblings()
+            if current.last_tab_child is not None:
+                (<baseItem>current.last_tab_child)._delete_and_siblings()
+            if current.last_tag_child is not None:
+                (<baseItem>current.last_tag_child)._delete_and_siblings()
+            if current.last_theme_child is not None:
+                (<baseItem>current.last_theme_child)._delete_and_siblings()
+            if current.last_viewport_drawlist_child is not None:
+                (<baseItem>current.last_viewport_drawlist_child)._delete_and_siblings()
+            if current.last_widgets_child is not None:
+                (<baseItem>current.last_widgets_child)._delete_and_siblings()
+            if current.last_window_child is not None:
+                (<baseItem>current.last_window_child)._delete_and_siblings()
+
+            current.parent = None
+            current.prev_sibling = None
+            current.next_sibling = None
+            current.last_drawings_child = None
+            current.last_handler_child = None
+            current.last_menubar_child = None
+            current.last_plot_element_child = None
+            current.last_tab_child = None
+            current.last_tag_child = None
+            current.last_theme_child = None
+            current.last_viewport_drawlist_child = None
+            current.last_widgets_child = None
+            current.last_window_child = None
+            if current._clear_additional_references_on_delete != baseItem._clear_additional_references_on_delete:
+                current._clear_additional_references_on_delete()
+            m.unlock()
+            current = prev
 
 
     @cython.final # The final is for performance, to avoid a virtual function and thus allow inlining
@@ -2298,18 +2311,22 @@ cdef class baseItem:
 
         Called exclusively from _propagate_hidden_state_to_children_with_handlers
         as part of the propagation process.
+        Called from the last child with the parent mutex held.
         """
-        cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)
+        cdef PyObject* current = <PyObject*>self
+        cdef PyObject* prev
+        cdef unique_lock[DCGMutex] m
 
-        # Skip propagating and handlers if already hidden.
-        if self.p_state == NULL or \
-            self.p_state.cur.traversed:
-            self.set_previous_states()
-            self._update_current_state_as_hidden()
-            self._propagate_hidden_state_to_children_with_handlers()
-            self.run_handlers()
-        if self.prev_sibling is not None:
-            self.prev_sibling.set_hidden_and_propagate_to_siblings_with_handlers()
+        while (<baseItem>current) is not None:
+            m = unique_lock[DCGMutex]((<baseItem>current).mutex)
+            if (<baseItem>current).p_state == NULL or (<baseItem>current).p_state.cur.traversed:
+                (<baseItem>current).set_previous_states()
+                (<baseItem>current)._update_current_state_as_hidden()
+                (<baseItem>current)._propagate_hidden_state_to_children_with_handlers()
+                (<baseItem>current).run_handlers()
+            prev = <PyObject*>((<baseItem>current).prev_sibling)
+            m.unlock()
+            current = prev
 
     @cython.final
     cdef void set_hidden_and_propagate_to_siblings_no_handlers(self) noexcept:
@@ -2318,6 +2335,7 @@ cdef class baseItem:
 
         Called exclusively from _propagate_hidden_state_to_children_no_handlers
         as part of the propagation process.
+        Called from the last child with the parent mutex held.
 
         The item might still be shown the next frame, and have been
         shown the frame before.
@@ -2342,15 +2360,17 @@ cdef class baseItem:
           as the current state will be overwritten when frame is rendered.
         """
         cdef unique_lock[DCGMutex] m
-        lock_gil_friendly(m, self.mutex)
+        cdef baseItem current = self
+        cdef baseItem prev
 
-        # Skip propagating and handlers if already hidden.
-        if self.p_state == NULL or \
-            self.p_state.cur.traversed:
-            self._update_current_state_as_hidden()
-            self._propagate_hidden_state_to_children_no_handlers()
-        if self.prev_sibling is not None:
-            self.prev_sibling.set_hidden_and_propagate_to_siblings_no_handlers()
+        while current is not None:
+            lock_gil_friendly(m, current.mutex)
+            if current.p_state == NULL or current.p_state.cur.traversed:
+                current._update_current_state_as_hidden()
+                current._propagate_hidden_state_to_children_no_handlers()
+            prev = current.prev_sibling
+            m.unlock()
+            current = prev
 
     @cython.final
     cdef void _set_hidden_and_propagate_to_children_with_handlers(self) noexcept nogil:
@@ -6509,21 +6529,7 @@ cdef class uiItem(baseItem):
         m.unlock()
         return baseItem.configure(self, **kwargs)
 
-    cpdef void delete_item(self):
-        baseItem.delete_item(self)
-        # Lock AFTER parent delete_item, as
-        # parent delete_item requires to be able
-        # to fully unlock the mutex
-        cdef unique_lock[DCGMutex] m
-        lock_gil_friendly(m, self.mutex)
-        self._font = None
-        self._theme = None
-        self.handlers = []
-
-    cdef void _delete_and_siblings(self):
-        baseItem._delete_and_siblings(self)
-        cdef unique_lock[DCGMutex] m
-        lock_gil_friendly(m, self.mutex)
+    cdef void _clear_additional_references_on_delete(self) noexcept:
         self._font = None
         self._theme = None
         self.handlers = []

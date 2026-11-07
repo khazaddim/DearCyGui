@@ -264,8 +264,42 @@ with targeted verification.
   `-m pytest -q --import-mode=importlib` on test_asyncio.py:
   45 passed, 6 skipped in 4.07s. New configured-loop-before-running test confirms
   legacy `get_event_loop` semantics are retained.
-- [ ] 05 `c303fb8` Viewport-test atomic fix: verify test observes thread-safe state (V).
+- [x] 05 `c303fb8` Viewport-test atomic fix: verify test observes thread-safe state (V).
+  Disposition: adapted
+  Result: `6136f15847f98094fafbfd8d7dc8dd66de53603a`; source
+  `c303fb8d088e4434f8cc5cc4ad902cef08c7240c`. Applied source locking of worker
+  counter updates and render-thread reads; final read follows worker joins.
+  Verification: V, Windows cp314 installed package. Absolute venv Python from
+  `C:\Chris`, `-m pytest -q --import-mode=importlib` on
+  test_viewport.py::TestWorkerThreads, ::TestViewportThreadSafety, and
+  ::TestMultipleViewports: 8 passed in 1.66s. Only baseline deallocation warning.
 - [ ] 06 `4a4a621` SDL 3.4.4 pin: retain controller-capable configuration, rebuild and verify input (S, C, W).
+  Disposition: adapted
+  Result: `c14bfc16f3652c0830bb91287670b5fe1b0905da`; source
+  `4a4a621d2d2495eb4cd07d66a7f5eb70e753771f`. Imported SDL
+  `5848e584a1b606de26e3dbd1c7e4ecbc34f807a6` (3.4.4). Controller-capable
+  Windows configuration and existing Linux workarounds are unchanged.
+  Added SDL/FreeType archives to Extension.depends: setuptools checks
+  `sources + ext.depends` for freshness, but previously extra_objects alone
+  allowed a freshly rebuilt SDL archive to be packaged with an old extension.
+  This tightly coupled build correction and its README note ensure dependency
+  upgrades actually relink. No new runtime API or dependency was introduced.
+  Verification: S/C/W automated portion, Windows cp314. Initial canonical
+  install built SDL but did not relink the main extension (old extension
+  timestamp, 8,309,248 bytes); that wheel is NOT SDL-upgrade verification.
+  After the depends correction, canonical build returned 0; extension is now
+  8,597,504 bytes, newer than the rebuilt SDL archive. Installed binary SHA256
+  `3e89f6e5d40a46a8245ee6411935f6a0aebc89348deafbd119dc451ddebeef84`;
+  wheel SHA256
+  `30f722aff51b98566b95583551645313122f710489f5a869069ec7b0a814d75e`.
+  CMake cache: SDL_JOYSTICK/SDL_HAPTIC/SDL_STATIC ON, SDL_SHARED/SDL_PRESEED OFF.
+  Installed native plot smoke (four orientation/value-space combinations,
+  colors, borders, axis_max, ignore_fit, three hidden frames) passed.
+  Controller discovery reports zero slots connected. Cumulative Stage A tests
+  are recorded below; physical/virtual input and other platforms remain
+  deferred, so the source entry stays unchecked. Evidence:
+  session files/stage-a-06-build.log, files/stage-a-06-relinked-build.log,
+  files/stage-a-gate-tests.log, archive/extension timestamps and tool output.
 - [x] 07 `914dd01` Revert missing-loop detection: record final net behavior with 04 (A).
   Disposition: already-present
   Result: unchanged runtime tree; source
@@ -274,7 +308,29 @@ with targeted verification.
   reverted final `get_event_loop` implementation, not transient loop detection.
   Verification: A, same exact net-diff and 45-passed/6-skipped async suite as 04.
 - [ ] 08 `012d18c` Disable new SDL requirements: preserve Linux workarounds and enabled joystick/gamepad support (S, W).
+  Disposition: already-present
+  Result: unchanged tree after `c14bfc16f3652c0830bb91287670b5fe1b0905da`;
+  source `012d18ca1e732040f03cb2a478475b5e4de144df`. All five source Linux
+  disables (XRANDR, XSCRNSAVER, XTEST, FRIBIDI, WAYLAND_LIBDECOR) already match
+  the fork setup.py. Did not restore upstream's gamepad-disabled Windows line.
+  Verification: S/W, full source patch and platform branches reviewed; Windows
+  controller-capable SDL rebuild and effective CMake settings recorded in 06.
+  Linux runtime/wheel execution remains deferred; entry stays unchecked.
 - [ ] A.gate Complete cumulative A/S/C/P/W checks relevant to this stage, record evidence, and establish approved checkpoint.
+  Automated checkpoint: Sources 01-08 are accounted for above. Absolute venv
+  Python from `C:\Chris`, `-m pytest -q --import-mode=importlib` on
+  test_asyncio.py, test_viewport.py, test_fork_regressions.py:
+  **86 passed, 6 skipped, 1 failed** in 9.79s. Only failure is the accepted
+  baseline `test_viewport_singlethreaded_wake` delay accumulation assertion
+  (approximately 0.010s vs required >0.4s). Cancellation and bounded viewport
+  dimension checks now pass. Native installed plot startup and zero-device
+  discovery passed; dependency-triggered relink and fork version are verified.
+  CMake controller settings and workflow content are retained. Evidence:
+  session files/stage-a-gate-tests.log. Full A.gate remains unchecked for
+  deferred controller-input, visual plot, Linux/free-threaded and other
+  environment checks. Advance only under the recorded deferral approval;
+  this is an automated-progress checkpoint, not full stage certification.
+  Checkpoint branch: `checkpoint/upstream-stage-a-automated-2026-11-06`.
 
 ## 2. Stage B: Lifecycle, visibility, layouts, and widgets
 

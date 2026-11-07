@@ -229,7 +229,7 @@ with targeted verification.
   Isolated rerun of the nested case plus both viewport cases: 3 passed in 1.00s.
   This is additional baseline scheduling sensitivity, not an asyncio code
   regression. Evidence: session files/stage-a-02-tests.log and tool output.
-- [ ] 03 `19d2e43` Cross-thread AsyncThreadPool cancellation: verify cancellation and shutdown from another thread (A).
+- [x] 03 `19d2e43` Cross-thread AsyncThreadPool cancellation: verify cancellation and shutdown from another thread (A).
   Disposition: adapted
   Result: `7721380153e50b1fe9b35d29a902412a3cb4b544`; source
   `19d2e43934788719ade8705524131c56a1600e4d`. Cancellation now schedules
@@ -253,10 +253,26 @@ with targeted verification.
   `git diff --quiet a7ebaa8^ 914dd01 -- dearcygui/utils/asyncio_helpers.py`
   returned 0. Keep the existing final `get_event_loop()` semantics. Record both
   entries; no unrelated source is reordered by this no-change accounting.
-- [ ] 04 `a7ebaa8` Missing-loop detection: account for together with source revert 07; do not retain reverted behavior (A).
+- [x] 04 `a7ebaa8` Missing-loop detection: account for together with source revert 07; do not retain reverted behavior (A).
+  Disposition: superseded
+  Result: unchanged runtime tree; source
+  `a7ebaa88dad4df9d0f678d1fbb5cfb2580f5acba`, reverted exactly by source 07.
+  Atomic group 04/07 regression/provenance commit:
+  `c856370d1aebc029c0398f36d57f5295f230bb6e`.
+  Verification: A, exact net source diff returned 0. Installed Windows cp314
+  async suite, absolute venv Python from `C:\Chris`,
+  `-m pytest -q --import-mode=importlib` on test_asyncio.py:
+  45 passed, 6 skipped in 4.07s. New configured-loop-before-running test confirms
+  legacy `get_event_loop` semantics are retained.
 - [ ] 05 `c303fb8` Viewport-test atomic fix: verify test observes thread-safe state (V).
 - [ ] 06 `4a4a621` SDL 3.4.4 pin: retain controller-capable configuration, rebuild and verify input (S, C, W).
-- [ ] 07 `914dd01` Revert missing-loop detection: record final net behavior with 04 (A).
+- [x] 07 `914dd01` Revert missing-loop detection: record final net behavior with 04 (A).
+  Disposition: already-present
+  Result: unchanged runtime tree; source
+  `914dd015ebc61128db817e7aface6765c36b5bf3`. Accounted in atomic group 04/07,
+  commit `c856370d1aebc029c0398f36d57f5295f230bb6e`; fork already uses the
+  reverted final `get_event_loop` implementation, not transient loop detection.
+  Verification: A, same exact net-diff and 45-passed/6-skipped async suite as 04.
 - [ ] 08 `012d18c` Disable new SDL requirements: preserve Linux workarounds and enabled joystick/gamepad support (S, W).
 - [ ] A.gate Complete cumulative A/S/C/P/W checks relevant to this stage, record evidence, and establish approved checkpoint.
 

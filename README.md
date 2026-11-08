@@ -2,6 +2,28 @@
 
 DearCyGui is a powerful, performant GUI library for Python that offers a refreshing approach to creating modern graphical user interfaces. Built with performance in mind, it bridges Python's ease of use with the speed of Dear ImGui through efficient Cython bindings.
 
+## About This Worktree
+
+This worktree (`C:\Chris\DearCyGui-upstream`) is the upstream-first integration
+checkout for our fork. The
+[Game_Controller_Build branch](https://github.com/khazaddim/DearCyGui/tree/Game_Controller_Build)
+in `C:\Chris\DearCyGui` lost its shared Git history with the
+[original DearCyGui repository](https://github.com/DearCyGui/DearCyGui), making
+upstream changes difficult to pull and merge.
+
+Axle Davy made many upstream improvements over the past year, while our branch
+added two features: support for multiple controllers and plot color bars.
+Rather than porting all of those upstream improvements into the old branch,
+this worktree starts from upstream history. The goal is to retain Axle Davy's
+changes, restore a shared Git history for future upstream merges, and then port
+our two features from `Game_Controller_Build`. This describes the integration
+plan, not a claim that the feature ports are already complete.
+
+For rebuilding and testing Cython changes, use the
+[DearCyGui build skill](.github/skills/dearcygui-build/SKILL.md), adapted from the
+[skill on Game_Controller_Build](https://github.com/khazaddim/DearCyGui/blob/Game_Controller_Build/.github/skills/dearcygui-build/SKILL.md)
+for this worktree's paths and build environment.
+
 ![Demo Screenshot](images/demo.gif)
 
 ## Key Features

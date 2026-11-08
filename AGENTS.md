@@ -8,3 +8,9 @@ For routine bug fixes, documentation, and tests that preserve existing behavior,
 work directly without creating a proposal.
 
 <!-- OPENSPEC:END -->
+
+## Reusable Skills
+
+- Use `.github/skills/dearcygui-build/SKILL.md` when building or rebuilding
+  DearCyGui, testing after `.pyx`/`.pxd` changes, or diagnosing Cython, MSVC,
+  CMake, SDL3, or compiled-extension import failures.

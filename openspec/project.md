@@ -33,3 +33,11 @@ to provide performant graphical interfaces, widgets, and data visualization.
 - Preserve the existing Python API unless a proposal explicitly covers an API
   change.
 - Treat vendored third-party code as external; avoid unrelated edits there.
+
+## Integration Reference
+
+For the upstream-first multi-controller and color-bar ports, read
+[prior integration findings](references/prior-integration-findings.md).
+These summarize the earlier branch's compatibility targets, build hazards, and
+historical baselines. They are not an active change proposal or proof of current
+behavior; establish a fresh baseline in this worktree.

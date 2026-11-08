@@ -24,6 +24,11 @@ For rebuilding and testing Cython changes, use the
 [skill on Game_Controller_Build](https://github.com/khazaddim/DearCyGui/blob/Game_Controller_Build/.github/skills/dearcygui-build/SKILL.md)
 for this worktree's paths and build environment.
 
+The [prior integration findings](openspec/references/prior-integration-findings.md)
+preserve useful controller/color-bar compatibility targets, build hazards, and
+historical test results from the earlier merge attempt. They are reference
+material, not an active merge plan or validation of this worktree.
+
 ![Demo Screenshot](images/demo.gif)
 
 ## Key Features

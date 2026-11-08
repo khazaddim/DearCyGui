@@ -66,3 +66,17 @@ For implementation diffs and supporting build changes, use the
 [original implementation commit index](references/prior-integration-findings.md#original-implementation-commit-index).
 It distinguishes feature code, proposal/demo changes, and packaging decisions;
 the linked commits are references to adapt, not an automatic cherry-pick list.
+
+### Feature Validation Demos
+
+- [Fancy_Demo.py](https://github.com/khazaddim/DearCyGui/blob/Game_Controller_Build/Fancy_Demo.py):
+  event-driven multi-controller demo with per-slot button/axis state, connection
+  tracking, and an interactive plot for checking input/rendering coexistence.
+- [PlotColorBars_Demo.py](https://github.com/khazaddim/DearCyGui/blob/Game_Controller_Build/PlotColorBars_Demo.py):
+  color-bar demo with live controls for orientations, anchors, and data/
+  normalized modes.
+
+These are source-branch validation harnesses, not runnable demos supplied by
+this worktree yet. Bring them over and adapt them alongside the feature ports,
+using the local build skill to test the freshly installed extension. Manual
+demo observations complement, but do not replace, automated regression tests.

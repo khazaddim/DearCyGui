@@ -80,3 +80,18 @@ These are source-branch validation harnesses, not runnable demos supplied by
 this worktree yet. Bring them over and adapt them alongside the feature ports,
 using the local build skill to test the freshly installed extension. Manual
 demo observations complement, but do not replace, automated regression tests.
+
+### Active Feature Port Plans
+
+- [Plot color bars](changes/port-plot-color-bars/proposal.md): the smaller,
+  first port in the integration sequence.
+- [Multi-controller support](changes/port-multi-controller-support/proposal.md):
+  the subsequent cross-layer controller port. Its
+  [design](changes/port-multi-controller-support/design.md) records reviewed
+  implementation commits, both Windows native enablement gates, frame/lifetime
+  adaptations, and the unchanged-copy-then-adapt plan for `Fancy_Demo.py`.
+  Its [tasks](changes/port-multi-controller-support/tasks.md) separate
+  deterministic connected-input tests from physical demo validation.
+
+These are planning artifacts, not claims that either feature is implemented or
+validated in this worktree.

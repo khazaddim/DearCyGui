@@ -29,6 +29,39 @@ preserve useful controller/color-bar compatibility targets, build hazards, and
 historical test results from the earlier merge attempt. They are reference
 material, not an active merge plan or validation of this worktree.
 
+### Post-Port Follow-Up: Native Visible-Range Volume Profile
+
+After both feature ports are complete and validated, extend the color bars to
+display a visible-range volume profile from caller-supplied, price-sampled
+volume data. Users perform the resampling; DCG does not select candles or infer
+how their volume is distributed across price levels. The current color-bar port
+renders caller-supplied values but does not aggregate them.
+
+The follow-up should:
+
+- Accept a two-dimensional array of volume values indexed by price and time,
+  together with the price and time bin boundaries needed to place its cells.
+- Allow the input time resolution to be finer than the candle chart's
+  resolution, such as minute volume samples displayed alongside hourly candles.
+- Read the live plot limits after pan/zoom input handling, identify the visible
+  time columns, and sum their volume across each price row to produce horizontal
+  bars.
+- Recompute the visible-column selection and sums whenever the plot viewport
+  changes through pan, zoom, or resize. Perform aggregation and drawing in the
+  same native render pass rather than relying on a Python plot-resize callback.
+- Define how partially visible time bins are handled. Including each
+  intersecting bin in full is the simplest policy; prorating would assume
+  uniform volume within each bin.
+- Use native buffers and safe data synchronization, and measure performance
+  during interactive pan/zoom.
+- Keep the resulting color bars excluded from axis fitting to avoid feeding
+  viewport-dependent geometry back into the plot limits.
+
+Price bins and the public API remain future design decisions; price bins are
+supplied by the caller rather than inferred from candles. Create a separate
+OpenSpec change for this work after porting; it is not part of the
+[current color-bar change](openspec/changes/port-plot-color-bars/proposal.md).
+
 ![Demo Screenshot](images/demo.gif)
 
 ## Key Features

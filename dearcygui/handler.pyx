@@ -779,8 +779,8 @@ cdef class DraggedHandler(baseHandler):
                     DraggedHandlerCallbackValue.build(
                         self.context,
                         self._button,
-                        <float>state.prev.drag_deltas[i].x,
-                        <float>state.prev.drag_deltas[i].y,
+                        <float>state.cur.drag_deltas[i].x,
+                        <float>state.cur.drag_deltas[i].y,
                         <float>io.MouseClickedPos[i].x,
                         <float>io.MouseClickedPos[i].y,
                         <float>io.MousePos.x,

@@ -445,6 +445,20 @@ cdef class DrawInvisibleButton(drawingItem):
             for i in range(<int>imgui.ImGuiMouseButton_COUNT):
                 self.state.cur.dragging[i] = False
 
+        # Update drag deltas for the last frame if dragging has stopped
+        if self.state.prev.active and not self.state.cur.active:
+            for i in range(<int>imgui.ImGuiMouseButton_COUNT):
+                if self.state.prev.dragging[i] and not self.state.cur.dragging[i]:
+                    if imgui.IsMousePosValid() and imgui.IsMouseReleased(i):
+                        cur_mouse_pos = ImVec2Vec2(imgui.GetMousePos())
+                        screen_p[0] = cur_mouse_pos.x
+                        screen_p[1] = cur_mouse_pos.y
+                        self.context.viewport.screen_to_coordinate(coordinate_p, screen_p)
+                        self.state.cur.drag_deltas[i].x = coordinate_p[0] - self._initial_mouse_position[0]
+                        self.state.cur.drag_deltas[i].y = coordinate_p[1] - self._initial_mouse_position[1]
+                    else:
+                        self.state.cur.drag_deltas[i] = self.state.prev.drag_deltas[i]
+
         if self.state.cur.hovered:
             for i in range(<int>imgui.ImGuiMouseButton_COUNT):
                 self.state.cur.clicked[i] = imgui.IsMouseClicked(i, False)

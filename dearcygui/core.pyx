@@ -5919,6 +5919,14 @@ cdef void update_current_mouse_states(itemState& state) noexcept nogil:
                 state.cur.drag_deltas[i] = ImVec2Vec2(imgui.GetMouseDragDelta(i, -1.))
                 state.cur.dragging[i] = True
 
+        # Update drag deltas for the last frame if dragging has stopped
+        for i in range(<int>imgui.ImGuiMouseButton_COUNT):
+            if state.prev.dragging[i] and not state.cur.dragging[i]:
+                if imgui.IsMousePosValid() and imgui.IsMouseReleased(i):
+                    state.cur.drag_deltas[i] = ImVec2Vec2(imgui.GetMouseDragDelta(i, -1.))
+                else:
+                    state.cur.drag_deltas[i] = state.prev.drag_deltas[i]
+
 # Drawing items base class
 
 cdef class drawingItem(baseItem):

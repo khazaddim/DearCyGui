@@ -243,7 +243,7 @@ cdef struct itemStateValues:
     bint deactivated_after_edited # TODOV1: check if it can be removed
     # * can_be_dragged states *
     bint[5] dragging # TODOV1: Remove, deduce from viewportStateValue + hover or active + state filter (see code) check if it can be removed
-    Vec2[5] drag_deltas # only valid when dragging # TODOV1 remove. Can be retrieved from viewportStateValue. What about DrawInvisibleButton though ?
+    Vec2[5] drag_deltas # only valid when dragging or the frame after # TODOV1 remove. Can be retrieved from viewportStateValue. What about DrawInvisibleButton though ?
     # * can_be_edited states *
     bint edited # text fields, etc
     # * can_be_focused states *

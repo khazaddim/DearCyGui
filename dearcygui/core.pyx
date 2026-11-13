@@ -4304,6 +4304,10 @@ cdef class Viewport(baseItem):
         element of the stream, or Tooltip will trigger a refresh
         after the requested delay without mouse movement.
 
+        Note ImGui may decide to split input event processing across
+        multiple ImGui frames, in which case wait_events will trigger
+        until all input events have been processed.
+
         The goal is that any DearCyGui item handles viewport
         waking automatically themselves. This way, the user
         only needs to call wake() when he has appended new items,

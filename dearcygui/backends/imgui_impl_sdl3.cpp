@@ -348,6 +348,17 @@ static ImGuiViewport* ImGui_ImplSDL3_GetViewportForWindowID(SDL_WindowID window_
     return (window_id == bd->WindowID) ? ImGui::GetMainViewport() : NULL;
 }
 
+static void ImGui_ImplSDL3_PushMousePosition(SDL_Window* window, float x, float y)
+{
+    ImGuiIO& io = ImGui::GetIO();
+    if (window == NULL)
+        return;
+    // Assumes AddMouseSourceEvent has already been called for the current mouse event.
+    // Convert from logical to pixel coordinates
+    float dpi = SDL_GetWindowPixelDensity(window);
+    io.AddMousePosEvent(x * dpi, y * dpi);
+}
+
 // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
 // - When io.WantCaptureMouse is true, do not dispatch mouse input data to your main application, or clear/overwrite your copy of the mouse data.
 // - When io.WantCaptureKeyboard is true, do not dispatch keyboard input data to your main application, or clear/overwrite your copy of the keyboard data.
@@ -366,11 +377,8 @@ bool ImGui_ImplSDL3_ProcessEvent(const SDL_Event* event)
             SDL_Window* window = SDL_GetWindowFromID(event->motion.windowID);
             if (ImGui_ImplSDL3_GetViewportForWindowID(event->motion.windowID) == NULL || window == NULL)
                 return false;
-            ImVec2 mouse_pos((float)event->motion.x, (float)event->motion.y);
             io.AddMouseSourceEvent(event->motion.which == SDL_TOUCH_MOUSEID ? ImGuiMouseSource_TouchScreen : ImGuiMouseSource_Mouse);
-            // Convert from logical to pixel coordinates
-            float dpi = SDL_GetWindowPixelDensity(window);
-            io.AddMousePosEvent(mouse_pos.x * dpi, mouse_pos.y * dpi);
+            ImGui_ImplSDL3_PushMousePosition(window, (float)event->motion.x, (float)event->motion.y);
             return true;
         }
         case SDL_EVENT_DROP_POSITION:
@@ -380,11 +388,8 @@ bool ImGui_ImplSDL3_ProcessEvent(const SDL_Event* event)
             SDL_Window* window = SDL_GetWindowFromID(event->drop.windowID);
             if (ImGui_ImplSDL3_GetViewportForWindowID(event->drop.windowID) == NULL || window == NULL)
                 return false;
-            ImVec2 mouse_pos((float)event->drop.x, (float)event->drop.y);
             io.AddMouseSourceEvent(ImGuiMouseSource_Mouse);
-            // Convert from logical to pixel coordinates
-            float dpi = SDL_GetWindowPixelDensity(window);
-            io.AddMousePosEvent(mouse_pos.x * dpi, mouse_pos.y * dpi);
+            ImGui_ImplSDL3_PushMousePosition(window, (float)event->drop.x, (float)event->drop.y);
             return true;
         }
         case SDL_EVENT_MOUSE_WHEEL:
@@ -395,6 +400,9 @@ bool ImGui_ImplSDL3_ProcessEvent(const SDL_Event* event)
             float wheel_x = -event->wheel.x;
             float wheel_y = event->wheel.y;
             io.AddMouseSourceEvent(event->wheel.which == SDL_TOUCH_MOUSEID ? ImGuiMouseSource_TouchScreen : ImGuiMouseSource_Mouse);
+            ImGui_ImplSDL3_PushMousePosition(
+                SDL_GetWindowFromID(event->wheel.windowID), (float)event->wheel.mouse_x, (float)event->wheel.mouse_y
+            );
             io.AddMouseWheelEvent(wheel_x, wheel_y);
             return true;
         }
@@ -412,6 +420,9 @@ bool ImGui_ImplSDL3_ProcessEvent(const SDL_Event* event)
             if (mouse_button == -1)
                 break;
             io.AddMouseSourceEvent(event->button.which == SDL_TOUCH_MOUSEID ? ImGuiMouseSource_TouchScreen : ImGuiMouseSource_Mouse);
+            ImGui_ImplSDL3_PushMousePosition(
+                SDL_GetWindowFromID(event->button.windowID), (float)event->button.x, (float)event->button.y
+            );
             io.AddMouseButtonEvent(mouse_button, (event->type == SDL_EVENT_MOUSE_BUTTON_DOWN));
             bd->MouseButtonsDown = (event->type == SDL_EVENT_MOUSE_BUTTON_DOWN) ? (bd->MouseButtonsDown | (1 << mouse_button)) : (bd->MouseButtonsDown & ~(1 << mouse_button));
             return true;
@@ -438,6 +449,7 @@ bool ImGui_ImplSDL3_ProcessEvent(const SDL_Event* event)
                 return false;
             // Simulate a mouse button up event for the left mouse button.
             io.AddMouseSourceEvent(ImGuiMouseSource_Mouse);
+            ImGui_ImplSDL3_PushMousePosition(window, (float)event->drop.x, (float)event->drop.y);
             io.AddMouseButtonEvent(0, false); // Simulate left mouse button up
             bd->MouseButtonsDown &= ~(1 << 0); // Clear the left mouse button
             return true;

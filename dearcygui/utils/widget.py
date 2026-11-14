@@ -1275,6 +1275,7 @@ class DraggableBar(dcg.DrawInWindow):
     
     The bar is only visible when hovered and can only be dragged from a specific grab region.
     Colors are automatically resolved from the current theme.
+    A released drag applies its final position; an invalidated drag keeps its last position.
     
     Parameters:
         context: DearCyGui context
@@ -1408,22 +1409,29 @@ class DraggableBar(dcg.DrawInWindow):
         """Called when the widget is no longer hovered."""
         self._drawing_list.show = self._dragging_in_grab
     
-    def _on_mouse_drag(self, sender, target, data: dcg.MouseDragHandlerCallbackValue):
+    def _on_mouse_drag(
+        self, sender: dcg.MouseDragHandler, target: dcg.DrawInWindow,
+        data: dcg.MouseDragHandlerCallbackValue,
+    ) -> None:
         """Update position when dragging in grab area."""
     
-        # If not dragging, check if the click was in the grab area.
-        # We include the check for the current mouse position as well
-        # as if the dragging started this should be true. This should
-        # filter the case where some other event moves the position
-        # of the bar to the original position.
-        if (
-            not self._dragging_in_grab 
-            and not (
-                self._grab_area_check(data.click_position)
-                and abs(data.click_position.x - data.mouse_position.x) < 2 * self._grab_radius
-                and abs(data.click_position.y - data.mouse_position.y) < 2 * self._grab_radius
-            )
-        ):
+        if data.is_invalidated:
+            if self._dragging_in_grab:
+                self._dragging_in_grab = False
+                self._drawing_list.show = self.state.hovered
+                # Reset position
+                self.position = self._drag_start_position
+            return
+
+        # Hidden items may run their handlers once with cleared geometry.
+        if not self.state.visible:
+            if data.is_released:
+                self._dragging_in_grab = False
+                self._drawing_list.show = False
+            return
+
+        # A first drag event may already be a release far from the grab area.
+        if not self._dragging_in_grab and not self._grab_area_check(data.click_position):
             return
 
         # Store the initial position when dragging starts
@@ -1431,6 +1439,7 @@ class DraggableBar(dcg.DrawInWindow):
             self._drag_start_position = self.position
 
         self._dragging_in_grab = True
+        self._drawing_list.show = True
 
         # Reset dragging state when dragging ends.
         if data.is_released:

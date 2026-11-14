@@ -2,7 +2,8 @@
 
 import asyncio
 import gc
-from collections.abc import Generator
+from collections.abc import Generator, Iterator
+from concurrent.futures import Executor
 from datetime import datetime
 from types import SimpleNamespace
 
@@ -26,7 +27,7 @@ from dearcygui.utils.window import (
     _get_children_recursive as get_children_recursive,
 )
 
-from dearcygui.utils.widget import DatePicker, DateTimePicker, TimePicker
+from dearcygui.utils.widget import DatePicker, DateTimePicker, TimePicker, DraggableBar
 
 
 @pytest.fixture
@@ -38,12 +39,28 @@ def ctx() -> Generator[dcg.Context, None, None]:
     context.viewport.destroy()
     gc.collect()
 
+@pytest.fixture
+def context() -> Iterator[dcg.Context]:
+    """Create a viewport and dispose of its callback queue and resources."""
+    ctx = dcg.Context()
+    ctx.viewport.initialize(visible=False, width=900, height=700)
+    ctx.viewport.vsync = False
+    yield ctx
+    queue = ctx.queue
+    assert isinstance(queue, Executor)
+    queue.shutdown(wait=True)
+    ctx.viewport.destroy()
+    gc.collect()
 
-def _render(ctx: dcg.Context, *, count: int = 5) -> None:
-    """Render enough frames for plot layout and limits to stabilize."""
+def _render(ctx: dcg.Context, *, count: int = 1) -> None:
+    """Render frames and wait for their callbacks."""
     for _ in range(count):
         ctx.viewport.render_frame()
+        ctx.queue.submit(lambda: None).result(timeout=5)
 
+def _coordinates(position: dcg.Coord) -> tuple[float, float]:
+    """Return coordinates as a typed pair."""
+    return position.x, position.y
 
 def _plot(ctx: dcg.Context) -> dcg.Plot:
     """Create a plot with fixed linear limits and no left-button panning."""
@@ -337,6 +354,107 @@ def test_date_picker_value_setter_accepts_timestamp(ctx: dcg.Context) -> None:
 
     assert picker.value_as_datetime == value
 
+@pytest.mark.parametrize("vertical", [True, False])
+def test_draggable_bar_fast_drag_uses_release_position(
+    context: dcg.Context, *, vertical: bool
+) -> None:
+    """Move a bar even if its first drag update is already outside the grab area."""
+    window = dcg.Window(context, width=600, height=400)
+    bar = DraggableBar(context, parent=window, vertical=vertical, position=0.3)
+    _render(context, count=5)
+    center = bar.state.pos_to_viewport + bar.state.rect_size * 0.5
+    context.inject_mouse_pos(center.x, center.y)
+    _render(context, count=2)
+    initial = bar.position
+    available = window.state.rect_size - bar.state.rect_size
+    context.inject_mouse_down(dcg.MouseButton.LEFT)
+    context.inject_mouse_pos(center.x + (80 if vertical else 0), center.y + (0 if vertical else 80))
+    context.inject_mouse_up(dcg.MouseButton.LEFT)
+    _render(context, count=5)
+
+    dimension = available.x if vertical else available.y
+    assert bar.position == pytest.approx(initial + 80 / dimension, abs=0.01)
+    assert not bar._dragging_in_grab
+
+
+def test_draggable_bar_invalidation_clears_drag_state(context: dcg.Context) -> None:
+    """Restore the initial position on invalidation."""
+    window = dcg.Window(context, width=600, height=400)
+    bar = DraggableBar(context, parent=window)
+    _render(context, count=5)
+    center = bar.state.pos_to_viewport + bar.state.rect_size * 0.5
+    context.inject_mouse_pos(center.x, center.y)
+    _render(context, count=2)
+    position = bar.position
+    context.inject_mouse_down(dcg.MouseButton.LEFT)
+    _render(context)
+    context.inject_mouse_pos(center.x + 30, center.y)
+    _render(context)
+    assert bar._dragging_in_grab
+    assert bar.position != position
+
+    handler = next(
+        handler for handler in bar.handlers if isinstance(handler, dcg.MouseDragHandler)
+    )
+    bar._on_mouse_drag(
+        handler, bar,
+        dcg.MouseDragHandlerCallbackValue(
+            context, dcg.MouseButton.LEFT, dcg.Coord(30, 0), center,
+            is_released=False, is_invalidated=True,
+        ),
+    )
+    assert not bar._dragging_in_grab
+    assert bar.position == position
+    assert bar._drawing_list.show == bar.state.hovered
+
+
+def test_draggable_bar_stays_visible_when_drag_leaves_grab(context: dcg.Context) -> None:
+    """Keep the bar visible after the first drag update leaves its bounds."""
+    window = dcg.Window(context, width=600, height=400)
+    bar = DraggableBar(context, parent=window)
+    _render(context, count=5)
+    center = bar.state.pos_to_viewport + bar.state.rect_size * 0.5
+    context.inject_mouse_pos(center.x, center.y)
+    _render(context, count=2)
+    context.inject_mouse_down(dcg.MouseButton.LEFT)
+    _render(context)
+    context.inject_mouse_pos(center.x + 80, center.y)
+    _render(context)
+    assert bar._dragging_in_grab
+    assert bar._drawing_list.show
+
+
+@pytest.mark.parametrize("release_while_hidden", [False, True])
+def test_draggable_bar_hidden_during_drag_handles_invalidation(
+    context: dcg.Context, *, release_while_hidden: bool
+) -> None:
+    """Reset the bar after its handler misses frames while it is hidden."""
+    window = dcg.Window(context, width=600, height=400)
+    bar = DraggableBar(context, parent=window)
+    _render(context, count=5)
+    center = bar.state.pos_to_viewport + bar.state.rect_size * 0.5
+    context.inject_mouse_pos(center.x, center.y)
+    _render(context, count=2)
+    position = bar.position
+    context.inject_mouse_down(dcg.MouseButton.LEFT)
+    _render(context)
+    context.inject_mouse_pos(center.x + 30, center.y)
+    _render(context)
+    assert bar._dragging_in_grab
+    assert bar.position != position
+    bar.show = False
+    _render(context, count=3)
+    if release_while_hidden:
+        context.inject_mouse_up(dcg.MouseButton.LEFT)
+        _render(context)
+    bar.show = True
+    _render(context, count=3)
+    assert not bar._dragging_in_grab
+    assert bar.position == position
+    if not release_while_hidden:
+        context.inject_mouse_up(dcg.MouseButton.LEFT)
+        _render(context)
+
 # window.py
 
 def test_scrolling_buffer_returns_requested_recent_values() -> None:
@@ -398,6 +516,179 @@ def test_item_inspector_removes_installed_handlers(ctx: dcg.Context) -> None:
 
     assert inspector._item_handler not in item.handlers
     assert inspector._inspected_items == []
+
+
+
+@pytest.mark.parametrize("fast", [False, True])
+def test_item_inspector_drag_tracks_original_item_after_hover_loss(
+    context: dcg.Context, *, fast: bool
+) -> None:
+    """Move a non-activatable item through release even after the pointer leaves it."""
+    window = dcg.Window(context, width=550, height=400, x=10, y=10)
+    item = dcg.Text(context, parent=window, value="Move this text")
+    inspector = ItemInspecter(context, x=600, y=10)
+    inspector.setup_handlers()
+    _render(context, count=5)
+    initial = item.state.pos_to_viewport
+    start = initial + item.state.rect_size * 0.5
+    context.inject_mouse_pos(start.x, start.y)
+    _render(context, count=2)
+    context.inject_key_down(dcg.Key.LEFTALT)
+    _render(context)
+    context.inject_mouse_down(dcg.MouseButton.RIGHT)
+    if not fast:
+        _render(context)
+    context.inject_mouse_pos(start.x + 100, start.y + 60)
+    if not fast:
+        _render(context)
+    context.inject_mouse_pos(start.x + 140, start.y + 80)
+    context.inject_mouse_up(dcg.MouseButton.RIGHT)
+    _render(context, count=6)
+
+    assert _coordinates(item.state.pos_to_viewport) == pytest.approx(
+        (initial.x + 140, initial.y + 80), abs=2
+    )
+    assert inspector._dragging_item is None
+    inspector.remove_handlers()
+
+
+def test_item_inspector_removal_clears_selected_drag(context: dcg.Context) -> None:
+    """Detach viewport tracking and retain the last requested position on removal."""
+    window = dcg.Window(context, width=550, height=400, x=10, y=10)
+    item = dcg.Text(context, parent=window, value="Move this text")
+    inspector = ItemInspecter(context, x=600, y=10)
+    inspector.setup_handlers()
+    _render(context, count=5)
+    initial = item.state.pos_to_viewport
+    start = initial + item.state.rect_size * 0.5
+    context.inject_mouse_pos(start.x, start.y)
+    _render(context, count=2)
+    context.inject_key_down(dcg.Key.LEFTALT)
+    _render(context)
+    context.inject_mouse_down(dcg.MouseButton.RIGHT)
+    _render(context)
+    context.inject_mouse_pos(start.x + 80, start.y + 40)
+    _render(context)
+    assert inspector._dragging_item is item
+    inspector.remove_handlers()
+    _render(context, count=2)
+
+    assert inspector._dragging_item is None
+    assert inspector._drag_tracker not in context.viewport.handlers
+    assert _coordinates(item.state.pos_to_viewport) == pytest.approx(
+        (initial.x + 80, initial.y + 40), abs=2
+    )
+
+
+@pytest.mark.parametrize("hide_item", [False, True])
+def test_item_inspector_invalidates_drag_and_restores_position(
+    context: dcg.Context, *, hide_item: bool
+) -> None:
+    """Restore the original position after invalidation, even for a hidden item."""
+    window = dcg.Window(context, width=550, height=400, x=10, y=10)
+    item = dcg.Text(context, parent=window, value="Move this text")
+    inspector = ItemInspecter(context, x=600, y=10)
+    inspector.setup_handlers()
+    _render(context, count=5)
+    initial = item.state.pos_to_viewport
+    start = initial + item.state.rect_size * 0.5
+    context.inject_mouse_pos(start.x, start.y)
+    _render(context, count=2)
+    context.inject_key_down(dcg.Key.LEFTALT)
+    _render(context)
+    context.inject_mouse_down(dcg.MouseButton.RIGHT)
+    _render(context)
+    context.inject_mouse_pos(start.x + 80, start.y + 40)
+    _render(context)
+    assert inspector._dragging_item is item
+    _render(context)
+    assert _coordinates(item.state.pos_to_viewport) == pytest.approx(
+        (initial.x + 80, initial.y + 40), abs=2
+    )
+    if hide_item:
+        item.show = False
+        _render(context)
+
+    tracker = next(
+        handler for handler in inspector._drag_tracker.children
+        if isinstance(handler, dcg.MouseDragHandler)
+    )
+    tracker.threshold = 1000
+    _render(context, count=2)
+    assert inspector._dragging_item is None
+    if hide_item:
+        item.show = True
+        _render(context, count=2)
+    assert _coordinates(item.state.pos_to_viewport) == pytest.approx(
+        _coordinates(initial), abs=2
+    )
+    context.inject_mouse_up(dcg.MouseButton.RIGHT)
+    _render(context)
+    inspector.remove_handlers()
+
+
+def test_item_inspector_drag_finishes_while_target_is_hidden(context: dcg.Context) -> None:
+    """Track a drag on the viewport even while the target is no longer traversed."""
+    window = dcg.Window(context, width=550, height=400, x=10, y=10)
+    item = dcg.Text(context, parent=window, value="Move this text")
+    inspector = ItemInspecter(context, x=600, y=10)
+    inspector.setup_handlers()
+    _render(context, count=5)
+    initial = item.state.pos_to_viewport
+    start = initial + item.state.rect_size * 0.5
+    context.inject_mouse_pos(start.x, start.y)
+    _render(context, count=2)
+    context.inject_key_down(dcg.Key.LEFTALT)
+    _render(context)
+    context.inject_mouse_down(dcg.MouseButton.RIGHT)
+    _render(context)
+    context.inject_mouse_pos(start.x + 40, start.y + 20)
+    _render(context)
+    item.show = False
+    _render(context, count=2)
+    context.inject_mouse_pos(start.x + 100, start.y + 60)
+    context.inject_mouse_up(dcg.MouseButton.RIGHT)
+    _render(context, count=3)
+    item.show = True
+    _render(context, count=3)
+
+    assert inspector._dragging_item is None
+    assert _coordinates(item.state.pos_to_viewport) == pytest.approx(
+        (initial.x + 100, initial.y + 60), abs=2
+    )
+    inspector.remove_handlers()
+
+
+def test_item_inspector_requires_alt_and_clears_plain_click(context: dcg.Context) -> None:
+    """Do not move without Alt, and discard an Alt-click that does not drag."""
+    window = dcg.Window(context, width=550, height=400, x=10, y=10)
+    item = dcg.Text(context, parent=window, value="Move this text")
+    inspector = ItemInspecter(context, x=600, y=10)
+    inspector.setup_handlers()
+    _render(context, count=5)
+    initial = item.state.pos_to_viewport
+    start = initial + item.state.rect_size * 0.5
+    context.inject_mouse_pos(start.x, start.y)
+    _render(context, count=2)
+    context.inject_mouse_down(dcg.MouseButton.RIGHT)
+    _render(context)
+    context.inject_mouse_pos(start.x + 80, start.y + 40)
+    context.inject_mouse_up(dcg.MouseButton.RIGHT)
+    _render(context, count=3)
+    assert _coordinates(item.state.pos_to_viewport) == pytest.approx(_coordinates(initial))
+    assert inspector._dragging_item is None
+
+    context.inject_mouse_pos(start.x, start.y)
+    _render(context, count=2)
+    context.inject_key_down(dcg.Key.LEFTALT)
+    _render(context)
+    context.inject_mouse_down(dcg.MouseButton.RIGHT)
+    _render(context)
+    assert inspector._dragging_item is item
+    context.inject_mouse_up(dcg.MouseButton.RIGHT)
+    _render(context)
+    assert inspector._dragging_item is None
+    inspector.remove_handlers()
 
 
 def test_style_editor_resets_and_exports_default_theme(ctx: dcg.Context) -> None:

@@ -418,17 +418,26 @@ class ItemInspecter(dcg.Window):
     """Inspector window for examining and interacting with items.
 
     This window allows users to hover over items to inspect them and
-    provides functionality to drag items while holding the Alt key.
+    provides functionality to drag items starting with Alt and a right-click.
+    An invalidated drag returns the item to its original position.
     """
     __slots__ = {
         "_dragging_item": "Currently dragged item",
         "_dragging_item_original_state": "Original state of the dragged item",
+        "_drag_position": "Last requested viewport position of the dragged item",
+        "_drag_started": "Whether a drag was reported for the selected item",
+        "_drag_tracker": "Viewport handlers tracking the selected gesture",
+        "_inspection_enabled": "Whether inspection handlers are installed",
         "_inspected_items": "List of currently inspected items",
         "_item_handler": "Handler list for managing item events"
     }
 
-    _dragging_item: dcg.baseItem | None
+    _dragging_item: dcg.uiItem | None
     _dragging_item_original_state: dcg.ItemStateCopy | None
+    _drag_position: dcg.Coord | None
+    _drag_started: bool
+    _drag_tracker: dcg.HandlerList
+    _inspection_enabled: bool
     _inspected_items: list[dcg.baseItem]
     _item_handler: dcg.HandlerList
 
@@ -437,8 +446,12 @@ class ItemInspecter(dcg.Window):
         # Initialize dragging state and item handler
         self._dragging_item = None
         self._dragging_item_original_state = None
+        self._drag_position = None
+        self._drag_started = False
+        self._inspection_enabled = False
         self._inspected_items = []
         self._item_handler = dcg.HandlerList(context)
+        self._drag_tracker = dcg.HandlerList(context)
 
         # Create the main layout for the inspector window
         with self:
@@ -453,18 +466,26 @@ class ItemInspecter(dcg.Window):
         # Create the item handler for managing inspection events
         with self._item_handler:
             dcg.GotHoverHandler(context, callback=self.handle_item_hovered)
-            # If an item is hovered and the Alt key is pressed,
-            # handle dragging an item.
+            # Select the hovered item at press time, before it can lose hover.
             with dcg.ConditionalHandler(context):
-                dcg.DraggingHandler(context, button=dcg.MouseButton.RIGHT, callback=self.handle_item_dragging)
+                dcg.ClickedHandler(
+                    context, button=dcg.MouseButton.RIGHT, callback=self._select_drag_item
+                )
                 dcg.KeyDownHandler(context, key=dcg.Key.LEFTALT)
-            dcg.DraggedHandler(context, button=dcg.MouseButton.RIGHT, callback=self.handle_item_dragged)
             # If a compatible item is hovered and the ALT key is set,
             # change the cursor to show we can drag
             with dcg.ConditionalHandler(context):
                 dcg.MouseCursorHandler(context, cursor=dcg.MouseCursor.HAND)
                 dcg.HoverHandler(context)
                 dcg.KeyDownHandler(context, key=dcg.Key.LEFTALT)
+
+        with self._drag_tracker:
+            dcg.MouseDragHandler(
+                context, button=dcg.MouseButton.RIGHT, callback=self._handle_mouse_drag
+            )
+            dcg.MouseReleaseHandler(
+                context, button=dcg.MouseButton.RIGHT, callback=self._handle_mouse_release
+            )
 
     def setup_handlers(self) -> None:
         """Install inspection handlers on all UI elements.
@@ -476,6 +497,10 @@ class ItemInspecter(dcg.Window):
         # Uninstall previous handlers first
         if len(self._inspected_items) > 0:
             self.remove_handlers()
+
+        self._inspection_enabled = True
+        with self.context.viewport.mutex:
+            self.context.viewport.handlers += [self._drag_tracker]
 
         # Get all children of the viewport recursively
         children_list = _get_children_recursive(self.context.viewport)
@@ -497,6 +522,7 @@ class ItemInspecter(dcg.Window):
         all tracked UI elements, effectively disabling the inspection 
         functionality.
         """
+        self._inspection_enabled = False
         for item in self._inspected_items:
             try:
                 with item.mutex:
@@ -506,49 +532,78 @@ class ItemInspecter(dcg.Window):
             except AttributeError:
                 pass
         self._inspected_items = []
+        with self.context.viewport.mutex:
+            self.context.viewport.handlers = [
+                handler for handler in self.context.viewport.handlers
+                if handler is not self._drag_tracker
+            ]
+        self._finish_drag()
 
-    def handle_item_dragging(self, handler, item: dcg.uiItem, data: dcg.DraggingHandlerCallbackValue) -> None:
-        """Process UI element dragging events.
-        
-        This method handles the dragging of UI elements, updating their position
-        relative to their parent based on the mouse movement. It tracks the
-        currently dragged item and maintains its original position for reference.
-        """
-        # Just to be safe. Might not be needed
-        if item is not self._dragging_item and self._dragging_item is not None:
+    def _select_drag_item(
+        self,
+        handler: dcg.ClickedHandler,
+        item: dcg.uiItem
+    ) -> None:
+        """Select the item under the initial Alt-right-click."""
+        if not self._inspection_enabled or self._drag_started or not isinstance(item, dcg.uiItem):
+            return
+        self._dragging_item = item
+        self._dragging_item_original_state = item.state.snapshot()
+
+    def _handle_mouse_drag(
+        self,
+        handler: dcg.MouseDragHandler,
+        target: dcg.Viewport,
+        data: dcg.MouseDragHandlerCallbackValue,
+    ) -> None:
+        """Move the selected item and finish on release or invalidation."""
+        if not self._inspection_enabled:
+            return
+        item = self._dragging_item
+        original = self._dragging_item_original_state
+        if item is None or original is None:
             return
 
-        # If we were not dragging, start dragging the current item
-        if self._dragging_item is None:
-            self._dragging_item = item
-            self._dragging_item_original_state = item.state.snapshot()
+        # Restore original position if the drag is invalidated
+        if data.is_invalidated:
+            if self._drag_started:
+                self._drag_position = original.pos_to_viewport
 
-        # Calculate the new position based on the original position and drag delta
-        assert self._dragging_item_original_state is not None
-        new_pos = self._dragging_item_original_state.pos_to_viewport + data.drag_delta
+        # Update the item's position based on the drag delta if the drag is valid   
+        else:
+            self._drag_started = True
+            position = original.pos_to_viewport + data.drag_delta
+            self._drag_position = position
+            item.x = dcg.Size.FIXED(position.x)
+            item.y = dcg.Size.FIXED(position.y)
 
-        # Display the item at the new position
-        item.x = dcg.Size.FIXED(new_pos.x)
-        item.y = dcg.Size.FIXED(new_pos.y)
+        # If the drag is released or invalidated, finish the drag operation
+        if data.is_released or data.is_invalidated:
+            self._finish_drag()
 
-    def handle_item_dragged(self, handler, item: dcg.uiItem) -> None:
-        """Handle the completion of a UI element drag operation.
-        
-        This method is called when a drag operation ends, cleaning up the 
-        dragging state and preparing for potential future drag operations.
-        """
-        # For safety
-        if self._dragging_item is None or item is not self._dragging_item:
-            return
+    def _handle_mouse_release(self) -> None:
+        """Clear a selection when a click never became a drag."""
+        if self._inspection_enabled:
+            self._finish_drag()
 
-        # Place the item relative to its parent without changing its current position
-        assert self._dragging_item_original_state is not None
-        item.x = dcg.Size.PARENT_X1() + dcg.Size.FIXED(item.state.pos_to_parent.x)
-        item.y = dcg.Size.PARENT_Y1() + dcg.Size.FIXED(item.state.pos_to_parent.y)
-
-        # Reset dragging state
+    def _finish_drag(self) -> None:
+        """Keep the last drag position relative to the parent and clear the gesture."""
+        item = self._dragging_item
+        position = self._drag_position
+        if self._drag_started and item is not None and position is not None:
+            # Use the requested position, which may not have been rendered yet.
+            state = item.state.snapshot()
+            if not state.visible:
+                state = self._dragging_item_original_state
+            assert state is not None
+            parent_origin = state.pos_to_viewport - state.pos_to_parent
+            position = position - parent_origin
+            item.x = dcg.Size.PARENT_X1() + dcg.Size.FIXED(position.x)
+            item.y = dcg.Size.PARENT_Y1() + dcg.Size.FIXED(position.y)
         self._dragging_item = None
         self._dragging_item_original_state = None
+        self._drag_position = None
+        self._drag_started = False
 
     def handle_item_hovered(self, handler, item):
         """Display detailed information about a hovered UI element.

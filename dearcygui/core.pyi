@@ -11487,6 +11487,10 @@ Render one frame of the application.
         element of the stream, or Tooltip will trigger a refresh
         after the requested delay without mouse movement.
 
+        Note ImGui may decide to split input event processing across
+        multiple ImGui frames, in which case wait_events will trigger
+        until all input events have been processed.
+
         The goal is that any DearCyGui item handles viewport
         waking automatically themselves. This way, the user
         only needs to call wake() when he has appended new items,
@@ -15807,6 +15811,7 @@ class DragDropSourceHandler(baseHandler):
     Wrap it in a ConditionalHandler to control when it is active.
 
     If set, the callback will be called when the drag starts.
+    No source is submitted while the mouse position is unavailable.
 
     Callback receives:
         - sender: This handler instance
@@ -25211,10 +25216,13 @@ class MouseDragHandler(baseHandler):
         threshold (float): Movement threshold to trigger drag.
                          Negative means use default.
 
-    NOTE: the handler callback will always receive a single event
-    with data.is_released set to True when a drag ends. It corresponds to
-    the moment the mouse button is released.
-    NOTE2: The state of the handler (in handler conditions) is True
+    Once a drag is reported, it ends with a callback whose is_released is True for a mouse release,
+    or whose is_invalidated is True if the drag is interrupted. Invalidation uses
+    the last reported position. It is delivered when this handler next runs,
+    so a removed handler or an item that never reappears cannot receive it.
+    A handler shared between items must be run for all of them on the same
+    frames for each to receive the ending callback.
+    NOTE: The state of the handler (in handler conditions) is True
     while the drag is ongoing, but not when it has ended (unlike for the
     callback, the frame of the mouse release is not taken into account).
 
@@ -25398,6 +25406,7 @@ class MouseMoveHandler(baseHandler):
 
     Note:
         Position is relative to the viewport.
+        No movement is reported when either position is unavailable.
 
     """
     def __init__(self, context : Context, *, attach : Any = ..., before : 'baseHandler' | None = None, callback : DCGCallable[Self, Any, MouseMoveHandlerCallbackValue] | None = None, children : list[Never] = [], enabled : bool = True, next_sibling : 'baseHandler' | None = None, parent : 'baseHandler' | None = None, previous_sibling : 'baseHandler' | None = None, show : bool = True, user_data : Any = ...):
@@ -32494,9 +32503,13 @@ Callback value for the MouseDownHandler.
 
 class MouseDragHandlerCallbackValue(MouseButtonHandlerCallbackValue):
     """
-Callback value for the MouseDragHandler.
+Describe a mouse drag update or its release or invalidation.
+
+    Invalidation reports the last position sent by the handler. Neither ending
+    flag is set for a drag update; only one is set when the drag ends.
+
     """
-    def __init__(self, context : Context, button : MouseButton, drag_delta : Coord, click_position : Coord, is_released : bool) -> None:
+    def __init__(self, context : Context, button : MouseButton, drag_delta : Coord, click_position : Coord, is_released : bool, is_invalidated : bool) -> None:
         ...
 
 
@@ -32516,7 +32529,7 @@ Callback value for the MouseDragHandler.
 
     @property
     def mouse_position(self) -> Coord:
-        """Current mouse position.
+        """Return the mouse position, or the last reported position on cancellation.
         """
         ...
 
@@ -32524,6 +32537,13 @@ Callback value for the MouseDragHandler.
     @property
     def is_released(self) -> bool:
         """Whether the mouse button just released (end of the drag operation).
+        """
+        ...
+
+
+    @property
+    def is_invalidated(self) -> bool:
+        """Whether the drag ended without a mouse release.
         """
         ...
 

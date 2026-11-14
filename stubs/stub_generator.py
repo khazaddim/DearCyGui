@@ -1063,6 +1063,7 @@ _CALLBACK_VALUE_PROPERTY_TYPES = {
     "frame_height": "int",
     "frame_width": "int",
     "is_released": "bool",
+    "is_invalidated": "bool",
     "key": "Key",
     "keys": "tuple[Key, ...]",
     "mouse_position": "Coord",

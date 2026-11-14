@@ -2212,3 +2212,4 @@ cdef extern from "imgui_internal.h" nogil:
     int ImFormatString(char* buf, size_t buf_size, const char* fmt, ...) 
     struct ImGuiContext:
         float MouseStationaryTimer
+        ImVec2 MouseLastValidPos

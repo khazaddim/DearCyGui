@@ -421,8 +421,9 @@ cdef class DrawInvisibleButton(drawingItem):
         self._capture_mouse = False
         self.state.cur.active = activated or held
         self.state.cur.hovered = hovered
+        # The last valid position also remains usable when the mouse leaves the viewport.
         if activated or (self.state.cur.active and not self.state.prev.active):
-            cur_mouse_pos = ImVec2Vec2(imgui.GetMousePos())
+            cur_mouse_pos = ImVec2Vec2(imgui.GetCurrentContext().MouseLastValidPos)
             screen_p[0] = cur_mouse_pos.x
             screen_p[1] = cur_mouse_pos.y
             self.context.viewport.screen_to_coordinate(coordinate_p, screen_p)
@@ -430,7 +431,7 @@ cdef class DrawInvisibleButton(drawingItem):
         cdef bint dragging = False
         cdef int32_t i
         if self.state.cur.active:
-            cur_mouse_pos = ImVec2Vec2(imgui.GetMousePos())
+            cur_mouse_pos = ImVec2Vec2(imgui.GetCurrentContext().MouseLastValidPos)
             screen_p[0] = cur_mouse_pos.x
             screen_p[1] = cur_mouse_pos.y
             self.context.viewport.screen_to_coordinate(coordinate_p, screen_p)
@@ -449,8 +450,8 @@ cdef class DrawInvisibleButton(drawingItem):
         if self.state.prev.active and not self.state.cur.active:
             for i in range(<int>imgui.ImGuiMouseButton_COUNT):
                 if self.state.prev.dragging[i] and not self.state.cur.dragging[i]:
-                    if imgui.IsMousePosValid() and imgui.IsMouseReleased(i):
-                        cur_mouse_pos = ImVec2Vec2(imgui.GetMousePos())
+                    if imgui.IsMouseReleased(i):
+                        cur_mouse_pos = ImVec2Vec2(imgui.GetCurrentContext().MouseLastValidPos)
                         screen_p[0] = cur_mouse_pos.x
                         screen_p[1] = cur_mouse_pos.y
                         self.context.viewport.screen_to_coordinate(coordinate_p, screen_p)

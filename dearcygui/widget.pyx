@@ -124,19 +124,18 @@ cdef extern from * nogil:
     void dcg_restore_menu_cursor(const imgui.ImVec2&)
 
 
-cdef void _fill_position_states_from_last_rect(uiItem item) noexcept nogil:
-    """
-    Helper to get the item starting position from the last submitted ImGui item.
-
-    The default path uses the cursor position to determine the starting position of the item.
-    However in some cases (Menu bars, etc) the element is not drawn at the cursor position.
-    This helper helps retrieve coordinates in that case.
-    """
-    item.state.cur.pos_to_viewport = ImVec2Vec2(imgui.GetItemRectMin())
+cdef void _fill_position_states_from_point(uiItem item, imgui.ImVec2 pos) noexcept nogil:
+    """Set position states from a viewport-space point."""
+    item.state.cur.pos_to_viewport = ImVec2Vec2(pos)
     item.state.cur.pos_to_window.x = item.state.cur.pos_to_viewport.x - item.context.viewport.window_pos.x
     item.state.cur.pos_to_window.y = item.state.cur.pos_to_viewport.y - item.context.viewport.window_pos.y
     item.state.cur.pos_to_parent.x = item.state.cur.pos_to_viewport.x - item.context.viewport.parent_pos.x
     item.state.cur.pos_to_parent.y = item.state.cur.pos_to_viewport.y - item.context.viewport.parent_pos.y
+
+
+cdef void _fill_position_states_from_last_rect(uiItem item) noexcept nogil:
+    """Set position states from the last submitted ImGui item's rectangle."""
+    _fill_position_states_from_point(item, imgui.GetItemRectMin())
 
 
 cdef void _fill_position_size_visibility_states_from_rect(
@@ -151,11 +150,7 @@ cdef void _fill_position_size_visibility_states_from_rect(
     ``rect.Min`` and ``rect.Max`` are the top-left and bottom-right corners.
     The rectangle remains unchanged.
     """
-    item.state.cur.pos_to_viewport = ImVec2Vec2(rect.Min)
-    item.state.cur.pos_to_window.x = rect.Min.x - item.context.viewport.window_pos.x
-    item.state.cur.pos_to_window.y = rect.Min.y - item.context.viewport.window_pos.y
-    item.state.cur.pos_to_parent.x = rect.Min.x - item.context.viewport.parent_pos.x
-    item.state.cur.pos_to_parent.y = rect.Min.y - item.context.viewport.parent_pos.y
+    _fill_position_states_from_point(item, rect.Min)
     item.state.cur.rect_size.x = rect.Max.x - rect.Min.x
     item.state.cur.rect_size.y = rect.Max.y - rect.Min.y
     item.state.cur.rendered = imgui.IsRectVisible(rect.Min, rect.Max)
@@ -1189,6 +1184,11 @@ cdef class Button(uiItem):
             activated = imgui.Button(self._imgui_label.c_str(),
                                      Vec2ImVec2(self.get_requested_size()))
         imgui.PopItemFlag()
+
+        # Small buttons do not take the full vertical space, thus we need to fix the pre-filled position
+        if self._small:
+            _fill_position_states_from_last_rect(self)
+
         self.update_current_state()
         SharedBool.set(<SharedBool>self._value, self.state.cur.active) # Unsure whether we should use active or activated
         if self._repeat:
@@ -3121,6 +3121,8 @@ cdef class Text(uiItem):
             imgui.EndGroup()
             #imgui.PopStyleVar(1)
 
+        # Text does not take the full vertical space, thus we need to fix the pre-filled position
+        _fill_position_states_from_last_rect(self)
         self.update_current_state()
         return False
 
@@ -3141,6 +3143,8 @@ cdef class TextValue(uiItem):
     
     The display format can be customized using printf-style format strings
     to control precision, alignment, and presentation.
+
+    For vector values, the item rectangle contains all displayed rows.
     """
     def __cinit__(self):
         self._print_format = string_from_bytes(b"%.3f")
@@ -3243,9 +3247,13 @@ cdef class TextValue(uiItem):
                        value_color.z, value_color.w)
         elif self._type == 8:
             value_vect = SharedFloatVect.get(<SharedFloatVect>self._value)
+            imgui.BeginGroup()
             for i in range(value_vect.shape[0]):
                 imgui.Text(self._print_format.c_str(), value_vect[i])
+            imgui.EndGroup()
 
+        # TextValue is among the items for which we need to fix the pre-filled position
+        _fill_position_states_from_last_rect(self)
         self.update_current_state()
         return False
 
@@ -3375,6 +3383,9 @@ cdef class Selectable(uiItem):
                                              Vec2ImVec2(self.get_requested_size()))
         if self._enabled:
             SharedBool.set(<SharedBool>self._value, checked)
+
+        # Selectables do not take the full vertical space, thus we need to fix the pre-filled position
+        _fill_position_states_from_last_rect(self)
         self.update_current_state()
         return changed
 
@@ -5300,6 +5311,9 @@ cdef class CollapsingHeader(uiItem):
             imgui.CollapsingHeader(self._imgui_label.c_str(),
                                    &self._show if self._closable else NULL,
                                    flags)
+        cdef imgui.ImRect header_rect = imgui.ImRect(
+            imgui.GetItemRectMin(), imgui.GetItemRectMax()
+        )
         if not(self._show):
             self._show_update_requested = True
         self.update_current_state()
@@ -5329,8 +5343,10 @@ cdef class CollapsingHeader(uiItem):
 
         # Use the header (and children if open) as the bounding box
         imgui.EndGroup()
-        self.state.cur.rect_size = Vec2(imgui.GetItemRectSize().x,
-                                        imgui.GetItemRectSize().y)
+        header_rect.Add(imgui.ImRect(imgui.GetItemRectMin(), imgui.GetItemRectMax()))
+        _fill_position_states_from_point(self, header_rect.Min)
+        self.state.cur.rect_size.x = header_rect.Max.x - header_rect.Min.x
+        self.state.cur.rect_size.y = header_rect.Max.y - header_rect.Min.y
 
          # Call the callback when we switch to the open state
         return not(was_open) and self.state.cur.open

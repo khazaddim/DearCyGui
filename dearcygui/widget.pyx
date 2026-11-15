@@ -3740,17 +3740,18 @@ cdef class MenuBar(uiItem):
             # We should hit this only if window is invisible
             # or has no menu bar
             self._set_not_rendered_and_propagate_to_children_with_handlers()
-        cdef bint activated = self.state.cur.active and not(self.state.prev.active)
-        cdef int32_t i
-        if activated and not(self._callbacks.empty()):
-            with gil:
-                for i in range(<int>self._callbacks.size()):
-                    self.context.queue_callback(
-                        <Callback>self._callbacks[i],
-                        self,
-                        self,
-                        uiItemCallbackNoneValue(None)
-                    )
+        # Does not have active state.
+        # cdef bint activated = self.state.cur.active and not(self.state.prev.active)
+        # cdef int32_t i
+        #if activated and not(self._callbacks.empty()):
+        #    with gil:
+        #        for i in range(<int>self._callbacks.size()):
+        #            self.context.queue_callback(
+        #                <Callback>self._callbacks[i],
+        #                self,
+        #                self,
+        #                uiItemCallbackNoneValue(None)
+        #             )
 
         if not(enabled):
             imgui.PopItemFlag()
@@ -3784,7 +3785,7 @@ cdef class Menu(uiItem):
         self.state.cap.can_be_clicked = True
         self.state.cap.can_be_focused = True
         self.state.cap.can_be_hovered = True
-        self.state.cap.can_be_active = True
+        # self.state.cap.can_be_active = True
         self.state.cap.has_rect_size = True
         self.state.cap.has_content_region = True
         self.state.cap.can_be_toggled = True
@@ -3792,7 +3793,7 @@ cdef class Menu(uiItem):
     cdef bint draw_item(self) noexcept nogil:
         cdef bint menu_open = imgui.BeginMenu(self._imgui_label.c_str(),
                                               self._enabled)
-        self.update_current_state()
+        self.update_current_state() # Does not capture active reliably (may be added in the future)
         cdef Vec2 pos_w, pos_p, parent_size_backup
         if menu_open:
             self.state.cur.hovered |= imgui.IsWindowHovered(imgui.ImGuiHoveredFlags_None)
@@ -3820,7 +3821,8 @@ cdef class Menu(uiItem):
             self._propagate_hidden_state_to_children_with_handlers()
         self.state.cur.open = menu_open
         SharedBool.set(<SharedBool>self._value, menu_open)
-        return self.state.cur.active and not(self.state.prev.active)
+        #return self.state.cur.active and not(self.state.prev.active)
+        return self.state.open and not(self.state.prev.open)
 
 cdef class Tooltip(uiItem):
     """

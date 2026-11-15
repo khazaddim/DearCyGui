@@ -29,6 +29,251 @@ def _render(ctx: dcg.Context, *, count: int = 1) -> None:
         ctx.viewport.render_frame()
 
 
+@pytest.mark.parametrize("button", list(dcg.MouseButton))
+@pytest.mark.parametrize("drawn", [False, True])
+def test_item_click_masks_preserve_views_and_snapshots(
+    context: dcg.Context, *, button: dcg.MouseButton, drawn: bool
+) -> None:
+    """Keep button-specific clicks and double clicks in live and copied states."""
+    clicks: list[dcg.MouseButton] = []
+    doubles: list[dcg.MouseButton] = []
+
+    def on_click(
+        sender: dcg.ClickedHandler,
+        target: dcg.Button | dcg.DrawInvisibleButton,
+        data: dcg.ClickedHandlerCallbackValue,
+    ) -> None:
+        """Record the button reported by the click handler."""
+        clicks.append(data.button)
+
+    def on_double(
+        sender: dcg.DoubleClickedHandler,
+        target: dcg.Button | dcg.DrawInvisibleButton,
+        data: dcg.DoubleClickedHandlerCallbackValue,
+    ) -> None:
+        """Record the button reported by the double-click handler."""
+        doubles.append(data.button)
+
+    handlers = [
+        dcg.ClickedHandler(context, button=button, callback=on_click),
+        dcg.DoubleClickedHandler(context, button=button, callback=on_double),
+    ]
+    window = dcg.Window(context, width=500, height=400)
+    if drawn:
+        drawing = dcg.DrawInWindow(context, parent=window, width=250, height=150)
+        item = dcg.DrawInvisibleButton(context, parent=drawing, p1=(0, 0), p2=(200, 100),
+                                       handlers=handlers)
+    else:
+        item = dcg.Button(context, parent=window, label="click", width=250, height=150,
+                          handlers=handlers)
+    _render(context, count=5)
+    x, y = item.state.pos_to_viewport
+    context.inject_mouse_pos(x + 30, y + 30)
+    _render(context, count=2)
+    assert item.state.hovered
+
+    context.inject_mouse_down(button)
+    _render(context)
+    first = item.state.snapshot()
+    expected = tuple(i == button.value for i in range(5))
+    assert item.state.clicked == expected
+    assert first.clicked == expected
+    assert item.state.double_clicked == [False] * 5
+    assert all(type(value) is bool for value in item.state.clicked)
+    assert all(type(value) is bool for value in item.state.double_clicked)
+
+    context.inject_mouse_up(button)
+    _render(context)
+    assert item.state.clicked == (False,) * 5
+    context.inject_mouse_down(button)
+    _render(context)
+    second = item.state.snapshot()
+    assert item.state.clicked == expected
+    assert item.state.double_clicked == list(expected)
+    assert second.double_clicked == list(expected)
+    assert first.double_clicked == [False] * 5
+
+    context.inject_mouse_up(button)
+    _render(context)
+    context.queue.submit(lambda: None).result(timeout=5)
+    assert clicks == [button, button]
+    assert doubles == [button]
+    assert first.clicked == expected
+    assert second.double_clicked == list(expected)
+
+    item.show = False
+    _render(context)
+    assert item.state.clicked == (False,) * 5
+    assert item.state.double_clicked == [False] * 5
+
+
+@pytest.mark.parametrize("button", list(dcg.MouseButton))
+@pytest.mark.parametrize("activatable", [False, True])
+def test_item_drag_masks_preserve_button_specific_release(
+    context: dcg.Context, *, button: dcg.MouseButton, activatable: bool
+) -> None:
+    """Retain per-button dragging for activatable and non-activatable items."""
+    ongoing: list[tuple[float, float]] = []
+    completed: list[tuple[float, float]] = []
+
+    def on_dragging(
+        sender: dcg.DraggingHandler,
+        target: dcg.Button | dcg.ProgressBar,
+        data: dcg.DraggingHandlerCallbackValue,
+    ) -> None:
+        """Record the ongoing displacement."""
+        ongoing.append((data.drag_delta.x, data.drag_delta.y))
+
+    def on_dragged(
+        sender: dcg.DraggedHandler,
+        target: dcg.Button | dcg.ProgressBar,
+        data: dcg.DraggedHandlerCallbackValue,
+    ) -> None:
+        """Record the final displacement."""
+        completed.append((data.drag_delta.x, data.drag_delta.y))
+
+    window = dcg.Window(context, width=500, height=400)
+    handlers = [
+        dcg.DraggingHandler(context, button=button, callback=on_dragging),
+        dcg.DraggedHandler(context, button=button, callback=on_dragged),
+    ]
+    if activatable:
+        item = dcg.Button(context, parent=window, label="drag", width=250, height=150,
+                          handlers=handlers)
+    else:
+        item = dcg.ProgressBar(context, parent=window, width=250, height=150,
+                               handlers=handlers)
+    _render(context, count=5)
+    x, y = item.state.pos_to_viewport
+    start = (x + 30, y + 30)
+    context.inject_mouse_pos(*start)
+    _render(context, count=2)
+    context.inject_mouse_down(button)
+    _render(context)
+    context.inject_mouse_pos(start[0] + 20, start[1] + 10)
+    _render(context)
+    context.inject_mouse_pos(start[0] + 40, start[1] + 20)
+    _render(context)
+    context.inject_mouse_up(button)
+    _render(context)
+    context.queue.submit(lambda: None).result(timeout=5)
+    assert ongoing[-1] == pytest.approx((40, 20))
+    assert completed == [pytest.approx((40, 20))]
+
+
+def test_item_drag_masks_preserve_simultaneous_buttons(context: dcg.Context) -> None:
+    """Keep simultaneous drags separate when one button stops before the other."""
+    completed: list[tuple[dcg.MouseButton, tuple[float, float]]] = []
+
+    def on_dragged(
+        sender: dcg.DraggedHandler,
+        target: dcg.Button,
+        data: dcg.DraggedHandlerCallbackValue,
+    ) -> None:
+        """Record the button and final displacement."""
+        completed.append((data.button, (data.drag_delta.x, data.drag_delta.y)))
+
+    window = dcg.Window(context, width=500, height=400)
+    item = dcg.Button(
+        context, parent=window, label="drag", width=250, height=150,
+        handlers=[
+            dcg.DraggedHandler(context, button=button, callback=on_dragged)
+            for button in (dcg.MouseButton.X1, dcg.MouseButton.X2)
+        ],
+    )
+    _render(context, count=5)
+    x, y = item.state.pos_to_viewport
+    start = (x + 30, y + 30)
+    context.inject_mouse_pos(*start)
+    _render(context, count=2)
+    context.inject_mouse_down(dcg.MouseButton.X1)
+    context.inject_mouse_down(dcg.MouseButton.X2)
+    _render(context)
+    assert item.state.clicked == (False, False, False, True, True)
+
+    context.inject_mouse_pos(start[0] + 20, start[1] + 10)
+    _render(context)
+    context.inject_mouse_up(dcg.MouseButton.X1)
+    _render(context)
+    context.inject_mouse_pos(start[0] + 40, start[1] + 20)
+    _render(context)
+    context.inject_mouse_up(dcg.MouseButton.X2)
+    _render(context)
+    context.queue.submit(lambda: None).result(timeout=5)
+    assert len(completed) == 2
+    assert completed[0][0] == dcg.MouseButton.X1
+    assert completed[0][1] == pytest.approx((20, 10))
+    assert completed[1][0] == dcg.MouseButton.X2
+    assert completed[1][1] == pytest.approx((40, 20))
+
+
+def test_item_drag_mask_preserves_delta_when_mouse_position_is_invalid(
+    context: dcg.Context,
+) -> None:
+    """Keep the last delta when the mouse position is lost on the release frame."""
+    completed: list[tuple[float, float]] = []
+
+    def on_dragged(
+        sender: dcg.DraggedHandler,
+        target: dcg.ProgressBar,
+        data: dcg.DraggedHandlerCallbackValue,
+    ) -> None:
+        """Record the final displacement."""
+        completed.append((data.drag_delta.x, data.drag_delta.y))
+
+    window = dcg.Window(context, width=500, height=400)
+    item = dcg.ProgressBar(
+        context, parent=window, width=250, height=150,
+        handlers=[dcg.DraggedHandler(context, callback=on_dragged)],
+    )
+    _render(context, count=5)
+    x, y = item.state.pos_to_viewport
+    start = (x + 30, y + 30)
+    context.inject_mouse_pos(*start)
+    _render(context, count=2)
+    context.inject_mouse_down(dcg.MouseButton.LEFT)
+    _render(context)
+    context.inject_mouse_pos(start[0] + 20, start[1] + 10)
+    _render(context)
+    context.inject_mouse_pos(-1e30, -1e30)
+    context.inject_mouse_up(dcg.MouseButton.LEFT)
+    _render(context)
+    context.queue.submit(lambda: None).result(timeout=5)
+    assert completed == [pytest.approx((20, 10))]
+
+
+def test_plot_axis_click_mask_preserves_axis_state(context: dcg.Context) -> None:
+    """Capture click state for the hovered plot axis and its handler."""
+    received: list[dcg.MouseButton] = []
+
+    def on_click(
+        sender: dcg.ClickedHandler,
+        target: dcg.PlotAxisConfig,
+        data: dcg.ClickedHandlerCallbackValue,
+    ) -> None:
+        """Record the axis click."""
+        received.append(data.button)
+
+    window = dcg.Window(context, width=700, height=500)
+    plot = dcg.Plot(context, parent=window, width=600, height=400)
+    plot.X1.handlers = [dcg.ClickedHandler(context, callback=on_click)]
+    _render(context, count=5)
+    x, y = plot.state.pos_to_viewport
+    width, height = plot.state.rect_size
+    context.inject_mouse_pos(x + width / 2, y + height - 10)
+    _render(context, count=2)
+    assert plot.X1.state.hovered
+    context.inject_mouse_down(dcg.MouseButton.LEFT)
+    _render(context)
+    snapshot = plot.X1.state.snapshot()
+    context.queue.submit(lambda: None).result(timeout=5)
+    assert plot.X1.state.clicked == (True, False, False, False, False)
+    assert snapshot.clicked == (True, False, False, False, False)
+    assert received == [dcg.MouseButton.LEFT]
+    context.inject_mouse_up(dcg.MouseButton.LEFT)
+    _render(context)
+
+
 def test_plot_pan_uses_only_motion_between_press_and_release(context: dcg.Context) -> None:
     """Apply the release-frame drag without panning on a later click."""
     window = dcg.Window(context, width=700, height=500)

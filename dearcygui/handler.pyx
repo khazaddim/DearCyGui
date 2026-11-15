@@ -606,14 +606,14 @@ cdef class ClickedHandler(baseHandler):
     cdef bint check_state(self, baseItem item) noexcept nogil:
         cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)
         cdef itemState *state = item.p_state
-        return state.cur.clicked[<int>self._button]
+        return (state.cur.clicked_mask & (1 << <int>self._button)) != 0
 
     cdef void run_handler(self, baseItem item) noexcept nogil:
         cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)
         cdef itemState *state = item.p_state
         if not(self._enabled) or self._callback is None:
             return
-        if state.cur.clicked[<int>self._button]:
+        if state.cur.clicked_mask & (1 << <int>self._button) != 0:
             with gil:
                 self.context.queue_callback(
                     self._callback,
@@ -653,14 +653,14 @@ cdef class DoubleClickedHandler(baseHandler):
     cdef bint check_state(self, baseItem item) noexcept nogil:
         cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)
         cdef itemState *state = item.p_state
-        return state.cur.double_clicked[<int>self._button]
+        return (state.cur.double_clicked_mask & (1 << <int>self._button)) != 0
 
     cdef void run_handler(self, baseItem item) noexcept nogil:
         cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)
         cdef itemState *state = item.p_state
         if not(self._enabled) or self._callback is None:
             return
-        if state.cur.double_clicked[<int>self._button]:
+        if state.cur.double_clicked_mask & (1 << <int>self._button) != 0:
             with gil:
                 self.context.queue_callback(
                     self._callback,
@@ -762,7 +762,8 @@ cdef class DraggedHandler(baseHandler):
     cdef bint check_state(self, baseItem item) noexcept nogil:
         cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)
         cdef itemState *state = item.p_state
-        return state.prev.dragging[<int>self._button] and not(state.cur.dragging[<int>self._button])
+        return ((state.prev.dragging_mask & ~state.cur.dragging_mask) &
+                (1 << <int>self._button)) != 0
 
     cdef void run_handler(self, baseItem item) noexcept nogil:
         cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)
@@ -772,7 +773,7 @@ cdef class DraggedHandler(baseHandler):
         if not(self._enabled) or self._callback is None:
             return
         cdef int32_t i = <int32_t>self._button
-        if state.prev.dragging[i] and not(state.cur.dragging[i]):
+        if (state.prev.dragging_mask & ~state.cur.dragging_mask) & (1 << i) != 0:
             mouse_pos = imgui.GetCurrentContext().MouseLastValidPos
             with gil:
                 self.context.queue_callback(
@@ -852,7 +853,7 @@ cdef class DraggingHandler(baseHandler):
     cdef bint check_state(self, baseItem item) noexcept nogil:
         cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)
         cdef itemState *state = item.p_state
-        return state.cur.dragging[<int>self._button]
+        return (state.cur.dragging_mask & (1 << <int>self._button)) != 0
 
     cdef void run_handler(self, baseItem item) noexcept nogil:
         cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)
@@ -862,7 +863,7 @@ cdef class DraggingHandler(baseHandler):
         cdef int32_t i = <int32_t>self._button
         if not(self._enabled) or self._callback is None:
             return
-        if state.cur.dragging[i]:
+        if state.cur.dragging_mask & (1 << i) != 0:
             mouse_pos = imgui.GetCurrentContext().MouseLastValidPos
             with gil:
                 self.context.queue_callback(

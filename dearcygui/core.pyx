@@ -2531,10 +2531,10 @@ cdef class baseItem:
             # In particular position and size states.
             self.p_state.cur.rendered = False
             self.p_state.cur.active = False
-            self.p_state.cur.clicked = [False, False, False, False, False]
-            self.p_state.cur.double_clicked = [False, False, False, False, False]
+            self.p_state.cur.clicked_mask = 0
+            self.p_state.cur.double_clicked_mask = 0
             self.p_state.cur.deactivated_after_edited = False
-            self.p_state.cur.dragging = [False, False, False, False, False]
+            self.p_state.cur.dragging_mask = 0
             self.p_state.cur.edited = False
             self.p_state.cur.focused = False
             self.p_state.cur.hovered = False
@@ -5165,6 +5165,13 @@ States used by many items
 """
 
 
+cdef tuple _mouse_mask_values(uint32_t mask):
+    """Return one boolean per mouse button in button order."""
+    cdef bint[<int>imgui.ImGuiMouseButton_COUNT] result
+    cdef int i
+    for i in range(<int>imgui.ImGuiMouseButton_COUNT):
+        result[i] = (mask & (1 << i)) != 0
+    return tuple(result)
 
 @cython.freelist(8)
 cdef class ItemStateView:
@@ -5268,7 +5275,7 @@ cdef class ItemStateView:
             raise ValueError("Item state is not available")
         if not(self._item.p_state.cap.can_be_clicked):
             raise AttributeError("Field undefined for this item type")
-        return tuple(self._item.p_state.cur.clicked)
+        return _mouse_mask_values(self._item.p_state.cur.clicked_mask)
     
     @property
     def double_clicked(self):
@@ -5287,7 +5294,7 @@ cdef class ItemStateView:
             raise ValueError("Item state is not available")
         if not(self._item.p_state.cap.can_be_clicked):
             raise AttributeError("Field undefined for this item type")
-        return self._item.p_state.cur.double_clicked
+        return _mouse_mask_values(self._item.p_state.cur.double_clicked_mask)
     
     @property
     def deactivated(self):
@@ -5663,7 +5670,7 @@ cdef class ItemStateCopy:
         """
         if not(self._state.cap.can_be_clicked):
             raise AttributeError("Field undefined for this item type")
-        return tuple(self._state.cur.clicked)
+        return _mouse_mask_values(self._state.cur.clicked_mask)
     
     @property
     def double_clicked(self):
@@ -5676,7 +5683,7 @@ cdef class ItemStateCopy:
         """
         if not(self._state.cap.can_be_clicked):
             raise AttributeError("Field undefined for this item type")
-        return self._state.cur.double_clicked
+        return _mouse_mask_values(self._state.cur.double_clicked_mask)
     
     @property
     def deactivated(self):
@@ -5868,25 +5875,30 @@ cdef class ItemStateCopy:
         return self._item
 
 
+cdef void update_current_mouse_click_states(itemStateValues& state, bint hovered) noexcept nogil:
+    """Capture click states at the current point in item traversal."""
+    cdef int32_t i
+    state.clicked_mask = 0
+    state.double_clicked_mask = 0
+    if hovered:
+        for i in range(<int>imgui.ImGuiMouseButton_COUNT):
+            if imgui.IsMouseClicked(i, False):
+                state.clicked_mask |= (<uint32_t>1 << i)
+            if imgui.IsMouseDoubleClicked(i):
+                state.double_clicked_mask |= (<uint32_t>1 << i)
+
+
 cdef void update_current_mouse_states(itemState& state) noexcept nogil:
     """
     Helper to fill common states. Must be called after the hovered state is updated
     """
     cdef int32_t i
     if state.cap.can_be_clicked:
-        if state.cur.hovered:
-            for i in range(<int>imgui.ImGuiMouseButton_COUNT):
-                state.cur.clicked[i] = imgui.IsMouseClicked(i, False)
-                state.cur.double_clicked[i] = imgui.IsMouseDoubleClicked(i)
-        else:
-            for i in range(<int>imgui.ImGuiMouseButton_COUNT):
-                state.cur.clicked[i] = False
-                state.cur.double_clicked[i] = False
+        update_current_mouse_click_states(state.cur, state.cur.hovered)
     cdef bint dragging
     cdef int32_t start_button = 0
     if state.cap.can_be_dragged:
-        for i in range(<int>imgui.ImGuiMouseButton_COUNT):
-            state.cur.dragging[i] = False
+        state.cur.dragging_mask = 0
         # An item can be dragged while not hovered anymore. Activation (clicked + press maintained)
         # is the most reliable criteria. If the item does not support activation, rely on hovering
         # test, and keeping dragging active.
@@ -5897,12 +5909,12 @@ cdef void update_current_mouse_states(itemState& state) noexcept nogil:
                 dragging = imgui.IsMouseDragging(0, -1.)
                 if dragging:
                     state.cur.drag_deltas[0] = ImVec2Vec2(imgui.GetMouseDragDelta(0, -1.))
-                    state.cur.dragging[0] = True
+                    state.cur.dragging_mask |= 1
             start_button = 1
         for i in range(start_button, <int>imgui.ImGuiMouseButton_COUNT):
             dragging = imgui.IsMouseDragging(i, -1.)
             if dragging:
-                if not state.prev.dragging[i]:
+                if not (state.prev.dragging_mask & (<uint32_t>1 << i)):
                     if state.cur.hovered:
                         # check if the item was hovered when the mouse was pressed
                         # TODOV1: seems false, it should also check the mouse was clicked this frame.
@@ -5917,15 +5929,16 @@ cdef void update_current_mouse_states(itemState& state) noexcept nogil:
                         dragging = False
             if dragging:
                 state.cur.drag_deltas[i] = ImVec2Vec2(imgui.GetMouseDragDelta(i, -1.))
-                state.cur.dragging[i] = True
+                state.cur.dragging_mask |= (<uint32_t>1 << i)
 
         # Update drag deltas for the last frame if dragging has stopped
-        for i in range(<int>imgui.ImGuiMouseButton_COUNT):
-            if state.prev.dragging[i] and not state.cur.dragging[i]:
-                if imgui.IsMousePosValid() and imgui.IsMouseReleased(i):
-                    state.cur.drag_deltas[i] = ImVec2Vec2(imgui.GetMouseDragDelta(i, -1.))
-                else:
-                    state.cur.drag_deltas[i] = state.prev.drag_deltas[i]
+        if state.cur.dragging_mask != state.prev.dragging_mask:
+            for i in range(<int>imgui.ImGuiMouseButton_COUNT):
+                if (state.prev.dragging_mask & ~state.cur.dragging_mask) & (<uint32_t>1 << i):
+                    if imgui.IsMousePosValid() and imgui.IsMouseReleased(i):
+                        state.cur.drag_deltas[i] = ImVec2Vec2(imgui.GetMouseDragDelta(i, -1.))
+                    else:
+                        state.cur.drag_deltas[i] = state.prev.drag_deltas[i]
 
 # Drawing items base class
 

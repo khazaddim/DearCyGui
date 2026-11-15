@@ -237,12 +237,12 @@ cdef struct itemStateValues:
     bint active
     # * can_be_clicked states *
     # Item is 'clicked': mouse button pressed
-    bint[5] clicked # <int>imgui.ImGuiMouseButton_COUNT. # TODOV1: remove, deduce from a viewportStateValue by hover + mouse click
-    bint[5] double_clicked
+    uint32_t clicked_mask # Mouse masks use bit i for button i.
+    uint32_t double_clicked_mask
     # * can_be_deactivated_after_edited states *
     bint deactivated_after_edited # TODOV1: check if it can be removed
     # * can_be_dragged states *
-    bint[5] dragging # TODOV1: Remove, deduce from viewportStateValue + hover or active + state filter (see code) check if it can be removed
+    uint32_t dragging_mask # One bit per mouse button.
     Vec2[5] drag_deltas # only valid when dragging or the frame after # TODOV1 remove. Can be retrieved from viewportStateValue. What about DrawInvisibleButton though ?
     # * can_be_edited states *
     bint edited # text fields, etc
@@ -295,6 +295,7 @@ cdef class ItemStateCopy:
     cdef ItemStateCopy create_from_view(ItemStateView view)
 
 
+cdef void update_current_mouse_click_states(itemStateValues&, bint) noexcept nogil
 cdef void update_current_mouse_states(itemState&) noexcept nogil
 
 """

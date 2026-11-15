@@ -32,7 +32,7 @@ from .core cimport baseHandler, drawingItem, uiItem, \
     draw_drawing_children, draw_menubar_children, \
     draw_ui_children, button_area, \
     draw_tab_children, Callback, ItemStateView, \
-    Context, SharedValue, update_current_mouse_states
+    Context, SharedValue, update_current_mouse_states, update_current_mouse_click_states
 from .c_types cimport unique_lock, DCGMutex, Vec2, Vec4, \
     DCGString, string_to_str, string_from_str, string_from_bytes,\
     swap_Vec2
@@ -430,6 +430,7 @@ cdef class DrawInvisibleButton(drawingItem):
             self._initial_mouse_position = coordinate_p
         cdef bint dragging = False
         cdef int32_t i
+        self.state.cur.dragging_mask = 0
         if self.state.cur.active:
             cur_mouse_pos = ImVec2Vec2(imgui.GetCurrentContext().MouseLastValidPos)
             screen_p[0] = cur_mouse_pos.x
@@ -438,18 +439,16 @@ cdef class DrawInvisibleButton(drawingItem):
             dragging = coordinate_p[0] != self._initial_mouse_position[0] or \
                        coordinate_p[1] != self._initial_mouse_position[1]
             for i in range(<int>imgui.ImGuiMouseButton_COUNT):
-                self.state.cur.dragging[i] = dragging and imgui.IsMouseDown(i)
+                if dragging and imgui.IsMouseDown(i):
+                    self.state.cur.dragging_mask |= (<uint32_t>1 << i)
                 if dragging:
                     self.state.cur.drag_deltas[i].x = coordinate_p[0] - self._initial_mouse_position[0]
                     self.state.cur.drag_deltas[i].y = coordinate_p[1] - self._initial_mouse_position[1]
-        else:
-            for i in range(<int>imgui.ImGuiMouseButton_COUNT):
-                self.state.cur.dragging[i] = False
-
         # Update drag deltas for the last frame if dragging has stopped
-        if self.state.prev.active and not self.state.cur.active:
+        if (self.state.prev.active and not self.state.cur.active and
+                self.state.cur.dragging_mask != self.state.prev.dragging_mask):
             for i in range(<int>imgui.ImGuiMouseButton_COUNT):
-                if self.state.prev.dragging[i] and not self.state.cur.dragging[i]:
+                if (self.state.prev.dragging_mask & ~self.state.cur.dragging_mask) & (<uint32_t>1 << i):
                     if imgui.IsMouseReleased(i):
                         cur_mouse_pos = ImVec2Vec2(imgui.GetCurrentContext().MouseLastValidPos)
                         screen_p[0] = cur_mouse_pos.x
@@ -460,14 +459,7 @@ cdef class DrawInvisibleButton(drawingItem):
                     else:
                         self.state.cur.drag_deltas[i] = self.state.prev.drag_deltas[i]
 
-        if self.state.cur.hovered:
-            for i in range(<int>imgui.ImGuiMouseButton_COUNT):
-                self.state.cur.clicked[i] = imgui.IsMouseClicked(i, False)
-                self.state.cur.double_clicked[i] = imgui.IsMouseDoubleClicked(i)
-        else:
-            for i in range(<int>imgui.ImGuiMouseButton_COUNT):
-                self.state.cur.clicked[i] = False
-                self.state.cur.double_clicked[i] = False
+        update_current_mouse_click_states(self.state.cur, self.state.cur.hovered)
 
         self.run_handlers()
 

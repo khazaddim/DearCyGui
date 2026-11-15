@@ -143,7 +143,7 @@ cdef class Layout(uiItem):
         self.state.cap.can_be_edited = True
         self.state.cap.can_be_focused = True
         self.state.cap.can_be_hovered = True
-        self.state.cap.can_be_toggled = True
+        # self.state.cap.can_be_toggled = True # Groups do not forward open/close, and we have custom ones on top
         self.state.cap.has_content_region = True
         self._previous_last_child = NULL
 

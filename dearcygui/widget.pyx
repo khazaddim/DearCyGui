@@ -1262,6 +1262,7 @@ cdef class Combo(uiItem):
         # for the combo, and one for the popup that opens. The edited flag
         # is not set, looking at imgui demo so we have to handle it manually.
         self.state.cur.open = open
+        self.state.cur.active = imgui.IsItemActive()
         self.update_current_state_subset()
 
         cdef bool pressed = False
@@ -1873,6 +1874,9 @@ cdef class RadioButton(uiItem):
         #imgui.PopStyleVar(1)
         imgui.PopID()
         self.update_current_state()
+        # Not captured by EndGroup
+        self.state.cur.edited = changed
+        self.state.cur.deactivated_after_edited = self.state.prev.active and changed and not(self.state.cur.active)
         return changed
 
 
@@ -2856,10 +2860,8 @@ cdef class Text(uiItem):
         self._wrap = -1
         self._marker = <int32_t>TextMarker.NONE
         self._value = <SharedValue>(SharedStr.__new__(SharedStr, self.context))
-        self.state.cap.can_be_active = True # unsure
         self.state.cap.can_be_clicked = True
         self.state.cap.can_be_dragged = True
-        self.state.cap.can_be_focused = True
         self.state.cap.can_be_hovered = True
 
     @property
@@ -3314,7 +3316,6 @@ cdef class ProgressBar(uiItem):
         self._value = <SharedValue>(SharedFloat.__new__(SharedFloat, self.context))
         self.state.cap.can_be_clicked = True
         self.state.cap.can_be_dragged = True
-        self.state.cap.can_be_focused = True
         self.state.cap.can_be_hovered = True
 
     @property

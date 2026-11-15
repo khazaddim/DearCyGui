@@ -1,6 +1,23 @@
 ## Why
 
-The `Game_Controller_Build` fork added a native `PlotColorBars` plot series, which supports per-bar colors, viewport-edge anchoring and a normalized length mode. That branch lost its shared Git history with upstream, so the feature cannot simply be merged. This worktree tracks Axel Davy's current `main`, and color bars are the smaller and more self-contained of the two fork features. Porting them first proves the adapt-and-validate workflow before the larger multi-controller port.
+The `Game_Controller_Build` fork added a native `PlotColorBars` plot series, which supports per-bar colors, viewport-edge anchoring and a normalized length mode. That branch lost its shared Git history with upstream, so the feature cannot simply be merged. This worktree was seeded from Axel Davy's `main`, and color bars are the smaller and more self-contained of the two fork features. Porting them first proves the adapt-and-validate workflow before the larger multi-controller port.
+
+## Upstream freshness and execution status
+
+This is a planning artifact, not an instruction to start porting against the
+current checkout. The integration branch's latest upstream merge is
+`19ace58972afa2e5dc5f37f3d92e34546b7f8ea9` (November 12, 2026), while upstream
+`main` was at [`5acbe6a`](https://github.com/DearCyGui/DearCyGui/commit/5acbe6a74653124ce03f1b4ed2b1636528bb39c9) on November 15. Since the older
+October 25 baseline, upstream has changed drawing thickness/radius and
+`DrawingScale` semantics, coordinate transforms, plot panning/rendering, and
+clock ownership; the latest work also changes item state/rectangle behavior
+and adds tests for those changes.
+
+Because upstream is actively changing, port execution may be deferred until a
+stable checkpoint is chosen. Before implementation, update this branch to that
+checkpoint, review the current plot/rendering/fitting integration points, and
+refresh this proposal and its task list. Do not treat the existing baseline,
+API assumptions, or validation plan as verified against newer upstream code.
 
 ## What Changes
 

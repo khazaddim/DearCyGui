@@ -2,6 +2,15 @@
 
 This is an upstream-first feature port, not a merge of the abandoned integration branch. The planning baseline is `d741df95b502818dee9932ba101b1263e435fee1`; the original feature source is `Game_Controller_Build` at `9db7a6b5537fc194229fcc9f20e389959ee5ff30`. Both histories are locally available without switching worktrees. Re-record the implementation baseline after the separate color-bar port lands.
 
+**Freshness warning:** this design is intentionally deferred while upstream is
+changing rapidly. The integration branch currently includes upstream through
+`19ace58972afa2e5dc5f37f3d92e34546b7f8ea9` (November 12, 2026); upstream
+`main` had advanced to [`5acbe6a`](https://github.com/DearCyGui/DearCyGui/commit/5acbe6a74653124ce03f1b4ed2b1636528bb39c9) by November 15, with further
+changes to item-state/geometry behavior, event and input handling, and related
+tests. The integration points and patch dispositions below are a historical
+review, not a current compatibility assessment. Choose a stable upstream
+checkpoint and re-review/update this design before starting the port.
+
 Read the [original proposal/design/spec/tasks](https://github.com/khazaddim/DearCyGui/tree/Game_Controller_Build/openspec/changes/add-multi-controller-support), but use implemented code to resolve stale wording:
 
 | Original wording | Implemented contract to port |

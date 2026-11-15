@@ -1,7 +1,8 @@
 ## 1. Setup and Provenance
 
-- [ ] 1.1 Use the existing `.venv` (CPython 3.14.0, matching the original repo); do not recreate it. Build the unmodified upstream baseline using the [dearcygui-build skill](../../../.github/skills/dearcygui-build/SKILL.md). Record the baseline pytest results, including pre-existing failures.
-- [ ] 1.2 Copy `PlotColorBars_Demo.py` unchanged from `Game_Controller_Build` (`9db7a6b`) into the repo root, and commit it on its own as provenance.
+- [ ] 1.1 When ready to execute, select an upstream checkpoint after the desired stabilization period, update this branch to it, and re-review the plot, rendering, and fitting integration points. Refresh this proposal and task list before implementation; do not assume the October 25 baseline is current.
+- [ ] 1.2 Use the existing `.venv` (CPython 3.14.0, matching the original repo); do not recreate it. Build the unmodified selected upstream baseline using the [dearcygui-build skill](../../../.github/skills/dearcygui-build/SKILL.md). Record the baseline pytest results, including pre-existing failures.
+- [ ] 1.3 Copy `PlotColorBars_Demo.py` unchanged from `Game_Controller_Build` (`9db7a6b`) into the repo root, and commit it on its own as provenance.
 
 ## 2. Cython Implementation
 

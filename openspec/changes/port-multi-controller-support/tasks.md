@@ -1,9 +1,10 @@
 ## 1. Baseline and source provenance
 
-- [ ] 1.1 Follow the planned color-bars-first order, record the implementation HEAD and frozen controller source `9db7a6b5537fc194229fcc9f20e389959ee5ff30`, and confirm both histories remain inspectable without importing the disconnected branch.
-- [ ] 1.2 Build and baseline the current worktree using the local `dearcygui-build` skill. Record installed package/extension paths and targeted viewport, async, shutdown/GC, and available color-bar test results; distinguish fresh baseline failures from historical reports.
-- [ ] 1.3 Copy `Fancy_Demo.py` unchanged from the frozen feature tip into the repository root and commit it alone as provenance. Verify its Git blob matches the source; keep all upstream adaptations for a later commit.
-- [ ] 1.4 Confirm the reviewed commit dispositions in the design against the implementation baseline, including M1's Windows C++ initialization hunk, the local compiled ImGui backend path, and relevant relink dependencies. Record any newly discovered port-specific differences.
+- [ ] 1.1 When ready to execute, select an upstream checkpoint after the desired stabilization period, update this branch to it, and re-review the backend, event-loop, viewport-lifetime, and handler integration points. Refresh this proposal, design, and task list before implementation; do not assume the October 25 baseline is current.
+- [ ] 1.2 Follow the planned color-bars-first order, record the implementation HEAD and frozen controller source `9db7a6b5537fc194229fcc9f20e389959ee5ff30`, and confirm both histories remain inspectable without importing the disconnected branch.
+- [ ] 1.3 Build and baseline the selected upstream worktree using the local `dearcygui-build` skill. Record installed package/extension paths and targeted viewport, async, shutdown/GC, and available color-bar test results; distinguish fresh baseline failures from historical reports.
+- [ ] 1.4 Copy `Fancy_Demo.py` unchanged from the frozen feature tip into the repository root and commit it alone as provenance. Verify its Git blob matches the source; keep all upstream adaptations for a later commit.
+- [ ] 1.5 Confirm the reviewed commit dispositions in the design against the implementation baseline, including M1's Windows C++ initialization hunk, the local compiled ImGui backend path, and relevant relink dependencies. Record any newly discovered port-specific differences.
 
 ## 2. Controller-capable SDL build and native startup
 

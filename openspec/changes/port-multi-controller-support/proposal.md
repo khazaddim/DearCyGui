@@ -1,3 +1,19 @@
+## Upstream freshness and execution status
+
+This is a planning artifact, not an instruction to start porting against the
+current checkout. The integration branch's latest upstream merge is
+`19ace58972afa2e5dc5f37f3d92e34546b7f8ea9` (November 12, 2026), while upstream
+`main` was at [`5acbe6a`](https://github.com/DearCyGui/DearCyGui/commit/5acbe6a74653124ce03f1b4ed2b1636528bb39c9) on November 15. Recent upstream work has
+continued changing shared event and input-handler behavior, item state and
+geometry, coordinate transforms, and viewport/context clock ownership, with
+new tests landing alongside those changes.
+
+Porting may be deferred until upstream reaches a stable checkpoint. Before
+implementation, update this branch to the selected checkpoint, re-review the
+backend, event-loop, viewport-lifetime, and handler integration points, and
+refresh this proposal, design, and task list. The existing compatibility
+analysis is based on an older upstream snapshot and is not execution-ready.
+
 ## Why
 
 The `Game_Controller_Build` fork added independent input for eight controller slots, but its disconnected Git history prevents a normal merge into Axel Davy's current DearCyGui. After the smaller `port-plot-color-bars` port, recreate this cross-layer feature on upstream history without undoing upstream's viewport, callback, or lifecycle improvements.

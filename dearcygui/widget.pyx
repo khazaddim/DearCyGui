@@ -48,6 +48,152 @@ from .imgui_types cimport is_ButtonDirection, make_ButtonDirection
 
 from warnings import warn as _warn
 
+cdef extern from * nogil:
+    """
+    static ImRect dcg_menu_bar_rect()
+    {
+        return ImGui::GetCurrentWindow()->MenuBarRect();
+    }
+
+    static float dcg_menu_bar_right_edge(float start_x)
+    {
+        ImGuiWindow* window = ImGui::GetCurrentWindow();
+        // Keep the first insertion point as the shared left margin even when
+        // later MenuBars append to this window in the same frame.
+        const ImGuiID frame_key = window->GetID("##dcg_menu_bar_margin_frame");
+        const ImGuiID margin_key = window->GetID("##dcg_menu_bar_margin");
+        ImGuiStorage* storage = &window->StateStorage;
+        const int frame = ImGui::GetFrameCount();
+        if (storage->GetInt(frame_key, -1) != frame)
+        {
+            storage->SetInt(frame_key, frame);
+            storage->SetFloat(margin_key, ImMax(0.0f, start_x - window->MenuBarRect().Min.x));
+        }
+        return window->MenuBarRect().Max.x - storage->GetFloat(margin_key);
+    }
+
+    static ImRect dcg_tab_bar_rect()
+    {
+        return ImGui::GetCurrentTabBar()->BarRect;
+    }
+
+    // Keep ImGui's horizontal menu layout unless a coordinate expression
+    // explicitly positions an axis. Vertical popup entries retain their
+    // existing rectangle alignment. Return the line cursor correction.
+    static ImVec2 dcg_align_menu_item_rect_to_cursor(bool explicit_x, bool explicit_y)
+    {
+        ImGuiWindow* window = ImGui::GetCurrentWindow();
+        if (window->SkipItems)
+            return ImVec2(0.0f, 0.0f);
+        const ImVec2 spacing = ImGui::GetStyle().ItemSpacing;
+        const float half_x = IM_TRUNC(spacing.x * 0.5f);
+        const bool horizontal = window->DC.LayoutType == ImGuiLayoutType_Horizontal;
+        const float rect_offset_x = horizontal
+            ? (explicit_x ? half_x - IM_TRUNC(spacing.x) : 0.0f) : -half_x;
+        const float rect_offset_y = !horizontal || explicit_y
+            ? window->DC.CurrLineTextBaseOffset - IM_TRUNC(spacing.y * 0.5f) : 0.0f;
+        if (rect_offset_x == 0.0f && rect_offset_y == 0.0f)
+            return ImVec2(0.0f, 0.0f);
+        // ItemSize takes the line origin from CursorPosPrevLine on a same
+        // line, so in that case the temporary shift did not move the origin.
+        const float restore_y = window->DC.IsSameLine ? 0.0f : rect_offset_y;
+        ImVec2 pos = ImGui::GetCursorScreenPos();
+        pos.x -= rect_offset_x;
+        pos.y -= rect_offset_y;
+        ImGui::SetCursorScreenPos(pos);
+        // Vertical ItemSize already resets X to the unadjusted indentation.
+        return ImVec2(horizontal ? rect_offset_x : 0.0f, restore_y);
+    }
+
+    static void dcg_restore_menu_cursor(const ImVec2& offset)
+    {
+        ImGuiWindow* window = ImGui::GetCurrentWindow();
+        if (window->SkipItems)
+            return;
+        window->DC.CursorPos.x += offset.x;
+        window->DC.CursorPos.y += offset.y;
+        window->DC.CursorPosPrevLine.x += offset.x;
+        window->DC.CursorPosPrevLine.y += offset.y;
+    }
+
+    """
+    imgui.ImRect dcg_menu_bar_rect()
+    float dcg_menu_bar_right_edge(float)
+    imgui.ImRect dcg_tab_bar_rect()
+    imgui.ImVec2 dcg_align_menu_item_rect_to_cursor(bool, bool)
+    void dcg_restore_menu_cursor(const imgui.ImVec2&)
+
+
+cdef void _fill_position_states_from_last_rect(uiItem item) noexcept nogil:
+    """
+    Helper to get the item starting position from the last submitted ImGui item.
+
+    The default path uses the cursor position to determine the starting position of the item.
+    However in some cases (Menu bars, etc) the element is not drawn at the cursor position.
+    This helper helps retrieve coordinates in that case.
+    """
+    item.state.cur.pos_to_viewport = ImVec2Vec2(imgui.GetItemRectMin())
+    item.state.cur.pos_to_window.x = item.state.cur.pos_to_viewport.x - item.context.viewport.window_pos.x
+    item.state.cur.pos_to_window.y = item.state.cur.pos_to_viewport.y - item.context.viewport.window_pos.y
+    item.state.cur.pos_to_parent.x = item.state.cur.pos_to_viewport.x - item.context.viewport.parent_pos.x
+    item.state.cur.pos_to_parent.y = item.state.cur.pos_to_viewport.y - item.context.viewport.parent_pos.y
+
+
+cdef void _fill_position_size_visibility_states_from_rect(
+    uiItem item,
+    const imgui.ImRect& rect
+) noexcept nogil:
+    """
+    Helper to fill the item's position, size, and visibility states from a given rectangle.
+
+    It sets position, size, and visibility from a viewport-space rectangle.
+
+    ``rect.Min`` and ``rect.Max`` are the top-left and bottom-right corners.
+    The rectangle remains unchanged.
+    """
+    item.state.cur.pos_to_viewport = ImVec2Vec2(rect.Min)
+    item.state.cur.pos_to_window.x = rect.Min.x - item.context.viewport.window_pos.x
+    item.state.cur.pos_to_window.y = rect.Min.y - item.context.viewport.window_pos.y
+    item.state.cur.pos_to_parent.x = rect.Min.x - item.context.viewport.parent_pos.x
+    item.state.cur.pos_to_parent.y = rect.Min.y - item.context.viewport.parent_pos.y
+    item.state.cur.rect_size.x = rect.Max.x - rect.Min.x
+    item.state.cur.rect_size.y = rect.Max.y - rect.Min.y
+    item.state.cur.rendered = imgui.IsRectVisible(rect.Min, rect.Max)
+
+
+cdef void _fill_states_from_item_rect(
+    uiItem item,
+    const imgui.ImRect& rect
+) noexcept nogil:
+    """
+    Fill the item states (position, hover, click, etc) from a given rectangle.
+
+    ``rect.Min`` and ``rect.Max`` must be the top-left and bottom-right
+    corners in viewport coordinates, with each maximum at least its minimum.
+    The rectangle remains unchanged and is not clipped before computing
+    position and size; visibility and hover use the current ImGui window and
+    clip rectangle.
+
+    This replaces update_current_state, which relies on ImGui item states,
+    with an alternative deducing states from the bounding rectangle.
+
+    States filled are:
+    - position states (pos_to_viewport, pos_to_window, pos_to_parent)
+    - rectangle size (rect_size)
+    - traversal status (traversed)
+    - rendering status (rendered)
+    - hover status (hovered)
+    - click status (updated via update_current_mouse_click_states)
+    """
+    _fill_position_size_visibility_states_from_rect(item, rect)
+    item.state.cur.traversed = True
+    item.state.cur.hovered = (
+        item.state.cur.rendered
+        and imgui.IsWindowHovered(imgui.ImGuiHoveredFlags_AllowWhenBlockedByActiveItem)
+        and imgui.IsMouseHoveringRect(rect.Min, rect.Max, True))
+    update_current_mouse_click_states(item.state.cur, item.state.cur.hovered)
+
+
 cdef class DrawInvisibleButton(drawingItem):
     """
     Invisible rectangular area, parallel to axes, behaving
@@ -1044,7 +1190,7 @@ cdef class Button(uiItem):
                                      Vec2ImVec2(self.get_requested_size()))
         imgui.PopItemFlag()
         self.update_current_state()
-        SharedBool.set(<SharedBool>self._value, self.state.cur.active) # Unsure. Not in original
+        SharedBool.set(<SharedBool>self._value, self.state.cur.active) # Unsure whether we should use active or activated
         if self._repeat:
             if self.state.cur.active != self.state.prev.active:
                 # Just clicked: prepare a check for press after the repeat delay
@@ -3301,15 +3447,30 @@ cdef class MenuItem(uiItem):
 
     cdef bint draw_item(self) noexcept nogil:
         cdef bool current_value = SharedBool.get(<SharedBool>self._value)
-        cdef bint pressed = imgui.MenuItem(self._imgui_label.c_str(),
-                                             self._shortcut.c_str(),
-                                             &current_value if self._check else NULL,
-                                             self._enabled)
+        cdef imgui.ImVec2 cursor_offset = dcg_align_menu_item_rect_to_cursor(
+            self.requested_x.is_item(), self.requested_y.is_item()
+        )
+        cdef bint pressed = imgui.MenuItem(
+            self._imgui_label.c_str(),
+            self._shortcut.c_str(),
+            &current_value if self._check else NULL,
+            self._enabled
+        )
+        dcg_restore_menu_cursor(cursor_offset)
+
+        # Override the position filled before draw_item based on the cursor
+        _fill_position_states_from_last_rect(self)
+
+        # Update states (valid because MenuItem has valid item states)
         self.update_current_state()
+
         # Patch edition (which else fires even with _check False)
         self.state.cur.edited = current_value != SharedBool.get(<SharedBool>self._value)
+
         # Patch activation
         self.state.cur.active = pressed
+
+        # Update the shared value and fire the callback on press
         SharedBool.set(<SharedBool>self._value, current_value)
         return pressed
 
@@ -3656,6 +3817,17 @@ cdef class MenuBar(uiItem):
     When placed directly under the viewport, the MenuBar becomes a main menu bar
     that appears at the top of the application window. When placed within another
     window, it creates a local menu bar for that window.
+
+    The item rectangle and mouse states describe this MenuBar's children, not
+    popup windows or other MenuBars sharing the physical bar. The content area
+    extends from this MenuBar's ImGui layout cursor to its logical right edge.
+    The right margin matches the left margin of the first shared bar's content
+    cursor, which can differ from the actual clip edge when the window is rounded.
+    Menu and MenuItem interaction rectangles may start before that cursor
+    because ImGui extends them into the surrounding spacing. An explicit
+    coordinate expression positions the corresponding rectangle edge.
+    Its occupied rectangle is measured after drawing its children, so sizing
+    expressions used by those children see the previous frame's rectangle.
     """
     def __cinit__(self):
         # We should maybe restrict to menuitem ?
@@ -3699,38 +3871,94 @@ cdef class MenuBar(uiItem):
         else:
             menu_allowed = imgui.BeginMenuBar()
         cdef Vec2 pos_w, pos_p, parent_size_backup
-        cdef float frame_h, win_width
+        cdef imgui.ImRect rect
+
+        # Initialize position and bounding rect for children
+        cdef imgui.ImVec2 start_cursor
+        cdef imgui.ImRect bounding_rect
+        cdef imgui.ImRect child_rect
+
+        # Draw items if the menu is displayed
+        cdef PyObject* child
+        cdef bint seen_child_with_rect = False
         if menu_allowed:
-            self.update_current_state()
-            frame_h = imgui.GetFrameHeight()
-            win_width = imgui.GetWindowWidth()
-            # rect_size: the full visual bounding box of the menubar.
-            # GetWindowWidth() gives the full window width including the scrollbar
-            # area, which is correct: the menubar visually spans the full width
-            # and is not affected by a vertical scrollbar in the content area.
-            self.state.cur.rect_size.x = win_width
-            self.state.cur.rect_size.y = frame_h
-            # content_region_size: equivalent to GetContentRegionAvail() but
-            # without the scrollbar deduction.
-            # GetContentRegionAvail() returns:
-            #   ContentRegionRect.Max.x - CursorPos.x
-            # = WindowWidth - WindowBorderSize - ScrollbarSizes.x - WindowPadding.x
-            # We replicate this without ScrollbarSizes.x since the scrollbar
-            # does not visually affect the menu bar area.
-            self.state.cur.content_region_size.x = win_width - imgui.GetStyle().WindowBorderSize - imgui.GetStyle().WindowPadding.x
-            self.state.cur.content_region_size.y = frame_h
+            start_cursor = imgui.GetCursorScreenPos()
+            bounding_rect = imgui.ImRect(start_cursor, start_cursor)
+            # Match the first content cursor's left margin on the right.
+            rect = dcg_menu_bar_rect()
+            self.state.cur.content_pos = ImVec2Vec2(start_cursor)
+            self.state.cur.content_region_size.x = fmax(
+                0., dcg_menu_bar_right_edge(start_cursor.x)
+                - self.state.cur.content_pos.x
+            )
+            self.state.cur.content_region_size.y = fmax(
+                0., rect.Max.y - self.state.cur.content_pos.y
+            )
+
+            # Draw children if any (appended from previous menu items by default)
             if self.last_widgets_child is not None:
-                # We are at the top of the window, but behave as if popup
-                pos_w = ImVec2Vec2(imgui.GetCursorScreenPos())
-                pos_p = pos_w
+                # Although we are part of the window (at the top),
+                # here we choose to behave as if we were a popup.
+                # Starting position is the cursor
+                pos_p = pos_w = ImVec2Vec2(start_cursor)
                 swap_Vec2(pos_w, self.context.viewport.window_pos)
                 swap_Vec2(pos_p, self.context.viewport.parent_pos)
+
+                # Parent size is the available region size
                 parent_size_backup = self.context.viewport.parent_size
                 self.context.viewport.parent_size = self.state.cur.content_region_size
-                draw_ui_children(self)
+
+                # Lock all children as we will access their state
+                # after draw(). Note we could lock just the immediate children if needed.
+                self.last_widgets_child.lock_and_previous_siblings()
+
+                # Get the first child to draw
+                child = <PyObject*>self.last_widgets_child
+                while (<uiItem>child).prev_sibling is not None:
+                    child = <PyObject*>(<uiItem>child).prev_sibling
+
+                # Draw each child and keep track of their bounding rect
+                while (<uiItem>child) is not None:
+                    # Draw the child
+                    (<uiItem>child).draw()
+
+                    # Update rect if any
+                    if (
+                        (<uiItem>child).state.cap.has_rect_size
+                        and (<uiItem>child).state.cap.has_position
+                        and (<uiItem>child).state.cur.traversed
+                    ):
+                        child_rect = imgui.ImRect(
+                            (<uiItem>child).state.cur.pos_to_viewport.x,
+                            (<uiItem>child).state.cur.pos_to_viewport.y,
+                            (<uiItem>child).state.cur.pos_to_viewport.x + (<uiItem>child).state.cur.rect_size.x,
+                            (<uiItem>child).state.cur.pos_to_viewport.y + (<uiItem>child).state.cur.rect_size.y
+                        )
+                        if not seen_child_with_rect:
+                            bounding_rect = child_rect
+                            seen_child_with_rect = True
+                        else:
+                            bounding_rect.Add(child_rect)
+
+                    # Move to the next sibling
+                    child = <PyObject*>(<uiItem>child).next_sibling
+
+                # Release locks
+                self.last_widgets_child.unlock_and_previous_siblings()
+
+                # Restore viewport positions and size
                 self.context.viewport.window_pos = pos_w
                 self.context.viewport.parent_pos = pos_p
                 self.context.viewport.parent_size = parent_size_backup
+
+            # Fill the current item's state from the calculated bounding rect
+            # This allows hover, click, etc to take into account that rect.
+            _fill_states_from_item_rect(self, bounding_rect)
+
+            # Ask redraw on layout change (same as for Layouts)
+            if self.state.cur.rect_size.x != self.state.prev.rect_size.x or \
+               self.state.cur.rect_size.y != self.state.prev.rect_size.y:
+                self.context.viewport.ask_immediate_redraw()
             if parent_viewport:
                 imgui.EndMainMenuBar()
             else:
@@ -3775,6 +4003,9 @@ cdef class Menu(uiItem):
     menu can contain multiple menu items or other menus.
 
     Menus must be created within a MenuBar or as a child of another Menu.
+
+    Hover and click states include the open popup. When open, focus refers to
+    the popup window; otherwise, it refers to the menu entry.
     """
     # TODO: MUST be inside a menubar
     def __cinit__(self):
@@ -3790,12 +4021,24 @@ cdef class Menu(uiItem):
         self.state.cap.can_be_toggled = True
 
     cdef bint draw_item(self) noexcept nogil:
+        cdef imgui.ImVec2 cursor_offset = dcg_align_menu_item_rect_to_cursor(
+            self.requested_x.is_item(), self.requested_y.is_item()
+        )
         cdef bint menu_open = imgui.BeginMenu(self._imgui_label.c_str(),
                                               self._enabled)
-        self.update_current_state() # Does not capture active reliably (may be added in the future)
+
+        # Override the position filled before draw_item based on the cursor
+        _fill_position_states_from_last_rect(self)
+
+        # Update the current state of the menu item before drawing its children
+        # NOTE: Does not capture "active" reliably (may be added in the future)
+        self.update_current_state()
         cdef Vec2 pos_w, pos_p, parent_size_backup
+
+        # Handle open popup
         if menu_open:
             self.state.cur.hovered |= imgui.IsWindowHovered(imgui.ImGuiHoveredFlags_None)
+            update_current_mouse_click_states(self.state.cur, self.state.cur.hovered)
             self.state.cur.focused = imgui.IsWindowFocused(imgui.ImGuiFocusedFlags_None)
             self.state.cur.content_pos = ImVec2Vec2(imgui.GetCursorScreenPos())
             self.state.cur.content_region_size = ImVec2Vec2(imgui.GetContentRegionAvail()) # Unsure
@@ -3818,6 +4061,10 @@ cdef class Menu(uiItem):
             imgui.EndMenu()
         else:
             self._propagate_hidden_state_to_children_with_handlers()
+
+        dcg_restore_menu_cursor(cursor_offset)
+
+        # Update the open state and shared value after handling the menu popup
         self.state.cur.open = menu_open
         SharedBool.set(<SharedBool>self._value, menu_open)
         #return self.state.cur.active and not(self.state.prev.active)
@@ -4170,10 +4417,19 @@ cdef class TabButton(uiItem):
             self._flags |= imgui.ImGuiTabItemFlags_NoTooltip
 
     cdef bint draw_item(self) noexcept nogil:
-        cdef bint pressed = imgui.TabItemButton(self._imgui_label.c_str(),
-                                                self._flags)
+        cdef bint pressed = imgui.TabItemButton(
+            self._imgui_label.c_str(),
+            self._flags
+        )
+
+        # Override the item position based on the last rect filled by ImGui
+        _fill_position_states_from_last_rect(self)
+
+        # Update the current state of the tab after drawing the tab item button
         self.update_current_state()
-        #SharedBool.set(<SharedBool>self._value, self.state.cur.active) # Unsure. Not in original
+
+        # Same as Button()
+        SharedBool.set(<SharedBool>self._value, self.state.cur.active) # Unsure whether we should use active or pressed
         return pressed
 
 
@@ -4332,9 +4588,17 @@ cdef class Tab(uiItem):
                                                  flags)
         if not(self._show):
             self._show_update_requested = True
+
+        # Fill the item position based on the last rect provided by ImGui
+        _fill_position_states_from_last_rect(self)
+
+        # Update the current state of the tab before drawing its children
         self.update_current_state()
+
         cdef Vec2 pos_p, parent_size_backup
         cdef float dx, dy
+        # NOTE: the children are not drawn in a popup, but inside
+        # the TabBar content region.
         if menu_open:
             if self.last_widgets_child is not None:
                 pos_p = ImVec2Vec2(imgui.GetCursorScreenPos())
@@ -4352,9 +4616,13 @@ cdef class Tab(uiItem):
             imgui.EndTabItem()
         else:
             self._propagate_hidden_state_to_children_with_handlers()
+
+        # Update the open state and shared value after handling the tab item
         self.state.cur.open = menu_open
         SharedBool.set(<SharedBool>self._value, menu_open)
         self._last_frame_change = (<SharedBool>self._value)._last_frame_change
+
+        # Spawn callback on activation
         return self.state.cur.active and not(self.state.prev.active)
 
 
@@ -4374,6 +4642,9 @@ cdef class TabBar(uiItem):
     layouts to be organized into a compact, user-friendly interface. Only the
     content of the currently selected tab is visible, while other tab contents are
     hidden until selected.
+
+    The mouse states (hover, click) describe the whole header bar, not the tab contents.
+    The item rect_size, etc refect to the whole visual (including children elements).
     """
     def __cinit__(self):
         #self._value = <SharedValue>(SharedBool.__new__(SharedBool, self.context))
@@ -4584,36 +4855,47 @@ cdef class TabBar(uiItem):
 
     cdef bint draw_item(self) noexcept nogil:
         imgui.PushID(self.uuid)
-        imgui.BeginGroup() # from original. Unsure if needed
+        imgui.BeginGroup()
         cdef bint visible = imgui.BeginTabBar(self._imgui_label.c_str(),
                                               self._flags)
-        self.update_current_state() # NOTE: cannot capture activation state reliably here
         cdef Vec2 pos_p, parent_size_backup
         cdef float dx, dy
         if visible:
+            # Use the bar for hover/clicks
+            _fill_states_from_item_rect(self, dcg_tab_bar_rect())
+
+            # Draw tabs
             if self.last_tab_child is not None:
+                # Get content position
                 pos_p = ImVec2Vec2(imgui.GetCursorScreenPos())
                 dx = pos_p.x - self.context.viewport.parent_pos.x
                 dy = pos_p.y - self.context.viewport.parent_pos.y
+                swap_Vec2(pos_p, self.context.viewport.parent_pos)
 
+                # Get content size
                 parent_size_backup = self.context.viewport.parent_size
                 self.context.viewport.parent_size.x = parent_size_backup.x - dx
                 self.context.viewport.parent_size.y = parent_size_backup.y - dy
 
-                swap_Vec2(pos_p, self.context.viewport.parent_pos)
+                # Draw all children
                 draw_tab_children(self)
+
+                # Restore position and size
                 self.context.viewport.parent_pos = pos_p
                 self.context.viewport.parent_size = parent_size_backup
             imgui.EndTabBar()
+        elif self.state.cur.rendered:
+            self._set_not_rendered_and_propagate_to_children_with_handlers()
+        # children can still be traversed when the bar was clipped.
         else:
             self._propagate_hidden_state_to_children_with_handlers()
-        # PushStyleVar was added because EngGroup adds itemSpacing
-        # which messed up requested sizes. However it seems the
-        # issue was fixed by imgui
-        #imgui.PushStyleVar(imgui.ImGuiStyleVar_ItemSpacing,
-        #                       imgui.ImVec2(0., 0.))
         imgui.EndGroup()
-        #imgui.PopStyleVar(1)
+
+        # Override the position, size, and visibility states based on the total rect
+        if visible:
+            _fill_position_size_visibility_states_from_rect(
+                self, imgui.ImRect(imgui.GetItemRectMin(), imgui.GetItemRectMax()))
+
         imgui.PopID()
         #return self.state.cur.active and not(self.state.prev.active)
         return False

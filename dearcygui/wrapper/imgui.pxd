@@ -2208,6 +2208,14 @@ cdef extern from "imgui_internal.h" namespace "ImGui" nogil:
     bint IsMouseDragPastThreshold(ImGuiMouseButton, float)
 
 cdef extern from "imgui_internal.h" nogil:
+    cppclass ImRect:
+        ImVec2 Min
+        ImVec2 Max
+        ImRect()
+        ImRect(const ImVec2&, const ImVec2&)
+        ImRect(float, float, float, float) # x1, y1, x2, y2
+        void Add(const ImRect&) # union
+
     int ImTextCharFromUtf8(unsigned int* out_char, const char* in_text, const char* in_text_end)
     int ImFormatString(char* buf, size_t buf_size, const char* fmt, ...) 
     struct ImGuiContext:

@@ -269,18 +269,23 @@ cdef class Layout(uiItem):
         # and reset _force_update
         cdef bint changed = self.check_change()
 
+        # Lock children as we will read their state after they are drawn.
+        self.last_widgets_child.lock_and_previous_siblings()
+
         # Pack the children inside a group to get
         # the correct states
         imgui.PushID(self.uuid)
         imgui.BeginGroup()
         cdef Vec2 pos_p
-        if self.last_widgets_child is not None:
-            pos_p = ImVec2Vec2(imgui.GetCursorScreenPos())
-            swap_Vec2(pos_p, self.context.viewport.parent_pos)
-            self.draw_children()
-            self.context.viewport.parent_pos = pos_p
+        pos_p = ImVec2Vec2(imgui.GetCursorScreenPos())
+        swap_Vec2(pos_p, self.context.viewport.parent_pos)
+        self.draw_children()
+        self.context.viewport.parent_pos = pos_p
         imgui.EndGroup()
         imgui.PopID()
+
+        # Unlock children after drawing and reading their state.
+        self.last_widgets_child.unlock_and_previous_siblings()
 
         # Update states by reading from the group.
         self.update_current_state()
@@ -1361,7 +1366,7 @@ cdef class WindowLayout(uiItem):
 
     cdef bint check_change(self) noexcept nogil:
         """
-        Return True if the layout needs to lock its children and redraw.
+        Check if the layout has changed since the last frame.
 
         Triggers are:
           - A change in the requested width or height expression
@@ -1484,11 +1489,8 @@ cdef class WindowLayout(uiItem):
         if self._theme is not None:
             self._theme.push()
 
-        # check_change decides whether children need to be locked (and thus
-        # whether their positions/sizes may be re-evaluated this frame).
         cdef bint changed = self.check_change()
-        if changed:
-            self.last_window_child.lock_and_previous_siblings()
+        self.last_window_child.lock_and_previous_siblings()
 
         # Expose our content area as the parent context so that children can
         # resolve sizing expressions like "fillx", "parent.height", etc.
@@ -1532,8 +1534,7 @@ cdef class WindowLayout(uiItem):
             # No children: zero the bounding box so the layout is invisible
             self.state.cur.rect_size = make_Vec2(0., 0.)
 
-        if changed:
-            self.last_window_child.unlock_and_previous_siblings()
+        self.last_window_child.unlock_and_previous_siblings()
 
         # Pop theme and font overrides in reverse order
         if self._theme is not None:

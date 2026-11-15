@@ -3301,13 +3301,17 @@ cdef class MenuItem(uiItem):
 
     cdef bint draw_item(self) noexcept nogil:
         cdef bool current_value = SharedBool.get(<SharedBool>self._value)
-        cdef bint activated = imgui.MenuItem(self._imgui_label.c_str(),
+        cdef bint pressed = imgui.MenuItem(self._imgui_label.c_str(),
                                              self._shortcut.c_str(),
                                              &current_value if self._check else NULL,
                                              self._enabled)
         self.update_current_state()
+        # Patch edition (which else fires even with _check False)
+        self.state.cur.edited = current_value != SharedBool.get(<SharedBool>self._value)
+        # Patch activation
+        self.state.cur.active = pressed
         SharedBool.set(<SharedBool>self._value, current_value)
-        return activated
+        return pressed
 
 cdef class ProgressBar(uiItem):
     """

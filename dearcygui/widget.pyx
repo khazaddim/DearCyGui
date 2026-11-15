@@ -3821,7 +3821,7 @@ cdef class Menu(uiItem):
         self.state.cur.open = menu_open
         SharedBool.set(<SharedBool>self._value, menu_open)
         #return self.state.cur.active and not(self.state.prev.active)
-        return self.state.open and not(self.state.prev.open)
+        return self.state.cur.open and not(self.state.prev.open)
 
 cdef class Tooltip(uiItem):
     """

@@ -2,8 +2,8 @@
 
 import gc
 import threading
+import time
 from collections.abc import Iterator
-
 import dearcygui as dcg
 import pytest
 
@@ -15,8 +15,17 @@ def context() -> Iterator[dcg.Context]:
     ctx.viewport.initialize(visible=False, width=800, height=600)
     yield ctx
     ctx.queue.shutdown(wait=True)
-    ctx.viewport.destroy()
-    gc.collect()
+    ctx.viewport.children = []
+    deadline = time.monotonic() + 5
+    while True:
+        try:
+            gc.collect()
+            ctx.viewport.destroy()
+            break
+        except RuntimeError as error:
+            if "resources are in use" not in str(error) or time.monotonic() >= deadline:
+                raise
+            time.sleep(0.01)
 
 
 def _render(ctx: dcg.Context, *, count: int = 5) -> None:

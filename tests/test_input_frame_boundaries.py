@@ -5,6 +5,7 @@ import os
 import shutil
 import subprocess
 import threading
+import time
 from collections.abc import Iterator
 
 import dearcygui as dcg
@@ -19,8 +20,17 @@ def context() -> Iterator[dcg.Context]:
     ctx.viewport.vsync = False
     yield ctx
     ctx.queue.shutdown(wait=True)
-    ctx.viewport.destroy()
-    gc.collect()
+    ctx.viewport.children = []
+    deadline = time.monotonic() + 5
+    while True:
+        try:
+            gc.collect()
+            ctx.viewport.destroy()
+            break
+        except RuntimeError as error:
+            if "resources are in use" not in str(error) or time.monotonic() >= deadline:
+                raise
+            time.sleep(0.01)
 
 
 def _render(ctx: dcg.Context, *, count: int = 1) -> None:
@@ -78,7 +88,7 @@ def test_item_click_masks_preserve_views_and_snapshots(
     expected = tuple(i == button.value for i in range(5))
     assert item.state.clicked == expected
     assert first.clicked == expected
-    assert item.state.double_clicked == [False] * 5
+    assert item.state.double_clicked == (False,) * 5
     assert all(type(value) is bool for value in item.state.clicked)
     assert all(type(value) is bool for value in item.state.double_clicked)
 
@@ -89,9 +99,9 @@ def test_item_click_masks_preserve_views_and_snapshots(
     _render(context)
     second = item.state.snapshot()
     assert item.state.clicked == expected
-    assert item.state.double_clicked == list(expected)
-    assert second.double_clicked == list(expected)
-    assert first.double_clicked == [False] * 5
+    assert item.state.double_clicked == expected
+    assert second.double_clicked == expected
+    assert first.double_clicked == (False,) * 5
 
     context.inject_mouse_up(button)
     _render(context)
@@ -99,12 +109,12 @@ def test_item_click_masks_preserve_views_and_snapshots(
     assert clicks == [button, button]
     assert doubles == [button]
     assert first.clicked == expected
-    assert second.double_clicked == list(expected)
+    assert second.double_clicked == expected
 
     item.show = False
     _render(context)
     assert item.state.clicked == (False,) * 5
-    assert item.state.double_clicked == [False] * 5
+    assert item.state.double_clicked == (False,) * 5
 
 
 @pytest.mark.parametrize("button", list(dcg.MouseButton))

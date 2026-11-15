@@ -28,7 +28,7 @@ from libcpp.string cimport string, to_string
 from libcpp.unordered_map cimport unordered_map
 
 from .core cimport uiItem, Context, lock_gil_friendly, Viewport, baseFont, baseItem
-from .c_types cimport DCGMutex, unique_lock, Vec2, Vec4, make_Vec2
+from .c_types cimport DCGMutex, DCGString, DCGVector, unique_lock, Vec2, string_to_str, string_from_str
 from .imgui_types cimport unparse_color, parse_color
 from .wrapper cimport imgui
 from .layout cimport Layout
@@ -1028,7 +1028,7 @@ cdef class MarkDownText(uiItem):
     """
 
     # Content
-    cdef string _text
+    cdef DCGString _text
     cdef MDParser _parser
     cdef uint32_t[<int32_t>TextColorIndex.COUNT] _color_table # requested colors from the user. value of 1 means "use default color"
     
@@ -1036,9 +1036,9 @@ cdef class MarkDownText(uiItem):
     cdef float _last_width
     cdef float _last_global_scale
     cdef Vec2 _rect_size
-    cdef vector[MDProcessedLine] _lines  # Processed lines for rendering, in order of increasing y position
-    cdef vector[MDProcessedBlock] _blocks  # Processed blocks for rendering, in a topological order
-    cdef vector[MDProcessedBlockDetail] _block_details # Details for selected blocks needed for rendering
+    cdef DCGVector[MDProcessedLine] _lines  # Processed lines for rendering, in order of increasing y position
+    cdef DCGVector[MDProcessedBlock] _blocks  # Processed blocks for rendering, in a topological order
+    cdef DCGVector[MDProcessedBlockDetail] _block_details # Details for selected blocks needed for rendering
     cdef PyObject *_applicable_font # font used for layout, baseFont
     cdef uint64_t _font_signature # signature of the applicable font at layout time
     cdef bint _last_is_soft_break # temporary data
@@ -1047,8 +1047,8 @@ cdef class MarkDownText(uiItem):
     cdef float[7] _heading_scales  # Scale factors for h1-h6, h0 used for normal text
 
     # Inline items
-    cdef unordered_map[uint64_t, PyObject*] _uuid_map  # Map of UUIDs to DCG objects (uiItem) for links, images, etc.
-    cdef dict _uuid_dict # Same as above, but holds the Python reference. We split to avoid gil during rendering.
+    # cdef unordered_map[uint64_t, PyObject*] _uuid_map  # Map of UUIDs to DCG objects (uiItem) for links, images, etc.
+    # cdef dict _uuid_dict # Same as above, but holds the Python reference. We split to avoid gil during rendering.
 
     def __cinit__(self, Context context, **kwargs):
         """Initialize the markdown component"""
@@ -1252,15 +1252,15 @@ cdef class MarkDownText(uiItem):
     @property
     def value(self):
         """Get the markdown text content"""
-        return self._text.decode('utf8')
+        return string_to_str(self._text)
     
     @value.setter
     def value(self, text): # TODO V1: Use SharedStr to store the value (needs change detection mechanism)
         """Set markdown text and mark for reparsing"""
         if not isinstance(text, str):
             raise TypeError("value must be a string")
-        new_value = text.encode('utf8')
-        if <int32_t>self._text.size() == <int32_t>len(new_value) and bytes(self._text) == new_value:
+        cdef DCGString new_value = string_from_str(text)
+        if self._text == new_value:
             return  # No change, no need to reparse
         self._text = new_value
         # Reset parser state

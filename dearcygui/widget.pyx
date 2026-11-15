@@ -6579,7 +6579,7 @@ cdef class SharedFloatVect(SharedValue):
         cdef cython_array arr = cython_array(shape=(self._value.shape[0],), itemsize=4, format='f')
         cdef float[::1] arr_view = arr
         cdef size_t i
-        for i in range(self._value.shape[0]):
+        for i in range(<size_t>self._value.shape[0]):
             arr_view[i] = self._value[i]
         return arr
 
@@ -6591,7 +6591,7 @@ cdef class SharedFloatVect(SharedValue):
         if len(value) != self._value.shape[0]:
             self._value = cython_array(shape=(len(value),), itemsize=4, format='f')
         cdef size_t i
-        for i in range(len(value)):
+        for i in range(<size_t>len(value)):
             self._value[i] = value[i]
         self._last_frame_change = self.context.viewport.frame_count
         self.on_update(True)
@@ -6605,7 +6605,7 @@ cdef class SharedFloatVect(SharedValue):
             with gil:
                 self._value = cython_array(shape=(value.shape[0],), itemsize=4, format='f')
         cdef size_t i
-        for i in range(value.shape[0]):
+        for i in range(<size_t>value.shape[0]):
             self._value[i] = value[i]
         self._last_frame_change = self.context.viewport.frame_count
         self.on_update(True)

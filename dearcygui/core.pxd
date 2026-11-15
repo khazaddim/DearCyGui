@@ -237,13 +237,13 @@ cdef struct itemStateValues:
     bint active
     # * can_be_clicked states *
     # Item is 'clicked': mouse button pressed
-    bint[5] clicked # <int>imgui.ImGuiMouseButton_COUNT. TODO: check if it can be removed
+    bint[5] clicked # <int>imgui.ImGuiMouseButton_COUNT. # TODOV1: remove, deduce from a viewportStateValue by hover + mouse click
     bint[5] double_clicked
     # * can_be_deactivated_after_edited states *
-    bint deactivated_after_edited # TODO: check if it can be removed
+    bint deactivated_after_edited # TODOV1: check if it can be removed
     # * can_be_dragged states *
-    bint[5] dragging # TODO: check if it can be removed
-    Vec2[5] drag_deltas # only valid when dragging # TODO: check if it can be removed
+    bint[5] dragging # TODOV1: Remove, deduce from viewportStateValue + hover or active + state filter (see code) check if it can be removed
+    Vec2[5] drag_deltas # only valid when dragging # TODOV1 remove. Can be retrieved from viewportStateValue. What about DrawInvisibleButton though ?
     # * can_be_edited states *
     bint edited # text fields, etc
     # * can_be_focused states *
@@ -362,8 +362,9 @@ cdef class Viewport(baseItem):
     cdef Vec2 parent_size # Content region size (in pixels) of the direct parent
     cdef bint in_plot # Current rendering occurs withing a plot
     cdef bint plot_fit # Current plot is fitting the axes to the data
-    cdef float thickness_multiplier # scale for the thickness of all lines (Draw*)
-    cdef float size_multiplier # scale for the size of all Draw* elements.
+    cdef float coordinate_size_scale # X-derived coordinate size to screen size
+    cdef float thickness_style_scale # dimensionless style factor for screen-space thickness
+    cdef bint screen_size_uses_global_scale # apply global scale to screen-space sizes
     cdef bint[6] enabled_axes # <int>implot.ImAxis_COUNT. Enabled plot axes.
     # Temporary scratch space to be accessed during rendering
     # Shouldn't be accessed outside draw()
@@ -403,6 +404,7 @@ cdef class Viewport(baseItem):
     cdef void* _implot_context # implot.ImPlotContext
     ### public methods ###
     cpdef void delete_item(self)
+    cdef uint64_t c_clock_ns(self) noexcept nogil
     cdef void coordinate_to_screen(self, float *dst_p, const double[2] src_p) noexcept nogil
     cdef void screen_to_coordinate(self, double *dst_p, const float[2] src_p) noexcept nogil
     cdef void ask_refresh_after_target(self, double monotonic) noexcept nogil # might refresh before, in which case you should call again
@@ -796,4 +798,3 @@ cdef class baseTheme(baseItem):
     cdef DCGVector[int32_t] _last_push_size
     cdef void push(self) noexcept nogil
     cdef void pop(self) noexcept nogil
-

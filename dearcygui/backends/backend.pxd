@@ -23,6 +23,7 @@ cdef extern from "backend.h" nogil:
         bint renderFrame(bint)
         void present()
         bint checkPrimaryThread()
+        uint64_t getCurrentTimeNS() noexcept
         void toggleFullScreen()
         void addWindowIcon(void*, int, int, int, int, int) except +
         void wakeRendering(uint64_t, bint)

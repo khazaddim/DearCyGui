@@ -279,57 +279,173 @@ cdef class DeactivatedAfterEditHandlerCallbackValue(HandlerCallbackValue):
     pass
 
 cdef class DraggedHandlerCallbackValue(MouseButtonHandlerCallbackValue):
-    """Callback value for the DraggedHandler."""
+    """Callback value for the DraggedHandler.
 
-    def __init__(self, Context context, MouseButton button, drag_delta):
+    When mouse_position is omitted, the constructor derives it by adding
+    drag_delta to click_position. Provide it explicitly when drag_delta
+    is not in screen coordinates.
+    """
+
+    def __init__(
+        self,
+        Context context,
+        MouseButton button,
+        drag_delta,
+        click_position,
+        mouse_position=None
+    ):
         if isinstance(drag_delta, Coord):
             self._drag_delta_x = getattr(drag_delta, "x")
             self._drag_delta_y = getattr(drag_delta, "y")
         else:
             raise TypeError("drag_delta must be of type Coord")
+        if isinstance(click_position, Coord):
+            self._click_pos_x = getattr(click_position, "x")
+            self._click_pos_y = getattr(click_position, "y")
+        else:
+            raise TypeError("click_position must be of type Coord")
+        if mouse_position is None:
+            self._mouse_pos_x = self._click_pos_x + self._drag_delta_x
+            self._mouse_pos_y = self._click_pos_y + self._drag_delta_y
+        elif isinstance(mouse_position, Coord):
+            self._mouse_pos_x = getattr(mouse_position, "x")
+            self._mouse_pos_y = getattr(mouse_position, "y")
+        else:
+            raise TypeError("mouse_position must be of type Coord")
         MouseButtonHandlerCallbackValue.__init__(self, context, button)
     
     @property
     def drag_delta(self):
-        """Delta between the position when dragging stopped and the initial position."""
+        """Delta in screen space between the position when dragging stopped and the initial position.
+
+        NOTE: when attached to a DrawInvisibleButton, the drag_delta is in coordinates space.
+        However click_position and mouse_position are always in screen space.
+        """
         cdef double[2] delta
         delta[0] = self._drag_delta_x
         delta[1] = self._drag_delta_y
         return Coord.build(delta)
 
+    @property
+    def click_position(self):
+        """Position of the mouse in screen space where the click occurred."""
+        cdef double[2] pos
+        pos[0] = self._click_pos_x
+        pos[1] = self._click_pos_y
+        return Coord.build(pos)
+
+    @property
+    def mouse_position(self):
+        """Current mouse position in screen space."""
+        cdef double[2] pos
+        pos[0] = self._mouse_pos_x
+        pos[1] = self._mouse_pos_y
+        return Coord.build(pos)
+
     @staticmethod
-    cdef DraggedHandlerCallbackValue build(Context context, MouseButton button, float drag_delta_x, float drag_delta_y):
+    cdef DraggedHandlerCallbackValue build(
+        Context context,
+        MouseButton button,
+        float drag_delta_x,
+        float drag_delta_y,
+        float click_pos_x,
+        float click_pos_y,
+        float mouse_pos_x,
+        float mouse_pos_y
+    ):
         cdef DraggedHandlerCallbackValue value = DraggedHandlerCallbackValue.__new__(DraggedHandlerCallbackValue)
         value._button = button
         value._drag_delta_x = drag_delta_x
         value._drag_delta_y = drag_delta_y
+        value._click_pos_x = click_pos_x
+        value._click_pos_y = click_pos_y
+        value._mouse_pos_x = mouse_pos_x
+        value._mouse_pos_y = mouse_pos_y
         return value
 
 cdef class DraggingHandlerCallbackValue(MouseButtonHandlerCallbackValue):
-    """Callback value for the DraggingHandler."""
+    """Callback value for the DraggingHandler.
 
-    def __init__(self, Context context, MouseButton button, drag_delta):
+    When mouse_position is omitted, the constructor derives it by adding
+    drag_delta to click_position. Provide it explicitly when drag_delta
+    is not in screen coordinates.
+    """
+
+    def __init__(
+        self,
+        Context context,
+        MouseButton button,
+        drag_delta,
+        click_position,
+        mouse_position=None
+    ):
         if isinstance(drag_delta, Coord):
             self._drag_delta_x = getattr(drag_delta, "x")
             self._drag_delta_y = getattr(drag_delta, "y")
         else:
             raise TypeError("drag_delta must be of type Coord")
+        if isinstance(click_position, Coord):
+            self._click_pos_x = getattr(click_position, "x")
+            self._click_pos_y = getattr(click_position, "y")
+        else:
+            raise TypeError("click_position must be of type Coord")
+        if mouse_position is None:
+            self._mouse_pos_x = self._click_pos_x + self._drag_delta_x
+            self._mouse_pos_y = self._click_pos_y + self._drag_delta_y
+        elif isinstance(mouse_position, Coord):
+            self._mouse_pos_x = getattr(mouse_position, "x")
+            self._mouse_pos_y = getattr(mouse_position, "y")
+        else:
+            raise TypeError("mouse_position must be of type Coord")
         MouseButtonHandlerCallbackValue.__init__(self, context, button)
 
     @property
     def drag_delta(self):
-        """Delta between the position when dragging stopped and the initial position."""
+        """Delta in screen space between the position when dragging stopped and the initial position.
+
+        NOTE: when attached to a DrawInvisibleButton, the drag_delta is in coordinates space.
+        However click_position and mouse_position are always in screen space.
+        """
         cdef double[2] delta
         delta[0] = self._drag_delta_x
         delta[1] = self._drag_delta_y
         return Coord.build(delta)
 
+    @property
+    def click_position(self):
+        """Position of the mouse in screen space where the click occurred."""
+        cdef double[2] pos
+        pos[0] = self._click_pos_x
+        pos[1] = self._click_pos_y
+        return Coord.build(pos)
+
+    @property
+    def mouse_position(self):
+        """Current mouse position in screen space."""
+        cdef double[2] pos
+        pos[0] = self._mouse_pos_x
+        pos[1] = self._mouse_pos_y
+        return Coord.build(pos)
+
     @staticmethod
-    cdef DraggingHandlerCallbackValue build(Context context, MouseButton button, float drag_delta_x, float drag_delta_y):
+    cdef DraggingHandlerCallbackValue build(
+        Context context,
+        MouseButton button,
+        float drag_delta_x,
+        float drag_delta_y,
+        float click_pos_x,
+        float click_pos_y,
+        float mouse_pos_x,
+        float mouse_pos_y
+    ):
         cdef DraggingHandlerCallbackValue value = DraggingHandlerCallbackValue.__new__(DraggingHandlerCallbackValue)
         value._button = button
         value._drag_delta_x = drag_delta_x
         value._drag_delta_y = drag_delta_y
+        value._click_pos_x = click_pos_x
+        value._click_pos_y = click_pos_y
+        value._mouse_pos_x = mouse_pos_x
+        value._mouse_pos_y = mouse_pos_y
         return value
 
 cdef class EditedHandlerCallbackValue(HandlerCallbackValue):
@@ -500,12 +616,28 @@ cdef class MouseDownHandlerCallbackValue(MouseButtonHandlerCallbackValue):
 cdef class MouseDragHandlerCallbackValue(MouseButtonHandlerCallbackValue):
     """Callback value for the MouseDragHandler."""
 
-    def __init__(self, Context context, MouseButton button, drag_delta):
+    def __init__(
+        self,
+        Context context,
+        MouseButton button,
+        drag_delta,
+        click_position,
+        is_released: bool
+    ):
         if isinstance(drag_delta, Coord):
             self._delta_x = getattr(drag_delta, "x")
             self._delta_y = getattr(drag_delta, "y")
         else:
             raise TypeError("drag_delta must be of type Coord")
+        if isinstance(click_position, Coord):
+            self._click_pos_x = getattr(click_position, "x")
+            self._click_pos_y = getattr(click_position, "y")
+        else:
+            raise TypeError("click_position must be of type Coord")
+
+        self._is_released = is_released
+        self._mouse_pos_x = self._click_pos_x + self._delta_x
+        self._mouse_pos_y = self._click_pos_y + self._delta_y
         MouseButtonHandlerCallbackValue.__init__(self, context, button)
 
     @property
@@ -516,12 +648,47 @@ cdef class MouseDragHandlerCallbackValue(MouseButtonHandlerCallbackValue):
         delta[1] = self._delta_y
         return Coord.build(delta)
 
+    @property
+    def click_position(self):
+        """Position where the click occurred."""
+        cdef double[2] pos
+        pos[0] = self._click_pos_x
+        pos[1] = self._click_pos_y
+        return Coord.build(pos)
+
+    @property
+    def mouse_position(self):
+        """Current mouse position."""
+        cdef double[2] pos
+        pos[0] = self._mouse_pos_x
+        pos[1] = self._mouse_pos_y
+        return Coord.build(pos)
+
+    @property
+    def is_released(self):
+        """Whether the mouse button just released (end of the drag operation)."""
+        return self._is_released
+
     @staticmethod
-    cdef MouseDragHandlerCallbackValue build(Context context, MouseButton button, float delta_x, float delta_y):
+    cdef MouseDragHandlerCallbackValue build(
+        Context context,
+        MouseButton button,
+        float delta_x,
+        float delta_y,
+        float click_pos_x,
+        float click_pos_y,
+        float mouse_pos_x,
+        float mouse_pos_y,
+        bint is_released):
         cdef MouseDragHandlerCallbackValue value = MouseDragHandlerCallbackValue.__new__(MouseDragHandlerCallbackValue)
         value._button = button
         value._delta_x = delta_x
         value._delta_y = delta_y
+        value._click_pos_x = click_pos_x
+        value._click_pos_y = click_pos_y
+        value._mouse_pos_x = mouse_pos_x
+        value._mouse_pos_y = mouse_pos_y
+        value._is_released = is_released
         return value
 
 cdef class MouseMoveHandlerCallbackValue(HandlerCallbackValue):

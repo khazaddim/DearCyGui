@@ -18,22 +18,29 @@ global_scale (float):
     transform.
 
 scales/shifts (double[2]):
-    Current coordinate space transform (when not in a plot, else
-    implot handles the transform).
+    Current coordinate space transform parameters (affine transform).
+    Note when in a plot, there is an additional transformation applied
+    by implot, and integrated in the coordinate space transform.
     The helpers already include this transform.
     To apply the transform, call viewport.coordinate_to_screen.
     To reverse the transform, call viewport.screen_to_coordinate.
 
-thickness_multiplier (float):
-    Factor to apply to line thicknesses. Already includes global_scale.
-    Multiply any thickness values by this. The helpers DO NOT include
-    this transform.
+coordinate_size_scale (float):
+    X-derived scale for sizes in drawing coordinates. It includes the
+    coordinate-to-screen transform's DPI scaling.
 
-size_multiplier (float): 
-    Factor to apply to object sizes drawn in coordinate space.
-    For coordinate space sizes, multiply radius by this.
-    For screen space sizes, multiply radius by global_scale instead.
-    The helpers DO NOT include this transform.
+thickness_style_scale (float):
+    Dimensionless screen-space stroke style factor. In plots, this is the
+    effective ImPlot line weight divided by global_scale; elsewhere it is 1.
+
+screen_size_uses_global_scale (bool):
+    Whether negative radii and thicknesses use global_scale, rather than 1,
+    as their screen-space size scale.
+
+For positive sizes, multiply radii and thicknesses by coordinate_size_scale.
+For negative sizes, use their absolute values and multiply radii by the
+screen-space size scale and thicknesses by that scale * thickness_style_scale.
+The draw helpers do not apply these transforms automatically.
 
 window_pos (Vec2):
     Position of parent window in viewport screen coordinates.
@@ -80,7 +87,7 @@ from libc.stdint cimport uint32_t, int32_t
 
 from .core cimport Context
 from .texture cimport Texture, Pattern
-from .c_types cimport Vec2, Vec4
+from .c_types cimport Vec2, Vec4, FRect, DRect
 
 ### Drawing helpers ###
 
@@ -447,9 +454,12 @@ cdef inline float get_scaled_thickness(Context context, float thickness) noexcep
     Positive thickness: in coordinate space
     Negative thickness: in unscaled screen space
     """
-    thickness *= context.viewport.thickness_multiplier
     if thickness > 0:
-        thickness *= context.viewport.size_multiplier
+        thickness *= context.viewport.coordinate_size_scale
+    else:
+        if context.viewport.screen_size_uses_global_scale:
+            thickness *= context.viewport.global_scale
+        thickness *= context.viewport.thickness_style_scale
     return abs(thickness)
 
 cdef inline float get_scaled_radius(Context context, float radius) noexcept nogil:
@@ -466,10 +476,11 @@ cdef inline float get_scaled_radius(Context context, float radius) noexcept nogi
     Negative radius: in unscaled screen space
     """
     if radius < 0:
-        # screen space radius
-        radius = -radius * context.viewport.global_scale
+        radius = -radius
+        if context.viewport.screen_size_uses_global_scale:
+            radius *= context.viewport.global_scale
     else:
-        radius = radius * context.viewport.size_multiplier
+        radius *= context.viewport.coordinate_size_scale
     return radius
 
 # t_draw* variants: Same as above, except all coordinates are in
@@ -870,6 +881,48 @@ cdef void t_draw_polygon_filling_no_aa(Context context,
         fill_color: Color to fill the polygon with (ImU32)
 """
 
+# Helpers to retrieve the current clip region. This is not used directly
+# by dearcgui itself, but can be used for custom clipping logic in user code.
+cdef FRect get_clip_rect(Context context, void* drawlist_ptr) noexcept nogil
+"""
+    Get the current clipping rectangle for the current window.
+
+    When inside a drawing item, this represents the boundary
+    of the drawing region in screen space. This is what is used
+    underneath for t_item_fully_clipped
+
+    Args:
+        context: The DearCyGui context
+        drawlist_ptr: current ImDrawList
+
+    Returns:
+        FRect representing the clipping rectangle (x1, y1, x2, y2)
+        with x1 <= x2 and y1 <= y2
+"""
+
+cdef DRect get_coordinate_clip_rect(Context context, void* drawlist_ptr) noexcept nogil
+"""
+    Get the current clipping rectangle for the current drawing region in coordinates.
+
+    Unlike get_clip_rect, which returns the clipping rectangle in screen space,
+    this function returns the clipping rectangle in the coordinate space
+    of the drawing region.
+
+    Usually it is preferrable to perform clipping in screen space in order to
+    properly account for line thickness and other screen-space effects. User
+    can choose to perform clipping in coordinate space to save computational
+    overhead. For instance an RTree can be used to quickly determine which
+    objects fall within the clipping rectangle in coordinate space.
+
+    Args:
+        context: The DearCyGui context
+        drawlist_ptr: current ImDrawList
+
+    Returns:
+        DRect representing the clipping rectangle (x1, y1, x2, y2)
+        with x1 <= x2 and y1 <= y2
+"""
+
 
 # When subclassing drawingItem and Draw* items, the drawlist
 # is passed to the draw method. This is a helper to get the
@@ -989,4 +1042,3 @@ Args:
 Returns:  
     GlyphInfo struct containing metrics and texture coords
 """
-

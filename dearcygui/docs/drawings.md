@@ -21,8 +21,11 @@ All color arguments in **DearCyGui** accept three formats:
 
 **DearCyGui** provides respectively `color_as_int`, `color_as_ints` and `color_as_floats` to produce these three representations. These functions take as input any of these three formats. When reading a color attribute of an item, the first format is used, thus these helpers can help convert the format to what you need.
 
-Most Draw* items accept a `thickness` attribute. This thickness is automatically scaled by the global scale and the plot scale (in inside `Plot`).
-Similarly the `radius` attribute of `DrawCircle` is scaled. To prevent this scaling and have a `thickness` or `radius` in pixels, pass a negative value.
+Most Draw* items accept a `thickness` attribute. Positive thicknesses and radii scale with the drawing coordinate system, including any DPI scaling already present in the coordinate-to-screen transform. Negative thicknesses and radii are screen-space sizes: they ignore coordinate zoom but normally scale with DPI. `DrawInWindow(no_global_scaling=True)` also disables DPI scaling for negative thicknesses and radii, including in relative mode. `DrawingScale(no_global_scaling=True)` disables global scaling for negative sizes while preserving its parent's coordinate transform unless `no_parent_scaling=True`. Plot line-weight styling still affects negative thicknesses through its dimensionless style factor. `ViewportDrawList` uses physical pixels by default.
+
+Positive radii and thicknesses use a single size scale derived from the X axis, even when the X and Y coordinate scales differ.
+
+Plot line-weight styling affects negative thicknesses but not positive thicknesses or radii. Normally, a negative thickness is multiplied by the effective ImPlot line weight in pixels. When global scaling is disabled by an inheriting `DrawingScale`, it is instead multiplied by the effective line weight divided by the global scale. Plot themes normally scale their line weight with DPI; a theme with `no_scaling=True` keeps it in physical pixels.
 
 # Coordinate system
 

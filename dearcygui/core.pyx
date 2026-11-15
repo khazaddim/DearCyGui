@@ -5892,6 +5892,15 @@ cdef void update_current_mouse_states(itemState& state) noexcept nogil:
     """
     Helper to fill common states. Must be called after the hovered state is updated
     """
+    # Initialize states
+    state.cur.clicked_mask = 0
+    state.cur.double_clicked_mask = 0
+    state.cur.dragging_mask = 0
+
+    # Fast exit if all the code below (no matter caps) would have no effect.
+    if not(state.cur.hovered) and not(state.cur.active) and state.prev.dragging_mask == 0:
+        return
+
     cdef int32_t i
     if state.cap.can_be_clicked:
         update_current_mouse_click_states(state.cur, state.cur.hovered)

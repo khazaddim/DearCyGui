@@ -3662,7 +3662,6 @@ cdef class MenuBar(uiItem):
         self.can_have_widget_child = True
         self.element_child_category = child_type.cat_menubar
         self.state.cap.can_be_clicked = True
-        self.state.cap.can_be_focused = True
         self.state.cap.can_be_hovered = True
         self.state.cap.has_content_region = True
         #self.state.cap.has_rect_size = False -> Unsure about current advertised size
@@ -4380,7 +4379,6 @@ cdef class TabBar(uiItem):
         #self._value = <SharedValue>(SharedBool.__new__(SharedBool, self.context))
         self.can_have_tab_child = True
         self.state.cap.can_be_clicked = True
-        self.state.cap.can_be_focused = True
         self.state.cap.can_be_hovered = True
         #self.state.cap.can_be_active = True
         self.state.cap.has_rect_size = True

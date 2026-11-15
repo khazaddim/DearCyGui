@@ -1076,7 +1076,7 @@ cdef class Combo(uiItem):
         self._value = <SharedValue>(SharedStr.__new__(SharedStr, self.context))
         self.state.cap.can_be_active = True
         self.state.cap.can_be_clicked = True
-        self.state.cap.can_be_deactivated_after_edited = True
+        #self.state.cap.can_be_deactivated_after_edited = True
         self.state.cap.can_be_dragged = True
         self.state.cap.can_be_edited = True
         self.state.cap.can_be_focused = True
@@ -1300,7 +1300,11 @@ cdef class Combo(uiItem):
         # NOTE: we don't include the popup in rect_size as it doesn't affect the placement
         # of other items around it (it is a different window, like Tooltip).
         self.state.cur.edited = changed
-        self.state.cur.deactivated_after_edited = self.state.prev.active and changed and not(self.state.cur.active)
+        # NOTE: deactivated after edited doesn't make sense for this item as we
+        # define activation on the combo itself, but not its popup. Thus
+        # when the popup click leads to an edition, the activation has been
+        # long gone.
+        #self.state.cur.deactivated_after_edited = self.state.prev.active and changed and not(self.state.cur.active)
         return pressed
 
 
@@ -1788,7 +1792,7 @@ cdef class RadioButton(uiItem):
         self._value = <SharedValue>(SharedStr.__new__(SharedStr, self.context))
         self.state.cap.can_be_active = True
         self.state.cap.can_be_clicked = True
-        self.state.cap.can_be_deactivated_after_edited = True
+        # self.state.cap.can_be_deactivated_after_edited = True
         self.state.cap.can_be_dragged = True
         self.state.cap.can_be_edited = True
         self.state.cap.can_be_focused = True
@@ -1876,7 +1880,11 @@ cdef class RadioButton(uiItem):
         self.update_current_state()
         # Not captured by EndGroup
         self.state.cur.edited = changed
-        self.state.cur.deactivated_after_edited = self.state.prev.active and changed and not(self.state.cur.active)
+        # The state does not make sense for this item as edited is enough.
+        # deactivated_after_edited is useful for items which spawn several
+        # edits until the item is deactivated, which is not the case for this widget.
+        # The below code fails to trigger for long presses.
+        # self.state.cur.deactivated_after_edited = self.state.prev.active and changed and not(self.state.cur.active)
         return changed
 
 
@@ -3113,7 +3121,8 @@ cdef class Selectable(uiItem):
         self._value = <SharedValue>(SharedBool.__new__(SharedBool, self.context))
         self.state.cap.can_be_active = True
         self.state.cap.can_be_clicked = True
-        self.state.cap.can_be_deactivated_after_edited = True
+        # deactivated_after_edited does not make sense for this item as edited is enough.
+        # self.state.cap.can_be_deactivated_after_edited = True
         self.state.cap.can_be_dragged = True
         self.state.cap.can_be_edited = True
         self.state.cap.can_be_focused = True
@@ -3239,9 +3248,10 @@ cdef class MenuItem(uiItem):
     """
     def __cinit__(self):
         self._value = <SharedValue>(SharedBool.__new__(SharedBool, self.context))
-        self.state.cap.can_be_active = True
+        self.state.cap.can_be_active = True # NOTE: activation is one frame only (no held)
         self.state.cap.can_be_clicked = True
-        self.state.cap.can_be_deactivated_after_edited = True
+        # deactivated_after_edited does not make sense for this item as edited is enough.
+        #self.state.cap.can_be_deactivated_after_edited = True
         self.state.cap.can_be_edited = True
         self.state.cap.can_be_focused = True
         self.state.cap.can_be_hovered = True
@@ -4054,8 +4064,11 @@ cdef class TabButton(uiItem):
         self._value = <SharedValue>(SharedBool.__new__(SharedBool, self.context))
         self.state.cap.can_be_active = True
         self.state.cap.can_be_clicked = True
-        self.state.cap.can_be_deactivated_after_edited = True
-        self.state.cap.can_be_edited = True
+        # deactivated_after_edited does not make sense for this item as edited is enough.
+        #self.state.cap.can_be_deactivated_after_edited = True
+        # edited does not make sense for this item as there is no real edition
+        # active/clicked states are sufficient for this item.
+        #self.state.cap.can_be_edited = True
         self.state.cap.can_be_focused = True
         self.state.cap.can_be_hovered = True
         self._flags = imgui.ImGuiTabItemFlags_None
@@ -4363,7 +4376,7 @@ cdef class TabBar(uiItem):
         self.state.cap.can_be_clicked = True
         self.state.cap.can_be_focused = True
         self.state.cap.can_be_hovered = True
-        self.state.cap.can_be_active = True
+        #self.state.cap.can_be_active = True
         self.state.cap.has_rect_size = True
         self._flags = imgui.ImGuiTabBarFlags_None
 
@@ -4570,7 +4583,7 @@ cdef class TabBar(uiItem):
         imgui.BeginGroup() # from original. Unsure if needed
         cdef bint visible = imgui.BeginTabBar(self._imgui_label.c_str(),
                                               self._flags)
-        self.update_current_state()
+        self.update_current_state() # NOTE: cannot capture activation state reliably here
         cdef Vec2 pos_p, parent_size_backup
         cdef float dx, dy
         if visible:
@@ -4598,7 +4611,8 @@ cdef class TabBar(uiItem):
         imgui.EndGroup()
         #imgui.PopStyleVar(1)
         imgui.PopID()
-        return self.state.cur.active and not(self.state.prev.active)
+        #return self.state.cur.active and not(self.state.prev.active)
+        return False
 
 
 

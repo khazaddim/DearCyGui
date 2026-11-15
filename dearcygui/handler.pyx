@@ -701,8 +701,12 @@ cdef class DeactivatedHandler(baseHandler):
 
 cdef class DeactivatedAfterEditHandler(baseHandler):
     """
-    However for editable items when the item loses
-    activation after having been edited.
+    However for editable items when the item loses activation after having been edited.
+
+    This is only useful for items that can have several consecutive edits before
+    losing activation. For instance InputText widgets spawn edit events for each
+    temporary edits. In that case the handler will trigger only after the final edit.
+    For this reason, few items are compatible with this handler.
     """
     cdef void check_bind(self, baseItem item):
         cdef unique_lock[DCGMutex] m

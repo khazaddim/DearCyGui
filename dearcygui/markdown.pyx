@@ -1052,8 +1052,8 @@ cdef class MarkDownText(uiItem):
 
     def __cinit__(self, Context context, **kwargs):
         """Initialize the markdown component"""
-        self.can_have_widget_child = True        # Children are shown if referenced by uuid in the markdown text
-        self.state.cap.has_content_region = True # For children
+        # self.can_have_widget_child = True        # Children are shown if referenced by uuid in the markdown text
+        # self.state.cap.has_content_region = True # For children
         self.state.cap.can_be_clicked = True
         self.state.cap.can_be_hovered = True
         self.state.cap.can_be_dragged = True

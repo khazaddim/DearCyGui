@@ -5318,11 +5318,11 @@ cdef class ItemStateView:
     @property
     def deactivated_after_edited(self):
         """
-        Whether the item was edited and then deactivated in this frame.
+        Whether the item was deactivated after one or several edits.
         
-        Useful for detecting when user completes an edit operation, such as
-        finishing text input or adjusting a value. This property is only true
-        for the frame when the deactivation occurs after editing.
+        Items such as InputText widgets with spawn edited states for each
+        temporary edit will only trigger this property after the final
+        edit when the item is deactivated.
         """
         if self._item is None:
             raise ValueError("Item has been deleted or is invalid")
@@ -5701,11 +5701,11 @@ cdef class ItemStateCopy:
     @property
     def deactivated_after_edited(self):
         """
-        Whether the item was edited and then deactivated in this frame.
+        Whether the item was deactivated after one or several edits.
         
-        Useful for detecting when user completes an edit operation, such as
-        finishing text input or adjusting a value. This property is only true
-        for the frame when the deactivation occurs after editing.
+        Items such as InputText widgets with spawn edited states for each
+        temporary edit will only trigger this property after the final
+        edit when the item is deactivated.
         """
         if not(self._state.cap.can_be_deactivated_after_edited):
             raise AttributeError("Field undefined for this item type")
@@ -6532,7 +6532,7 @@ cdef class uiItem(baseItem):
         - clicked: Whether any mouse button was clicked on the item
         - double_clicked: Whether any mouse button was double-clicked
         - deactivated: Whether the item just became inactive
-        - deactivated_after_edited: Whether the item was edited and then deactivated
+        - deactivated_after_edited: Whether the item was edited (possibly several times) and then deactivated
         - edited: Whether the item's value was modified
         - focused: Whether the item has keyboard focus
         - hovered: Whether the mouse is over the item

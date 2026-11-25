@@ -13,6 +13,8 @@ lib_location.txt
 version_number.txt
 dearpygui.egg-info/
 build/
+build_FT/
+build_SDL/
 # Ignore only subdirectories
 sandbox/*/
 src/CMakeFiles/

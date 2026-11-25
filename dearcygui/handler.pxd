@@ -1,6 +1,6 @@
-from libc.stdint cimport int32_t
+from libc.stdint cimport int32_t, int64_t
 from .core cimport baseHandler, baseItem
-from .c_types cimport DCGString, DCGVector
+from .c_types cimport DCGString, DCGVector, Vec2
 from .types cimport MouseButton, Positioning, HandlerListOP, MouseCursor
 from .widget cimport SharedBool
 
@@ -238,8 +238,18 @@ cdef class MouseDownHandler(baseHandler):
 cdef class MouseDragHandler(baseHandler):
     cdef MouseButton _button
     cdef float _threshold
+    cdef int64_t _last_seen_frame
+    cdef bint _drag_reported
+    cdef int32_t _frame_event
+    cdef MouseButton _gesture_button
+    cdef bint _blocked_until_release
+    cdef Vec2 _click_position
+    cdef Vec2 _mouse_position
+    cdef Vec2 _drag_delta
     cdef bint check_state(self, baseItem) noexcept nogil
     cdef void run_handler(self, baseItem) noexcept nogil
+    cdef bint _capture_drag_position(self, int32_t, float) noexcept nogil
+    cdef void _update_drag_frame(self, int64_t) noexcept nogil
 
 cdef class MouseMoveHandler(baseHandler):
     cdef bint check_state(self, baseItem) noexcept nogil

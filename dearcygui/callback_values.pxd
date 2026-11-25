@@ -234,6 +234,7 @@ cdef class MouseDragHandlerCallbackValue(MouseButtonHandlerCallbackValue):
     cdef float _mouse_pos_x
     cdef float _mouse_pos_y
     cdef bint _is_released
+    cdef bint _is_invalidated
     @staticmethod
     cdef MouseDragHandlerCallbackValue build(
         Context context,
@@ -244,7 +245,8 @@ cdef class MouseDragHandlerCallbackValue(MouseButtonHandlerCallbackValue):
         float click_pos_y,
         float mouse_pos_x,
         float mouse_pos_y,
-        bint is_released
+        bint is_released,
+        bint is_invalidated
     )
 
 cdef class MouseMoveHandlerCallbackValue(HandlerCallbackValue):

@@ -82,6 +82,7 @@ from .callback_values cimport (
     DragDropTargetHandlerCallbackValue
 )
 from .c_types cimport DCGMutex, unique_lock, string_to_str, string_from_str
+from .imgui_types cimport ImVec2Vec2
 from .types cimport make_Positioning, read_rect, Rect,\
     is_Key, make_Key, Positioning, Coord, make_MouseButton
 from .widget cimport SharedBool
@@ -605,14 +606,14 @@ cdef class ClickedHandler(baseHandler):
     cdef bint check_state(self, baseItem item) noexcept nogil:
         cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)
         cdef itemState *state = item.p_state
-        return state.cur.clicked[<int>self._button]
+        return (state.cur.clicked_mask & (1 << <int>self._button)) != 0
 
     cdef void run_handler(self, baseItem item) noexcept nogil:
         cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)
         cdef itemState *state = item.p_state
         if not(self._enabled) or self._callback is None:
             return
-        if state.cur.clicked[<int>self._button]:
+        if state.cur.clicked_mask & (1 << <int>self._button) != 0:
             with gil:
                 self.context.queue_callback(
                     self._callback,
@@ -652,14 +653,14 @@ cdef class DoubleClickedHandler(baseHandler):
     cdef bint check_state(self, baseItem item) noexcept nogil:
         cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)
         cdef itemState *state = item.p_state
-        return state.cur.double_clicked[<int>self._button]
+        return (state.cur.double_clicked_mask & (1 << <int>self._button)) != 0
 
     cdef void run_handler(self, baseItem item) noexcept nogil:
         cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)
         cdef itemState *state = item.p_state
         if not(self._enabled) or self._callback is None:
             return
-        if state.cur.double_clicked[<int>self._button]:
+        if state.cur.double_clicked_mask & (1 << <int>self._button) != 0:
             with gil:
                 self.context.queue_callback(
                     self._callback,
@@ -700,8 +701,12 @@ cdef class DeactivatedHandler(baseHandler):
 
 cdef class DeactivatedAfterEditHandler(baseHandler):
     """
-    However for editable items when the item loses
-    activation after having been edited.
+    However for editable items when the item loses activation after having been edited.
+
+    This is only useful for items that can have several consecutive edits before
+    losing activation. For instance InputText widgets spawn edit events for each
+    temporary edits. In that case the handler will trigger only after the final edit.
+    For this reason, few items are compatible with this handler.
     """
     cdef void check_bind(self, baseItem item):
         cdef unique_lock[DCGMutex] m
@@ -761,16 +766,19 @@ cdef class DraggedHandler(baseHandler):
     cdef bint check_state(self, baseItem item) noexcept nogil:
         cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)
         cdef itemState *state = item.p_state
-        return state.prev.dragging[<int>self._button] and not(state.cur.dragging[<int>self._button])
+        return ((state.prev.dragging_mask & ~state.cur.dragging_mask) &
+                (1 << <int>self._button)) != 0
 
     cdef void run_handler(self, baseItem item) noexcept nogil:
         cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)
         cdef itemState *state = item.p_state
         cdef imgui.ImGuiIO io = imgui.GetIO()
+        cdef imgui.ImVec2 mouse_pos
         if not(self._enabled) or self._callback is None:
             return
         cdef int32_t i = <int32_t>self._button
-        if state.prev.dragging[i] and not(state.cur.dragging[i]):
+        if (state.prev.dragging_mask & ~state.cur.dragging_mask) & (1 << i) != 0:
+            mouse_pos = imgui.GetCurrentContext().MouseLastValidPos
             with gil:
                 self.context.queue_callback(
                     self._callback,
@@ -779,12 +787,12 @@ cdef class DraggedHandler(baseHandler):
                     DraggedHandlerCallbackValue.build(
                         self.context,
                         self._button,
-                        <float>state.prev.drag_deltas[i].x,
-                        <float>state.prev.drag_deltas[i].y,
+                        <float>state.cur.drag_deltas[i].x,
+                        <float>state.cur.drag_deltas[i].y,
                         <float>io.MouseClickedPos[i].x,
                         <float>io.MouseClickedPos[i].y,
-                        <float>io.MousePos.x,
-                        <float>io.MousePos.y
+                        mouse_pos.x,
+                        mouse_pos.y
                     )
                 )
 
@@ -849,16 +857,18 @@ cdef class DraggingHandler(baseHandler):
     cdef bint check_state(self, baseItem item) noexcept nogil:
         cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)
         cdef itemState *state = item.p_state
-        return state.cur.dragging[<int>self._button]
+        return (state.cur.dragging_mask & (1 << <int>self._button)) != 0
 
     cdef void run_handler(self, baseItem item) noexcept nogil:
         cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)
         cdef itemState *state = item.p_state
         cdef imgui.ImGuiIO io = imgui.GetIO()
+        cdef imgui.ImVec2 mouse_pos
         cdef int32_t i = <int32_t>self._button
         if not(self._enabled) or self._callback is None:
             return
-        if state.cur.dragging[i]:
+        if state.cur.dragging_mask & (1 << i) != 0:
+            mouse_pos = imgui.GetCurrentContext().MouseLastValidPos
             with gil:
                 self.context.queue_callback(
                     self._callback,
@@ -871,8 +881,8 @@ cdef class DraggingHandler(baseHandler):
                         <float>state.cur.drag_deltas[i].y,
                         <float>io.MouseClickedPos[i].x,
                         <float>io.MouseClickedPos[i].y,
-                        <float>io.MousePos.x,
-                        <float>io.MousePos.y
+                        mouse_pos.x,
+                        mouse_pos.y
                     )
                 )
 
@@ -1066,7 +1076,7 @@ cdef class GotMouseOverHandler(baseHandler):
                y2 > io.MousePos.y):
             return False
         # Check the mouse was not over the item
-        if io.MousePosPrev.x == -1 or io.MousePosPrev.y == -1: # Invalid pos
+        if not imgui.IsMousePosValid(&io.MousePosPrev):
             return True
         x1 = item.p_state.prev.pos_to_viewport.x
         y1 = item.p_state.prev.pos_to_viewport.y
@@ -1104,7 +1114,7 @@ cdef class LostMouseOverHandler(baseHandler):
     cdef bint check_state(self, baseItem item) noexcept nogil:
         cdef imgui.ImGuiIO io = imgui.GetIO()
         # Check the mouse was over the item
-        if io.MousePosPrev.x == -1 or io.MousePosPrev.y == -1: # Invalid pos
+        if not imgui.IsMousePosValid(&io.MousePosPrev):
             return False
         cdef float x1 = item.p_state.prev.pos_to_viewport.x
         cdef float y1 = item.p_state.prev.pos_to_viewport.y
@@ -2245,6 +2255,13 @@ cdef class MouseDownHandler(baseHandler):
             self.context.viewport.ask_refresh_after_delta(imgui.GetIO().KeyRepeatRate)
 
 
+cdef enum:
+    _MOUSE_DRAG_NONE
+    _MOUSE_DRAG_UPDATE
+    _MOUSE_DRAG_RELEASE
+    _MOUSE_DRAG_INVALIDATE
+
+
 cdef class MouseDragHandler(baseHandler):
     """
     Handler for mouse dragging motions.
@@ -2254,16 +2271,35 @@ cdef class MouseDragHandler(baseHandler):
         threshold (float): Movement threshold to trigger drag.
                          Negative means use default.
 
-    NOTE: the handler callback will always receive a single event
-    with data.is_released set to True when a drag ends. It corresponds to
-    the moment the mouse button is released.
-    NOTE2: The state of the handler (in handler conditions) is True
-    while the drag is ongoing, but not when it has ended (unlike for the
-    callback, the frame of the mouse release is not taken into account).
+    Once a drag is reported, it always ends with a callback
+    with either is_released or is_invalidated being True.
+
+    is_released means the drag ended due to a mouse release.  
+    is_invalidated means the drag was interrupted (e.g. item hidden, window
+    focus loss, etc.)
+
+    Naturally if the item is never shown back or the handler is disabled or
+    removed, no final callback will be delivered.
+    
+    It is possible for a short drag to only trigger a final callback without
+    any intermediate updates.
+
+    The same handler may be attached to multiple items, but as the handler
+    uses the frame count for tracking its callback delivery, undefined
+    behaviour may occur if the handler is not run for all attached items
+    on the same frames.
+
+    When used as handler condition (ConditionalHandler, etc), the state
+    of the handler reflects whether a drag is currently ongoing. It does
+    check false once the drag has ended, even on the frame of the mouse release.
     """
     def __cinit__(self):
         self._button = MouseButton.LEFT
         self._threshold = -1 # < 0. means use default
+        self._last_seen_frame = -1
+        self._drag_reported = False
+        self._frame_event = _MOUSE_DRAG_NONE
+        self._blocked_until_release = False
 
     @property
     def button(self):
@@ -2302,15 +2338,15 @@ cdef class MouseDragHandler(baseHandler):
 
     cdef void run_handler(self, baseItem item) noexcept nogil:
         cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)
-        cdef imgui.ImVec2 delta
-        cdef imgui.ImGuiIO io = imgui.GetIO()
+        cdef int64_t frame = imgui.GetFrameCount()
         if not(self._enabled) or self._callback is None:
             return
-        if (
-            imgui.IsMouseDragging(<int>self._button, self._threshold)
-            or (imgui.IsMouseReleased(<int>self._button) and imgui.IsMouseDragPastThreshold(<int>self._button, self._threshold))
-        ):
-            delta = imgui.GetMouseDragDelta(<int>self._button, self._threshold)
+
+        # Cache one event per frame so shared handlers deliver it to every item.
+        if frame != self._last_seen_frame:
+            self._update_drag_frame(frame)
+            self._last_seen_frame = frame
+        if self._frame_event != _MOUSE_DRAG_NONE:
             with gil:
                 self.context.queue_callback(
                     self._callback,
@@ -2318,16 +2354,76 @@ cdef class MouseDragHandler(baseHandler):
                     item,
                     MouseDragHandlerCallbackValue.build(
                         self.context,
-                        self._button,
-                        delta.x,
-                        delta.y,
-                        <float>io.MouseClickedPos[<int>self._button].x,
-                        <float>io.MouseClickedPos[<int>self._button].y,
-                        <float>io.MousePos.x,
-                        <float>io.MousePos.y,
-                        imgui.IsMouseReleased(<int>self._button)
+                        self._gesture_button,
+                        self._drag_delta.x,
+                        self._drag_delta.y,
+                        self._click_position.x,
+                        self._click_position.y,
+                        self._mouse_position.x,
+                        self._mouse_position.y,
+                        self._frame_event == _MOUSE_DRAG_RELEASE,
+                        self._frame_event == _MOUSE_DRAG_INVALIDATE
                     )
                 )
+
+    cdef bint _capture_drag_position(self, int32_t button, float threshold) noexcept nogil:
+        """Store valid drag coordinates, retaining the previous snapshot otherwise."""
+        cdef imgui.ImGuiIO io = imgui.GetIO()
+        if not imgui.IsMousePosValid() or not imgui.IsMousePosValid(&io.MouseClickedPos[button]):
+            return False
+        self._click_position = ImVec2Vec2(io.MouseClickedPos[button])
+        self._mouse_position = ImVec2Vec2(io.MousePos)
+        self._drag_delta = ImVec2Vec2(imgui.GetMouseDragDelta(button, threshold))
+        return True
+
+    cdef void _update_drag_frame(self, int64_t frame) noexcept nogil:
+        """Determine and cache this frame's event before delivering it to items."""
+        cdef int32_t button = <int32_t>self._button
+        cdef bint dragging = imgui.IsMouseDragging(button, self._threshold)
+        cdef bint released = imgui.IsMouseReleased(button)
+        self._frame_event = _MOUSE_DRAG_NONE
+
+        # A missed frame, changed button, or lost drag state invalidates the gesture.
+        if self._drag_reported and (
+            self._last_seen_frame != frame - 1
+            or self._gesture_button != self._button
+            or (not dragging and not released)
+        ):
+            self._frame_event = _MOUSE_DRAG_INVALIDATE
+            self._drag_reported = False
+            self._blocked_until_release = imgui.IsMouseDown(button)
+            return
+
+        # Do not report the same held button as a new drag after invalidation.
+        if self._blocked_until_release:
+            if not imgui.IsMouseDown(button):
+                self._blocked_until_release = False
+            return
+
+        # End a reported drag even if the position is unavailable or the threshold changed.
+        if released and self._drag_reported:
+            self._capture_drag_position(button, 0.)
+            self._frame_event = _MOUSE_DRAG_RELEASE
+            self._drag_reported = False
+            return
+
+        # A complete drag can first be observed on its release frame.
+        if dragging or (
+            released and imgui.IsMouseDragPastThreshold(button, self._threshold)
+        ):
+            if self._capture_drag_position(button, self._threshold):
+                self._gesture_button = self._button
+                self._frame_event = _MOUSE_DRAG_RELEASE if released else _MOUSE_DRAG_UPDATE
+                self._drag_reported = not released
+
+            # Continue firing the dragging callback even if we couldn't resolve mouse position.
+            # As dragging is False if ClickedPos is invalid, or if the mouse button is not down,
+            # only the current mouse position may be invalid here. Window focus is not lost
+            # as it resets button state. 
+            # We allow the drag to continue and maybe finish successfully later if 
+            # the mouse position becomes valid again or if the mouse is released.
+            elif dragging and self._drag_reported:
+                self._frame_event = _MOUSE_DRAG_UPDATE
 
 
 cdef class MouseMoveHandler(baseHandler):
@@ -2340,10 +2436,11 @@ cdef class MouseMoveHandler(baseHandler):
         
     Note:
         Position is relative to the viewport.
+        No movement is reported when either position is unavailable.
     """
     cdef bint check_state(self, baseItem item) noexcept nogil:
         cdef imgui.ImGuiIO io = imgui.GetIO()
-        if not(imgui.IsMousePosValid()):
+        if not(imgui.IsMousePosValid()) or not imgui.IsMousePosValid(&io.MousePosPrev):
             return False
         if io.MousePos.x != io.MousePosPrev.x or \
            io.MousePos.y != io.MousePosPrev.y:
@@ -2357,6 +2454,8 @@ cdef class MouseMoveHandler(baseHandler):
         if not(imgui.IsMousePosValid()):
             return
         cdef imgui.ImGuiIO io = imgui.GetIO()
+        if not imgui.IsMousePosValid(&io.MousePosPrev):
+            return
         if io.MousePos.x != io.MousePosPrev.x or \
            io.MousePos.y != io.MousePosPrev.y:
             with gil:
@@ -2796,6 +2895,7 @@ cdef class DragDropSourceHandler(baseHandler):
     Wrap it in a ConditionalHandler to control when it is active.
 
     If set, the callback will be called when the drag starts.
+    No source is submitted while the mouse position is unavailable.
 
     Callback receives:
         - sender: This handler instance
@@ -2947,6 +3047,8 @@ cdef class DragDropSourceHandler(baseHandler):
     cdef void run_handler(self, baseItem item) noexcept nogil:
         cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)
         if not(self._enabled):
+            return
+        if not imgui.IsMousePosValid():
             return
         if not self.check_state(item):
             return
@@ -3337,7 +3439,7 @@ cdef class DragDropTargetHandler(baseHandler):
         cdef unique_lock[DCGMutex] m = unique_lock[DCGMutex](self.mutex)
         cdef const imgui.ImGuiPayload *received_payload = NULL
         cdef int i
-        if not(self._enabled):
+        if not(self._enabled) or not imgui.IsMousePosValid():
             return
 
         if imgui.BeginDragDropTarget():

@@ -614,7 +614,11 @@ cdef class MouseDownHandlerCallbackValue(MouseButtonHandlerCallbackValue):
         return value
 
 cdef class MouseDragHandlerCallbackValue(MouseButtonHandlerCallbackValue):
-    """Callback value for the MouseDragHandler."""
+    """Describe a mouse drag update or its release or invalidation.
+
+    Invalidation reports the last position sent by the handler. Neither ending
+    flag is set for a drag update; only one is set when the drag ends.
+    """
 
     def __init__(
         self,
@@ -622,7 +626,8 @@ cdef class MouseDragHandlerCallbackValue(MouseButtonHandlerCallbackValue):
         MouseButton button,
         drag_delta,
         click_position,
-        is_released: bool
+        is_released: bool,
+        is_invalidated: bool
     ):
         if isinstance(drag_delta, Coord):
             self._delta_x = getattr(drag_delta, "x")
@@ -636,6 +641,7 @@ cdef class MouseDragHandlerCallbackValue(MouseButtonHandlerCallbackValue):
             raise TypeError("click_position must be of type Coord")
 
         self._is_released = is_released
+        self._is_invalidated = is_invalidated
         self._mouse_pos_x = self._click_pos_x + self._delta_x
         self._mouse_pos_y = self._click_pos_y + self._delta_y
         MouseButtonHandlerCallbackValue.__init__(self, context, button)
@@ -658,7 +664,7 @@ cdef class MouseDragHandlerCallbackValue(MouseButtonHandlerCallbackValue):
 
     @property
     def mouse_position(self):
-        """Current mouse position."""
+        """Return the mouse position, or the last reported position on invalidation."""
         cdef double[2] pos
         pos[0] = self._mouse_pos_x
         pos[1] = self._mouse_pos_y
@@ -668,6 +674,11 @@ cdef class MouseDragHandlerCallbackValue(MouseButtonHandlerCallbackValue):
     def is_released(self):
         """Whether the mouse button just released (end of the drag operation)."""
         return self._is_released
+
+    @property
+    def is_invalidated(self):
+        """Whether the drag ended without a mouse release."""
+        return self._is_invalidated
 
     @staticmethod
     cdef MouseDragHandlerCallbackValue build(
@@ -679,7 +690,8 @@ cdef class MouseDragHandlerCallbackValue(MouseButtonHandlerCallbackValue):
         float click_pos_y,
         float mouse_pos_x,
         float mouse_pos_y,
-        bint is_released):
+        bint is_released,
+        bint is_invalidated):
         cdef MouseDragHandlerCallbackValue value = MouseDragHandlerCallbackValue.__new__(MouseDragHandlerCallbackValue)
         value._button = button
         value._delta_x = delta_x
@@ -689,6 +701,7 @@ cdef class MouseDragHandlerCallbackValue(MouseButtonHandlerCallbackValue):
         value._mouse_pos_x = mouse_pos_x
         value._mouse_pos_y = mouse_pos_y
         value._is_released = is_released
+        value._is_invalidated = is_invalidated
         return value
 
 cdef class MouseMoveHandlerCallbackValue(HandlerCallbackValue):

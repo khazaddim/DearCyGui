@@ -1375,6 +1375,14 @@ bool SDLViewport::renderFrame(bool can_skip_presenting) {
     ImGui_ImplSDL3_NewFrame(frameHeight, frameWidth);
     ImGui::NewFrame();
 
+    // If Imgui has not process all events (because
+    // it decided to cut event process in several frames),
+    // we need to render again to process the remaining input events.
+    if (!GImGui->InputEventsQueue.empty()) {
+        needsRender.store(true);
+        needsRefresh.store(true); // Unsure
+    }
+
     bool does_needs_refresh = needsRefresh.load();
     needsRefresh.store(false);
 

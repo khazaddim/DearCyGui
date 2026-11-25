@@ -26,7 +26,7 @@ from .core cimport baseHandler, baseItem, uiItem, AxisTag, \
     lock_gil_friendly, \
     draw_drawing_children, \
     draw_ui_children, baseFont, plotElement, \
-    update_current_mouse_states, \
+    update_current_mouse_states, update_current_mouse_click_states, \
     draw_plot_element_children, itemState, ItemStateView
 from .callback_values cimport AxesResizeHandlerCallbackValue
 from .c_types cimport unique_lock, DCGMutex, DCGString, DCGVector,\
@@ -1130,10 +1130,7 @@ cdef class PlotAxisConfig(baseItem):
         self._flags = flags
 
         cdef bint hovered = implot.IsAxisHovered(axis)
-        cdef int32_t i
-        for i in range(<int>imgui.ImGuiMouseButton_COUNT):
-            self.state.cur.clicked[i] = hovered and imgui.IsMouseClicked(i, False)
-            self.state.cur.double_clicked[i] = hovered and imgui.IsMouseDoubleClicked(i)
+        update_current_mouse_click_states(self.state.cur, hovered)
         cdef bint backup_hovered = self.state.cur.hovered
         self.state.cur.hovered = hovered
         self.run_handlers() # TODO FIX multiple configs tied. Maybe just not support ?
@@ -1142,9 +1139,7 @@ cdef class PlotAxisConfig(baseItem):
         # Restore correct states
         # We do it here and not above to trigger the handlers only once
         self.state.cur.hovered |= backup_hovered
-        for i in range(<int>imgui.ImGuiMouseButton_COUNT):
-            self.state.cur.clicked[i] = self.state.cur.hovered and imgui.IsMouseClicked(i, False)
-            self.state.cur.double_clicked[i] = self.state.cur.hovered and imgui.IsMouseDoubleClicked(i)
+        update_current_mouse_click_states(self.state.cur, self.state.cur.hovered)
 
     cdef void after_plot(self, int32_t axis, bint fit_this_frame) noexcept nogil:
         if not(self.context.viewport.enabled_axes[axis]):
@@ -1167,10 +1162,8 @@ cdef class PlotAxisConfig(baseItem):
         self.state.cur.hovered = False
         self.state.cur.traversed = False
         self.state.cur.rendered = False
-        cdef int32_t i
-        for i in range(<int>imgui.ImGuiMouseButton_COUNT):
-            self.state.cur.clicked[i] = False
-            self.state.cur.double_clicked[i] = False
+        self.state.cur.clicked_mask = 0
+        self.state.cur.double_clicked_mask = 0
         self.run_handlers()
 
 

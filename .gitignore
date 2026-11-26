@@ -15,6 +15,9 @@ dearpygui.egg-info/
 build/
 build_FT/
 build_SDL/
+*.egg-info/
+dearcygui/*.cpp
+dearcygui/utils/*.cpp
 # Ignore only subdirectories
 sandbox/*/
 src/CMakeFiles/

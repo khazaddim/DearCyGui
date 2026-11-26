@@ -101,3 +101,44 @@ def test_item_rect_contains_drawn_pixels(
     )
     changed[y:y + height, x:x + width] = False
     assert not changed.any(), f"{kind} draws outside {(x, y, width, height)}"
+
+
+@pytest.mark.parametrize("kind", ("triangle", "polygon"))
+@pytest.mark.parametrize("offset", (-3.0, -0.02, 0.0, 0.02, 0.5, 3.0))
+@pytest.mark.parametrize("reverse", (False, True))
+@pytest.mark.parametrize(("thickness", "color"), (
+    (-0.5, (255, 255, 255, 128)), (-1.0, (255, 255, 255)),
+))
+def test_nearly_collinear_outlined_shape_stays_near_its_edges(
+    context: dcg.Context, *, kind: str, offset: float, reverse: bool,
+    thickness: float, color: tuple[int, ...],
+) -> None:
+    """Keep the outline bounded as the projected face crosses edge-on."""
+    window = dcg.Window(context, width=600, height=400)
+    drawing = dcg.DrawInWindow(context, parent=window, width=400, height=300)
+    points = [(100, 100), (180, 140), (140, 120 + offset)]
+    if reverse:
+        points.reverse()
+    if kind == "polygon" and offset == 0:
+        pytest.skip("DrawPolygon cannot triangulate an exactly collinear polygon")
+    if kind == "triangle":
+        item = dcg.DrawTriangle(
+            context, parent=drawing, p1=points[0], p2=points[1], p3=points[2],
+            color=color, fill=(200, 80, 40), thickness=thickness, show=False,
+        )
+    else:
+        item = dcg.DrawPolygon(
+            context, parent=drawing, points=points,
+            color=color, fill=(200, 80, 40), thickness=thickness, show=False,
+        )
+    background = _pixels(context)
+    item.show = True
+    foreground = _pixels(context)
+    changed = np.any(background[:, :, :3] != foreground[:, :, :3], axis=2)
+    assert changed.any()
+    x, y = drawing.state.pos_to_viewport
+    for px, py in ((120, 110), (140, 120), (160, 130)):
+        assert changed[int(y + py - 2):int(y + py + 3),
+                       int(x + px - 2):int(x + px + 3)].any()
+    changed[int(y + 94):int(y + 147), int(x + 94):int(x + 187)] = False
+    assert not changed.any()

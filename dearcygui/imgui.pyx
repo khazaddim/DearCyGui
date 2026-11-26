@@ -446,12 +446,22 @@ cdef void _t_draw_polygon_outline_thick(Context context,
                                         float thickness,
                                         bint closed) noexcept nogil:
     """
-    t_draw_polygon_outline for thickness > AA_SIZE.
+    Draw an outline with clipped joins, including for thin sharp corners.
     """
     cdef imgui.ImDrawList* draw_list = <imgui.ImDrawList*>drawlist_ptr
     cdef imgui.ImVec2 uv_white = imgui.GetFontTexUvWhitePixel()
     cdef imgui.ImU32 color_trans = color & ~imgui.IM_COL32_A_MASK
     cdef float AA_SIZE = draw_list._FringeScale
+
+    cdef uint32_t alpha
+    cdef float alpha_scale
+    if thickness < AA_SIZE:
+        alpha = (color >> 24) & 0xFF
+        alpha_scale = pow(fmax(thickness / AA_SIZE, 0.), 0.7)
+        alpha = <uint32_t>(alpha * alpha_scale)
+        if alpha == 0:
+            return
+        color = (color & 0x00FFFFFF) | (alpha << 24)
 
     # Reserve space for vertices and indices
     cdef int max_vtx_count = points_count * 6
@@ -463,7 +473,7 @@ cdef void _t_draw_polygon_outline_thick(Context context,
     draw_list.PrimReserve(max_idx_count, max_vtx_count)
     
     cdef unsigned int vtx_base_idx = draw_list._VtxCurrentIdx
-    cdef float half_inner_thickness = (thickness - AA_SIZE) * 0.5
+    cdef float half_inner_thickness = fmax(thickness - AA_SIZE, 0.) * 0.5
 
     cdef int i0, i1
     cdef float dm_x, dm_y
@@ -1967,6 +1977,7 @@ cdef void t_draw_polygon_outline(Context context,
             connected to the first point
     """
     cdef imgui.ImDrawList* draw_list = <imgui.ImDrawList*>drawlist_ptr
+    cdef int i
 
     # Quick exit for transparent color
     if color & imgui.IM_COL32_A_MASK == 0:
@@ -1980,6 +1991,14 @@ cdef void t_draw_polygon_outline(Context context,
         return
 
     if thickness <= draw_list._FringeScale:
+        if closed:
+            for i in range(points_count):
+                if normals[2*i] * normals[2*i] + normals[2*i+1] * normals[2*i+1] > 2.01:
+                    _t_draw_polygon_outline_thick(
+                        context, drawlist_ptr, points, points_count,
+                        normals, color, thickness, closed
+                    )
+                    return
         _t_draw_polygon_outline_thin(
             context, drawlist_ptr, points, points_count,
             normals, color, thickness, closed

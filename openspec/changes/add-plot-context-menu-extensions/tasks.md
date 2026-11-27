@@ -48,4 +48,6 @@
   record manual or automated interaction evidence.
 - [x] 3.5 Validate this OpenSpec change and update task status only as work is
   completed.
-- [ ] 3.6 Perform the clean/release rebuild before release.
+- [x] 3.6 Perform the clean/release rebuild before release. A clean Windows
+  CPython 3.14 wheel was built from commit `ebc70ef` and verified with 24
+  targeted tests; the `psutil`-dependent memory test was deselected.

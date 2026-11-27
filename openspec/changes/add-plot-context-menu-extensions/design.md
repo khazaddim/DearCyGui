@@ -102,5 +102,10 @@ with native entries and that the native Crosshairs action still works. The user
 ran the integrated custom probe and confirmed it works after resizing and
 changing focus; the output showed direct, nested, checked, and unchecked
 callbacks for both plots. The user also confirmed the `no_menus` and alternate
-button modes and verified native Crosshairs and Box Select. A clean/release
-rebuild has not been performed.
+button modes and verified native Crosshairs and Box Select.
+
+A clean source snapshot of commit `ebc70ef` and its recorded native submodules
+produced a Windows CPython 3.14 wheel. The wheel was installed into an isolated
+directory and passed 24 targeted menu, ownership, and GC tests; the GC memory
+test was deselected because `psutil` was unavailable. Other platform and
+Python-version wheels are left to the GitHub Actions build.

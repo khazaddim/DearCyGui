@@ -113,7 +113,10 @@ integration, checkmark state, nested menus, multiple plots, subplot variants,
 `no_menus`, and an alternate menu button. The interactive custom probe was
 also tested after resizing and changing focus, and the user confirmed the
 `no_menus` and alternate-button modes, as well as native Crosshairs and Box
-Select. A clean release rebuild remains open in the
+Select. A clean Windows CPython 3.14 wheel built from commit `ebc70ef` passed
+24 targeted tests when installed in an isolated directory; one `psutil`-based
+GC memory test was deselected. Other platform and Python-version wheels are
+left to GitHub Actions. See the
 [task checklist](openspec/changes/add-plot-context-menu-extensions/tasks.md).
 
 Because the implementation changes Cython code, users must rebuild and install

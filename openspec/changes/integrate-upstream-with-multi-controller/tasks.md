@@ -338,8 +338,57 @@ Suggested model: Claude Opus 5.5 — reason across lifecycle, layout, and widget
 dependencies while adapting upstream changes to the older fork implementation.
 
 - [ ] 09 `3ba4828` Plot-border DPI fix: check scaling and custom bar rendering (V, P).
+  Disposition: adapted
+  Result: `b78c48ed2741ce36c30c1848fc6f4eaa84a1814c`; source
+  `3ba482820569b7bceca460e981fd0f2eb2778782`. Applied the one-line
+  PlotBorderSize scale assignment alongside the existing plot-style scaling.
+  Verification: V/P automated portion, Windows cp314 installed package.
+  Canonical rebuild returned 0; wheel SHA256
+  `b1b22a91eda72ff33c72c62f86bec1bfe9ccdb3f16dfa486b62a429df12df047`.
+  Absolute venv Python from `C:\Chris`,
+  `-m pytest -q --import-mode=importlib` on test_fork_regressions.py and
+  test_viewport.py::TestViewportInitialization: 30 passed in 2.65s.
+  Four native bar orientation/value-space combinations exercised at viewport
+  scales 0.8, 1.0, 2.0 without exceptions. Render-frame returns were False,
+  True, False, with metric frame counts 0, 1, 2; this is not a measurement of
+  border pixels at all scales. Visual DPI thickness and live pan/zoom remain
+  deferred; entry stays unchecked. Evidence: session files/stage-b-09-build.log
+  and tool output.
 - [ ] 10 `6a64692` Iterative delete_item: verify deep-tree deletion, table cleanup, GC and shutdown; no controller/context lifetime regression (C plus focused GC/shutdown tests).
+  Disposition: adapted
+  Result: `471ba7d4d112b71c5d392c28e3f3850de6963737`; source
+  `6a64692f0709d6135f2121b1c1f53cfe1516ae5c`. Iterated sibling deletion and
+  sibling hidden-state propagation, adding subclass reference-cleanup hooks
+  across core/table declarations and implementation. Preserved fork tag children
+  and controller surfaces. Table hook also calls inherited uiItem cleanup,
+  avoiding the source patch's omission of table font/theme/handler cleanup.
+  Omitted source's archived old-code comment blocks. Nested descendants still
+  recurse; no unbounded depth guarantee is claimed.
+  Verification: C plus GC/shutdown automated portion, Windows cp314 installed
+  package. Canonical rebuild returned 0; wheel SHA256
+  `2628734a9d37c38e5108451d991feb757c0b1aaace67c95d74e73866a771a9d0`.
+  Added tests for 5,000 siblings, 512 nested child windows with stable controller
+  slot objects, and table shared-cell/theme/gamepad-handler cleanup. Corrected
+  the new test's initial assumption: empty table indexing returns None, not a
+  TableElement with None content; production behavior was correct.
+  Absolute venv Python from `C:\Chris`, `-m pytest -q --import-mode=importlib`
+  on test_gc.py, test_shutdown.py, test_fork_regressions.py:
+  initial run reproduced the accepted Windows termination failure.
+  Rerun with explicit
+  `--deselect=tests/test_shutdown.py::test_hanging_scenario_detection`:
+  61 passed, 2 skipped, 1 deselected in 17.15s. Existing cross-thread
+  deallocation warnings remain. Physical controller lifetime/input checks
+  remain deferred; entry stays unchecked. Evidence:
+  session files/stage-b-10-build.log, files/stage-b-10-tests.log and rerun output.
 - [ ] 11 `b27d524` DrawSVG path update: confirm changing path invalidates the cached texture (D).
+  Disposition: pending
+  Result: no source edits yet. Full patch reviewed; verification preparation
+  found the optional skia-python renderer missing from the workspace venv.
+  Verification: `import skia` raised ModuleNotFoundError. An attempted
+  `pip install --only-binary=:all: skia-python` was interrupted. Subsequent
+  `importlib.util.find_spec('skia')` confirmed it is not installed. No dependency
+  manifest changed. Do not retry the download automatically; optional renderer
+  verification remains pending.
 - [ ] 12 `3c42032` Hidden initialization visibility: verify initial hidden/show transitions and backend/controller dispatch (L, V, C).
 - [ ] 13 `fb79887` Visibility tests: run added cases; distinguish baseline failures from regressions (L).
 - [ ] 14 `958e398` SDL/ImPlot pins: use source-recorded revisions, rebuild, and recheck controllers and native bars (S, C, P).

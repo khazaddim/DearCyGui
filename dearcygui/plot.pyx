@@ -17,8 +17,6 @@
 
 from libc.stdint cimport uint8_t, uint32_t, int32_t
 from libc.math cimport INFINITY
-from libc.stdlib cimport getenv
-from libc.stdio cimport printf, fflush, stdout
 from libcpp.vector cimport vector
 
 from cpython.object cimport PyObject
@@ -1471,9 +1469,15 @@ cdef class Plot(uiItem):
     Child elements are added as plot elements that represent different
     visualizations of data. These elements are rendered in the plotting area
     and can appear in the legend.
+
+    Widget children such as Menu and MenuItem are displayed in the native
+    plot-canvas context menu after the built-in options. Their callbacks use
+    the normal DearCyGui callback queue. Axis and legend context menus are
+    separate and do not display these children.
     """
     def __cinit__(self, context, *args, **kwargs):
         self.can_have_plot_element_child = True
+        self.can_have_widget_child = True
         self.state.cap.can_be_clicked = True
         self.state.cap.can_be_dragged = True
         self.state.cap.can_be_focused = True
@@ -2168,7 +2172,10 @@ cdef class Plot(uiItem):
 
     cdef bint draw_item(self) noexcept nogil:
         cdef bint visible
-        cdef imgui.ImGuiID spike_plot_id
+        cdef imgui.ImGuiID plot_id
+        cdef PyObject* child
+        cdef bint has_visible_menu_child
+        cdef Vec2 pos_w, pos_p, parent_size_backup
         implot.GetStyle().UseLocalTime = self._use_local_time
         implot.GetStyle().UseISO8601 = self._use_ISO8601
         implot.GetStyle().Use24HourClock = self._use_24hour_clock
@@ -2200,7 +2207,7 @@ cdef class Plot(uiItem):
                                    self._flags)
         # BeginPlot created the imgui Item
         if visible:
-            spike_plot_id = imgui.GetItemID()
+            plot_id = imgui.GetItemID()
             self.state.cur.rect_size = ImVec2Vec2(imgui.GetItemRectSize())
             self.state.cur.traversed = True
             self.state.cur.rendered = True
@@ -2252,15 +2259,34 @@ cdef class Plot(uiItem):
             # configuration with the mouse
             self._flags = GetPlotConfig()
             implot.EndPlot()
-            # Temporary opt-in probe for appending to the native ImPlot popup.
-            if getenv("DCG_PLOT_MENU_SPIKE") != NULL:
-                imgui.PushOverrideID(spike_plot_id)
+            if self.last_widgets_child is not None:
+                # ImPlot uses the plot ID as the popup's ID seed.
+                imgui.PushOverrideID(plot_id)
                 if imgui.BeginPopup("##PlotContext", imgui.ImGuiWindowFlags_None):
-                    imgui.Separator()
-                    if imgui.MenuItem("Cython spike action"):
-                        printf("Cython spike action selected: %s\n", self._imgui_label.c_str())
-                        fflush(stdout)
+                    has_visible_menu_child = False
+                    child = <PyObject*>self.last_widgets_child
+                    while (<baseItem>child) is not None:
+                        (<uiItem>child).mutex.lock()
+                        has_visible_menu_child = (<uiItem>child)._show
+                        (<uiItem>child).mutex.unlock()
+                        if has_visible_menu_child:
+                            break
+                        child = <PyObject*>(<baseItem>child).prev_sibling
+                    if has_visible_menu_child:
+                        imgui.Separator()
+                    pos_w = ImVec2Vec2(imgui.GetCursorScreenPos())
+                    pos_p = pos_w
+                    swap_Vec2(pos_w, self.context.viewport.window_pos)
+                    swap_Vec2(pos_p, self.context.viewport.parent_pos)
+                    parent_size_backup = self.context.viewport.parent_size
+                    self.context.viewport.parent_size = ImVec2Vec2(imgui.GetContentRegionAvail())
+                    draw_ui_children(self)
+                    self.context.viewport.window_pos = pos_w
+                    self.context.viewport.parent_pos = pos_p
+                    self.context.viewport.parent_size = parent_size_backup
                     imgui.EndPopup()
+                else:
+                    (<baseItem>self.last_widgets_child).set_hidden_and_propagate_to_siblings_with_handlers()
                 imgui.PopID()
             self._X1.after_plot(implot.ImAxis_X1)
             self._X2.after_plot(implot.ImAxis_X2)

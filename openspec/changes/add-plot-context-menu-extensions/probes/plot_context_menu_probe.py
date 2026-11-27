@@ -1,4 +1,4 @@
-"""Manual plot-menu probe; --custom requires the proposed Plot child support."""
+"""Manual probe for native and plot-owned context-menu entries."""
 
 import argparse
 
@@ -8,7 +8,7 @@ import dearcygui.dearcygui as dcg_native
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--custom", action="store_true", help="Attach proposed custom menu children")
+    parser.add_argument("--custom", action="store_true", help="Attach custom menu children")
     parser.add_argument("--no-menus", action="store_true", help="Disable the native plot menus")
     parser.add_argument("--middle-button", action="store_true", help="Use middle-click for plot menus")
     parser.add_argument("--smoke", action="store_true", help="Render three hidden frames and exit")
@@ -46,6 +46,13 @@ def main():
                             context,
                             label=f"Run {name}",
                             callback=lambda *_, n=name: action(n, "direct"),
+                        )
+                        dcg.MenuItem(
+                            context,
+                            label=f"Toggle {name}",
+                            check=True,
+                            callback=lambda sender, target, checked, n=name:
+                                action(n, "checked" if checked else "unchecked"),
                         )
                         with dcg.Menu(context, label="Nested"):
                             dcg.MenuItem(

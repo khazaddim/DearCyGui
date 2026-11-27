@@ -19,28 +19,33 @@
 
 ## 2. DearCyGui Integration
 
-- [ ] 2.1 Enable plot-owned widget children and render them only in the native
+- [x] 2.1 Enable plot-owned widget children and render them only in the native
   plot-canvas context popup; add a separator only when appropriate.
-- [ ] 2.2 Preserve menu button, native popup behavior, existing plots with no
+- [x] 2.2 Preserve menu button, native popup behavior, existing plots with no
   children, child state propagation, locking, and queued callbacks.
-- [ ] 2.3 Verify custom submenus with at least two nesting levels open in the
+- [x] 2.3 Verify custom submenus with at least two nesting levels open in the
   native popup, contain the correct entries, and invoke the selected item's
   callback once. Test per-plot isolation, removal, replacement, deletion, and
-  GC. Complete and run the included ownership tests and extension-mode probe.
-- [ ] 2.4 Update relevant public stubs, documentation, and examples.
-- [ ] 2.5 Test checkable menu items: verify the checkmark toggles in both
+  GC. Complete and run the included ownership tests and extension-mode probe
+  smoke test.
+- [x] 2.4 Update relevant public stubs, documentation, and examples.
+- [x] 2.5 Test checkable menu items: verify the checkmark toggles in both
   directions, the callback receives the new boolean state, and different
   plots maintain independent states.
 
 ## 3. Full Build and Acceptance
 
-- [ ] 3.1 Perform a full rebuild from the integrated sources and confirm the
+- [x] 3.1 Perform a full rebuild from the integrated sources and confirm the
   probes load the rebuilt extension.
-- [ ] 3.2 Run targeted existing tests plus the included ownership tests.
-- [ ] 3.3 Run the extension-mode probe and verify callbacks fire exactly once,
-  nested menus work, native actions remain usable, `no_menus` prevents opening
-  a new popup, and an alternate `menu_button` opens it.
-- [ ] 3.4 Repeat the subplot and multi-plot cases against the full build and
+- [x] 3.2 Run targeted existing tests plus the included ownership tests.
+- [ ] 3.3 Manually run the extension-mode probe and verify callbacks fire
+  exactly once, nested menus work, native actions remain usable, `no_menus`
+  prevents opening a new popup, and an alternate `menu_button` opens it.
+  The user confirmed direct, nested, and checkable actions on both plots,
+  including after resizing and changing focus. Manual checks of native actions,
+  `no_menus`, and the alternate button remain.
+- [x] 3.4 Repeat the subplot and multi-plot cases against the full build and
   record manual or automated interaction evidence.
-- [ ] 3.5 Validate this OpenSpec change and update task status only as work is
+- [x] 3.5 Validate this OpenSpec change and update task status only as work is
   completed.
+- [ ] 3.6 Perform the clean/release rebuild before release.

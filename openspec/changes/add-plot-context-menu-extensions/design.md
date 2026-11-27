@@ -4,9 +4,8 @@
 
 ImPlot opens and renders `##PlotContext` inside `EndPlot()`. At that point it
 uses `PushOverrideID(plot.ID)`. Dear ImGui permits a subsequent begin of an
-already-begun window to append content in the same frame. These observations
-suggest an approach that needs no ImPlot source changes, but the complete
-interaction has not yet been demonstrated.
+already-begun window to append content in the same frame. Integration tests
+confirm this approach without changes to ImPlot source.
 
 ## Goals and Non-Goals
 
@@ -28,10 +27,10 @@ interaction has not yet been demonstrated.
    needed; do not modify vendored sources. Restore DearCyGui viewport state and
    honor the existing item locking and callback queueing conventions.
 
-This is a hypothesis, not a verified implementation. The captured ID must be
-the plot item ID for ordinary plots and subplot cells, including shared-item
-subplots. `EndPlot()` resets the current ImPlot plot and advances the subplot,
-so the appended drawing must not assume a current ImPlot plot remains.
+The captured ID is the plot item ID for ordinary plots and subplot cells,
+including shared-item subplots. `EndPlot()` resets the current ImPlot plot and
+advances the subplot, so the appended drawing does not assume a current
+ImPlot plot remains.
 
 ## Proposed Python API
 
@@ -46,8 +45,7 @@ with dcg.Plot(C) as plot:
 
 Menu items can also be attached directly to the plot. The widget children
 appear only in the plot-canvas popup, after a separator, and are not drawn in
-the plot body. An empty plot menu adds no separator. This API is conditional on
-the experiment succeeding; the probe scripts express the proposed contract.
+the plot body. An empty plot menu adds no separator.
 
 ## Risks and Validation
 
@@ -88,8 +86,20 @@ and shared-legend subplot examples.
 The user also ran the interactive demo and reported that the menu works after
 resizing the window and switching focus to VS Code and back.
 
-These observations support the approach but do not validate the proposed
-Python API. The spike adds the same fixed item to every plot, and custom
-widget children, nested custom menus, callback dispatch, per-plot ownership,
-and integrated resizing/focus behavior remain to be tested. The temporary
-spike must not be treated as the final implementation.
+These observations supported the approach but did not validate the Python API.
+The temporary spike has since been removed.
+
+## Integration Results
+
+The integrated extension was rebuilt and installed from these sources using
+the existing cached native build dependencies. Hidden-viewport interaction
+tests cover nested custom menus, callback dispatch, per-plot ownership and
+state, ordinary and shared-legend subplots, alternate menu buttons, no-menus
+behavior, child removal and deletion, and separator visibility. Framebuffer
+comparisons verify that a checkmark appears and disappears when toggled.
+A separate injected-input capture confirmed that a Python-owned item appears
+with native entries and that the native Crosshairs action still works. The user
+ran the integrated custom probe and confirmed it works after resizing and
+changing focus; the output showed direct, nested, checked, and unchecked
+callbacks for both plots. Manual checks of native actions, `no_menus`, and the
+alternate button remain. A clean/release rebuild has not been performed.

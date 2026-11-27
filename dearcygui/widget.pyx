@@ -3744,9 +3744,9 @@ cdef class Menu(uiItem):
     provide a hierarchical structure for your application's command system. Each
     menu can contain multiple menu items or other menus.
 
-    Menus must be created within a MenuBar or as a child of another Menu.
+    Menus can be created within a MenuBar, as a child of another Menu, or as
+    a Plot child to extend its plot-canvas context menu.
     """
-    # TODO: MUST be inside a menubar
     def __cinit__(self):
         # We should maybe restrict to menuitem ?
         self._value = <SharedValue>(SharedBool.__new__(SharedBool, self.context))

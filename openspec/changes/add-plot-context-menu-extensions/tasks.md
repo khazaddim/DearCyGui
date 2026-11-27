@@ -23,10 +23,14 @@
   plot-canvas context popup; add a separator only when appropriate.
 - [ ] 2.2 Preserve menu button, native popup behavior, existing plots with no
   children, child state propagation, locking, and queued callbacks.
-- [ ] 2.3 Verify custom nested menus, per-plot isolation, removal, replacement,
-  deletion, and GC. Complete and run the included ownership tests and
-  extension-mode probe.
+- [ ] 2.3 Verify custom submenus with at least two nesting levels open in the
+  native popup, contain the correct entries, and invoke the selected item's
+  callback once. Test per-plot isolation, removal, replacement, deletion, and
+  GC. Complete and run the included ownership tests and extension-mode probe.
 - [ ] 2.4 Update relevant public stubs, documentation, and examples.
+- [ ] 2.5 Test checkable menu items: verify the checkmark toggles in both
+  directions, the callback receives the new boolean state, and different
+  plots maintain independent states.
 
 ## 3. Full Build and Acceptance
 

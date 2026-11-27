@@ -1,121 +1,111 @@
 ---
 name: dearcygui-build
-description: "Use when building DearCyGui from source, rebuilding after editing .pyx/.pxd files, debugging Cython/MSVC/CMake/SDL3 build failures, or running tests against the freshly built extension. Covers the Windows virtual environment and native build workflow for this upstream integration worktree."
+description: "Use when: building DearCyGui from source, rebuilding after editing .pyx/.pxd files, debugging build failures, running the demo/tests after a code change, or invoking Python against the freshly-built extension on this workspace. Covers the Cython + setuptools + CMake (SDL3) build pipeline and the Windows venv conventions used here."
 ---
 
 # DearCyGui Build Workflow
 
-Adapted from the
-[Game_Controller_Build skill](https://github.com/khazaddim/DearCyGui/blob/Game_Controller_Build/.github/skills/dearcygui-build/SKILL.md).
-Use this workflow to rebuild after Cython changes and test the installed
-extension, not the uncompiled source package or the old checkout's build.
+Use this skill whenever you have edited any Cython source (`.pyx` or `.pxd`) under `dearcygui/` and need to recompile the extension, or when you need to run Python code that imports `dearcygui` after a change.
 
-## Environment (Windows / this worktree)
+## When To Use
 
-- **Repo root:** `C:\Chris\DearCyGui-upstream`
-- **Worktree-local venv:** `C:\Chris\DearCyGui-upstream\.venv`
-- **Venv Python:** `C:\Chris\DearCyGui-upstream\.venv\Scripts\python.exe`
-- Do not assume the venv exists or that its Python version matches the old
-  checkout. Inspect the selected interpreter before creating a venv.
-- Do not reuse or reinstall into `C:\Chris\DearCyGui\.venv`; that environment
-  belongs to the original feature checkout.
-- Build dependencies come from [pyproject.toml](../../../pyproject.toml):
-  `Cython==3.1.6`, `wheel`, `click`, `setuptools`, and `cmake`.
-  The manifest notes that Cython 3.1.2 fails.
-- Native toolchain: Visual Studio Build Tools with Desktop development with
-  C++. MinGW support in [setup.py](../../../setup.py) is currently disabled.
+- "rebuild" / "build" / "recompile" after editing `.pyx` or `.pxd`
+- Running the demo (`Small_Input_Demo.py`) or tests after code changes
+- Diagnosing `ModuleNotFoundError: No module named 'dearcygui.dearcygui'`
+- Diagnosing Cython compile errors, linker errors, or SDL3 build issues
+- Any task that involves importing `dearcygui` from Python on this workspace
 
-If the local venv is missing, create it with the selected supported Python
-interpreter using `-m venv C:\Chris\DearCyGui-upstream\.venv`.
-For `--no-build-isolation`, ensure the manifest's build dependencies are
-installed in that venv; restore missing dependencies before retrying a failed
-build. Pytest must also be installed there to run tests.
+## Environment (Windows / this workspace)
 
-Fresh agent terminals do not inherit an interactive terminal's venv activation.
-Always invoke the worktree-local Python by absolute path.
+- **Repo root:** `C:\Chris\DearCyGui`
+- **Venv:** `C:\Chris\DearCyGui\.venv` (Python 3.14, cp314)
+- **Venv Python (absolute):** `C:\Chris\DearCyGui\.venv\Scripts\python.exe`
+- **PowerShell activation:** `Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned; & .\.venv\Scripts\Activate.ps1`
+- **Build deps** (declared in `pyproject.toml`, must be pre-installed in venv when using `--no-build-isolation`): `Cython==3.1.6`, `wheel`, `click`, `setuptools`, `cmake`. Note: Cython 3.1.2 is known to fail; 3.1.6 works.
+- **Native toolchain:** MSVC (Visual Studio Build Tools, "Desktop development with C++"). MinGW path exists in `setup.py` but is disabled.
 
 ## Canonical Build Command
 
-Run from this worktree, not the original checkout:
-
 ```powershell
-Set-Location 'C:\Chris\DearCyGui-upstream'
-& 'C:\Chris\DearCyGui-upstream\.venv\Scripts\python.exe' -m pip install --no-build-isolation . --force-reinstall --no-cache-dir
+C:\Chris\DearCyGui\.venv\Scripts\python.exe -m pip install --no-build-isolation . --force-reinstall --no-cache-dir
 ```
 
-- `--no-build-isolation` uses the venv's installed build dependencies.
-- `--force-reinstall` installs the new wheel even if the version is unchanged.
-- `--no-cache-dir` avoids reusing a stale cached wheel.
-- `.` builds the current worktree.
+Why each flag:
 
-The build configures and builds static SDL3 and FreeType libraries in
-`build_SDL` and `build_FT`, transpiles Cython sources to C++, compiles the native
-extension with setuptools/MSVC, and installs the wheel in the local venv.
-CMake can reuse its build directories for incremental work, but `setup.py`
-still invokes both configure and build on each run.
+- `--no-build-isolation`: build runs against the venv's already-installed Cython/setuptools/cmake (faster, reproducible). Requires those deps to be present in the venv.
+- `--force-reinstall`: ensures the wheel is reinstalled even when version string didn't change.
+- `--no-cache-dir`: avoids pip caching a stale wheel from a previous build.
+- `.`: build from the current directory (the repo root).
 
-Allow several minutes for a full rebuild. Use a long-running command session
-and retrieve its final result rather than launching overlapping builds.
-When `.pxd` files change, rebuild the package rather than trying to compile
-only one dependent `.pyx` file.
+The build does several phases:
+1. **CMake** builds SDL3 (static) into `build_SDL/` and FreeType into `build_FT/`.
+2. **Cython** transpiles every `.pyx` under `dearcygui/` → `.cpp`.
+3. **setuptools / MSVC** compiles the `.cpp` files + hand-written backend C++ into the extension module.
+4. **pip** installs the resulting wheel into the venv's `site-packages`.
 
-## Verify the Installed Extension
+The full rebuild takes several minutes on Windows. The SDL3 / FreeType CMake phases are cached and skip on re-runs unless their `build_*/` folders are deleted.
 
-An absolute interpreter path alone does not prevent source-package shadowing:
-Python can still put the current directory or a script's directory on
-`sys.path`. Use isolated mode for the import smoke test:
+## Build Flags (optional)
 
-```powershell
-& 'C:\Chris\DearCyGui-upstream\.venv\Scripts\python.exe' -I -c "import dearcygui; import dearcygui.dearcygui; print(dearcygui.__file__)"
+Pass to `pip install` via `--config-settings` or directly to `setup.py`. From [setup.py](setup.py):
+
+- `--msvc-compat` — when using MinGW, emit MSVC-compatible flags (`-fms-extensions`, etc.).
+- `--gcc-clang-compat` — extra GCC/Clang interop flags.
+
+Neither is needed on a stock MSVC setup.
+
+## Running Python After A Build
+
+**CRITICAL:** Do NOT run Python from the repo root with bare `python script.py`. The repo root contains a `dearcygui/` source folder, so `import dearcygui` resolves to the *source* (no compiled extension), producing:
+
+```
+ModuleNotFoundError: No module named 'dearcygui.dearcygui'
 ```
 
-Verify the printed path is under this worktree's
-`.venv\Lib\site-packages\dearcygui`, not the old checkout or the source tree.
+Two safe patterns:
 
-Run the smallest relevant pytest selection with isolated Python and pytest's
-importlib mode to avoid importing the source package:
+1. **Use the venv Python by absolute path from any cwd:**
+   ```powershell
+   C:\Chris\DearCyGui\.venv\Scripts\python.exe path\to\script.py
+   ```
+   pip-install puts the compiled package in `.venv\Lib\site-packages\dearcygui\`, which the venv Python finds first when cwd is anywhere except the repo root.
 
-```powershell
-& 'C:\Chris\DearCyGui-upstream\.venv\Scripts\python.exe' -I -m pytest --import-mode=importlib 'C:\Chris\DearCyGui-upstream\tests\test_widgets.py'
-```
+2. **Run from the repo root only after sys.path massaging.** `Small_Input_Demo.py` does this: it removes the repo root from `sys.path` and prepends `.venv\Lib\site-packages` before `import dearcygui`.
 
-Replace the example selector with tests covering the change. GUI tests may
-require a working display and graphics context; report environmental failures
-explicitly. For standalone scripts, run outside the source tree and ensure
-the script directory does not shadow the installed package. The old
-checkout's `Small_Input_Demo.py` is not part of this worktree.
+Tool-launched fresh terminals do NOT inherit venv activation from the user's interactive session — always invoke the venv Python by absolute path in agent terminals, or re-run the activation incantation.
 
-## Generated Files
+## Generated Files (gitignore policy)
 
-Cython emits `.cpp` beside `.pyx` sources. Do not commit generated files under
-the top-level `dearcygui` package or `dearcygui\utils`. This worktree's
-[.gitignore](../../../.gitignore) does not currently exclude them or all native
-build directories, so inspect `git status` after building and leave those
-artifacts unstaged. Likewise, do not commit the venv or generated package
-metadata.
+Cython emits `.cpp` next to each `.pyx`. These are build artifacts and must not be committed:
 
-Keep the tracked, hand-written backend C++ sources:
+- `dearcygui/*.cpp` — gitignored.
+- `dearcygui/utils/*.cpp` — gitignored.
+- `cython_learning/*.cpp` — gitignored.
 
-- `dearcygui\backends\imgui_impl_opengl3.cpp`
-- `dearcygui\backends\imgui_impl_sdl3.cpp`
-- `dearcygui\backends\sdl3_gl3_backend.cpp`
+Hand-written C++ that IS tracked:
 
-Do not delete or revert pre-existing worktree changes during cleanup.
+- `dearcygui/backends/imgui_impl_opengl3.cpp`
+- `dearcygui/backends/imgui_impl_sdl3.cpp`
+- `dearcygui/backends/sdl3_gl3_backend.cpp`
 
-## Common Failures
+If a regenerated `.cpp` appears as modified in `git status`, the rule of thumb is: it's a build artifact, leave it unstaged. If it's under `dearcygui/utils/` or top-level `dearcygui/` it should already be gitignored; if it shows up anyway, check the `.gitignore` patterns (recursive globs are NOT used — each subdirectory needs its own rule).
 
-- **Missing `dearcygui.dearcygui`:** check whether the import resolved to the
-  uncompiled source package. Use the isolated import check above and confirm
-  that the build and installation succeeded.
-- **Missing Cython, CMake, or setuptools:** restore the dependencies declared
-  in `pyproject.toml` into the local venv before retrying.
-- **CMake/compiler failure:** verify MSVC Build Tools and CMake availability.
-  If a Visual Studio `.bat` environment setup is needed, run it and the build
-  in the same `cmd.exe` process; its environment does not persist across tool
-  calls.
-- **Stale extension:** rebuild and reinstall with the canonical command, then
-  verify the imported package path.
+## Common Failure Modes
 
-Surface the first Cython/compiler error and the failing command; later errors
-may be cascades. Do not report success until the build, installed-extension
-import, and relevant tests have succeeded, or clearly state any blockers.
+- **`ModuleNotFoundError: No module named 'dearcygui.dearcygui'`** — running from repo root with bare `python`. Fix: use venv Python absolute path from a different cwd.
+- **`NameError` on a Cython `cpdef enum class` (e.g. `GamepadButton`)** — inside `.pyx` files, bare `EnumName(int_value)` is not callable at Python runtime without an explicit import. Use the helper `make_EnumName(int_value)` (defined alongside the enum in `dearcygui/types.pxd`) or cimport the enum.
+- **Cython 3.1.2 build error** — pin Cython to 3.1.6 in the venv.
+- **SDL3 CMake fails on first build** — make sure `cmake` is installed in the venv (`pip install cmake`) and a C++ compiler is available on PATH (MSVC Build Tools on Windows).
+- **Stale extension after `.pxd` edit** — `.pxd` changes affect every `.pyx` that cimports from it, plus their transitive consumers. The canonical command rebuilds everything; do not try to partial-rebuild a single file.
+- **Venv not activated in agent terminal** — symptom: `python` resolves to system Python and `import dearcygui` finds nothing or the wrong build. Fix: always use `C:\Chris\DearCyGui\.venv\Scripts\python.exe` by absolute path.
+
+## Recommended Agent Workflow
+
+When the user asks you to rebuild and test:
+
+1. Edit the `.pyx` / `.pxd` files.
+2. Run the canonical build command (sync mode, generous timeout — at least 10 min).
+3. On success, run the demo or test with the venv Python by absolute path.
+4. Do NOT stage regenerated `.cpp` files — they're either gitignored or by-convention untracked.
+
+When the user reports a build failure, surface the **first** Cython/compiler error from the log (later errors are usually downstream cascades) and ask before attempting fixes that change source semantics.

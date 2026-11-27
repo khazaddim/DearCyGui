@@ -1,7 +1,7 @@
 [submodule "thirdparty/imgui"]
 	path = thirdparty/imgui
 	url = https://github.com/axeldavy/imgui
-	branch = dearcygui
+	branch = docking
 [submodule "thirdparty/implot"]
 	path = thirdparty/implot
 	url = https://github.com/axeldavy/implot
@@ -24,3 +24,6 @@
 [submodule "thirdparty/md4c"]
 	path = thirdparty/md4c
 	url = https://github.com/axeldavy/md4c
+[submodule "Demos"]
+	path = Demos
+	url = https://github.com/DearCyGui/Demos

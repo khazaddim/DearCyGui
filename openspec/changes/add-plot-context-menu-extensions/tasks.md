@@ -42,8 +42,8 @@
   exactly once, nested menus work, native actions remain usable, `no_menus`
   prevents opening a new popup, and an alternate `menu_button` opens it.
   The user confirmed direct, nested, and checkable actions on both plots,
-  including after resizing and changing focus. Manual checks of native actions,
-  `no_menus`, and the alternate button remain.
+  including after resizing and changing focus, and confirmed `no_menus` and
+  the alternate button. A manual check of native actions remains.
 - [x] 3.4 Repeat the subplot and multi-plot cases against the full build and
   record manual or automated interaction evidence.
 - [x] 3.5 Validate this OpenSpec change and update task status only as work is

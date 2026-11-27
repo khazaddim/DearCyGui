@@ -101,5 +101,6 @@ A separate injected-input capture confirmed that a Python-owned item appears
 with native entries and that the native Crosshairs action still works. The user
 ran the integrated custom probe and confirmed it works after resizing and
 changing focus; the output showed direct, nested, checked, and unchecked
-callbacks for both plots. Manual checks of native actions, `no_menus`, and the
-alternate button remain. A clean/release rebuild has not been performed.
+callbacks for both plots. The user also confirmed the `no_menus` and alternate
+button modes. A manual check of native actions remains. A clean/release rebuild
+has not been performed.

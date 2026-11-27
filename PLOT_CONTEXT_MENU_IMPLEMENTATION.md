@@ -111,9 +111,10 @@ The integrated extension was rebuilt and tested with the existing cached
 native build dependencies. Automated interaction tests cover native-menu
 integration, checkmark state, nested menus, multiple plots, subplot variants,
 `no_menus`, and an alternate menu button. The interactive custom probe was
-also tested after resizing and changing focus. Manual checks of native actions,
-`no_menus`, and the alternate button, plus a clean release rebuild, remain
-open in the [task checklist](openspec/changes/add-plot-context-menu-extensions/tasks.md).
+also tested after resizing and changing focus, and the user confirmed the
+`no_menus` and alternate-button modes. A manual check of native actions and a
+clean release rebuild remain open in the
+[task checklist](openspec/changes/add-plot-context-menu-extensions/tasks.md).
 
 Because the implementation changes Cython code, users must rebuild and install
 the extension before trying it. The probe prints the paths of the Python

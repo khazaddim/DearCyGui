@@ -71,3 +71,25 @@ exercise the candidate path without Cython support. That focused experiment
 precedes the final integration and full clean/release rebuild; it does not
 eliminate the need for either. If it fails, record the failure and seek a new
 decision instead of silently falling back to vendored C++ changes.
+
+## Initial Spike Results
+
+Before rebuilding, the baseline probe ran without the spike, and a
+hidden-viewport capture showed the native X-Axis, Y-Axis, Legend, and Settings
+entries.
+
+The opt-in local spike captures the plot item ID and appends a fixed ImGui
+menu item after `EndPlot()`. In hidden-viewport captures with injected mouse
+events, the native menu and the spike item appeared in the same popup. The
+spike item activated and closed the popup; reopening it showed one spike item.
+The native Settings submenu opened and its Crosshairs option changed the plot
+setting. The item was also visible on a second ordinary plot and in regular
+and shared-legend subplot examples.
+The user also ran the interactive demo and reported that the menu works after
+resizing the window and switching focus to VS Code and back.
+
+These observations support the approach but do not validate the proposed
+Python API. The spike adds the same fixed item to every plot, and custom
+widget children, nested custom menus, callback dispatch, per-plot ownership,
+and integrated resizing/focus behavior remain to be tested. The temporary
+spike must not be treated as the final implementation.

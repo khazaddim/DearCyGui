@@ -2202,6 +2202,7 @@ cdef extern from "imgui.h" namespace "ImGui" nogil:
 
 cdef extern from "imgui_internal.h" namespace "ImGui" nogil:
     ImGuiKeyData* GetKeyData(ImGuiKey)
+    void PushOverrideID(ImGuiID)  # added for plot custom plot right click menu
     ImGuiID GetActiveID()
     ImGuiID GetHoveredID()
     ImGuiID GetFocusID()

@@ -21,6 +21,23 @@ The baseline interactive run has no custom items. Right-click each plot canvas
 and check that the normal native options work. `--smoke` only renders hidden
 frames; it does not inspect a popup or verify any interaction.
 
+## Temporary Cython spike
+
+When the local extension has been rebuilt with the temporary spike, enable it
+for this process and run the baseline probe without `--custom`:
+
+```powershell
+$env:DCG_PLOT_MENU_SPIKE = '1'
+& $python "$probe\plot_context_menu_probe.py"
+Remove-Item Env:\DCG_PLOT_MENU_SPIKE
+```
+
+Right-click either plot canvas. `Cython spike action` should appear beneath the
+native entries; selecting it writes a message to the terminal. The spike
+inserts the same fixed item into every plot and does not provide Python menu
+children or callbacks. The environment variable is an experiment switch, not
+a supported public API.
+
 After integrating the proposed plot-child API into the tested build, run:
 
 ```powershell

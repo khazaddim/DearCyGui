@@ -17,6 +17,8 @@
 
 from libc.stdint cimport uint8_t, uint32_t, int32_t
 from libc.math cimport INFINITY
+from libc.stdlib cimport getenv
+from libc.stdio cimport printf, fflush, stdout
 from libcpp.vector cimport vector
 
 from cpython.object cimport PyObject
@@ -2166,6 +2168,7 @@ cdef class Plot(uiItem):
 
     cdef bint draw_item(self) noexcept nogil:
         cdef bint visible
+        cdef imgui.ImGuiID spike_plot_id
         implot.GetStyle().UseLocalTime = self._use_local_time
         implot.GetStyle().UseISO8601 = self._use_ISO8601
         implot.GetStyle().Use24HourClock = self._use_24hour_clock
@@ -2197,6 +2200,7 @@ cdef class Plot(uiItem):
                                    self._flags)
         # BeginPlot created the imgui Item
         if visible:
+            spike_plot_id = imgui.GetItemID()
             self.state.cur.rect_size = ImVec2Vec2(imgui.GetItemRectSize())
             self.state.cur.traversed = True
             self.state.cur.rendered = True
@@ -2248,6 +2252,16 @@ cdef class Plot(uiItem):
             # configuration with the mouse
             self._flags = GetPlotConfig()
             implot.EndPlot()
+            # Temporary opt-in probe for appending to the native ImPlot popup.
+            if getenv("DCG_PLOT_MENU_SPIKE") != NULL:
+                imgui.PushOverrideID(spike_plot_id)
+                if imgui.BeginPopup("##PlotContext", imgui.ImGuiWindowFlags_None):
+                    imgui.Separator()
+                    if imgui.MenuItem("Cython spike action"):
+                        printf("Cython spike action selected: %s\n", self._imgui_label.c_str())
+                        fflush(stdout)
+                    imgui.EndPopup()
+                imgui.PopID()
             self._X1.after_plot(implot.ImAxis_X1)
             self._X2.after_plot(implot.ImAxis_X2)
             self._X3.after_plot(implot.ImAxis_X3)

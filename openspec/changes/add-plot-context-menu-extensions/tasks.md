@@ -38,12 +38,12 @@
 - [x] 3.1 Perform a full rebuild from the integrated sources and confirm the
   probes load the rebuilt extension.
 - [x] 3.2 Run targeted existing tests plus the included ownership tests.
-- [ ] 3.3 Manually run the extension-mode probe and verify callbacks fire
+- [x] 3.3 Manually run the extension-mode probe and verify callbacks fire
   exactly once, nested menus work, native actions remain usable, `no_menus`
   prevents opening a new popup, and an alternate `menu_button` opens it.
   The user confirmed direct, nested, and checkable actions on both plots,
   including after resizing and changing focus, and confirmed `no_menus` and
-  the alternate button. A manual check of native actions remains.
+  the alternate button. Native Crosshairs and Box Select also work.
 - [x] 3.4 Repeat the subplot and multi-plot cases against the full build and
   record manual or automated interaction evidence.
 - [x] 3.5 Validate this OpenSpec change and update task status only as work is
